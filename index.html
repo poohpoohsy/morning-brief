@@ -140,11 +140,25 @@ function weatherStrip(w){
     <span>濕度 ${esc(w.hmin)}–${esc(w.hmax)}%</span></div>`;
 }
 
+function chgText(h){
+  return h.change === 0 ? "<b>unchanged</b>"
+    : `<b class="${h.change>0?'up':'down'}">${h.change>0?'+':''}$${(h.change/1000).toFixed(1)}bn</b>`;
+}
 function balancePanel(h, bars){
   if(!h || !h.available) return "";
   const bn = v => "$" + (v/1000).toFixed(1) + "bn";
   const vals = bars.filter(b => b.value != null);
   const max = Math.max(...vals.map(b => b.value), h.balance_hkdm);
+  if (vals.length < 2) {
+    return `<section class="panel">
+      <div class="ptitle">Aggregate balance</div>
+      <div class="asof">HKMA daily figures, ${esc(h.as_of)}.</div>
+      <div class="big"><span class="bigval mono">${bn(h.balance_hkdm)}</span>
+        <span class="bigmeta">vs yesterday ${chgText(h)}</span></div>
+      <div class="bigmeta">1M HIBOR <b>${esc(h.hibor_1m ?? "n/a")}%</b> · overnight <b>${esc(h.hibor_on ?? "n/a")}%</b> · base rate <b>${esc(h.base_rate ?? "n/a")}%</b></div>
+      <div class="notes">History is still building - the chart appears once a few days of figures have accumulated.</div>
+    </section>`;
+  }
   const peak = vals.reduce((a,b) => b.value > a.value ? b : a, vals[0]);
   const low  = vals.reduce((a,b) => b.value < a.value ? b : a, vals[0]);
 

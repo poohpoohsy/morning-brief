@@ -1,31 +1,45 @@
 {
   "report_date": "Saturday, 12 September 2026",
-  "generated_at": "12 Sep 2026 23:06 HKT",
-  "generated_iso": "2026-09-12T23:06:01.175131+08:00",
+  "generated_at": "12 Sep 2026 23:19 HKT",
+  "generated_iso": "2026-09-12T23:19:50.737060+08:00",
   "build": {
     "method": "gemini:gemini-3.6-flash",
     "log": [
-      "[work] no entries from 明報 經濟",
-      "[work] no entries from 明報 國際",
-      "[work] no entries from 明報 即時經濟",
+      "[work] 明報 經濟: HTTP 403 Forbidden",
+      "[work] 明報 國際: HTTP 403 Forbidden",
+      "[work] 明報 即時經濟: HTTP 403 Forbidden",
       "[work] 0 items after filtering",
-      "[smalltalk_hk] no entries from 明報 經濟",
-      "[smalltalk_hk] no entries from 明報 國際",
+      "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
+      "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
       "[smalltalk_hk] 0 items after filtering",
-      "[smalltalk_sg] no entries from Workers' Party",
+      "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
       "[smalltalk_sg] 2 items after filtering",
-      "[personal_hk] no entries from 明報 港聞",
-      "[personal_hk] no entries from 明報 娛樂",
-      "[personal_hk] no entries from 明報 副刊",
-      "[personal_hk] no entries from 明報 即時港聞",
+      "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
+      "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
+      "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
+      "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
       "[personal_hk] 3 items after filtering",
-      "[personal_sg] no entries from Workers' Party",
+      "[personal_sg] Workers' Party: HTTP 404 Not Found",
       "[personal_sg] 2 items after filtering",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025, antigravity-preview-05-2026, deep-research-max-preview-04-2026, deep-research-preview-04-2026, deep-research-pro-preview-12-2025",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
       "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
-      "Model used: gemini-3.6-flash"
+      "Model used: gemini-3.6-flash",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?offset=0&sortby=end_of_date&sortorder=desc: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2016-12-01&to=2016-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2017-12-01&to=2017-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2018-12-01&to=2018-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2019-12-01&to=2019-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2020-12-01&to=2020-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2021-12-01&to=2021-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2022-12-01&to=2022-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2023-12-01&to=2023-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2024-12-01&to=2024-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2025-12-01&to=2025-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2026-12-01&to=2026-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "HKMA year query returned no usable history - using daily snapshots instead.",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?offset=0&sortby=end_of_date&sortorder=desc: The read operation timed out"
     ]
   },
   "weather": {
@@ -37,72 +51,9 @@
     "hmax": 95
   },
   "hkma": {
-    "available": true,
-    "as_of": "2026-09-11",
-    "balance_hkdm": 54003.0,
-    "change": 0.0,
-    "flat_sessions": 2,
-    "hibor_1m": 2.87964,
-    "hibor_on": 2.1,
-    "base_rate": 4
+    "available": false
   },
-  "hkma_bars": [
-    {
-      "year": 2016,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2017,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2018,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2019,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2020,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2021,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2022,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2023,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2024,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2025,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    },
-    {
-      "year": 2026,
-      "value": 54003.0,
-      "date": "2026-09-11"
-    }
-  ],
+  "hkma_bars": [],
   "rates": {
     "tenor": "3-month, new money, HKD",
     "rows": [],
@@ -120,8 +71,8 @@
     "smalltalk_hk": [],
     "smalltalk_sg": [
       {
-        "headline": "Syed Saddiq Invites Ong Ye Kung to October Wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Singapore Health Minister Ong Ye Kung to his wedding in October. He joked that he had upgraded bilateral relations to wedding-invitation status.",
+        "headline": "Syed Saddiq Invites Health Minister Ong Ye Kung to October Wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Singapore Health Minister Ong Ye Kung to his wedding in October. He joked that the invitation upgraded bilateral relations to wedding-invitation status.",
         "sources": [
           {
             "name": "The Independent SG",
@@ -130,8 +81,8 @@
         ]
       },
       {
-        "headline": "PM Lawrence Wong Addresses Salary Increase Discussions",
-        "body": "Prime Minister Lawrence Wong thanked MPs for participating in salary discussions, stating the increases concern Singapore's future rather than himself or the PAP government.",
+        "headline": "PM Lawrence Wong Addresses Salary Discussions in Parliament",
+        "body": "Prime Minister Lawrence Wong reiterated that salary increases are about Singapore's future rather than himself or the PAP government. He thanked the Members of Parliament who participated in the discussion.",
         "sources": [
           {
             "name": "The Independent SG",
@@ -142,8 +93,8 @@
     ],
     "personal_hk": [
       {
-        "headline": "動保團體呼籲市民抵制馬術表演Cavalluna",
-        "body": "亞洲善待動物組織指於啟德體育館上演的馬術表演Cavalluna涉嫌虐待動物，呼籲市民抵制。\n該節目由香港賽馬會主辦及合作，展演期至本周日結束。",
+        "headline": "動物權益團體呼籲市民抵制啟德馬術表演",
+        "body": "動保組織PETA指控馬術表演「Cavalluna」涉嫌虐待動物，呼籲市民抵制該演出。\n該節目由香港賽馬會主要贊助及主辦，於啟德體育園由本週二公演至本週日。",
         "sources": [
           {
             "name": "HKFP",
@@ -154,8 +105,8 @@
     ],
     "personal_sg": [
       {
-        "headline": "Health Minister Ong Ye Kung Invited to Syed Saddiq's Wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman extended an invitation to Singapore Health Minister Ong Ye Kung for his upcoming October wedding.",
+        "headline": "Malaysian Politician Syed Saddiq Invites Health Minister Ong Ye Kung to Wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman invited Singapore Health Minister Ong Ye Kung to his October wedding.\nHe joked that he had upgraded bilateral relations to wedding-invitation status.",
         "sources": [
           {
             "name": "The Independent SG",
@@ -164,8 +115,8 @@
         ]
       },
       {
-        "headline": "PM Lawrence Wong Clarifies Higher Salary Rationale",
-        "body": "Prime Minister Lawrence Wong reiterated that salary increases are aimed at securing Singapore's future and are not about himself or the PAP government.",
+        "headline": "PM Lawrence Wong Speaks on Salary Increases",
+        "body": "Prime Minister Lawrence Wong stated that higher salaries are about Singapore's future rather than himself or the PAP government.\nHe thanked the MPs who participated in the parliamentary discussion.",
         "sources": [
           {
             "name": "The Independent SG",
