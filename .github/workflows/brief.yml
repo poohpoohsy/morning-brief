@@ -1,0 +1,59 @@
+name: Morning brief
+
+on:
+  schedule:
+    # 05:30 Hong Kong time = 21:30 UTC the day before.
+    # Set early on purpose: GitHub delays scheduled runs 5-30 minutes at peak,
+    # so aiming at 06:00 would sometimes land at 06:25.
+    - cron: "30 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: morning-brief
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Only feedparser is needed. Gemini is called over plain HTTPS,
+      # so there is no SDK to install for the free path.
+      - run: pip install feedparser
+
+      - name: Build brief
+        env:
+          LLM_PROVIDER: ${{ vars.LLM_PROVIDER }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python build.py
+
+      - name: Save results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Brief $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Report how it built
+        run: |
+          M=$(python -c "import json;print(json.load(open('data/brief.json'))['build']['method'])")
+          echo "Build method: $M"
+          if [ "$M" = "rss-only" ]; then
+            echo "::warning::Built from RSS summaries - no model key set, or the model call failed."
+          fi
