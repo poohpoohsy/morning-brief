@@ -1,9 +1,9 @@
 {
   "report_date": "Saturday, 12 September 2026",
-  "generated_at": "12 Sep 2026 21:37 HKT",
-  "generated_iso": "2026-09-12T21:37:59.546030+08:00",
+  "generated_at": "12 Sep 2026 23:06 HKT",
+  "generated_iso": "2026-09-12T23:06:01.175131+08:00",
   "build": {
-    "method": "rss-only",
+    "method": "gemini:gemini-3.6-flash",
     "log": [
       "[work] no entries from 明報 經濟",
       "[work] no entries from 明報 國際",
@@ -21,7 +21,11 @@
       "[personal_hk] 3 items after filtering",
       "[personal_sg] no entries from Workers' Party",
       "[personal_sg] 2 items after filtering",
-      "Model step skipped or failed (HTTP Error 503: Service Unavailable) — using RSS summaries"
+      "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025, antigravity-preview-05-2026, deep-research-max-preview-04-2026, deep-research-preview-04-2026, deep-research-pro-preview-12-2025",
+      "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
+      "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
+      "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
+      "Model used: gemini-3.6-flash"
     ]
   },
   "weather": {
@@ -116,78 +120,58 @@
     "smalltalk_hk": [],
     "smalltalk_sg": [
       {
+        "headline": "Syed Saddiq Invites Ong Ye Kung to October Wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Singapore Health Minister Ong Ye Kung to his wedding in October. He joked that he had upgraded bilateral relations to wedding-invitation status.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
           }
-        ],
-        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
+        ]
       },
       {
+        "headline": "PM Lawrence Wong Addresses Salary Increase Discussions",
+        "body": "Prime Minister Lawrence Wong thanked MPs for participating in salary discussions, stating the increases concern Singapore's future rather than himself or the PAP government.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
           }
-        ],
-        "headline": "Prime Minister Lawrence Wong: Higher salaries are not about me or the PAP government",
-        "body": "PM Wong thanked the MPs who participated in the discussion, and reiterated that the increase in salaries are about Singa"
+        ]
       }
     ],
     "personal_hk": [
       {
-        "sources": [
-          {
-            "name": "HKFP",
-            "url": "https://hongkongfp.com/2026/09/12/macau-to-hold-closed-door-trial-in-first-national-security-case-against-democrat/"
-          }
-        ],
-        "headline": "Macau to hold closed-door trial in first national security case against democrat",
-        "body": "Macau will hold its first national security trial behind clo sed doors next week, a court said on Friday,"
-      },
-      {
-        "sources": [
-          {
-            "name": "HKFP",
-            "url": "https://hongkongfp.com/2026/09/12/yu-zidi-chinas-fearless-swimming-prodigy-13-with-olympics-in-her-sights/"
-          }
-        ],
-        "headline": "Yu Zidi: China’s fearless swimming prodigy, 13, with Olympics in her sights",
-        "body": "Yu Zidi made history last year aged 12 when she became the y oungest-ever medallist at the swimming world championships."
-      },
-      {
+        "headline": "動保團體呼籲市民抵制馬術表演Cavalluna",
+        "body": "亞洲善待動物組織指於啟德體育館上演的馬術表演Cavalluna涉嫌虐待動物，呼籲市民抵制。\n該節目由香港賽馬會主辦及合作，展演期至本周日結束。",
         "sources": [
           {
             "name": "HKFP",
             "url": "https://hongkongfp.com/2026/09/12/animal-ngo-urges-hongkogners-to-shun-govt-backed-equestrian-show-cavalluna/"
           }
-        ],
-        "headline": "Animal NGO urges Hongkongers to shun gov’t-backed equestrian show Cavalluna",
-        "body": "People for the Ethical Treatment of Animals Asia (PETA) has urged Hongkongers to shun a live equestrian theatrical show"
+        ]
       }
     ],
     "personal_sg": [
       {
+        "headline": "Health Minister Ong Ye Kung Invited to Syed Saddiq's Wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman extended an invitation to Singapore Health Minister Ong Ye Kung for his upcoming October wedding.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
           }
-        ],
-        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
+        ]
       },
       {
+        "headline": "PM Lawrence Wong Clarifies Higher Salary Rationale",
+        "body": "Prime Minister Lawrence Wong reiterated that salary increases are aimed at securing Singapore's future and are not about himself or the PAP government.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
           }
-        ],
-        "headline": "Prime Minister Lawrence Wong: Higher salaries are not about me or the PAP government",
-        "body": "PM Wong thanked the MPs who participated in the discussion, and reiterated that the increase in salaries are about Singa"
+        ]
       }
     ]
   }
