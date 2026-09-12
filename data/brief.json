@@ -1,7 +1,7 @@
 {
   "report_date": "Saturday, 12 September 2026",
-  "generated_at": "12 Sep 2026 21:27 HKT",
-  "generated_iso": "2026-09-12T21:27:35.144253+08:00",
+  "generated_at": "12 Sep 2026 21:37 HKT",
+  "generated_iso": "2026-09-12T21:37:59.546030+08:00",
   "build": {
     "method": "rss-only",
     "log": [
@@ -21,7 +21,7 @@
       "[personal_hk] 3 items after filtering",
       "[personal_sg] no entries from Workers' Party",
       "[personal_sg] 2 items after filtering",
-      "Model step skipped or failed (HTTP Error 404: Not Found) — using RSS summaries"
+      "Model step skipped or failed (HTTP Error 503: Service Unavailable) — using RSS summaries"
     ]
   },
   "weather": {
