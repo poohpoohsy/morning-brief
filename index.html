@@ -231,7 +231,8 @@ function workCard(it){
 function plainCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
-    <p class="two">${esc(it.body)}</p>
+    ${it.body ? `<p class="two">${esc(it.body)}</p>`
+              : `<p class="two" style="opacity:.6">Headline only - open the source.</p>`}
     ${srcLine(it.sources)}</article>`;
 }
 

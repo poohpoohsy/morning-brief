@@ -1,50 +1,53 @@
 {
-  "report_date": "Saturday, 12 September 2026",
-  "generated_at": "12 Sep 2026 23:42 HKT",
-  "generated_iso": "2026-09-12T23:42:34.858944+08:00",
+  "report_date": "Sunday, 13 September 2026",
+  "generated_at": "13 Sep 2026 01:57 HKT",
+  "generated_iso": "2026-09-13T01:57:00.353631+08:00",
   "build": {
-    "method": "rss-only",
+    "method": "gemini:gemini-3.5-flash",
     "log": [
       "[work] 明報 經濟: HTTP 403 Forbidden",
       "[work] 明報 國際: HTTP 403 Forbidden",
       "[work] 明報 即時經濟: HTTP 403 Forbidden",
-      "[work] 187 items after filtering",
+      "[work] 208 items after filtering",
       "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
       "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
       "[smalltalk_hk] 58 items after filtering",
       "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
-      "[smalltalk_sg] 17 items after filtering",
+      "[smalltalk_sg] 15 items after filtering",
       "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
       "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
       "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
-      "[personal_hk] 167 items after filtering",
+      "[personal_hk] 156 items after filtering",
       "[personal_sg] Workers' Party: HTTP 404 Not Found",
       "[personal_sg] 8 items after filtering",
+      "Prompt size: 38,700 characters, 45 clusters",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025, antigravity-preview-05-2026, deep-research-max-preview-04-2026, deep-research-preview-04-2026, deep-research-pro-preview-12-2025",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
-      "Model used: gemini-3.7-flash",
-      "Model step skipped or failed (Expecting value: line 156 column 7 (char 9998)) — using RSS summaries",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?offset=0&sortby=end_of_date&sortorder=desc: The read operation timed out",
+      "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
+      "Model gemini-3.6-flash failed: HTTP Error 400: Bad Request",
+      "Model used: gemini-3.5-flash",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?sortby=end_of_date&sortorder=desc: The read operation timed out",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2016-12-01&to=2016-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2017-12-01&to=2017-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2017-12-01&to=2017-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2018-12-01&to=2018-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2019-12-01&to=2019-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2020-12-01&to=2020-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2021-12-01&to=2021-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2022-12-01&to=2022-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2022-12-01&to=2022-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2023-12-01&to=2023-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2024-12-01&to=2024-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2025-12-01&to=2025-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2026-12-01&to=2026-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2025-12-01&to=2025-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2026-12-01&to=2026-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
       "HKMA year query returned no usable history - using daily snapshots instead.",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?offset=0&sortby=end_of_date&sortorder=desc: HTTP Error 502: Bad Gateway"
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity: The read operation timed out",
+      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?sortby=end_of_date&sortorder=desc: The read operation timed out"
     ]
   },
   "weather": {
     "available": true,
-    "desc": "Mainly cloudy with a few showers. Showers will be heavier in some areas with thunderstorms at first. There will be swells.",
+    "desc": "Mainly cloudy with a few showers. Showers will be heavier in some areas with thunderstorms at first. Seas will be rough with swells.",
     "tmin": 26,
     "tmax": 29,
     "hmin": 75,
@@ -69,42 +72,40 @@
   "sections": {
     "work": [
       {
+        "zh": [
+          "港元活期存款高息招徠",
+          "最高利率可達六厘",
+          "惟須留意屬漸進加息"
+        ],
+        "en": "Hong Kong banks are attracting customers with high-interest Hong Kong dollar savings accounts, offering rates of up to 6%. However, depositors should be aware that these accounts utilize a progressive interest rate structure.",
         "sources": [
-          {
-            "name": "明報新聞網",
-            "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxNaElsWFRwU1BTaTRsYmQ0M1FmRjhNVTdkVHljRl9tYW1ENWtqU2FVZWxHcFVWbzZ5dGpPcXg5dHBQaFk2aEgxNWUwcUVBLV9DckVkSUphbXU5MW10ZEVMTkFBakM0dTdLUlU5SWZiSE9YaGNDT1czXzctdTIxWjlqM2daYmhiSmxtUGxvN09QQldOMG5pdmpPNGQxc2VadUlaNGgyd3BrNXdCaVhCNzNrY0R2X3hLNVVaWno1bjFzYXMxckd0Zjczd1luaHlWM0JzOWFaX094V2JpZHd1UkRsSF9EZTRsRFVTRjkxNUpDR2VxYTFBeVQ4b3BlWkJldmVFQmFIMDRpZFo2YjV6WGFsT3RvNVd6QjN1TDFpTUNGbmQzVnJteS1CaFhkX09TZVMxdGpwQ2loTE9FRVB4eEVYYWN5MXM?oc=5"
-          },
           {
             "name": "明報財經網",
             "url": "https://news.google.com/rss/articles/CBMi_gJBVV95cUxNNEZ0aDZONzZpRzZhTDkzdGtHd01NQlNZQkpFZnpJOEtSdGU3WVJRU2NENTNGY2ZkSWRYN3l5SXg2dTQ4bS1DOVY2NVMyNWNLa0U1SElteW1Wc2dGOTJoY3ozRG5CU29zem5tR1d0Ul9YR0hRcHNJN0FQWkM1Tk9sUVBLM2hXOGNlLXdFNC1NWUwxdmlkS0kwM1k4d3hxVjRfYlhXU0ljcUNKS0xzZUtzZGFTM1ZUMWVDUEd5NjhUNmFBVzF3TjZRU2JhNVRvTy0zaWprS3hrSnVHblhoT29DWnhpOVhlX09FQ2hBTGdWZkVfNEYtUVdnR2RpX3htWjlUR2gtZTJjN0JhNERpRXdRMk96VjdOeExVN2lHMlVaZWpTczhVd0dwS09qTGZFa2t1LXdrS3p1RzZISWVqbmw3T3JkdTZycU9lVmhWZE5walBqV2RBWEFhbDQ1UGhHRHJCaW5RdVlDT0RLVFc1MTV1WURPUnBaZFY5LW9QeFNn?oc=5"
           }
-        ],
-        "zh": [
-          "活期存款高息招徠 留意屬漸進加息 - 20260911 - 經濟",
-          "明報新聞網",
-          ""
-        ],
-        "en": "活期存款高息招徠 留意屬漸進加息 - 20260911 - 經濟    明報新聞網"
+        ]
       },
       {
+        "zh": [
+          "港迪四機構設工作組",
+          "加強兩地金融聯繫",
+          "推動雙邊市場發展"
+        ],
+        "en": "The Hong Kong Monetary Authority, Hong Kong Exchanges and Clearing Limited, the Dubai Financial Services Authority, and Nasdaq Dubai have jointly established a Strategic Working Group. This initiative aims to strengthen financial ties and collaboration between Hong Kong and Dubai.",
         "sources": [
           {
             "name": "Fintech News HK",
             "url": "https://fintechnews.hk/40567/regtech/hong-kong-dubai-strategic-working-group-hkma-hkex-dfsa-nasdaq-dubai/"
-          },
-          {
-            "name": "Securities Finance Times",
-            "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOenZkMnc0R1ZJb2RRS2xnRF90Z1dDMzlaUWthd09nMmk0M0V3WXNIcUdLckRkUzIxU3g0WnRzXzlEUUNUdUUyY3ZobzNpbWpVb2xlYVNaZ04tN1ZxU0ZPUGZvUGwtWHNXaTVGUlpQSDZaMEUwbldtYXB3TlBiV2Y5Q2h6NW9Ha2wydU5pRUVmdzc5dFl4S3YwbjZSWmRIbWM?oc=5"
           }
-        ],
-        "zh": [
-          "The Hong Kong Monetary Authority (",
-          "HKMA),",
-          "Hong Kong Exchanges and Clearing L"
-        ],
-        "en": "The Hong Kong Monetary Authority (HKMA), Hong Kong Exchanges and Clearing Limited (HKEX), the Dubai Financial Services Authority (DFSA), and Nasdaq Dubai jointly announced the establishment of a Strategic Working Group. The Strategic Working Group aims to strengthen the ties between the financial markets of Hong Kong and the Dubai International Financial Centre (DIFC). The [...] The post HKMA, HKEX, Nasdaq Dubai and DFSA Establish Strategic Working Group appeared first on Fintech Hong Kong ."
+        ]
       },
       {
+        "zh": [
+          "月之暗面否認上市傳聞",
+          "澄清無意於滬港雙重上市",
+          "回應市場近期相關猜測"
+        ],
+        "en": "Chinese AI startup Moonshot AI (Moon's Dark Side) has denied rumors regarding its plans for a dual listing in Shanghai and Hong Kong.",
         "sources": [
           {
             "name": "etnet 經濟通",
@@ -112,185 +113,61 @@
           },
           {
             "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMitgJBVV95cUxOQkNST0lWV0VhcnU4NjdrN3dQQVdVOWpILVM0Wi1mUnBiOGppRjhjSzR1TGRqQmZBMk1HSVJFemxKRWxuQ2dLajA4a19taWtyWUlPdktxel8xSFA4V0RVZjZjZU50dTAtTkY1U1JzUElPWHZMNDBVSmdsNENvM2p4M0ZwYnhwRW92dFZjYjJfak1EUTkzX2ZuczFGc1V5R243RUxiQmZWdnRWVVd3S1NlcmJOMnZ5Q1RTbWg3UUVueFRkVzVELU04T2NXdnhBbkdCS1gyV2ZCU1lSbVR2aUotNjdPbS1xYXlPZGVNWUNMTzROdnI1UXBHZmN4UEVyY2owRjBtX2N0TjI4WEoxSGpfNjVtZk9SbWt5dFVEOEdyc3ViWGt5VEVEc2JiVTJTYUcxRjVJZGdR?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMitgJBVV95cUxOQkNST0lWV0VhcnU4NjdrN3dQQVdVOWpILVM0Wi1mUnBiOGppRjhjSzR1TGRqQmZBMk1HSVJFemxKRWxuQ2dLajA4a19taWtyWUlPdktxel8xSFA4V0RVZjZjZU50dTAtTkY1U1JzUElPWHZMNDBVSmdsNENvM2p4M0ZwYnhwRW92dFZjYjJfak1EUTkzX2ZuczFGc1V5R243RUxiQmZWdnRWVVd3S1NlcmJOMnZ5Q1RTbWg3UUVueFRkVzDELU04T2NXdnhBbkdCS1gyV2ZCU1lSbVR2aUotNjdPbS1xYXlPZGVNWUNMTzROdnI1UXBHZmN4UEVyY2owRjBtX2N0TjI4WEoxSGpfNjVtZk9SbWt5dFVEOEdyc3ViWGt5VEVEc2JiVTJTYUcxRjVJZGdQ?oc=5"
           }
-        ],
-        "zh": [
-          "【新股上市】月之暗面否認擬於滬港雙重上市- A股    etnet",
-          "經濟通",
-          ""
-        ],
-        "en": "【新股上市】月之暗面否認擬於滬港雙重上市- A股    etnet 經濟通"
+        ]
       }
     ],
     "smalltalk_hk": [
       {
+        "headline": "Haitian Flavouring Completes Acquisition of Amoy Food",
+        "body": "Chinese seasoning giant Haitian Flavouring has completed its acquisition of the century-old brand Amoy Food, with CITIC Capital selling its entire stake. The transaction value was not disclosed, but the move is aimed at boosting Haitian's expansion into overseas markets.",
         "sources": [
-          {
-            "name": "信報網站",
-            "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOamxRZERRQ2N4MjZUalJUWjBOSUFMNWR0VEN4R2E2MHRXbktYTDVoYWQxOTM5c0lUVTF5WHBtYmxVZlBhZ1RwSXRDOVJLT3Q5cVROdklodXp2OXpsMFkxeFJ0NUh1a0RlemtubkRsNS1iNjUzcWJoZzVDN2JrMlRBeXdCVXA5X1QtNlhsVTB1d1JRTWhnM0FwQ2RsdDdJa29pZEJiR1pYVjhJSGdGdnp0QWxSNk1hM1VxRFVzSjVGY1ByTzlRMWdhVlR4aHFHX3dWR0NuWDJrOE5jdGgtTjhrZnBkUWowSy1Xcm1YTlZCaw?oc=5"
-          },
           {
             "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMikAJBVV95cUxPM2VUZjNRSWpkR0RUMVdRMTBBMjR5Ukw0b2tlbVc3YklycWk0TzZnb2c5aDB4d2xlTTdxOUZJZmM1dHpVU3B2OUJKbEJWMVBKU3k1dzZXTndVUWdnMFdjM3l0TzhFVlhMUVZvbU03VmFKUV9abzQyZ09OaDhkSFVHZWxWY1hfeHl6amk1RXVCYmkwc08zNWtCMkU3Qkg4R1hPSXdxZEJzbXRUQUlQbTdfZ1JlTEZCMl92Wml6eklkWkl5UEt3cW91dzk5TkJIaHgyV0xtVDJGbmVTSDhFMXF5X2pqNy1tM24zSGE5Z3owNFNYZ0lJR01RQXFqTEhvZVFQSG85MGZlZERFMHphTXRWUg?oc=5"
-          }
-        ],
-        "headline": "海天味業完成收購淘大食品",
-        "body": "海天味業完成收購淘大食品    信報網站"
-      },
-      {
-        "sources": [
-          {
-            "name": "明報新聞網",
-            "url": "https://news.google.com/rss/articles/CBMi9gJBVV95cUxPN2ljblFDYnJNZ09sTG1DSmVGYm9xNTNHU2o0Q3VaX2lDVFpYMkVnVUUyRUwyeEo1eDdXc0JOQUl6TllFSVF6Z01sWjlCRy05TEQ0RFZmQXhmMGl4c0dDYmRlcEk5NjNROHVCekpXMHVadkh5TG45dkJwXzlNX0FRc0hYQWp2UE1hZlZ3MVFLLTZUa2Y2RFpRUm5JNzJRM2h6N0V3UzZBbjhMYnZEMzRkM0R4d2FOR1BHUW5nY2tZRmlZSWt4SDVMTEZXX0pRaVJwR1puRl9OMVVzRUJJdTA2elN1d1owWFV6VkduQ0gydVhrdU51SUZLSFBMQWhsXzNVeEF3eVIzeHdNX050WUxBNzQ5OVNqUVFwOGJoUFF2VjdUN2hNeGNFUWI3WTZ2b2FadHNsOUlWU1RVUHJGd3pjcUlVRG9WV21JQi0ya2V1YWY1aF9vWDA2ejNCcUVJVDlBLURQVjRoTmVlcGhBeTQzalU0OFpCdw?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMi5gJBVV95cUxPMG8tZVlSNWx3RlZXTjZiZ1BPWHz2U29YdFFCRVhDV2RPcndUZ1ppUDM5VkRkUGhUdlc3QUZVOVRtaGlhUFNaYVpvZTFyNU92eHc3elpMS05peWRJSmlFSzNlSUxMN3R1YUFJNkh0d25VN1M1cXJZSlhBZS1oUTU1UVBlOWNmSWFlOTZBOUV2bk5kSGZNTjlvdVhhdnFLaWN5eFdOZ0p6TGlfNHllbVQ0a1FGRGFFS1lPUWh3aU41MERaU1R2UkhkbHdFSEs3S0NDZlA5SGE0cU9iSVdFbjlwM2xHc011S1RqSzNSSWVwVUtqdGo1dnlGbkhrZFQ5WHg3OHlEeFd0Q1I4V0I3TUtUa2J1SVhkSEs5X2xzLTR3YThHb3YtUHpCOGViTDBZZUhwaW9NS0Iyc0UyRUxjNG1iV0kwNFMtZkd0bnQ0TkdOemZaaXBMdm45NWpjM3hvckNaRC16a1hn?oc=5"
           },
-          {
-            "name": "明報財經網",
-            "url": "https://news.google.com/rss/articles/CBMi1AJBVV95cUxQWGlJcEh3d2tJUXN3N1JxSWwwYm4zRGxKS3M0UjlnWGFvWG9xT200MjA4MWxGNFAycEdkWmIwaFd1LWpzdFM4b01CYXBjMHBQZ3U1SEJhVlZ0TGJOdVhua0FNS24zNjlvcm1uWHdvcmppWjQtVGRHUEY1VFZ6X3ZHQklyZU5ZSlVOQ1V1MExXckdJT0NLejRWOUtVNXJLbWpGZjRtdUtpOE5EWks4enc5b2R5Z1pnWWpWZXZ5eXpKelRHa0M3SUlYRURIYjZwY0d3R0lXUHRXUmRrTTRPbzktVGJtWUJ4SkRtUjNFQWRvbHl5bFB3Mk9iWFp5M1JWdVVVTHowUzNaMDBFZVhNS2JXS3hoeERrcXhJN3dJM0xUWW9vLUw1U3Jyc210N3ptUC01b2REQmk2eEpwSGl0ZFNobFJMdG1RbVA0STZzNDU4WkNBbzR1?oc=5"
-          }
-        ],
-        "headline": "張兆聰：中集安瑞科候業績改善 支持股價回升 - 20260911 - 經濟",
-        "body": "張兆聰：中集安瑞科候業績改善 支持股價回升 - 20260911 - 經濟    明報新聞網"
-      },
-      {
-        "sources": [
           {
             "name": "etnet 經濟通",
-            "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOTjVZTE1oNHRKaTJQLUprRzBNbkhGcEhmN1loVU1ZTFV0alRYcE4wcGk5SkZWeEU3dmh0N1E1S0g4eU9KMDlSOWZCdExvT3J5elR4V3dDck1Pa0d5TElLOURkQmhQYmFDay03UkZNc0szUm9kbk5wLUVDZ29iakNrejBn?oc=5"
-          },
-          {
-            "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMivgJBVV95cUxNNWloOGpXbUhSclF3bGlMa0RXR0Vta3dPdXY3R2lRcXprMy1fY2trb09nZ2JzbUczdk5Gd2h0LUpGLVhmd1VZYTJKazJ2bFlfd215dE5PV3VfQ2J4cm4tNVcwWkdyY0NfaV9TbG50ZkxLdHZzLTktaDFwU1JFVDRMOGxwdm51RVloQ1NPWHFqc3VrcXQycnlKSnNENjhKREd4RHJUWkhlRGxLR085SHJpcjQxUVZsNWZ1ajZueFpIb0RwNWdicVNUTzVfS25Nak5UR0d1aWVSQjJKcWRCNkRRczVaOEo3QmFqRXpWWWtGUzVrbzFsUzUtRC1kQXpKQmlIcmRYU3dCbVF5Q3lVRF83T3ZlbzcydDYyZ0puN3J2V3JoNzJTOWNfNFZOMzdOYTVSaF9scURiTDNoOFR4S0E?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNlpMUFRWQzQ2OV9qR19qckpveG9PMjdpZlh0X1pLbmVXSWJTMXRZRmluS2NkOEphajV1OGItUlFScTRsTFdfWWd3c1dXYWhGUjBnT0xta3dDYVhaNC1ubWFidmZGcXVQRXRpYlkxNXgyX2pwZ0dzcXVUZ2NwTTE1WE1icVByNmtpX21OZmhkM1ZPRHl6?oc=5"
           }
-        ],
-        "headline": "《Ａ股焦點》海天味業A微跌，完成收購淘大100%股權",
-        "body": "《Ａ股焦點》海天味業A微跌，完成收購淘大100%股權    etnet 經濟通"
+        ]
       }
     ],
     "smalltalk_sg": [
       {
-        "sources": [
-          {
-            "name": "India Today",
-            "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQQm8wQWJzazlGOEdIaVlyNDVIOTdvU1Q0OXc0OFpxdHcxX1p4c0NSQWl5RUMxck8yVDB4bFl1ZVhyVWdHY1VsSFFIcVhoRUpRQ28zbG42eEhMT0gxVUpFNlBVTU8xeXVvWWc5Zi1MdEd6YklsenVIWjdmUFhmRHpIOGVSajVOZVhCWEpPdG5tdUFuQ3NqOVpzc242bDk3VjFpX2ZlWEVBY0NLbG1FNmlBWlNBOXh3alRJTVdjYjhrZnBLQW9iUkdfMTFVekFWS1VTanktSERfMU1nLUV6bnfSAeMBQVVfeXFMTjE5bFptX0dodkF5MFNtRHZlS0RkWU9xNUlMT09JU1UtaHVOQ3hITHlrQnpQcVBiUkpMR2tqeVF1R1I0Zk8xeTFGSHdrM0JWMnlyZkxhOFFxd0FfVjcwYTlxTWpBa00tdEpXcEFheFlEMzdXVHZVYjFaU3BKaklTdVpJd1A3M0xDMk9CUjM3bzhLaUZhQXZ2cjlZQnhsd2JmUHFtUXUwZXpoa1BubTR1RGIzU0hKaEZkS0tzOGtMcUl4R1E1ay1FU3RBVnBMYlozSlhRVmxUc0t2ZTRtRHFrYzF6ejQ?oc=5"
-          },
-          {
-            "name": "The420.in",
-            "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPZ244RE04cnhNYW8zVmV5V2NwQ2hQSHJndFpPVW5kMlFtOTRXaWpWeVhYN3V6bm1hbUhwWjctdklPREFZWGVXZF9OcS11M2daeTJxNG54U1NsXzloSHhMVTd4S1otMzc2V0FXSENlN3dTTTdBbWVxb09wS1BFWFJrZzlB?oc=5"
-          }
-        ],
-        "headline": "ED raids Maharashtra firm in Rs 135 crore bank fraud; Rs 35 crore frozen, BMW seized",
-        "body": "ED raids Maharashtra firm in Rs 135 crore bank fraud; Rs 35 crore frozen, BMW seized    India Today"
-      },
-      {
+        "headline": "Syed Saddiq Invites Ong Ye Kung to October Wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman has extended a wedding invitation to Singapore's Health Minister Ong Ye Kung for his upcoming nuptials in October. Saddiq lightheartedly joked that the gesture upgraded their bilateral relations to \"wedding-invitation status.\"",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
           }
-        ],
-        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
+        ]
       }
     ],
     "personal_hk": [
       {
+        "headline": "沙田圍呂明才小學39人疑食物中毒 下周一起取消現場午膳分份",
+        "body": "浸信會沙田圍呂明才小學39名師生懷疑進食滷水雞髀和長通粉後食物中毒。\n校方宣布下周一起暫停現場分份，全面改以獨立飯盒供應。",
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869781-20260912.htm"
-          },
-          {
-            "name": "hkcna.hk",
-            "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9JNHFJYjVlcGJfVVlxcWZKNTVrZnQ5QUFrMEtWYXUxSVBhS1BncjdhUER6OHNBcThPTmZDUnVyQmp0bEFMY2xuX05iaDRFeDF6MEJSQ1haZXN2ekFYUkhMV1VLMHVVUQ?oc=5"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869814-20260912.htm"
           }
-        ],
-        "headline": "立法會支持支聯會案判刑 堅決反對部分美西方國家詆毀攻擊",
-        "body": "立法會表示，堅定支持高等法院原訟庭，依法對「支聯會煽動顛覆國家政權案」的判刑，認為是彰顯法律公義， 有力捍衛《中華人民共和國憲法》和《基本法》確立的香港特區憲制秩序。"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK News",
-            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE91c21FOHhpMjdNMC1Pd0w2THQ2WEtqX2RsSTBGQ19LT1VGeTI1bDZTTDcwQ2JGREpZdmlSb29yakQ2SENCUWl6ZVNra0tQZ0RUWk9MUnZJd1NSWWZQZVBLZldldXJsandzQWxqbWlfaw?oc=5"
-          }
-        ],
-        "headline": "羅淑佩：冀港隊亞運展現「全力以赴 永不放棄」精神 籲巿民打氣",
-        "body": "羅淑佩：冀港隊亞運展現「全力以赴 永不放棄」精神 籲巿民打氣    RTHK News"
-      },
-      {
-        "sources": [
-          {
-            "name": "中國香港足球總會",
-            "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9yR1BvX0pSNWdRMkZyU0V3RDRQOG5Wel90dkh6M3pmREFBVkNKMGc1My1UUnpwNjE0YXR6YkZfTVJuRm5WRW9HNVlLazlySjdZX0hkWkJiNXY1LXdSeG1V?oc=5"
-          }
-        ],
-        "headline": "2026-27年度中銀人壽香港超級聯賽 – 冠忠南區 1:3 傑志",
-        "body": "2026-27年度中銀人壽香港超級聯賽 – 冠忠南區 1:3 傑志    中國香港足球總會"
-      },
-      {
-        "sources": [
-          {
-            "name": "香港商报",
-            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9LZUtzTGdiYVk2UVRULWR6S0JxN042Z3NqVHhBSTF4UjFMYkVUY3haejRzODhET3R5dzkyQ0hzMUh1SlR4VjFqTVhFZHVXVDVRd1luQTBwVkRDRDZyc0VvbkhaNHJhVGhHSGlmaWx1N0hYMmo3Rmc?oc=5"
-          },
-          {
-            "name": "堅料網",
-            "url": "https://news.google.com/rss/articles/CBMigARBVV95cUxPUlB6a2xqZ3J1cVU0WVlWTnZnSlJXRUhZdWRiV205ZDBza1pDMGVYVUQxdTI1M0NUWko4TW9rLVY4Q2M3eEFiVU16TFZNTnptTExKN2ctMjhGN0FLRVNVV3cyQ1hwM3gxRWJmcElHb0FqSktqUGhpY00xZnpNdkIzNEpGaGhOUFFKdmVmR0JScHBzSjVjSVExZnlsN05BZGgzNXVNanA0TWQ1WWZveUdob015Q3UydUlObkxzMV9uay1rR3g0d2lSXzlhV3gwSS1XMjMzdlJhWm5GR2NheUEteElaNTJfS0gzYTU2bi1lWXZzdHZULW8zMkZJYlRvTEwyS0ZQNlJQbFFYRENWM2FXSUpxQTYtRjA2alFoZUtIVnhVU2tpWTB5azBqNndWUzhRbm41NTBadmdOY09oZmpscmxmNEdWMmFyWm5MbG1QMlpiX2RRQzhXdkFrYlo0aHNJV05ueVRCREtoSmR1NmhtSE9xUEpQSmVqOTVqaEdxaV9FbFBKc28wcHVlN0R1SjI2bE05UnpEa0kwWXM2RExOU3RSYjhVUkhWWTVJYnJJcTdVdHp2UHZHMHhWWFc3Rkk0dkFkUTNWVk5RN3h3UU1zQXVIY0dHZ0V4bTRfMms2aS1MU2FaeVVwV3lXY2g2dmc4dTY0dnMtekhmM1J2ZDh4Qw?oc=5"
-          }
-        ],
-        "headline": "第二十屆香港藝術發展獎9月16日起公開接受申請",
-        "body": "第二十屆香港藝術發展獎9月16日起公開接受申請    香港商报"
-      },
-      {
-        "sources": [
-          {
-            "name": "香港01",
-            "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxOUlVFRWhKMmpyYzJsT1AwTHpBT2lnZTRMRHVLc1hRVHg4c2dOcWpVaVQwaXVNRjRSN2pFQXkxODdqZE1JLXN5OFdhR2F6bHg0cHJEaVNPeWxIMjh2blg2TVRUYWczU0RtTUVYSkxyc21YQmpZem51d2ZtN3JiYjB6QjJhZjZsSXQ4Uzc0YUp0QURnVHBwMTV1Z1BkMzI2ZDZuNVVQR0pjVzVYZkFhUDhWYzcyak5vMzN4Y0VQRWFPMXRBc0s1cTVJQ25rRXkyNVpBNk55LURhU081OVhVd1Rjb1ZKemVaTHhDYW1YZE1wTVlDQWFES2psV1ZWa01DbXZIdzhxMHJR?oc=5"
-          },
-          {
-            "name": "香港商报",
-            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9VbHpHZE1BUk9oU2FVMXotVGdNSUpwbUZzNW1XWVFpbDd3aExiZFhfU3lIQ3lHZURZSDh6bUlSUmt6Y1E4R212bmx2UUVqZTRNVU5tMmdGSnljMEo4b29aREo2Ql9MYzc3azJYY1BoV0hfdGNEUFE?oc=5"
-          }
-        ],
-        "headline": "支聯會案給香港上了一堂政治課",
-        "body": "支聯會案給香港上了一堂政治課    香港01"
-      },
-      {
-        "sources": [
-          {
-            "name": "香港商报",
-            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5aNkIyT3lyTDBZSWJnSFRSUFFfeHhqNXpPdnhzWUFpaVpGS3NWTC1tTWRXV2l5b19qN3lNOG4zRURMTk41cFlBZ3MwakxjTlBMTDh2YXRZdmc0Y2ptRHdseEJQekFhNGJRMW83OEZQdjlQRFRRbmc?oc=5"
-          },
-          {
-            "name": "香港文匯報",
-            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5JQU1zUG8wcmtPQUo3OXZaT1MyN2ZYanlEVkcwbFJJQ0dTNlVVY0Z2NzJNNGtBb0hJN1p5M0xMWEF6M0V0dV94Vjdma2dGVTJPYWt1OW9ON3NMaWk0OW4yU0VVRF81cUExUE1MVGFLNm02S21mY0hR?oc=5"
-          }
-        ],
-        "headline": "「天宮課堂‧港澳專場」圓滿舉辦 香港科技創新教育聯盟承辦「星河有信‧港夢飛天」徵集家書送太空",
-        "body": "「天宮課堂‧港澳專場」圓滿舉辦 香港科技創新教育聯盟承辦「星河有信‧港夢飛天」徵集家書送太空    香港商报"
+        ]
       }
     ],
     "personal_sg": [
       {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
-          }
-        ],
-        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
-      },
-      {
+        "headline": "Prime Minister Lawrence Wong Addresses Ministerial Salary Increases",
+        "body": "PM Lawrence Wong clarified that the recent salary increases are not about him or the PAP government, but are focused on Singapore's future.\nHe thanked Members of Parliament for participating in the discussion regarding the compensation adjustments.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
           }
-        ],
-        "headline": "Prime Minister Lawrence Wong: Higher salaries are not about me or the PAP government",
-        "body": "PM Wong thanked the MPs who participated in the discussion, and reiterated that the increase in salaries are about Singa"
+        ]
       }
     ]
   }
