@@ -1,0 +1,194 @@
+{
+  "report_date": "Saturday, 12 September 2026",
+  "generated_at": "12 Sep 2026 21:18 HKT",
+  "generated_iso": "2026-09-12T21:18:37.292897+08:00",
+  "build": {
+    "method": "rss-only",
+    "log": [
+      "[work] no entries from 明報 經濟",
+      "[work] no entries from 明報 國際",
+      "[work] no entries from 明報 即時經濟",
+      "[work] 0 items after filtering",
+      "[smalltalk_hk] no entries from 明報 經濟",
+      "[smalltalk_hk] no entries from 明報 國際",
+      "[smalltalk_hk] 0 items after filtering",
+      "[smalltalk_sg] no entries from Workers' Party",
+      "[smalltalk_sg] 2 items after filtering",
+      "[personal_hk] no entries from 明報 港聞",
+      "[personal_hk] no entries from 明報 娛樂",
+      "[personal_hk] no entries from 明報 副刊",
+      "[personal_hk] no entries from 明報 即時港聞",
+      "[personal_hk] 3 items after filtering",
+      "[personal_sg] no entries from Workers' Party",
+      "[personal_sg] 2 items after filtering",
+      "Model step skipped or failed (HTTP Error 404: Not Found) — using RSS summaries"
+    ]
+  },
+  "weather": {
+    "available": true,
+    "desc": "Mainly cloudy with a few showers. Showers will be heavier in some areas with thunderstorms at first. There will be swells.",
+    "tmin": 25,
+    "tmax": 29,
+    "hmin": 75,
+    "hmax": 95
+  },
+  "hkma": {
+    "available": true,
+    "as_of": "2026-09-11",
+    "balance_hkdm": 54003.0,
+    "change": 0.0,
+    "flat_sessions": 2,
+    "hibor_1m": 2.87964,
+    "hibor_on": 2.1,
+    "base_rate": 4
+  },
+  "hkma_bars": [
+    {
+      "year": 2016,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2017,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2018,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2019,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2020,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2021,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2022,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2023,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2024,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2025,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    },
+    {
+      "year": 2026,
+      "value": 54003.0,
+      "date": "2026-09-11"
+    }
+  ],
+  "rates": {
+    "tenor": "3-month, new money, HKD",
+    "rows": [],
+    "movers": []
+  },
+  "labels": {
+    "work": "Work",
+    "smalltalk_hk": "Small Talk · Hong Kong",
+    "smalltalk_sg": "Small Talk · Singapore",
+    "personal_hk": "Personal · 香港民生",
+    "personal_sg": "Personal · Singapore Government"
+  },
+  "sections": {
+    "work": [],
+    "smalltalk_hk": [],
+    "smalltalk_sg": [
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
+          }
+        ],
+        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
+          }
+        ],
+        "headline": "Prime Minister Lawrence Wong: Higher salaries are not about me or the PAP government",
+        "body": "PM Wong thanked the MPs who participated in the discussion, and reiterated that the increase in salaries are about Singa"
+      }
+    ],
+    "personal_hk": [
+      {
+        "sources": [
+          {
+            "name": "HKFP",
+            "url": "https://hongkongfp.com/2026/09/12/macau-to-hold-closed-door-trial-in-first-national-security-case-against-democrat/"
+          }
+        ],
+        "headline": "Macau to hold closed-door trial in first national security case against democrat",
+        "body": "Macau will hold its first national security trial behind clo sed doors next week, a court said on Friday,"
+      },
+      {
+        "sources": [
+          {
+            "name": "HKFP",
+            "url": "https://hongkongfp.com/2026/09/12/yu-zidi-chinas-fearless-swimming-prodigy-13-with-olympics-in-her-sights/"
+          }
+        ],
+        "headline": "Yu Zidi: China’s fearless swimming prodigy, 13, with Olympics in her sights",
+        "body": "Yu Zidi made history last year aged 12 when she became the y oungest-ever medallist at the swimming world championships."
+      },
+      {
+        "sources": [
+          {
+            "name": "HKFP",
+            "url": "https://hongkongfp.com/2026/09/12/animal-ngo-urges-hongkogners-to-shun-govt-backed-equestrian-show-cavalluna/"
+          }
+        ],
+        "headline": "Animal NGO urges Hongkongers to shun gov’t-backed equestrian show Cavalluna",
+        "body": "People for the Ethical Treatment of Animals Asia (PETA) has urged Hongkongers to shun a live equestrian theatrical show"
+      }
+    ],
+    "personal_sg": [
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
+          }
+        ],
+        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to his October wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Si ngapore Health Minister Ong Ye Kung to his October wedding,"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
+          }
+        ],
+        "headline": "Prime Minister Lawrence Wong: Higher salaries are not about me or the PAP government",
+        "body": "PM Wong thanked the MPs who participated in the discussion, and reiterated that the increase in salaries are about Singa"
+      }
+    ]
+  }
+}

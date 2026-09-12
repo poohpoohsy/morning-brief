@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Morning Brief</title>
+<style>
+  :root{
+    --bg:#fbfaf9; --card:#fff; --ink:#1c1917; --ink2:#44403c; --muted:#78716c;
+    --line:#e7e5e4; --hair:#f5f5f4; --zebra:#fafaf9;
+    --shadow:0 1px 2px rgba(28,25,23,.05),0 6px 20px rgba(28,25,23,.045);
+    --work:#1d4ed8; --work-bg:#eff6ff; --work-ink:#1e3a8a;
+    --talk:#7c3aed; --talk-bg:#f5f3ff; --talk-ink:#5b21b6;
+    --life:#b45309;
+    --up:#047857; --down:#b91c1c; --bar:#1d4ed8; --warn-bg:#fef3c7; --warn-ink:#78350f; --warn-line:#fcd34d;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0c0a09; --card:#1c1917; --ink:#fafaf9; --ink2:#d6d3d1; --muted:#a8a29e;
+      --line:#292524; --hair:#232020; --zebra:#211e1c; --shadow:0 1px 2px rgba(0,0,0,.5);
+      --work:#93c5fd; --work-bg:#172554; --work-ink:#bfdbfe;
+      --talk:#c4b5fd; --talk-bg:#2e1065; --talk-ink:#ddd6fe;
+      --life:#fcd34d;
+      --up:#34d399; --down:#f87171; --bar:#60a5fa;
+      --warn-bg:#451a03; --warn-ink:#fde68a; --warn-line:#78350f;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang HK","Noto Sans HK",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:auto;padding:18px 16px 64px}
+  .mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .date{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:5px 0 3px;font-size:29px;line-height:1.1;letter-spacing:-.022em}
+  .sub{color:var(--muted);font-size:13px}
+  .stale{display:none;margin-top:14px;padding:12px 14px;border-radius:11px;
+    background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);
+    font-size:13px;line-height:1.5}
+  .stale.show{display:block}
+  .wx{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:9px 13px;
+    background:var(--card);border:1px solid var(--line);border-radius:11px;
+    font-size:13px;color:var(--ink2);box-shadow:var(--shadow)}
+  .wx b{color:var(--ink)}
+  .panel{margin-top:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:15px 16px;box-shadow:var(--shadow)}
+  .ptitle{font-size:14px;font-weight:680;margin:0 0 2px}
+  .asof{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+  .big{display:flex;align-items:baseline;gap:10px;margin-bottom:3px}
+  .bigval{font-size:27px;font-weight:720;letter-spacing:-.025em}
+  .bigmeta{font-size:12.5px;color:var(--muted)}
+  .up{color:var(--up)}.down{color:var(--down)}
+  .bars{display:flex;align-items:flex-end;gap:4px;height:70px;margin-top:14px}
+  .bcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+  .b{width:100%;background:var(--bar);opacity:.5;border-radius:2px 2px 0 0;min-height:2px}
+  .b.hi{opacity:1}.b.lo{opacity:.22}.b.now{opacity:1;background:var(--ink)}
+  .blab{display:flex;gap:4px;margin-top:5px}
+  .blab span{flex:1;text-align:center;font-size:9.5px;color:var(--muted)}
+  .notes{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .notes b{color:var(--ink);font-weight:650}
+  table{width:100%;border-collapse:collapse;margin-top:4px;font-size:13.5px}
+  th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);font-weight:700;padding:0 0 7px}
+  th.r,td.r{text-align:right}
+  td{padding:6px 0;border-top:1px solid var(--hair)}
+  tr:nth-child(even) td{background:var(--zebra)}
+  td.rank{width:24px;color:var(--muted);font-size:11.5px}
+  .bank{font-weight:600}
+  .kind{font-size:10.5px;color:var(--muted);margin-left:6px;font-weight:400}
+  .rate{font-weight:680}.chg{font-size:11.5px;width:48px}
+  tr.cut td{border-top:1.5px dashed var(--line)}
+  .cutlab{font-size:10.5px;color:var(--muted);padding-top:6px}
+  .newpromo{margin-top:13px;border-top:1px solid var(--hair);padding-top:10px}
+  .newpromo .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);font-weight:700;margin-bottom:6px}
+  .np{font-size:13px;line-height:1.5;margin:5px 0;color:var(--ink2)}
+  .np b{color:var(--ink)}
+  .section{margin-top:32px}
+  .shead{display:flex;align-items:baseline;gap:9px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;position:relative;top:-1px}
+  .section h2{font-size:19px;margin:0;letter-spacing:-.015em}
+  .scount{margin-left:auto;font-size:12px;color:var(--muted)}
+  .sub2{font-size:11.5px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);margin:18px 0 7px}
+  .wcard{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;margin:8px 0;box-shadow:var(--shadow)}
+  .wtop{display:flex;gap:7px;align-items:center;margin-bottom:6px;font-size:11px}
+  .chip{font-weight:650;padding:2px 7px;border-radius:5px;background:var(--work-bg);color:var(--work-ink)}
+  .wtop .src{margin-left:auto;color:var(--muted)}
+  .zh3{font-size:14.5px;line-height:1.5;margin:0;color:var(--ink)}
+  .zh3 span{display:block}
+  details{margin-top:7px}
+  summary{font-size:12px;color:var(--work);cursor:pointer;font-weight:600;
+    list-style:none;display:inline-flex;align-items:center;gap:4px}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"›";font-size:14px;transition:transform .15s}
+  details[open] summary::before{transform:rotate(90deg)}
+  .en{margin-top:8px;padding:10px 11px;background:var(--hair);border-radius:8px;
+    font-size:13px;line-height:1.55;color:var(--ink2)}
+  .en a{color:var(--work);text-decoration:none;font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:13px;
+    padding:14px 15px;margin:8px 0;box-shadow:var(--shadow)}
+  .headline{font-weight:680;font-size:15.5px;line-height:1.35;margin:0 0 5px;letter-spacing:-.01em}
+  .two{font-size:14px;line-height:1.55;color:var(--ink2);margin:0}
+  .srcs{margin-top:7px;font-size:11.5px;color:var(--muted)}
+  .srcs a{color:var(--muted)}
+  .empty{color:var(--muted);font-size:13px;padding:10px 0}
+  footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
+  @media(max-width:560px){h1{font-size:25px}.bars{height:58px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="date" id="date">Loading…</div>
+  <h1>Morning Brief</h1>
+  <div class="sub" id="sub"></div>
+  <div class="stale" id="stale"></div>
+  <div id="wx"></div>
+  <div id="panels"></div>
+  <div id="sections"></div>
+  <footer id="foot"></footer>
+</main>
+
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"']/g, m =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const $ = id => document.getElementById(id);
+
+function hkDay(d){
+  return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Hong_Kong",
+    year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+}
+
+function weatherStrip(w){
+  if(!w || !w.available) return "";
+  return `<div class="wx"><b>${esc(w.desc)}</b>
+    <span>${esc(w.tmin)}–${esc(w.tmax)}°C</span>
+    <span>濕度 ${esc(w.hmin)}–${esc(w.hmax)}%</span></div>`;
+}
+
+function balancePanel(h, bars){
+  if(!h || !h.available) return "";
+  const bn = v => "$" + (v/1000).toFixed(1) + "bn";
+  const vals = bars.filter(b => b.value != null);
+  const max = Math.max(...vals.map(b => b.value), h.balance_hkdm);
+  const peak = vals.reduce((a,b) => b.value > a.value ? b : a, vals[0]);
+  const low  = vals.reduce((a,b) => b.value < a.value ? b : a, vals[0]);
+
+  const cols = bars.map((b,i) => {
+    const v = b.value ?? 0;
+    const last = i === bars.length - 1;
+    const cls = last ? "now" : (b === peak ? "hi" : (b === low ? "lo" : ""));
+    return `<div class="bcol"><div class="b ${cls}" style="height:${(v/max*100).toFixed(1)}%"></div></div>`;
+  }).join("");
+  const labs = bars.map((b,i) =>
+    `<span>${i === bars.length-1 ? "now" : String(b.year).slice(2)}</span>`).join("");
+
+  const chg = h.change === 0 ? "<b>unchanged</b>"
+    : `<b class="${h.change>0?'up':'down'}">${h.change>0?'+':''}${bn(h.change)}</b>`;
+
+  return `<section class="panel">
+    <div class="ptitle">Aggregate balance</div>
+    <div class="asof">HKMA daily figures, ${esc(h.as_of)}. Bars are year-end closing balance.</div>
+    <div class="big"><span class="bigval mono">${bn(h.balance_hkdm)}</span>
+      <span class="bigmeta">vs yesterday ${chg}${h.flat_sessions>1?` · ${h.flat_sessions} sessions flat`:""}</span></div>
+    <div class="bigmeta">1M HIBOR <b>${esc(h.hibor_1m ?? "n/a")}%</b> · overnight <b>${esc(h.hibor_on ?? "n/a")}%</b> · base rate <b>${esc(h.base_rate ?? "n/a")}%</b></div>
+    <div class="bars">${cols}</div><div class="blab">${labs}</div>
+    <div class="notes"><b>Peak</b> ${bn(peak.value)}, ${peak.year} · <b>Low</b> ${bn(low.value)}, ${low.year}<br>
+      Today is ${(h.balance_hkdm/peak.value*100).toFixed(0)}% of the ${peak.year} peak.</div>
+  </section>`;
+}
+
+function ratePanel(r){
+  if(!r || !r.rows.length) return "";
+  const rows = r.rows.map(x => {
+    const c = x.change_bp;
+    const chg = (c === null || c === undefined || c === 0) ? "—"
+      : `<span class="${c>0?'up':'down'}">${c>0?'+':''}${c}</span>`;
+    return `<tr class="${x.rank===11?'cut':''}">
+      <td class="rank">${x.rank}</td>
+      <td><span class="bank">${esc(x.name)}</span><span class="kind">${esc(x.kind)}</span></td>
+      <td class="r rate">${x.rate.toFixed(2)}%</td><td class="r chg">${chg}</td></tr>`;
+  }).join("");
+  const movers = (r.movers||[]).map(m =>
+    `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
+  return `<section class="panel">
+    <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
+    <div class="asof">${r.rows.length} banks tracked.</div>
+    <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="cutlab">Dashed line = top 10 cut-off.</div>
+    ${movers ? `<div class="newpromo"><div class="h">Moved today · 3 max</div>${movers}</div>` : ""}
+  </section>`;
+}
+
+function srcLine(sources){
+  if(!sources || !sources.length) return "";
+  return `<div class="srcs">` + sources.map(s => s.url
+    ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`
+    : esc(s.name)).join(" · ") + `</div>`;
+}
+
+function workCard(it){
+  const zh = (it.zh||[]).slice(0,3).map(l => `<span>${esc(l)}</span>`).join("");
+  const src = (it.sources||[])[0] || {};
+  return `<article class="wcard">
+    <div class="wtop"><span class="chip">${esc(it.tag || "Work")}</span>
+      <span class="src">${esc(src.name || "")}</span></div>
+    <p class="zh3">${zh}</p>
+    ${it.en ? `<details><summary>English summary &amp; source</summary>
+      <div class="en">${esc(it.en)}${srcLine(it.sources)}</div></details>` : srcLine(it.sources)}
+  </article>`;
+}
+
+function plainCard(it){
+  return `<article class="card">
+    <h3 class="headline">${esc(it.headline)}</h3>
+    <p class="two">${esc(it.body)}</p>
+    ${srcLine(it.sources)}</article>`;
+}
+
+function render(D){
+  $("date").textContent = D.report_date || "";
+  $("sub").textContent  = D.generated_at ? `Built ${D.generated_at}` : "";
+  $("wx").innerHTML = weatherStrip(D.weather);
+  $("panels").innerHTML = balancePanel(D.hkma, D.hkma_bars||[]) + ratePanel(D.rates);
+
+  const S = D.sections || {}, L = D.labels || {};
+  const block = (title, colour, groups) => {
+    const total = groups.reduce((n,g) => n + (g.items||[]).length, 0);
+    const body = groups.map(g => {
+      if(!(g.items||[]).length) return "";
+      return (g.sub ? `<div class="sub2">${esc(g.sub)}</div>` : "") +
+        g.items.map(g.work ? workCard : plainCard).join("");
+    }).join("") || `<div class="empty">Nothing met the bar today.</div>`;
+    return `<section class="section">
+      <div class="shead"><span class="dot" style="background:${colour}"></span>
+        <h2>${esc(title)}</h2><span class="scount">${total} item${total===1?"":"s"}</span></div>
+      ${body}</section>`;
+  };
+
+  $("sections").innerHTML =
+    block("Work", "var(--work)", [{items:S.work||[], work:true}]) +
+    block("Small Talk", "var(--talk)", [
+      {sub:"Hong Kong", items:S.smalltalk_hk||[]},
+      {sub:"Singapore", items:S.smalltalk_sg||[]}]) +
+    block("Personal", "var(--life)", [
+      {sub:"香港 · 民生", items:S.personal_hk||[]},
+      {sub:"Singapore · Government", items:S.personal_sg||[]}]);
+
+  // staleness + degraded build
+  const msgs = [];
+  if(D.generated_iso){
+    const built = hkDay(new Date(D.generated_iso)), today = hkDay(new Date());
+    if(built !== today){
+      const days = Math.round((new Date(today) - new Date(built))/864e5);
+      msgs.push(`Last built ${built}, ${days} day${days===1?"":"s"} ago. Check the Actions tab.`);
+    }
+  }
+  if(D.build && D.build.method === "fallback"){
+    msgs.push("Summarisation did not run. Cards below are headline-level only.");
+  }
+  if(msgs.length){ $("stale").innerHTML = msgs.join("<br>"); $("stale").classList.add("show"); }
+
+  $("foot").textContent = "Items flagged headline-only have no retrieved body text. "
+    + "Open the source before repeating anything that matters.";
+}
+
+fetch(`data/brief.json?ts=${Date.now()}`, {cache:"no-store"})
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(render)
+  .catch(e => {
+    $("date").textContent = "";
+    $("sub").textContent = "Could not load data/brief.json — run the workflow once.";
+  });
+</script>
+</body>
+</html>
