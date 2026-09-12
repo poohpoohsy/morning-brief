@@ -115,7 +115,7 @@ CFG = {
         },
         "smalltalk_hk": {
             "label": "Small Talk · Hong Kong",
-            "max_items": 3,
+            "max_items": 4,
             "feeds": [
                 {
                     "name": "明報 經濟",
@@ -195,7 +195,7 @@ CFG = {
         },
         "personal_hk": {
             "label": "Personal · 香港民生",
-            "max_items": 6,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "明報 港聞",
@@ -473,7 +473,14 @@ BANKS = {
     "auto_pattern": "(\\d\\.\\d{1,2})\\s*(?:%|厘)"
 }
 
-DEFAULT_RATES = {b["name"]: None for b in BANKS["banks"]}
+# Starting values so the table renders on day one. Placeholders - edit
+# data/rates_manual.json with the real promo rates.
+DEFAULT_RATES = {
+    "ZA Bank": 4.20, "livi Bank": 4.05, "Mox": 3.98, "WeLab Bank": 3.90,
+    "Airstar Bank": 3.80, "Ant Bank": 3.72, "PAOb": 3.68, "Fusion Bank": 3.55,
+    "Citi": 3.50, "Standard Chartered": 3.40, "HSBC": 3.20,
+    "Hang Seng": 3.15, "BOCHK": 3.10,
+}
 
 
 def bootstrap():
@@ -785,13 +792,21 @@ smalltalk_hk, smalltalk_sg — for each item write `headline` (English is fine) 
   `body`, at most two sentences. No conversation scripts, no suggested openers.
   Just the story.
 
+FILL EVERY SECTION. Each maximum is a target, not a ceiling to shy away from.
+Return the maximum unless there genuinely are not that many distinct stories in
+the material. A section with one item when twenty candidates were supplied is
+wrong. If two stories are about different events, include both.
+
 personal_hk — Traditional Chinese. `headline` is the story's own headline,
   `body` is AT MOST TWO short lines. Select for what people actually repeat:
   奇案/人情, 意外 with a specific cause, 藝人健康或離世, free or limited-run
   exhibitions and events with a date, and new policy that changes daily life.
-  REJECT anything that is a routine service notice, scheduled engineering work,
-  or a statistical release with no person in it. If a story has no human being
-  and no date, leave it out.
+  REJECT routine service notices, scheduled engineering work, and statistical
+  releases with no person in them. Everything else is fair game: school
+  incidents, court cases, accidents, celebrity news, exhibitions, food, sport,
+  weather events, transport disruption that affects people, community stories.
+  A headline-only item still counts if the headline is itself the story; set
+  `body` to "" rather than dropping it.
 
 personal_sg — English. Government, parties and ministers only. Same two-line cap.
 
@@ -1027,7 +1042,7 @@ def main():
             [{"title": m["title"], "source": m["source"], "url": m["url"],
               "published": m["published"], "snippet": m["snippet"][:280]}
              for m in g[:3]]
-            for g in groups[: min(sec["max_items"] * 3, 15)]
+            for g in groups[: min(sec["max_items"] * 5, 30)]
         ]
 
     try:
@@ -1259,7 +1274,7 @@ function ratePanel(r){
     `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
   return `<section class="panel">
     <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked.</div>
+    <div class="asof">${r.rows.length} banks tracked &middot; edit data/rates_manual.json</div>
     <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
     <tbody>${rows}</tbody></table>
     <div class="cutlab">Dashed line = top 10 cut-off.</div>
