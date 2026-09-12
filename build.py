@@ -13,7 +13,7 @@ Environment:
   LLM_MODEL      optional override
 """
 
-import os, re, json, html, time, urllib.request
+import os, re, json, html, time, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -318,9 +318,9 @@ def bootstrap():
     """Write index.html and the manual rates file if they do not exist yet."""
     (ROOT / "data").mkdir(exist_ok=True)
     page = ROOT / "index.html"
-    if not page.exists():
+    if not page.exists() or page.read_text(encoding="utf-8") != INDEX_HTML:
         page.write_text(INDEX_HTML, encoding="utf-8")
-        print("Created index.html")
+        print("Wrote index.html")
     manual = ROOT / "data/rates_manual.json"
     if not manual.exists():
         manual.write_text(json.dumps(DEFAULT_RATES, indent=2), encoding="utf-8")
@@ -351,6 +351,37 @@ def get_json(url, timeout=25):
 
 # ---------------------------------------------------------------- feeds
 
+BROWSER_HEADERS = {
+    # Several Hong Kong publishers reject requests that look like a bot or that
+    # come from a datacentre IP with no browser headers. Ming Pao is one of them:
+    # the feed URLs are correct, but a bare feedparser request gets nothing back.
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/126.0.0.0 Safari/537.36"),
+    "Accept": "application/rss+xml, application/xml, text/xml, */*;q=0.8",
+    "Accept-Language": "zh-HK,zh;q=0.9,en;q=0.8",
+    "Accept-Encoding": "identity",
+    "Connection": "close",
+}
+
+
+def fetch_feed(url, section, name):
+    """Fetch a feed as a browser would. Returns bytes, or None after logging why."""
+    req = urllib.request.Request(url, headers=BROWSER_HEADERS)
+    try:
+        with urllib.request.urlopen(req, timeout=45) as r:
+            body = r.read()
+        if not body:
+            log(f"[{section}] {name}: empty response")
+            return None
+        return body
+    except urllib.error.HTTPError as e:
+        log(f"[{section}] {name}: HTTP {e.code} {e.reason}")
+    except Exception as e:
+        log(f"[{section}] {name}: {e}")
+    return None
+
+
 def entry_time(e):
     for key in ("published_parsed", "updated_parsed"):
         t = getattr(e, key, None)
@@ -367,13 +398,12 @@ def fetch_section(key, sec):
     items = []
 
     for feed in sec["feeds"]:
-        try:
-            parsed = feedparser.parse(feed["url"])
-        except Exception as e:
-            log(f"[{key}] feed error {feed['name']}: {e}")
+        raw = fetch_feed(feed["url"], key, feed["name"])
+        if raw is None:
             continue
+        parsed = feedparser.parse(raw)
         if not parsed.entries:
-            log(f"[{key}] no entries from {feed['name']}")
+            log(f"[{key}] {feed['name']}: fetched but no entries parsed")
             continue
 
         for e in parsed.entries:
@@ -462,7 +492,13 @@ def hkma_block():
 
 
 def hkma_year_ends(years=11):
-    """Year-end closing balance for the bar chart. One call per year-end window."""
+    """Year-end closing balance for the bar chart.
+
+    The daily-figures endpoint ignores the date filter in some deployments and
+    just returns the latest record, which silently produces a chart of eleven
+    identical bars. So we sanity-check the result and drop it rather than show
+    something wrong.
+    """
     bars = []
     this_year = datetime.now(HK).year
     for y in range(this_year - years + 1, this_year + 1):
@@ -471,11 +507,45 @@ def hkma_year_ends(years=11):
         d = get_json(url)
         try:
             rec = d["result"]["records"][0]
-            bars.append({"year": y, "value": float(rec["closing_balance"]), "date": rec["end_of_date"]})
+            bars.append({"year": y, "value": float(rec["closing_balance"]),
+                         "date": rec.get("end_of_date", "")})
         except Exception:
             bars.append({"year": y, "value": None, "date": ""})
         time.sleep(0.2)
+
+    dated = [b for b in bars if b["date"] and b["value"] is not None]
+    if len(dated) < 2:
+        log("HKMA year query returned no usable history - using daily snapshots instead.")
+        return []
+    distinct_years = {b["date"][:4] for b in dated}
+    if len(distinct_years) < 2:
+        log("HKMA year filter ignored - every year returned the same record. "
+            "Dropping the year chart; building history from daily snapshots instead.")
+        return []
     return bars
+
+
+def history_bars():
+    """Our own rolling record of the aggregate balance.
+
+    Appended to on every run, so the chart fills in over time and does not
+    depend on the API honouring a date filter.
+    """
+    path = ROOT / "data/history.json"
+    try:
+        hist = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        hist = []
+
+    h = hkma_block()
+    if h.get("available") and h.get("as_of"):
+        if not any(x["date"] == h["as_of"] for x in hist):
+            hist.append({"date": h["as_of"], "value": h["balance_hkdm"]})
+    hist = sorted(hist, key=lambda x: x["date"])[-400:]
+    path.write_text(json.dumps(hist, indent=2), encoding="utf-8")
+
+    return [{"year": x["date"][5:10], "value": x["value"], "date": x["date"]}
+            for x in hist[-30:]]
 
 
 # ---------------------------------------------------------------- rates
@@ -748,7 +818,7 @@ def main():
         "build": {"method": method, "log": LOG},
         "weather": weather(),
         "hkma": hkma_block(),
-        "hkma_bars": hkma_year_ends(),
+        "hkma_bars": hkma_year_ends() or history_bars(),
         "rates": rate_table(),
         "labels": {k: v["label"] for k, v in CFG["sections"].items()},
         "sections": sections,
@@ -902,11 +972,25 @@ function weatherStrip(w){
     <span>濕度 ${esc(w.hmin)}–${esc(w.hmax)}%</span></div>`;
 }
 
+function chgText(h){
+  return h.change === 0 ? "<b>unchanged</b>"
+    : `<b class="${h.change>0?'up':'down'}">${h.change>0?'+':''}$${(h.change/1000).toFixed(1)}bn</b>`;
+}
 function balancePanel(h, bars){
   if(!h || !h.available) return "";
   const bn = v => "$" + (v/1000).toFixed(1) + "bn";
   const vals = bars.filter(b => b.value != null);
   const max = Math.max(...vals.map(b => b.value), h.balance_hkdm);
+  if (vals.length < 2) {
+    return `<section class="panel">
+      <div class="ptitle">Aggregate balance</div>
+      <div class="asof">HKMA daily figures, ${esc(h.as_of)}.</div>
+      <div class="big"><span class="bigval mono">${bn(h.balance_hkdm)}</span>
+        <span class="bigmeta">vs yesterday ${chgText(h)}</span></div>
+      <div class="bigmeta">1M HIBOR <b>${esc(h.hibor_1m ?? "n/a")}%</b> · overnight <b>${esc(h.hibor_on ?? "n/a")}%</b> · base rate <b>${esc(h.base_rate ?? "n/a")}%</b></div>
+      <div class="notes">History is still building - the chart appears once a few days of figures have accumulated.</div>
+    </section>`;
+  }
   const peak = vals.reduce((a,b) => b.value > a.value ? b : a, vals[0]);
   const low  = vals.reduce((a,b) => b.value < a.value ? b : a, vals[0]);
 
