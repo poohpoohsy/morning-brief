@@ -54,6 +54,22 @@ CFG = {
                 {
                     "name": "RTHK finance",
                     "url": "https://rthk.hk/rthk/news/rss/e_expressnews_efinance.xml"
+                },
+                {
+                    "name": "RTHK 財經",
+                    "url": "https://rthk.hk/rthk/news/rss/c_expressnews_cfinance.xml"
+                },
+                {
+                    "name": "銀行 (GN)",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "虛擬銀行 (GN)",
+                    "url": "https://news.google.com/rss/search?q=%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%BB%A3%E5%B9%A3%E5%8C%96+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "HK banking (GN)",
+                    "url": "https://news.google.com/rss/search?q=Hong+Kong+bank+OR+HKMA+OR+stablecoin+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
                 }
             ],
             "include": [
@@ -104,6 +120,14 @@ CFG = {
                 {
                     "name": "news.gov.hk",
                     "url": "https://www.news.gov.hk/rss/news/topstories_en.xml"
+                },
+                {
+                    "name": "HK business (GN)",
+                    "url": "https://news.google.com/rss/search?q=Hong+Kong+business+OR+IPO+OR+acquisition+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
+                },
+                {
+                    "name": "港聞財經 (GN)",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E6%94%B6%E8%B3%BC+OR+%E4%B8%8A%E5%B8%82+OR+%E6%A5%AD%E7%B8%BE+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 }
             ],
             "include": [
@@ -134,6 +158,10 @@ CFG = {
                 {
                     "name": "Workers' Party",
                     "url": "https://www.wp.sg/feed/"
+                },
+                {
+                    "name": "SG business (GN)",
+                    "url": "https://news.google.com/rss/search?q=Singapore+MAS+OR+bank+OR+economy+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
                 }
             ],
             "include": [
@@ -172,9 +200,49 @@ CFG = {
                 {
                     "name": "HKFP",
                     "url": "https://hongkongfp.com/feed"
+                },
+                {
+                    "name": "RTHK 本地",
+                    "url": "https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml"
+                },
+                {
+                    "name": "明報 (GN)",
+                    "url": "https://news.google.com/rss/search?q=site%3Amingpao.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "香港01 (GN)",
+                    "url": "https://news.google.com/rss/search?q=site%3Ahk01.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "星島 (GN)",
+                    "url": "https://news.google.com/rss/search?q=site%3Astheadline.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "香港民生 (GN)",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 }
             ],
-            "include": [],
+            "include": [
+                "香港",
+                "港",
+                "市民",
+                "警",
+                "法院",
+                "醫",
+                "學校",
+                "天文台",
+                "展覽",
+                "食",
+                "藝人",
+                "歌手",
+                "演員",
+                "逝世",
+                "意外",
+                "判囚",
+                "被捕",
+                "房屋",
+                "交通"
+            ],
             "exclude": [
                 "工程",
                 "維修",
@@ -205,6 +273,10 @@ CFG = {
                 {
                     "name": "Workers' Party",
                     "url": "https://www.wp.sg/feed/"
+                },
+                {
+                    "name": "SG govt (GN)",
+                    "url": "https://news.google.com/rss/search?q=Singapore+minister+OR+parliament+OR+PAP+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
                 }
             ],
             "include": [
@@ -422,9 +494,14 @@ def fetch_section(key, sec):
             if inc and not any(w in blob for w in inc):
                 continue
 
+            if " - " in title and "(GN)" in feed["name"]:
+                title, _, publisher = title.rpartition(" - ")
+                name = publisher.strip() or feed["name"]
+            else:
+                name = feed["name"]
             item = {
                 "title": title,
-                "source": feed["name"],
+                "source": name,
                 "url": getattr(e, "link", ""),
                 "published": when.astimezone(HK).strftime("%d %b %H:%M") if when else "",
                 "snippet": summary,
