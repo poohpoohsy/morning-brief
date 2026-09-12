@@ -531,7 +531,7 @@ def fetch_feed(url, section, name):
     """Fetch a feed as a browser would. Returns bytes, or None after logging why."""
     req = urllib.request.Request(url, headers=BROWSER_HEADERS)
     try:
-        with urllib.request.urlopen(req, timeout=45) as r:
+        with urllib.request.urlopen(req, timeout=20) as r:
             body = r.read()
         if not body:
             log(f"[{section}] {name}: empty response")
@@ -587,6 +587,8 @@ def fetch_section(key, sec):
             if " - " in title and "news.google.com" in feed["url"]:
                 title, _, publisher = title.rpartition(" - ")
                 name = publisher.strip() or feed["name"]
+                if publisher and summary.endswith(publisher):
+                    summary = summary[: -len(publisher)].strip()
             else:
                 name = feed["name"]
             item = {
@@ -626,7 +628,8 @@ def cluster(items, threshold=0.72):
 # ---------------------------------------------------------------- HKMA
 
 def hkma_block():
-    daily = get_json(CFG["hkma"]["daily"] + "?offset=0&sortby=end_of_date&sortorder=desc")
+    daily = (get_json(CFG["hkma"]["daily"])
+             or get_json(CFG["hkma"]["daily"] + "?sortby=end_of_date&sortorder=desc"))
     out = {"available": False}
     if not daily:
         return out
@@ -852,7 +855,14 @@ def gemini(prompt):
 
     body = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 8000},
+        "generationConfig": {
+            "temperature": 0.3,
+            "maxOutputTokens": 32000,
+            # Flash models spend output budget on internal reasoning first; with a
+            # small cap the reply gets cut off mid-JSON, which is exactly what
+            # happened here. Zero keeps the whole budget for the answer.
+            "thinkingConfig": {"thinkingBudget": 0},
+        },
     }).encode("utf-8")
 
     last = None
@@ -862,7 +872,7 @@ def gemini(prompt):
         req = urllib.request.Request(url, data=body, headers={
             "Content-Type": "application/json", "x-goog-api-key": key})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
+            with urllib.request.urlopen(req, timeout=120) as r:
                 data = json.loads(r.read().decode("utf-8"))
             text = "".join(part.get("text", "")
                            for part in data["candidates"][0]["content"]["parts"])
@@ -874,14 +884,45 @@ def gemini(prompt):
     raise RuntimeError(f"All candidate models failed; last error: {last}")
 
 
+def parse_json_loose(text):
+    """Parse the model's reply, repairing a truncated tail if need be.
+
+    A cut-off reply is still mostly useful - it is the last item that is
+    incomplete, not the first eight. Walk back to the last complete object,
+    close whatever brackets are still open, and keep what parsed.
+    """
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        log(f"Model reply did not parse ({e}); attempting repair")
+
+    # Candidate cut points: the end of every complete object, latest first.
+    cuts = [m.end() for m in re.finditer(r"\}", text)]
+    for cut in reversed(cuts):
+        head = text[:cut]
+        closing = ("]" * (head.count("[") - head.count("]"))
+                   + "}" * (head.count("{") - head.count("}")))
+        # try both orderings; nesting differs between a truncated list and dict
+        for tail in (closing, closing[::-1]):
+            try:
+                data = json.loads(head + tail)
+                log(f"Repaired reply, kept {cut:,} of {len(text):,} characters")
+                return data
+            except json.JSONDecodeError:
+                continue
+    raise ValueError("Could not repair the model reply")
+
+
 def call_model(payload):
     provider = (os.getenv("LLM_PROVIDER") or "gemini").lower()
     prompt = PROMPT.replace("{payload}", json.dumps(payload, ensure_ascii=False))
+    log(f"Prompt size: {len(prompt):,} characters, "
+        f"{sum(len(v) for v in payload.values())} clusters")
 
     if provider == "gemini":
         text, model = gemini(prompt)
         text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.S)
-        return json.loads(text), f"gemini:{model}"
+        return parse_json_loose(text), f"gemini:{model}"
 
     if provider == "anthropic":
         key = os.getenv("ANTHROPIC_API_KEY")
@@ -904,7 +945,7 @@ def call_model(payload):
         model = f"openai:{model}"
 
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.S)
-    return json.loads(text), (os.getenv("LLM_MODEL") or model)
+    return parse_json_loose(text), (os.getenv("LLM_MODEL") or model)
 
 
 def sentences(text, n=3, cap=34):
@@ -925,6 +966,15 @@ def sentences(text, n=3, cap=34):
     return out or [(text or "")[:cap]]
 
 
+def redundant(title, body):
+    """True when the snippet adds nothing beyond the headline."""
+    norm = lambda t: re.sub(r"[^\w\u4e00-\u9fff]+", "", (t or "").lower())
+    t, b = norm(title), norm(body)
+    if not b:
+        return True
+    return b.startswith(t[:24]) or t.startswith(b[:24]) or similar(t, b) > 0.7
+
+
 def rss_digest(collected):
     """No-model mode. Uses the publisher's own RSS summary, which for 明報 and
     HK01 is usually two or three usable sentences. Not as sharp as a model pass,
@@ -943,16 +993,21 @@ def rss_digest(collected):
                     continue
                 seen.add(m["source"])
                 srcs.append({"name": m["source"], "url": m["url"]})
+            thin = redundant(lead["title"], body)
             entry = {"sources": srcs}
             if key == "work":
-                lines = sentences(body, 3)
-                while len(lines) < 3:
-                    lines.append("")
-                entry["zh"] = lines[:3]
-                entry["en"] = body[:600] if body else "No summary in the feed - open the source."
+                if thin:
+                    entry["zh"] = [lead["title"][:34], "（只有標題，未有內文）", ""]
+                    entry["en"] = "Headline only - this feed carried no article text."
+                else:
+                    lines = sentences(body, 3)
+                    while len(lines) < 3:
+                        lines.append("")
+                    entry["zh"] = lines[:3]
+                    entry["en"] = body[:600]
             else:
                 entry["headline"] = lead["title"]
-                entry["body"] = " ".join(sentences(body, 2, 60)) or "Open the source."
+                entry["body"] = "" if thin else " ".join(sentences(body, 2, 60))
             out[key].append(entry)
     return out
 
@@ -965,10 +1020,14 @@ def main():
     for key, sec in CFG["sections"].items():
         groups = cluster(fetch_section(key, sec))
         collected[key] = groups
+        # Keep the prompt small. With 17 publishers the raw material is far more
+        # than the model needs to choose from, and an oversized prompt just times
+        # out - which is why this silently fell back to RSS.
         payload[key] = [
             [{"title": m["title"], "source": m["source"], "url": m["url"],
-              "published": m["published"], "snippet": m["snippet"]} for m in g[:5]]
-            for g in groups[: sec["max_items"] * 4]
+              "published": m["published"], "snippet": m["snippet"][:280]}
+             for m in g[:3]]
+            for g in groups[: min(sec["max_items"] * 3, 15)]
         ]
 
     try:
@@ -1230,7 +1289,8 @@ function workCard(it){
 function plainCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
-    <p class="two">${esc(it.body)}</p>
+    ${it.body ? `<p class="two">${esc(it.body)}</p>`
+              : `<p class="two" style="opacity:.6">Headline only - open the source.</p>`}
     ${srcLine(it.sources)}</article>`;
 }
 
