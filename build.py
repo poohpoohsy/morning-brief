@@ -25,7 +25,7 @@ HK = timezone(timedelta(hours=8))
 LOG = []
 
 CFG = {
-    "window_hours": 26,
+    "window_hours": 50,
     "sections": {
         "work": {
             "label": "Work",
@@ -60,16 +60,24 @@ CFG = {
                     "url": "https://rthk.hk/rthk/news/rss/c_expressnews_cfinance.xml"
                 },
                 {
-                    "name": "銀行 (GN)",
-                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "銀行新聞 GN1",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aaastocks.com+OR+site%3Aetnet.com.hk+OR+site%3Ahkej.com+OR+site%3Ahket.com+OR+site%3Amingpao.com%29+%28%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+OR+%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%B8%8A%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "虛擬銀行 (GN)",
-                    "url": "https://news.google.com/rss/search?q=%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%BB%A3%E5%B9%A3%E5%8C%96+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "銀行新聞 GN2",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Anews.now.com+OR+site%3Aquamnet.com+OR+site%3Aorientaldaily.on.cc+OR+site%3Awenweipo.com+OR+site%3Ahk.finance.yahoo.com%29+%28%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+OR+%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%B8%8A%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "HK banking (GN)",
-                    "url": "https://news.google.com/rss/search?q=Hong+Kong+bank+OR+HKMA+OR+stablecoin+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
+                    "name": "銀行新聞 GN3",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aam730.com.hk+OR+site%3Astheadline.com+OR+site%3Ahk01.com+OR+site%3Abastillepost.com+OR+site%3Ahubbis.com%29+%28%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+OR+%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%B8%8A%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "銀行新聞 GN4",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Athestandard.com.hk+OR+site%3Arthk.hk%29+%28%E9%8A%80%E8%A1%8C+OR+%E5%AD%98%E6%AC%BE+OR+%E9%87%91%E7%AE%A1%E5%B1%80+OR+%E8%99%9B%E6%93%AC%E9%8A%80%E8%A1%8C+OR+%E7%A9%A9%E5%AE%9A%E5%B9%A3+OR+%E4%B8%8A%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "HK banking wide",
+                    "url": "https://news.google.com/rss/search?q=Hong+Kong+bank+OR+HKMA+OR+stablecoin+when%3A2d&hl=en-HK&gl=HK&ceid=HK:en"
                 }
             ],
             "include": [
@@ -122,12 +130,20 @@ CFG = {
                     "url": "https://www.news.gov.hk/rss/news/topstories_en.xml"
                 },
                 {
-                    "name": "HK business (GN)",
-                    "url": "https://news.google.com/rss/search?q=Hong+Kong+business+OR+IPO+OR+acquisition+when%3A1d&hl=en-HK&gl=HK&ceid=HK:en"
+                    "name": "商業新聞 GN1",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aaastocks.com+OR+site%3Aetnet.com.hk+OR+site%3Ahkej.com+OR+site%3Ahket.com+OR+site%3Amingpao.com%29+%28%E6%94%B6%E8%B3%BC+OR+%E6%A5%AD%E7%B8%BE+OR+%E7%B6%93%E6%BF%9F+OR+%E6%A8%93%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "港聞財經 (GN)",
-                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E6%94%B6%E8%B3%BC+OR+%E4%B8%8A%E5%B8%82+OR+%E6%A5%AD%E7%B8%BE+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "商業新聞 GN2",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Anews.now.com+OR+site%3Aquamnet.com+OR+site%3Aorientaldaily.on.cc+OR+site%3Awenweipo.com+OR+site%3Ahk.finance.yahoo.com%29+%28%E6%94%B6%E8%B3%BC+OR+%E6%A5%AD%E7%B8%BE+OR+%E7%B6%93%E6%BF%9F+OR+%E6%A8%93%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "商業新聞 GN3",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aam730.com.hk+OR+site%3Astheadline.com+OR+site%3Ahk01.com+OR+site%3Abastillepost.com+OR+site%3Ahubbis.com%29+%28%E6%94%B6%E8%B3%BC+OR+%E6%A5%AD%E7%B8%BE+OR+%E7%B6%93%E6%BF%9F+OR+%E6%A8%93%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "商業新聞 GN4",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Athestandard.com.hk+OR+site%3Arthk.hk%29+%28%E6%94%B6%E8%B3%BC+OR+%E6%A5%AD%E7%B8%BE+OR+%E7%B6%93%E6%BF%9F+OR+%E6%A8%93%E5%B8%82%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 }
             ],
             "include": [
@@ -206,20 +222,24 @@ CFG = {
                     "url": "https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml"
                 },
                 {
-                    "name": "明報 (GN)",
-                    "url": "https://news.google.com/rss/search?q=site%3Amingpao.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "港聞 GN1",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aaastocks.com+OR+site%3Aetnet.com.hk+OR+site%3Ahkej.com+OR+site%3Ahket.com+OR+site%3Amingpao.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "香港01 (GN)",
-                    "url": "https://news.google.com/rss/search?q=site%3Ahk01.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "港聞 GN2",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Anews.now.com+OR+site%3Aquamnet.com+OR+site%3Aorientaldaily.on.cc+OR+site%3Awenweipo.com+OR+site%3Ahk.finance.yahoo.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "星島 (GN)",
-                    "url": "https://news.google.com/rss/search?q=site%3Astheadline.com+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "港聞 GN3",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aam730.com.hk+OR+site%3Astheadline.com+OR+site%3Ahk01.com+OR+site%3Abastillepost.com+OR+site%3Ahubbis.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 },
                 {
-                    "name": "香港民生 (GN)",
-                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+when%3A1d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                    "name": "港聞 GN4",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Athestandard.com.hk+OR+site%3Arthk.hk%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "香港 wide",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
                 }
             ],
             "include": [
@@ -295,7 +315,77 @@ CFG = {
         "daily": "https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity",
         "press": "https://api.hkma.gov.hk/public/press-releases?lang=en"
     },
-    "weather": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en"
+    "weather": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+    "watched_publishers": [
+        {
+            "name": "AASTOCKS",
+            "domain": "aastocks.com"
+        },
+        {
+            "name": "ET Net",
+            "domain": "etnet.com.hk"
+        },
+        {
+            "name": "HKEJ 信報",
+            "domain": "hkej.com"
+        },
+        {
+            "name": "HKET 經濟日報",
+            "domain": "hket.com"
+        },
+        {
+            "name": "Ming Pao 明報",
+            "domain": "mingpao.com"
+        },
+        {
+            "name": "Now Finance",
+            "domain": "news.now.com"
+        },
+        {
+            "name": "Quamnet",
+            "domain": "quamnet.com"
+        },
+        {
+            "name": "Oriental Daily",
+            "domain": "orientaldaily.on.cc"
+        },
+        {
+            "name": "Wen Wei Po 文匯",
+            "domain": "wenweipo.com"
+        },
+        {
+            "name": "Yahoo Finance",
+            "domain": "hk.finance.yahoo.com"
+        },
+        {
+            "name": "am730",
+            "domain": "am730.com.hk"
+        },
+        {
+            "name": "Sing Tao 星島",
+            "domain": "stheadline.com"
+        },
+        {
+            "name": "HK01 香港01",
+            "domain": "hk01.com"
+        },
+        {
+            "name": "Bastille Post",
+            "domain": "bastillepost.com"
+        },
+        {
+            "name": "Hubbis",
+            "domain": "hubbis.com"
+        },
+        {
+            "name": "The Standard",
+            "domain": "thestandard.com.hk"
+        },
+        {
+            "name": "RTHK",
+            "domain": "rthk.hk"
+        }
+    ]
 }
 
 BANKS = {
@@ -494,7 +584,7 @@ def fetch_section(key, sec):
             if inc and not any(w in blob for w in inc):
                 continue
 
-            if " - " in title and "(GN)" in feed["name"]:
+            if " - " in title and "news.google.com" in feed["url"]:
                 title, _, publisher = title.rpartition(" - ")
                 name = publisher.strip() or feed["name"]
             else:
