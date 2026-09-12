@@ -1,48 +1,30 @@
 {
   "report_date": "Sunday, 13 September 2026",
-  "generated_at": "13 Sep 2026 01:57 HKT",
-  "generated_iso": "2026-09-13T01:57:00.353631+08:00",
+  "generated_at": "13 Sep 2026 02:11 HKT",
+  "generated_iso": "2026-09-13T02:11:31.606224+08:00",
   "build": {
-    "method": "gemini:gemini-3.5-flash",
+    "method": "gemini:gemini-3.8-flash",
     "log": [
       "[work] 明報 經濟: HTTP 403 Forbidden",
       "[work] 明報 國際: HTTP 403 Forbidden",
       "[work] 明報 即時經濟: HTTP 403 Forbidden",
-      "[work] 208 items after filtering",
+      "[work] 193 items after filtering",
       "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
       "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
-      "[smalltalk_hk] 58 items after filtering",
+      "[smalltalk_hk] 57 items after filtering",
       "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
       "[smalltalk_sg] 15 items after filtering",
       "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
       "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
       "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
-      "[personal_hk] 156 items after filtering",
+      "[personal_hk] 152 items after filtering",
       "[personal_sg] Workers' Party: HTTP 404 Not Found",
       "[personal_sg] 8 items after filtering",
-      "Prompt size: 38,700 characters, 45 clusters",
+      "Prompt size: 64,326 characters, 83 clusters",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025, antigravity-preview-05-2026, deep-research-max-preview-04-2026, deep-research-preview-04-2026, deep-research-pro-preview-12-2025",
-      "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.6-flash failed: HTTP Error 400: Bad Request",
-      "Model used: gemini-3.5-flash",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?sortby=end_of_date&sortorder=desc: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2016-12-01&to=2016-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2017-12-01&to=2017-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2018-12-01&to=2018-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2019-12-01&to=2019-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2020-12-01&to=2020-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2021-12-01&to=2021-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2022-12-01&to=2022-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 502: Bad Gateway",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2023-12-01&to=2023-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2024-12-01&to=2024-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2025-12-01&to=2025-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2026-12-01&to=2026-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: The read operation timed out",
-      "HKMA year query returned no usable history - using daily snapshots instead.",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity: The read operation timed out",
-      "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?sortby=end_of_date&sortorder=desc: The read operation timed out"
+      "Model used: gemini-3.8-flash",
+      "HKMA year filter ignored - every year returned the same record. Dropping the year chart; building history from daily snapshots instead."
     ]
   },
   "weather": {
@@ -54,9 +36,22 @@
     "hmax": 95
   },
   "hkma": {
-    "available": false
+    "available": true,
+    "as_of": "2026-09-11",
+    "balance_hkdm": 54003.0,
+    "change": 0.0,
+    "flat_sessions": 2,
+    "hibor_1m": 2.87964,
+    "hibor_on": 2.1,
+    "base_rate": 4
   },
-  "hkma_bars": [],
+  "hkma_bars": [
+    {
+      "year": "09-11",
+      "value": 54003.0,
+      "date": "2026-09-11"
+    }
+  ],
   "rates": {
     "tenor": "3-month, new money, HKD",
     "rows": [],
@@ -73,25 +68,11 @@
     "work": [
       {
         "zh": [
-          "港元活期存款高息招徠",
-          "最高利率可達六厘",
-          "惟須留意屬漸進加息"
+          "港金管局與杜拜金融局建工作組",
+          "聯同港交所及納斯達克杜拜合作",
+          "旨在加強雙方資本市場聯動"
         ],
-        "en": "Hong Kong banks are attracting customers with high-interest Hong Kong dollar savings accounts, offering rates of up to 6%. However, depositors should be aware that these accounts utilize a progressive interest rate structure.",
-        "sources": [
-          {
-            "name": "明報財經網",
-            "url": "https://news.google.com/rss/articles/CBMi_gJBVV95cUxNNEZ0aDZONzZpRzZhTDkzdGtHd01NQlNZQkpFZnpJOEtSdGU3WVJRU2NENTNGY2ZkSWRYN3l5SXg2dTQ4bS1DOVY2NVMyNWNLa0U1SElteW1Wc2dGOTJoY3ozRG5CU29zem5tR1d0Ul9YR0hRcHNJN0FQWkM1Tk9sUVBLM2hXOGNlLXdFNC1NWUwxdmlkS0kwM1k4d3hxVjRfYlhXU0ljcUNKS0xzZUtzZGFTM1ZUMWVDUEd5NjhUNmFBVzF3TjZRU2JhNVRvTy0zaWprS3hrSnVHblhoT29DWnhpOVhlX09FQ2hBTGdWZkVfNEYtUVdnR2RpX3htWjlUR2gtZTJjN0JhNERpRXdRMk96VjdOeExVN2lHMlVaZWpTczhVd0dwS09qTGZFa2t1LXdrS3p1RzZISWVqbmw3T3JkdTZycU9lVmhWZE5walBqV2RBWEFhbDQ1UGhHRHJCaW5RdVlDT0RLVFc1MTV1WURPUnBaZFY5LW9QeFNn?oc=5"
-          }
-        ]
-      },
-      {
-        "zh": [
-          "港迪四機構設工作組",
-          "加強兩地金融聯繫",
-          "推動雙邊市場發展"
-        ],
-        "en": "The Hong Kong Monetary Authority, Hong Kong Exchanges and Clearing Limited, the Dubai Financial Services Authority, and Nasdaq Dubai have jointly established a Strategic Working Group. This initiative aims to strengthen financial ties and collaboration between Hong Kong and Dubai.",
+        "en": "The Hong Kong Monetary Authority, HKEX, Dubai Financial Services Authority, and Nasdaq Dubai have established a Strategic Working Group. The cross-border initiative is aimed at deepening financial ties and collaboration across both capital markets.",
         "sources": [
           {
             "name": "Fintech News HK",
@@ -101,19 +82,29 @@
       },
       {
         "zh": [
-          "月之暗面否認上市傳聞",
-          "澄清無意於滬港雙重上市",
-          "回應市場近期相關猜測"
+          "港銀推高達六厘活期存款吸客",
+          "相關優惠多屬漸進式加息機制",
+          "存戶須留意獲取最高利率之條款"
         ],
-        "en": "Chinese AI startup Moonshot AI (Moon's Dark Side) has denied rumors regarding its plans for a dual listing in Shanghai and Hong Kong.",
+        "en": "Hong Kong banks are drawing customer funds with savings deposit rates reaching as high as 6%. However, depositors need to note that these promotional yields are tiered under progressive interest rate structures rather than flat rates.",
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxNaElsWFRwU1BTaTRsYmQ0M1FmRjhNVTdkVHljRl9tYW1ENWtqU2FVZWxHcFVWbzZ5dGpPcXg5dHBQaFk2aEgxNWUwcUVBLV9DckVkSUphbXU5MW10ZEVMTkFBakM0dTdLUlU5SWZiSE9YaGNDT1czXzctdTIxWjlqM2daYmhiSmxtUGxvN09QQldOMG5pdmpPNGQxc2VadUlaNGgyd3BrNXdCaVhCNzNrY0R2X3hLNVVaWno1bjFzYXMxckd0Zjczd1luaHlWM0JzOWFaX094V2JpZHd1UkRsSF9EZTRsRFVTRjkxNUpDR2VxYTFBeVQ4b3BlWkJldmVFQmFIMDRpZFo2YjV6WGFsT3RvNVd6QjN1TDFpTUNGbmQzVnJteS1CaFhkX09TZVMxdGpwQ2loTE9FRVB4eEVYYWN5MXM?oc=5"
+          }
+        ]
+      },
+      {
+        "zh": [
+          "月之暗面澄清上市相關傳聞",
+          "否認計劃於香港及上海雙重上市",
+          "公司近期受資本市場高度關注"
+        ],
+        "en": "Chinese AI startup Moonshot AI has publicly dismissed media speculation regarding an initial public offering. The company denied reports that it was preparing for a dual listing across Hong Kong and Shanghai.",
         "sources": [
           {
             "name": "etnet 經濟通",
             "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1odTBTOVBhY1VPUU9GV1N0aUVuTWlLNUZHMkVQblZTTjJXVWxESWFxUF9mRTlPNkFiT29fWUxMdlNuUTFmakJpWGdTNlZtNUFDUXVUM3VrcUJFY0VqbXNvWXBRN0Z2N1czREo4MkNDeDYtZFEyMkU5b1kwSG1yaTA?oc=5"
-          },
-          {
-            "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMitgJBVV95cUxOQkNST0lWV0VhcnU4NjdrN3dQQVdVOWpILVM0Wi1mUnBiOGppRjhjSzR1TGRqQmZBMk1HSVJFemxKRWxuQ2dLajA4a19taWtyWUlPdktxel8xSFA4V0RVZjZjZU50dTAtTkY1U1JzUElPWHZMNDBVSmdsNENvM2p4M0ZwYnhwRW92dFZjYjJfak1EUTkzX2ZuczFGc1V5R243RUxiQmZWdnRWVVd3S1NlcmJOMnZ5Q1RTbWg3UUVueFRkVzDELU04T2NXdnhBbkdCS1gyV2ZCU1lSbVR2aUotNjdPbS1xYXlPZGVNWUNMTzROdnI1UXBHZmN4UEVyY2owRjBtX2N0TjI4WEoxSGpfNjVtZk9SbWt5dFVEOEdyc3ViWGt5VEVEc2JiVTJTYUcxRjVJZGdQ?oc=5"
           }
         ]
       }
@@ -121,27 +112,63 @@
     "smalltalk_hk": [
       {
         "headline": "Haitian Flavouring Completes Acquisition of Amoy Food",
-        "body": "Chinese seasoning giant Haitian Flavouring has completed its acquisition of the century-old brand Amoy Food, with CITIC Capital selling its entire stake. The transaction value was not disclosed, but the move is aimed at boosting Haitian's expansion into overseas markets.",
+        "body": "Mainland condiment giant Foshan Haitian Flavouring & Food has officially finalized its full buyout of century-old Hong Kong brand Amoy Food from Trustar Capital. The Chinese maker plans to use the storied local brand to spearhead and accelerate its global market expansion.",
         "sources": [
           {
             "name": "香港經濟日報HKET",
             "url": "https://news.google.com/rss/articles/CBMi5gJBVV95cUxPMG8tZVlSNWx3RlZXTjZiZ1BPWHz2U29YdFFCRVhDV2RPcndUZ1ppUDM5VkRkUGhUdlc3QUZVOVRtaGlhUFNaYVpvZTFyNU92eHc3elpMS05peWRJSmlFSzNlSUxMN3R1YUFJNkh0d25VN1M1cXJZSlhBZS1oUTU1UVBlOWNmSWFlOTZBOUV2bk5kSGZNTjlvdVhhdnFLaWN5eFdOZ0p6TGlfNHllbVQ0a1FGRGFFS1lPUWh3aU41MERaU1R2UkhkbHdFSEs3S0NDZlA5SGE0cU9iSVdFbjlwM2xHc011S1RqSzNSSWVwVUtqdGo1dnlGbkhrZFQ5WHg3OHlEeFd0Q1I4V0I3TUtUa2J1SVhkSEs5X2xzLTR3YThHb3YtUHpCOGViTDBZZUhwaW9NS0Iyc0UyRUxjNG1iV0kwNFMtZkd0bnQ0TkdOemZaaXBMdm45NWpjM3hvckNaRC16a1hn?oc=5"
-          },
+          }
+        ]
+      },
+      {
+        "headline": "China SAMR Clears Anta Sports to Acquire Puma Stake",
+        "body": "China's State Administration for Market Regulation has granted antitrust clearance for Anta Sports to acquire a major controlling stake in Puma. The transaction is valued at approximately 1.5 billion euros.",
+        "sources": [
           {
-            "name": "etnet 經濟通",
-            "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNlpMUFRWQzQ2OV9qR19qckpveG9PMjdpZlh0X1pLbmVXSWJTMXRZRmluS2NkOEphajV1OGItUlFScTRsTFdfWWd3c1dXYWhGUjBnT0xta3dDYVhaNC1ubWFidmZGcXVQRXRpYlkxNXgyX2pwZ0dzcXVUZ2NwTTE1WE1icVByNmtpX21OZmhkM1ZPRHl6?oc=5"
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxOZmt5Nm9rNDU1WUZBbTE4S0JNVGZFYzJFOWoxZVdJYW9vemFFQjZGRGdJSnR5NlU0T0NhLUdGT3ZwNVE5VzV6TlZSaTkxZzV5RUxYenYweEdLWkgtVzAxN2gzRTdjb0VRMk1UVWhuOW1xWFpPR0hoQktISF9jUmlNWGM4R3RQUm82QlRJVkNPY2lfaElxQkdHT2g4MUJOUmIydXlpbWIwN0JQS2daNXZKWUp0ZDc2VmdydzdpY24yYjVaOFdtUHVzSENKZU05UlJVay1iMTFId1NwRmtkYmpocmoyVVpaVjBQMjNkZ0pMTGh0dmMzbE92MFM2T25IUW5yNFA4WWZGa1hHRFhiZVdEUTQtNTE5S0dLX1IxaU9NUnFhOUFhUW5VSw?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "JD.com Remedies for Ceconomy Deal Draw Competitor Pushback",
+        "body": "Remedies submitted by JD.com to clear its proposed takeover of European consumer electronics retailer Ceconomy have faced criticism from industry rivals, according to Reuters. Regulators are assessing whether the concessions sufficiently address market competition concerns.",
+        "sources": [
+          {
+            "name": "Now 新聞",
+            "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1tTjR2RzluUHN0UXplXzUwWmpFQjJiaEdsRXhfazZ1Qi11TDhCY2I2by1VendrTDI0a0tFTll2TmNjb091VkxTdDRPR0tyRWt4cS15SzNIUEhaYXZBQUdXTGtzSEM?oc=5"
           }
         ]
       }
     ],
     "smalltalk_sg": [
       {
-        "headline": "Syed Saddiq Invites Ong Ye Kung to October Wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has extended a wedding invitation to Singapore's Health Minister Ong Ye Kung for his upcoming nuptials in October. Saddiq lightheartedly joked that the gesture upgraded their bilateral relations to \"wedding-invitation status.\"",
+        "headline": "Power Bank Catches Fire at Little India MRT Station",
+        "body": "A power bank caught fire at Little India MRT station, prompting an immediate response from station personnel who extinguished the blaze on site. The incident caused brief concern among commuters but resulted in no reported casualties.",
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
+            "name": "AsiaOne",
+            "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxON3hyLUw0YjJvc2hKQ096dWZWTHh5anVYenNrbGs2M2tIQ19VeWMxY0pIR3lpd0hVRHNyZUdEc0twTmp0bk4zbkZnbFdtdlNTaTNiVWpxRHEzcm54V21PY2JrN1lTajlzbEk1VElralhONEE3VWxWVjBvODVZRXJ3T3NxMHNWWXJlTFE?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Gemini Secures Full Major Payment Institution Licence in Singapore",
+        "body": "Cryptocurrency exchange Gemini has been granted a full Major Payment Institution license by the Monetary Authority of Singapore. The approval allows the firm to scale up its digital payment token and cross-border transfer services across the region.",
+        "sources": [
+          {
+            "name": "CoinGape",
+            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQSjAwMk1qcU1NN0h6UjFnaGNQd1o1LVllNkdoX2oxTXNvZUl1SEZ4em1TZDJTbkoxLWhqZWZiNnNsY3dGTlg3LVBSQ0w0V0hKSS1QVXhQZDAzTXhldTJUYW9VVFNkODA3bzJlUl9IRm02WVBHcThLTkhxQk1BWV9qRTFvd0VPeG14MHZuVXJKQTRSSWZxRlZBbE5YWWRZRHZqYV9YbUIwZV83aGsy?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Singapore Pilots Cross-Bank AI System to Curb Scam Accounts",
+        "body": "Singapore lenders have begun testing a collaborative cross-bank artificial intelligence system designed to detect and flag mule and scam accounts in near real time. The initiative aims to disrupt illicit fund transfers before stolen capital can be withdrawn.",
+        "sources": [
+          {
+            "name": "Cryptonews.net",
+            "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5pWDExSnFtakZRX1RwcFQxTEFIcFJUVHNZLThTZmNxOFJfTF9Xc1VqU2xQREZrZmM4SEZvd296dlA2X0IyMmhZNWJEUVJtVExfRk91cjB3?oc=5"
           }
         ]
       }
@@ -149,23 +176,63 @@
     "personal_hk": [
       {
         "headline": "沙田圍呂明才小學39人疑食物中毒 下周一起取消現場午膳分份",
-        "body": "浸信會沙田圍呂明才小學39名師生懷疑進食滷水雞髀和長通粉後食物中毒。\n校方宣布下周一起暫停現場分份，全面改以獨立飯盒供應。",
+        "body": "浸信會沙田圍呂明才小學37名學童及2名職員食午膳滷水雞髀和長通粉後不適，食安中心已勒令飯商停業消毒。\n校方通告宣布下周一起取消現場分份午膳，全面改派獨立飯盒。",
         "sources": [
           {
             "name": "RTHK 本地",
             "url": "https://news.rthk.hk/rthk/ch/component/k2/1869814-20260912.htm"
           }
         ]
+      },
+      {
+        "headline": "周一鳴：香港警察學院日後可頒授學士學位 預期今年底正式開始",
+        "body": "警務處處長周一鳴透露警察學院獲評審局批准頒授學位，屬首個合資格政府部門。\n未獲學位的員佐級警員預計今年底起可報讀免費課程，進修3至4年取得安保及刑事調查榮譽學士。",
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869777-20260912.htm"
+          }
+        ]
+      },
+      {
+        "headline": "第二十屆香港藝術發展獎9月16日起公開接受申請",
+        "body": "第二十屆香港藝術發展獎將於9月16日起公開接受申請，部分核心獎項獎金更獲倍增。",
+        "sources": [
+          {
+            "name": "堅料網",
+            "url": "https://news.google.com/rss/articles/CBMigARBVV95cUxPUlB6a2xqZ3J1cVU0WVlWTnZnSlJXRUhZdWRiV205ZDBza1pDMGVYVUQxdTI1M0NUWko4TW9rLVY4Q2M3eEFiVU16TFZNTnptTExKN2ctMjhGN0FLRVNVV3cyQ1hwM3gxRWJmcElHb0FqSktqUGhpY00xZnpNdkIzNEpGaGhOUFFKdmVmR0JScHBzSjVjSVExZnlsN05BZGgzNXVNanA0TWQ1WWZveUdob015Q3UydUlObkxzMV9uay1rR3g0d2lSXzlhV3gwSS1XMjMzdlJhWm5GR2NheUEteElaNTJfS0gzYTU2bi1lWXZzdHZULW8zMkZJYlRvTEwyS0ZQNlJQbFFYRENWM2FXSUpxQTYtRjA2alFoZUtIVnhVU2tpWTB5azBqNndWUzhRbm41NTBadmdOY09oZmpscmxmNEdWMmFyWm5MbG1QMlpiX2RRQzhXdkFrYlo0aHNJV05ueVRCREtoSmR1NmhtSE9xUEpQSmVqOTVqaEdxaV9FbFBKc28wcHVlN0R1SjI2bE05UnpEa0kwWXM2RExOU3RSYjhVUkhWWTVJYnJJcTdVdHp2UHZHMHhWWFc3Rkk0dkFkUTNWVk5RN3h3UU1zQXVIY0dHZ0V4bTRfMms2aS1MU2FaeVVwV3lXY2g2dmc4dTY0dnMtekhmM1J2ZDh4Qw?oc=5"
+          }
+        ]
       }
     ],
     "personal_sg": [
       {
-        "headline": "Prime Minister Lawrence Wong Addresses Ministerial Salary Increases",
-        "body": "PM Lawrence Wong clarified that the recent salary increases are not about him or the PAP government, but are focused on Singapore's future.\nHe thanked Members of Parliament for participating in the discussion regarding the compensation adjustments.",
+        "headline": "PM Lawrence Wong Addresses Ministerial Salary Increases",
+        "body": "Prime Minister Lawrence Wong stated that salary adjustments for political office holders are not about himself or the PAP government, but rather Singapore's future governance.\nHe thanked Members of Parliament for their participation in the wage debate following public discussion over minister pay adjustments.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
+          }
+        ]
+      },
+      {
+        "headline": "Malaysian Politician Syed Saddiq Invites Health Minister Ong Ye Kung to Wedding",
+        "body": "Malaysian Member of Parliament Syed Saddiq Abdul Rahman has extended an invitation to Singapore Health Minister Ong Ye Kung for his upcoming October wedding.\nSyed Saddiq quipped that the invitation represented upgrading bilateral relations between the two countries to wedding status.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
+          }
+        ]
+      },
+      {
+        "headline": "PM Lawrence Wong Speaks at Singapore Kadayanallur Muslim League Dinner",
+        "body": "Prime Minister Lawrence Wong attended and delivered an address at the 85th Anniversary Dinner of the Singapore Kadayanallur Muslim League.",
+        "sources": [
+          {
+            "name": "Prime Minister's Office Singapore",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPOGdMVmF1WmtORE9WU01OakQ2VDZVbDlwZ1l0Z0xsQ1Y5cExhbnhkc1ZHQUVVWnBxR2hhallWVTNmTVpiaHozdElybk1CUHNyRjdZUnlTX29ZY2Vyc09sb0s1bFllaFpSNG1xLUQtdU83V0hmd3U5LUxYVHI0cEp0U082MUFvcVlzNHRkcjJPTTJPNDBWdVlxS0lCb250VGRRckpGaGhTNS1SUUJ3THFWZGZDZkxTSzUt?oc=5"
           }
         ]
       }
