@@ -1,26 +1,26 @@
 {
   "report_date": "Saturday, 12 September 2026",
-  "generated_at": "12 Sep 2026 23:19 HKT",
-  "generated_iso": "2026-09-12T23:19:50.737060+08:00",
+  "generated_at": "12 Sep 2026 23:34 HKT",
+  "generated_iso": "2026-09-12T23:34:01.842684+08:00",
   "build": {
     "method": "gemini:gemini-3.6-flash",
     "log": [
       "[work] 明報 經濟: HTTP 403 Forbidden",
       "[work] 明報 國際: HTTP 403 Forbidden",
       "[work] 明報 即時經濟: HTTP 403 Forbidden",
-      "[work] 0 items after filtering",
+      "[work] 78 items after filtering",
       "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
       "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
-      "[smalltalk_hk] 0 items after filtering",
+      "[smalltalk_hk] 11 items after filtering",
       "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
-      "[smalltalk_sg] 2 items after filtering",
+      "[smalltalk_sg] 17 items after filtering",
       "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
       "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
       "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
-      "[personal_hk] 3 items after filtering",
+      "[personal_hk] 230 items after filtering",
       "[personal_sg] Workers' Party: HTTP 404 Not Found",
-      "[personal_sg] 2 items after filtering",
+      "[personal_sg] 8 items after filtering",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025, antigravity-preview-05-2026, deep-research-max-preview-04-2026, deep-research-preview-04-2026, deep-research-pro-preview-12-2025",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
@@ -45,7 +45,7 @@
   "weather": {
     "available": true,
     "desc": "Mainly cloudy with a few showers. Showers will be heavier in some areas with thunderstorms at first. There will be swells.",
-    "tmin": 25,
+    "tmin": 26,
     "tmax": 29,
     "hmin": 75,
     "hmax": 95
@@ -67,60 +67,106 @@
     "personal_sg": "Personal · Singapore Government"
   },
   "sections": {
-    "work": [],
-    "smalltalk_hk": [],
-    "smalltalk_sg": [
+    "work": [
       {
-        "headline": "Syed Saddiq Invites Health Minister Ong Ye Kung to October Wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman has invited Singapore Health Minister Ong Ye Kung to his wedding in October. He joked that the invitation upgraded bilateral relations to wedding-invitation status.",
+        "zh": [
+          "美國8月CPI按年升3.4%",
+          "市場預料聯儲局下周加息",
+          "美股三指數結束四日跌勢"
+        ],
+        "en": "U.S. headline CPI rose 3.4% year-on-year in August, boosting market expectations for a 25-basis-point rate hike next week to over 86%. Despite persistent inflation, U.S. stock indices ended a four-day losing streak as oil prices eased, with the Dow Jones closing up 509 points.",
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
+            "name": "RTHK 財經",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869741-20260912.htm"
+          },
+          {
+            "name": "RTHK 財經",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869740-20260912.htm"
           }
         ]
       },
       {
-        "headline": "PM Lawrence Wong Addresses Salary Discussions in Parliament",
-        "body": "Prime Minister Lawrence Wong reiterated that salary increases are about Singapore's future rather than himself or the PAP government. He thanked the Members of Parliament who participated in the discussion.",
+        "zh": [
+          "港銀公會與德勤發布藍圖報告",
+          "九成九受訪銀行持正面態度",
+          "對香港金融中心地位表達支持"
+        ],
+        "en": "The Hong Kong Association of Banks and Deloitte jointly released the Banking 2030 blueprint report. The survey reveals that 99% of interviewed banks maintain a positive outlook on the future development and financial status of Hong Kong's banking sector.",
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
+            "name": "hkcna.hk",
+            "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5INnZaQkQ0OUdWaVhRaHZjMjI2ZjJCejViV0VLb2xmRnNCZzdGTEcwbWZvUHc1NzNtVmwyRU1mcEdSOVFZb2RVQlhHVWE3YzB4bDBFcE1TWk5EWkxjM2FNUlpDMW16UQ?oc=5"
+          },
+          {
+            "name": "香港商报",
+            "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE16MW1nWmZNUzZ0djVrX1RSMHAxZWdqcEpxMmVubTc4MThpUTNRRjFVeGZUdENvR0Jyai1BV0lJTTViSHZYVFd5TEhRb0t2WGxLWVV3MXJVT0RRaEhHMUhHMzJKWGxjdVFWY001NQ?oc=5"
+          }
+        ]
+      },
+      {
+        "zh": [
+          "本港多間銀行更新港元定存優惠",
+          "建行亞洲定存利率最高達6.88厘",
+          "中銀及恒生亦提供高息特惠"
+        ],
+        "en": "Major banks in Hong Kong have updated their promotional rates for Hong Kong dollar fixed deposits. China Construction Bank offers rates up to 6.88%, while Bank of China and Hang Seng Bank provide promotional rates up to 5.00% and 6.00% respectively.",
+        "sources": [
+          {
+            "name": "UHK 港生活",
+            "url": "https://news.google.com/rss/articles/CBMimwNBVV95cUxPVDV6SjNRN2Jpa3hPSHZZYTBORHZUY2JyZWlRdHBvUVF3emxjbktLNzZ3Rkk2ZnBubDhYd3ZEaFo4Qy1nZmxZZy04R09rVDI3UEJDWW0xZzBKaGJrRnhrcWVwaGEtdVBWdWVqWnI4d3U2cWU3eXEtT1NRT0ZvOFl5emU1djRMU0QtVnZ2WHpUQjRIWXZwRC1LcndSYU9RWHNFbFNDQUQ3WFRXQkFQTkVQSWZlZTJIcHhuZUxJMUR1MHpYWGYyb2QwalJzR2RxVWxpMDlSTmlypE41eTZSRlo5c01VeXViZlplWW5nX211dWI1UlM3RzAzdy1JOF9PTnkweXh1SVZoZ3NCd2VoekNXVFhPU0F1V1pORzVXanoyVnA1QkZYVmtKZTZaSHQzYURNYXIwc0Q3dDRNQU5Ec1B1QVhrcl92Y1ctb29DSEVmZ3dYaXFucGFvX3hmNk9SOXMxa0pNZmRtSTFtOFp6WkV2YkY5X0JxVmx2ODQtQVBXWU9zOGlTR2Q0cUJzbzQ2ak5kOGt5eVJCWGxsUGM?oc=5"
+          },
+          {
+            "name": "wealth.hket.com",
+            "url": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxPRkJSQklLYlV2akpfb3VZT2pQZGRXc3pvTFozbmxoY2RRMTczWGs0TFFkTTZveU9DWYLhd3dUPdYelhSWExrY28zckU3N2JrR3lqdWFxaUtOa3BwQjdqNDVLZmd6R3FGdjVHb1JTSTRuRXg1X3JCdTBzOGlLM2ROSi1zcGVxLWVycU5Pd0dNckFTQldMR1ZnSG4tb1MtOTlzak1xd2NSTkx6LWFjbWs2UTVKM3E3WVAzOWhKVVlXSGM0cnQwV25BZTRlRXpqVEJVRGxKX3BnTVRHNWl5aUtwd0cwWkNEa2xOaFd2UC1WYWFidmllV3FhbnJ1LVFNZHExRWhqeWJkam8zQ1dzRFB6Rjk3cGJ5TGIxZkZlUTV1Q1dCTkNjWjVocHJRMFhOQnFfNHZma042clhTd05oVHBaUVVZZmVTakRMVHl6MHhYWGxVTW5fYVo2Vl9fNHlsOGViM2NwVA?oc=5"
+          }
+        ]
+      }
+    ],
+    "smalltalk_hk": [
+      {
+        "headline": "Mainland condiment giant Haitian Flavouring completes acquisition of Hong Kong's Amoy Food",
+        "body": "Mainland condiment leader Haitian Flavouring has completed its acquisition of Amoy Food to accelerate its global strategic expansion. This transaction marks another ownership change for the iconic Hong Kong brand.",
+        "sources": [
+          {
+            "name": "香港商报",
+            "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9pQnZKdUVsQ2p0X1ZTbnJsWUE0RjZqWFZ6YV9uVkd0c3NPLU5lWDJyTFNxUGI1bFLjT0Y5NlprXzFmaFQ4UWZMN3dXTTl5c1hOZ3ZzOEZYRmtqZ2YyeldvSDRDeXR6UEtPU0tSUFRsOERSS3UwX0tMTzVaTQ?oc=5"
+          }
+        ]
+      }
+    ],
+    "smalltalk_sg": [
+      {
+        "headline": "Singapore tests cross-bank AI to flag scam accounts in near real time",
+        "body": "Singapore is testing a cross-bank artificial intelligence system designed to flag scam accounts in near real time across financial institutions. The initiative aims to enhance early scam detection and protect retail banking clients from financial fraud.",
+        "sources": [
+          {
+            "name": "Cryptonews.net",
+            "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5pWDExSnFtakZRX1RwcFQxTEFIcFJUVHNZLThTZmNxOFJfTF9Xc1VqU2xQREZrZmM4SEZvd296dlA2X0IyMmhZNWJEUVJtVExfRk91cjB3?oc=5"
           }
         ]
       }
     ],
     "personal_hk": [
       {
-        "headline": "動物權益團體呼籲市民抵制啟德馬術表演",
-        "body": "動保組織PETA指控馬術表演「Cavalluna」涉嫌虐待動物，呼籲市民抵制該演出。\n該節目由香港賽馬會主要贊助及主辦，於啟德體育園由本週二公演至本週日。",
+        "headline": "沙田圍呂明才小學39人食校園午膳後疑食物中毒",
+        "body": "浸信會沙田圍呂明才小學39名師生周三進食滷水雞髀及長通粉後疑食物中毒。\n食安中心已指示涉事午膳供應商即時暫停運作以進行徹底清潔消毒。",
         "sources": [
           {
-            "name": "HKFP",
-            "url": "https://hongkongfp.com/2026/09/12/animal-ngo-urges-hongkogners-to-shun-govt-backed-equestrian-show-cavalluna/"
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1869810-20260912.htm"
           }
         ]
       }
     ],
     "personal_sg": [
       {
-        "headline": "Malaysian Politician Syed Saddiq Invites Health Minister Ong Ye Kung to Wedding",
-        "body": "Malaysian politician Syed Saddiq Abdul Rahman invited Singapore Health Minister Ong Ye Kung to his October wedding.\nHe joked that he had upgraded bilateral relations to wedding-invitation status.",
+        "headline": "Malaysian politician Syed Saddiq invites Health Minister Ong Ye Kung to October wedding",
+        "body": "Malaysian politician Syed Saddiq Abdul Rahman invited Singapore Health Minister Ong Ye Kung to his wedding in October.\nSaddiq joked that he had upgraded bilateral relations to wedding-invitation status.",
         "sources": [
           {
             "name": "The Independent SG",
             "url": "https://theindependent.sg/malaysian-politician-syed-saddiq-invites-health-minister-ong-ye-kung-to-his-october-wedding/"
-          }
-        ]
-      },
-      {
-        "headline": "PM Lawrence Wong Speaks on Salary Increases",
-        "body": "Prime Minister Lawrence Wong stated that higher salaries are about Singapore's future rather than himself or the PAP government.\nHe thanked the MPs who participated in the parliamentary discussion.",
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/prime-minister-lawrence-wong-higher-salaries-are-not-about-me-or-the-pap-government/"
           }
         ]
       }
