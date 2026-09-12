@@ -566,23 +566,75 @@ CLUSTERS:
 """
 
 
+def gemini_models(key):
+    """Ask Google which models this key can actually use for generateContent."""
+    for ver in ("v1beta", "v1"):
+        url = f"https://generativelanguage.googleapis.com/{ver}/models?pageSize=200"
+        req = urllib.request.Request(url, headers={"x-goog-api-key": key})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = json.loads(r.read().decode("utf-8"))
+        except Exception as e:
+            log(f"ListModels {ver} failed: {e}")
+            continue
+        names = [m["name"].split("/")[-1] for m in data.get("models", [])
+                 if "generateContent" in m.get("supportedGenerationMethods", [])]
+        if names:
+            log(f"Models available ({ver}): {', '.join(names[:40])}")
+            return ver, names
+    return None, []
+
+
+def rank_models(names):
+    """Prefer free Flash text models, newest first. Skip image/audio variants."""
+    def score(n):
+        if any(x in n for x in ("image", "tts", "audio", "embedding", "live")):
+            return (-1, 0)
+        nums = re.findall(r"(\d+(?:\.\d+)?)", n)
+        ver = float(nums[0]) if nums else 0.0
+        tier = 3 if ("flash" in n and "lite" not in n) else 2 if "flash" in n else 1
+        return (tier, ver)
+    return sorted([n for n in names if score(n)[0] > 0], key=score, reverse=True)
+
+
 def gemini(prompt):
-    """Google AI Studio free tier. No credit card, no SDK - just a POST."""
+    """Google AI Studio free tier. Discovers a working model rather than
+    hardcoding a name, because Google retires model IDs frequently."""
     key = os.getenv("GEMINI_API_KEY")
     if not key:
         raise RuntimeError("GEMINI_API_KEY not set")
-    model = os.getenv("LLM_MODEL") or "gemini-2.5-flash"
-    url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
-           f"{model}:generateContent?key={key}")
+
+    ver, available = gemini_models(key)
+    if not available:
+        raise RuntimeError("Could not list models - check the API key is valid")
+
+    wanted = os.getenv("LLM_MODEL") or ""
+    order = ([wanted] if wanted in available else []) + rank_models(available)
+    if wanted and wanted not in available:
+        log(f"LLM_MODEL '{wanted}' is not available to this key - ignoring it")
+
     body = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.3, "maxOutputTokens": 8000},
     }).encode("utf-8")
-    req = urllib.request.Request(url, data=body,
-                                 headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=120) as r:
-        data = json.loads(r.read().decode("utf-8"))
-    return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"]), model
+
+    last = None
+    for model in order[:4]:
+        url = (f"https://generativelanguage.googleapis.com/{ver}"
+               f"/models/{model}:generateContent")
+        req = urllib.request.Request(url, data=body, headers={
+            "Content-Type": "application/json", "x-goog-api-key": key})
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                data = json.loads(r.read().decode("utf-8"))
+            text = "".join(part.get("text", "")
+                           for part in data["candidates"][0]["content"]["parts"])
+            log(f"Model used: {model}")
+            return text, model
+        except Exception as e:
+            log(f"Model {model} failed: {e}")
+            last = e
+    raise RuntimeError(f"All candidate models failed; last error: {last}")
 
 
 def call_model(payload):
