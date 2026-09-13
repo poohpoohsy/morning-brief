@@ -24,6 +24,8 @@ ROOT = Path(__file__).resolve().parent
 HK = timezone(timedelta(hours=8))
 LOG = []
 
+# Flattened once at import; every section is filtered against it.
+
 CFG = {
     "window_hours": 50,
     "sections": {
@@ -309,6 +311,114 @@ CFG = {
                 "election"
             ],
             "exclude": []
+        },
+        "juicy_hk": {
+            "label": "Juicy · 香港",
+            "max_items": 40,
+            "feeds": [
+                {
+                    "name": "明報 港聞",
+                    "url": "https://news.mingpao.com/rss/pns/s00002.xml"
+                },
+                {
+                    "name": "明報 娛樂",
+                    "url": "https://news.mingpao.com/rss/pns/s00016.xml"
+                },
+                {
+                    "name": "明報 副刊",
+                    "url": "https://news.mingpao.com/rss/pns/s00005.xml"
+                },
+                {
+                    "name": "明報 即時港聞",
+                    "url": "https://news.mingpao.com/rss/ins/s00001.xml"
+                },
+                {
+                    "name": "HKFP",
+                    "url": "https://hongkongfp.com/feed"
+                },
+                {
+                    "name": "RTHK 本地",
+                    "url": "https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml"
+                },
+                {
+                    "name": "港聞 GN1",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aaastocks.com+OR+site%3Aetnet.com.hk+OR+site%3Ahkej.com+OR+site%3Ahket.com+OR+site%3Amingpao.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "港聞 GN2",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Anews.now.com+OR+site%3Aquamnet.com+OR+site%3Aorientaldaily.on.cc+OR+site%3Awenweipo.com+OR+site%3Ahk.finance.yahoo.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "港聞 GN3",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Aam730.com.hk+OR+site%3Astheadline.com+OR+site%3Ahk01.com+OR+site%3Abastillepost.com+OR+site%3Ahubbis.com%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "港聞 GN4",
+                    "url": "https://news.google.com/rss/search?q=%28site%3Athestandard.com.hk+OR+site%3Arthk.hk%29+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "香港 wide",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+when%3A2d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "熱話 GN",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E7%86%B1%E8%A9%B1+OR+%E7%B6%B2%E6%B0%91+OR+%E7%88%AD%E8%AD%B0+OR+%E8%A2%AB%E6%8D%95+OR+%E9%86%9C%E8%81%9E+when%3A3d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                },
+                {
+                    "name": "奇案 GN",
+                    "url": "https://news.google.com/rss/search?q=%E9%A6%99%E6%B8%AF+%E6%B3%95%E5%BA%AD+OR+%E5%88%A4%E5%9B%9A+OR+%E8%B2%AA%E6%B1%A1+OR+%E8%A9%90%E9%A8%99+when%3A3d&hl=zh-HK&gl=HK&ceid=HK:zh-Hant"
+                }
+            ],
+            "include": [],
+            "exclude": [
+                "工程",
+                "維修",
+                "改道",
+                "暫停服務",
+                "提早收車",
+                "封路",
+                "例行",
+                "統計數字",
+                "諮詢文件",
+                "招標",
+                "空缺",
+                "周年報告",
+                "engineering works",
+                "service adjustment",
+                "road closure",
+                "consultation paper"
+            ]
+        },
+        "juicy_sg": {
+            "label": "Juicy · Singapore",
+            "max_items": 40,
+            "feeds": [
+                {
+                    "name": "The Independent SG",
+                    "url": "https://theindependent.sg/feed/"
+                },
+                {
+                    "name": "Mothership GN",
+                    "url": "https://news.google.com/rss/search?q=site%3Amothership.sg+when%3A3d&hl=en-SG&gl=SG&ceid=SG:en"
+                },
+                {
+                    "name": "SG news GN",
+                    "url": "https://news.google.com/rss/search?q=Singapore+%28court+OR+probe+OR+fined+OR+viral+OR+resigns+OR+scandal%29+when%3A3d&hl=en-SG&gl=SG&ceid=SG:en"
+                },
+                {
+                    "name": "SG politics GN",
+                    "url": "https://news.google.com/rss/search?q=Singapore+%28parliament+OR+minister+OR+PAP+OR+MAS+OR+policy%29+when%3A3d&hl=en-SG&gl=SG&ceid=SG:en"
+                },
+                {
+                    "name": "SG life GN",
+                    "url": "https://news.google.com/rss/search?q=Singapore+%28HDB+OR+COE+OR+hawker+OR+MRT+OR+cost+of+living%29+when%3A3d&hl=en-SG&gl=SG&ceid=SG:en"
+                }
+            ],
+            "include": [],
+            "exclude": [
+                "horoscope",
+                "advertorial"
+            ]
         }
     },
     "hkma": {
@@ -387,8 +497,112 @@ CFG = {
         }
     ],
     "prompt_budget_chars": 60000,
-    "output_ceiling": 40
+    "output_ceiling": 40,
+    "global_exclude": {
+        "_comment": "Applied to every section, on top of each section's own list.",
+        "not_hong_kong": [
+            "科創板",
+            "滬市",
+            "深市",
+            "A股",
+            "創業板",
+            "北交所",
+            "國產GPU",
+            "四小龍",
+            "十五五",
+            "十四五",
+            "工信部",
+            "國務院",
+            "發改委",
+            "內地芯片",
+            "晶片替代",
+            "美股動向",
+            "道指",
+            "納指",
+            "標普",
+            "美債息",
+            "聯儲",
+            "華爾街",
+            "A-share",
+            "STAR Market",
+            "Wall Street",
+            "Nasdaq",
+            "Dow Jones"
+        ],
+        "market_plumbing": [
+            "夜期",
+            "成交資料",
+            "期指",
+            "收市報告",
+            "指數成分",
+            "沽空",
+            "窩輪",
+            "牛熊證",
+            "每日成交",
+            "изменение",
+            "盤路",
+            "技術走勢"
+        ],
+        "site_boilerplate": [
+            "現有會員",
+            "訂戶",
+            "登入",
+            "訂閱",
+            "會員專享",
+            "立即註冊",
+            "免費試閱",
+            "Subscribe",
+            "Sign in",
+            "paywall"
+        ],
+        "recruitment": [
+            "招聘",
+            "職位空缺",
+            "應徵",
+            "聘請",
+            "學年）",
+            "行政主任",
+            "合約教師",
+            "Job vacancy",
+            "recruitment",
+            "apply now"
+        ],
+        "weather_notices": [
+            "酷熱天氣警告",
+            "寒冷天氣警告",
+            "避暑中心",
+            "避寒中心",
+            "強烈季候風",
+            "紫外線指數",
+            "空氣質素健康指數"
+        ],
+        "official_platitudes": [
+            "密切留意",
+            "定必增撥",
+            "會繼續關注",
+            "表示歡迎",
+            "冀港隊",
+            "予以支持",
+            "高度重視",
+            "持續跟進",
+            "適時檢視",
+            "全力以赴"
+        ],
+        "sport_fixtures": [
+            "亞運會",
+            "世界盃",
+            "友賽",
+            "超級聯賽",
+            "賽果",
+            "開幕禮",
+            "揭幕戰"
+        ]
+    }
 }
+
+# Flattened once; every section is filtered against it.
+GLOBAL_EXCLUDE = [w for k, v in CFG.get("global_exclude", {}).items()
+                  if k != "_comment" for w in v]
 
 BANKS = {
     "tenor": "3-month, new money, HKD",
@@ -498,7 +712,6 @@ def bootstrap():
         print("Created data/rates_manual.json - fill in today's rates")
 
 
-LOG = []
 
 
 def log(msg):
@@ -585,7 +798,12 @@ def fetch_section(key, sec):
             summary = clean(getattr(e, "summary", ""))[:900]
             if not title:
                 continue
+            # Titles often carry a site name: "…搜查令|香港經濟日報". Strip it so
+            # it neither clutters the card nor skews the duplicate check.
+            title = re.split(r"\s*[|｜]\s*", title)[0].strip()
             blob = (title + " " + summary).lower()
+            if any(w.lower() in blob for w in GLOBAL_EXCLUDE):
+                continue
 
             # Back-test rule: service notices and statistical releases never travel.
             if any(w in blob for w in exc):
@@ -838,10 +1056,46 @@ personal_hk — Traditional Chinese. `headline` is the story's own headline,
 
 personal_sg — English. Government, parties and ministers only. Same two-line cap.
 
+juicy_hk (Traditional Chinese) and juicy_sg (English) — the stories people will
+actually repeat this week. Rank and select as follows, in this order:
+
+  1. MONEY PLUS A HUMAN FAULT ranks highest. A dispute over a lottery win, a
+     bribe, a betrayal between colleagues, a fraud. These get repeated more than
+     anything else.
+  2. MERGE STORIES THAT SHARE A CAUSE into one item. Three separate construction
+     accidents in one week are one story about site safety and oversight - write
+     it as one item naming all three, not three items.
+  3. KEEP LIGHT CONSUMER STORIES. A chain changing its seating rules, a decades-old
+     shop closing, a restaurant opening. These are meal-table material and cost
+     nobody anything to discuss.
+  4. KEEP PRACTICAL ITEMS that carry a date or a number - a licensing timeline,
+     a bond issue size, a fee change.
+  5. DROP pure政治立場 commentary, sports results, and anything with no person in it.
+  6. DROP anything without a Hong Kong angle. Mainland A-share listings, PRC
+     five-year-plan policy and US market commentary do not belong here unless a
+     Hong Kong company, regulator or listing is directly involved.
+  7. DROP market plumbing (index data, futures turnover, technical charts),
+     recruitment notices, site boilerplate, and official statements that contain
+     no new fact - "會繼續關注", "定必增撥資源" and similar.
+
+  Each item also needs a `tag` - one of: 奇案人情 / 醜聞 / 行業線 / 輕鬆 / 實用 / 敏感
+  (or in English: scandal, human interest, industry, light, practical, sensitive).
+
+  And a `raise` field, true or false. Set it to FALSE for anything where the
+  other person's answer would expose a political position - national security
+  cases, sentencing of activists, sovereignty questions, elections. These items
+  still belong in the brief, because being uninformed is worse, but they are for
+  knowing and not for raising. Everything else is true.
+
+
+For juicy_hk and juicy_sg use `headline`, `body` (at most two sentences),
+`tag` and `raise`.
+
 Return ONLY a JSON object keyed by section name, each a list of objects with:
   zh (work only, array of exactly 3 strings)
   headline, body (non-work sections)
   en (work only)
+  tag, raise (juicy sections only)
   sources: array of {name, url}
 
 CLUSTERS:
@@ -1159,7 +1413,6 @@ def main():
 
 
 
-
 INDEX_HTML = r'''<!doctype html>
 <html lang="en">
 <head>
@@ -1269,6 +1522,11 @@ INDEX_HTML = r'''<!doctype html>
   .srcs{margin-top:7px;font-size:11.5px;color:var(--muted)}
   .srcs a{color:var(--muted)}
   .empty{color:var(--muted);font-size:13px;padding:10px 0}
+  .tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:5px;
+    background:var(--juicy-bg);color:var(--juicy-ink);letter-spacing:.02em}
+  .quiet{margin-top:8px;font-size:12px;line-height:1.45;color:var(--muted);
+    border-left:2px solid var(--muted);padding-left:9px}
+  .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
   @media(max-width:560px){h1{font-size:25px}.bars{height:58px}}
 </style>
@@ -1390,6 +1648,16 @@ function workCard(it){
   </article>`;
 }
 
+function juicyCard(it){
+  return `<article class="card">
+    <div class="jhead">${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ""}</div>
+    <h3 class="headline">${esc(it.headline)}</h3>
+    ${it.body ? `<p class="two">${esc(it.body)}</p>` : ""}
+    ${it.raise === false
+      ? `<div class="quiet">知道就得 &middot; 唔使主動提 — the other person's answer would expose a political position.</div>`
+      : ""}
+    ${srcLine(it.sources)}</article>`;
+}
 function plainCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
@@ -1410,7 +1678,7 @@ function render(D){
     const body = groups.map(g => {
       if(!(g.items||[]).length) return "";
       return (g.sub ? `<div class="sub2">${esc(g.sub)}</div>` : "") +
-        g.items.map(g.work ? workCard : plainCard).join("");
+        g.items.map(g.card || (g.work ? workCard : plainCard)).join("");
     }).join("") || `<div class="empty">Nothing met the bar today.</div>`;
     return `<section class="section">
       <div class="shead"><span class="dot" style="background:${colour}"></span>
@@ -1425,7 +1693,10 @@ function render(D){
       {sub:"Singapore", items:S.smalltalk_sg||[]}]) +
     block("Personal", "var(--life)", [
       {sub:"香港 · 民生", items:S.personal_hk||[]},
-      {sub:"Singapore · Government", items:S.personal_sg||[]}]);
+      {sub:"Singapore · Government", items:S.personal_sg||[]}]) +
+    block("Juicy", "var(--juicy)", [
+      {sub:"香港", items:S.juicy_hk||[], card:juicyCard},
+      {sub:"Singapore", items:S.juicy_sg||[], card:juicyCard}]);
 
   // staleness + degraded build
   const msgs = [];
