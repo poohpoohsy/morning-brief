@@ -29,7 +29,7 @@ CFG = {
     "sections": {
         "work": {
             "label": "Work",
-            "max_items": 3,
+            "max_items": 40,
             "feeds": [
                 {
                     "name": "明報 經濟",
@@ -115,7 +115,7 @@ CFG = {
         },
         "smalltalk_hk": {
             "label": "Small Talk · Hong Kong",
-            "max_items": 4,
+            "max_items": 40,
             "feeds": [
                 {
                     "name": "明報 經濟",
@@ -165,7 +165,7 @@ CFG = {
         },
         "smalltalk_sg": {
             "label": "Small Talk · Singapore",
-            "max_items": 2,
+            "max_items": 40,
             "feeds": [
                 {
                     "name": "The Independent SG",
@@ -195,7 +195,7 @@ CFG = {
         },
         "personal_hk": {
             "label": "Personal · 香港民生",
-            "max_items": 8,
+            "max_items": 40,
             "feeds": [
                 {
                     "name": "明報 港聞",
@@ -284,7 +284,7 @@ CFG = {
         },
         "personal_sg": {
             "label": "Personal · Singapore Government",
-            "max_items": 2,
+            "max_items": 40,
             "feeds": [
                 {
                     "name": "The Independent SG",
@@ -385,7 +385,9 @@ CFG = {
             "name": "RTHK",
             "domain": "rthk.hk"
         }
-    ]
+    ],
+    "prompt_budget_chars": 60000,
+    "output_ceiling": 40
 }
 
 BANKS = {
@@ -728,23 +730,42 @@ def history_bars():
 # ---------------------------------------------------------------- rates
 
 def rate_table():
-    banks = BANKS
-    manual_path = ROOT / "data/rates_manual.json"
-    manual = json.loads(manual_path.read_text(encoding="utf-8")) if manual_path.exists() else {}
-    prev_path = ROOT / "data/rates_prev.json"
-    prev = json.loads(prev_path.read_text(encoding="utf-8")) if prev_path.exists() else {}
+    """Build the promo rate table.
 
-    rows = []
-    for b in banks["banks"]:
-        rate = manual.get(b["name"])
-        if b.get("mode") == "auto":
-            log(f"auto mode not enabled for {b['name']}; using manual value")
-        if rate is None:
+    Values come from data/rates_manual.json. Anything missing or null falls back
+    to a placeholder so the table still renders - a blank panel just looks
+    broken. Placeholders are flagged on the page so they are never mistaken for
+    today's real rates.
+    """
+    manual_path = ROOT / "data/rates_manual.json"
+    try:
+        manual = json.loads(manual_path.read_text(encoding="utf-8"))
+    except Exception:
+        manual = {}
+
+    prev_path = ROOT / "data/rates_prev.json"
+    try:
+        prev = json.loads(prev_path.read_text(encoding="utf-8"))
+    except Exception:
+        prev = {}
+
+    rows, placeholders = [], 0
+    for b in BANKS["banks"]:
+        value = manual.get(b["name"])
+        is_placeholder = False
+        if value is None:
+            value = DEFAULT_RATES.get(b["name"])
+            is_placeholder = value is not None
+        if value is None:
             continue
+        if is_placeholder:
+            placeholders += 1
         before = prev.get(b["name"])
         rows.append({
-            "name": b["name"], "kind": b["kind"], "rate": float(rate),
-            "change_bp": round((float(rate) - float(before)) * 100) if before is not None else None,
+            "name": b["name"], "kind": b["kind"], "rate": float(value),
+            "change_bp": (round((float(value) - float(before)) * 100)
+                          if before is not None else None),
+            "placeholder": is_placeholder,
             "url": b.get("url", ""),
         })
 
@@ -752,11 +773,17 @@ def rate_table():
     for i, r in enumerate(rows, 1):
         r["rank"] = i
 
-    prev_path.write_text(json.dumps({r["name"]: r["rate"] for r in rows}, indent=2), encoding="utf-8")
+    prev_path.write_text(json.dumps({r["name"]: r["rate"] for r in rows}, indent=2),
+                         encoding="utf-8")
+
+    if placeholders:
+        log(f"{placeholders} of {len(rows)} rates are placeholders - "
+            f"edit data/rates_manual.json")
 
     movers = [r for r in rows if r.get("change_bp")]
     movers.sort(key=lambda r: abs(r["change_bp"]), reverse=True)
-    return {"tenor": banks["tenor"], "rows": rows, "movers": movers[:3]}
+    return {"tenor": BANKS["tenor"], "rows": rows, "movers": movers[:3],
+            "placeholders": placeholders}
 
 
 # ---------------------------------------------------------------- weather
@@ -792,10 +819,11 @@ smalltalk_hk, smalltalk_sg — for each item write `headline` (English is fine) 
   `body`, at most two sentences. No conversation scripts, no suggested openers.
   Just the story.
 
-FILL EVERY SECTION. Each maximum is a target, not a ceiling to shy away from.
-Return the maximum unless there genuinely are not that many distinct stories in
-the material. A section with one item when twenty candidates were supplied is
-wrong. If two stories are about different events, include both.
+THERE IS NO FIXED NUMBER OF ITEMS. Include every distinct story that belongs in
+a section. Do not ration yourself: if forty candidates were supplied and thirty
+are distinct and relevant, return thirty. Merge only genuine duplicates of the
+same event. A section with three items when thirty candidates were supplied is
+wrong. Keep each item short so that a long list stays readable.
 
 personal_hk — Traditional Chinese. `headline` is the story's own headline,
   `body` is AT MOST TWO short lines. Select for what people actually repeat:
@@ -928,11 +956,33 @@ def parse_json_loose(text):
     raise ValueError("Could not repair the model reply")
 
 
+def fit_budget(payload):
+    """Trim the payload to the prompt budget, fairly rather than by section.
+
+    Removes from whichever section currently has the most candidates, so a
+    section with three stories keeps all three while one with eighty gives some
+    back. Only bites on genuinely huge days.
+    """
+    budget = CFG.get("prompt_budget_chars", 60000)
+    size = lambda p: len(json.dumps(p, ensure_ascii=False))
+    dropped = 0
+    while size(payload) > budget:
+        biggest = max(payload, key=lambda k: len(payload[k]))
+        if len(payload[biggest]) <= 1:
+            break
+        payload[biggest].pop()
+        dropped += 1
+    if dropped:
+        log(f"Trimmed {dropped} clusters to fit the {budget:,} character budget")
+    return payload
+
+
 def call_model(payload):
     provider = (os.getenv("LLM_PROVIDER") or "gemini").lower()
     prompt = PROMPT.replace("{payload}", json.dumps(payload, ensure_ascii=False))
-    log(f"Prompt size: {len(prompt):,} characters, "
-        f"{sum(len(v) for v in payload.values())} clusters")
+    log("Candidates sent: " + ", ".join(
+        f"{k}={len(v)}" for k, v in payload.items()))
+    log(f"Prompt size: {len(prompt):,} characters")
 
     if provider == "gemini":
         text, model = gemini(prompt)
@@ -990,7 +1040,7 @@ def redundant(title, body):
     return b.startswith(t[:24]) or t.startswith(b[:24]) or similar(t, b) > 0.7
 
 
-def rss_digest(collected):
+def rss_digest(collected, depth=1):
     """No-model mode. Uses the publisher's own RSS summary, which for 明報 and
     HK01 is usually two or three usable sentences. Not as sharp as a model pass,
     but free, instant, and it never invents anything."""
@@ -998,7 +1048,7 @@ def rss_digest(collected):
     for key, groups in collected.items():
         sec = CFG["sections"][key]
         out[key] = []
-        for g in groups[: sec["max_items"]]:
+        for g in groups[: sec["max_items"] * depth]:
             lead = g[0]
             body = lead.get("snippet") or ""
             srcs = []
@@ -1029,24 +1079,63 @@ def rss_digest(collected):
 
 # ---------------------------------------------------------------- main
 
+def top_up(sections, collected):
+    """Fill out any section the model returned short.
+
+    The model is conservative: given thirty candidates and a cap of eight it
+    will often return three. Rather than lose good stories, take the clusters it
+    passed over and add them in RSS form until the section reaches its quota.
+    """
+    rss = rss_digest(collected, depth=4)
+    for key, sec in CFG["sections"].items():
+        have = sections.get(key) or []
+        # Fill to the number of distinct stories available, not a fixed number.
+        want = min(len(collected.get(key) or []),
+                   sec.get("max_items", 40),
+                   CFG.get("output_ceiling", 40))
+        if len(have) >= want:
+            continue
+
+        chosen = [(h.get("headline") or " ".join(h.get("zh") or [])) for h in have]
+        added = 0
+        for cand in rss.get(key, []):
+            if len(have) >= want:
+                break
+            label = cand.get("headline") or " ".join(cand.get("zh") or [])
+            # Chinese headlines share common phrases, so only drop a candidate
+            # when it is close to a straight duplicate.
+            if any(similar(label, c) > 0.75 for c in chosen):
+                continue
+            have.append(cand)
+            chosen.append(label)
+            added += 1
+        if added:
+            log(f"[{key}] model returned {len(have) - added}, topped up by {added}")
+        sections[key] = have
+    return sections
+
+
 def main():
     collected = {}
     payload = {}
     for key, sec in CFG["sections"].items():
         groups = cluster(fetch_section(key, sec))
         collected[key] = groups
-        # Keep the prompt small. With 17 publishers the raw material is far more
-        # than the model needs to choose from, and an oversized prompt just times
-        # out - which is why this silently fell back to RSS.
+        # No fixed per-section cap. Take every cluster and let the shared
+        # character budget below decide where to stop, so a busy 民生 day is not
+        # truncated to suit a quiet Work day.
         payload[key] = [
             [{"title": m["title"], "source": m["source"], "url": m["url"],
               "published": m["published"], "snippet": m["snippet"][:280]}
              for m in g[:3]]
-            for g in groups[: min(sec["max_items"] * 5, 30)]
+            for g in groups
         ]
+
+    payload = fit_budget(payload)
 
     try:
         sections, method = call_model(payload)
+        sections = top_up(sections, collected)
     except Exception as e:
         log(f"Model step skipped or failed ({e}) — using RSS summaries")
         sections, method = rss_digest(collected), "rss-only"
@@ -1274,7 +1363,7 @@ function ratePanel(r){
     `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
   return `<section class="panel">
     <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked &middot; edit data/rates_manual.json</div>
+    <div class="asof">${r.rows.length} banks tracked${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}</div>
     <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
     <tbody>${rows}</tbody></table>
     <div class="cutlab">Dashed line = top 10 cut-off.</div>
