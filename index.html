@@ -107,6 +107,11 @@
   .srcs{margin-top:7px;font-size:11.5px;color:var(--muted)}
   .srcs a{color:var(--muted)}
   .empty{color:var(--muted);font-size:13px;padding:10px 0}
+  .tag{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:5px;
+    background:var(--juicy-bg);color:var(--juicy-ink);letter-spacing:.02em}
+  .quiet{margin-top:8px;font-size:12px;line-height:1.45;color:var(--muted);
+    border-left:2px solid var(--muted);padding-left:9px}
+  .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
   @media(max-width:560px){h1{font-size:25px}.bars{height:58px}}
 </style>
@@ -228,6 +233,16 @@ function workCard(it){
   </article>`;
 }
 
+function juicyCard(it){
+  return `<article class="card">
+    <div class="jhead">${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ""}</div>
+    <h3 class="headline">${esc(it.headline)}</h3>
+    ${it.body ? `<p class="two">${esc(it.body)}</p>` : ""}
+    ${it.raise === false
+      ? `<div class="quiet">知道就得 &middot; 唔使主動提 — the other person's answer would expose a political position.</div>`
+      : ""}
+    ${srcLine(it.sources)}</article>`;
+}
 function plainCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
@@ -248,7 +263,7 @@ function render(D){
     const body = groups.map(g => {
       if(!(g.items||[]).length) return "";
       return (g.sub ? `<div class="sub2">${esc(g.sub)}</div>` : "") +
-        g.items.map(g.work ? workCard : plainCard).join("");
+        g.items.map(g.card || (g.work ? workCard : plainCard)).join("");
     }).join("") || `<div class="empty">Nothing met the bar today.</div>`;
     return `<section class="section">
       <div class="shead"><span class="dot" style="background:${colour}"></span>
@@ -263,7 +278,10 @@ function render(D){
       {sub:"Singapore", items:S.smalltalk_sg||[]}]) +
     block("Personal", "var(--life)", [
       {sub:"香港 · 民生", items:S.personal_hk||[]},
-      {sub:"Singapore · Government", items:S.personal_sg||[]}]);
+      {sub:"Singapore · Government", items:S.personal_sg||[]}]) +
+    block("Juicy", "var(--juicy)", [
+      {sub:"香港", items:S.juicy_hk||[], card:juicyCard},
+      {sub:"Singapore", items:S.juicy_sg||[], card:juicyCard}]);
 
   // staleness + degraded build
   const msgs = [];
