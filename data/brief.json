@@ -1,69 +1,47 @@
 {
-  "report_date": "Thursday, 22 October 2026",
-  "generated_at": "22 Oct 2026 08:10 HKT",
-  "generated_iso": "2026-10-22T08:10:57.051376+08:00",
+  "report_date": "Friday, 23 October 2026",
+  "generated_at": "23 Oct 2026 08:06 HKT",
+  "generated_iso": "2026-10-23T08:06:41.160392+08:00",
   "build": {
-    "method": "rss-only",
+    "method": "gemini:gemini-3.7-flash",
     "log": [
       "[work] 明報 經濟: HTTP 403 Forbidden",
       "[work] 明報 國際: HTTP 403 Forbidden",
       "[work] 明報 即時經濟: HTTP 403 Forbidden",
-      "[work] 銀行新聞 GN1: HTTP 503 Service Unavailable",
-      "[work] 銀行新聞 GN2: HTTP 503 Service Unavailable",
-      "[work] 銀行新聞 GN3: HTTP 503 Service Unavailable",
-      "[work] 銀行新聞 GN4: HTTP 503 Service Unavailable",
-      "[work] HK banking wide: HTTP 503 Service Unavailable",
-      "[work] 23 items after filtering",
+      "[work] 222 items after filtering",
       "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
       "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
-      "[smalltalk_hk] 商業新聞 GN1: HTTP 503 Service Unavailable",
-      "[smalltalk_hk] 商業新聞 GN2: HTTP 503 Service Unavailable",
-      "[smalltalk_hk] 商業新聞 GN3: HTTP 503 Service Unavailable",
-      "[smalltalk_hk] 商業新聞 GN4: HTTP 503 Service Unavailable",
-      "[smalltalk_hk] 0 items after filtering",
+      "[smalltalk_hk] 81 items after filtering",
       "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
-      "[smalltalk_sg] SG business (GN): HTTP 503 Service Unavailable",
-      "[smalltalk_sg] 11 items after filtering",
+      "[smalltalk_sg] 22 items after filtering",
       "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
       "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
       "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
       "[personal_hk] HKFP: HTTP 403 Forbidden",
-      "[personal_hk] 港聞 GN1: HTTP 503 Service Unavailable",
-      "[personal_hk] 港聞 GN2: HTTP 503 Service Unavailable",
-      "[personal_hk] 港聞 GN3: HTTP 503 Service Unavailable",
-      "[personal_hk] 港聞 GN4: HTTP 503 Service Unavailable",
-      "[personal_hk] 香港 wide: HTTP 503 Service Unavailable",
-      "[personal_hk] 15 items after filtering",
+      "[personal_hk] 189 items after filtering",
       "[personal_sg] Workers' Party: HTTP 404 Not Found",
-      "[personal_sg] SG govt (GN): HTTP 503 Service Unavailable",
-      "[personal_sg] 6 items after filtering",
+      "[personal_sg] 21 items after filtering",
       "[juicy_hk] 明報 港聞: HTTP 403 Forbidden",
       "[juicy_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[juicy_hk] 明報 副刊: HTTP 403 Forbidden",
       "[juicy_hk] 明報 即時港聞: HTTP 403 Forbidden",
       "[juicy_hk] HKFP: HTTP 403 Forbidden",
-      "[juicy_hk] 港聞 GN1: HTTP 503 Service Unavailable",
-      "[juicy_hk] 港聞 GN2: HTTP 503 Service Unavailable",
-      "[juicy_hk] 港聞 GN3: HTTP 503 Service Unavailable",
-      "[juicy_hk] 港聞 GN4: HTTP 503 Service Unavailable",
-      "[juicy_hk] 香港 wide: HTTP 503 Service Unavailable",
-      "[juicy_hk] 熱話 GN: HTTP 503 Service Unavailable",
-      "[juicy_hk] 奇案 GN: HTTP 503 Service Unavailable",
-      "[juicy_hk] 16 items after filtering",
-      "[juicy_sg] Mothership GN: HTTP 503 Service Unavailable",
-      "[juicy_sg] SG news GN: HTTP 503 Service Unavailable",
-      "[juicy_sg] SG politics GN: HTTP 503 Service Unavailable",
-      "[juicy_sg] SG life GN: HTTP 503 Service Unavailable",
-      "[juicy_sg] 31 items after filtering",
-      "Candidates sent: work=23, smalltalk_hk=0, smalltalk_sg=11, personal_hk=15, personal_sg=6, juicy_hk=16, juicy_sg=31",
-      "Prompt size: 57,447 characters",
+      "[juicy_hk] 521 items after filtering",
+      "[juicy_sg] 207 items after filtering",
+      "Trimmed 1152 clusters to fit the 60,000 character budget",
+      "Candidates sent: work=10, smalltalk_hk=11, smalltalk_sg=11, personal_hk=11, personal_sg=11, juicy_hk=11, juicy_sg=11",
+      "Prompt size: 63,613 characters",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-nano-banana-2.1, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, gemini-4-argon, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview, gemini-3.8-flash-tts, gemini-3.8-flash-lite-tts, gemini-robotics-er-2-preview, gemini-2.5-computer-use-preview-10-2025",
       "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.6-flash failed: HTTP Error 503: Service Unavailable",
-      "Model gemini-3.5-flash failed: HTTP Error 503: Service Unavailable",
-      "Model step skipped or failed (All candidate models failed; last error: HTTP Error 503: Service Unavailable) — using RSS summaries",
+      "Model used: gemini-3.7-flash",
+      "[work] model returned 3, topped up by 37",
+      "[smalltalk_hk] model returned 7, topped up by 33",
+      "[smalltalk_sg] model returned 6, topped up by 15",
+      "[personal_hk] model returned 3, topped up by 37",
+      "[personal_sg] model returned 6, topped up by 15",
+      "[juicy_hk] model returned 3, topped up by 37",
+      "[juicy_sg] model returned 4, topped up by 36",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2018-12-01&to=2018-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 405: Not Allowed",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2019-12-01&to=2019-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 405: Not Allowed",
       "API failed https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?from=2020-12-01&to=2020-12-31&sortby=end_of_date&sortorder=desc&pagesize=1: HTTP Error 405: Not Allowed",
@@ -81,20 +59,20 @@
   },
   "weather": {
     "available": true,
-    "desc": "Cloudy periods at first. Mainly fine, hot and dry during the day.",
-    "tmin": 26,
-    "tmax": 32,
-    "hmin": 50,
-    "hmax": 85
+    "desc": "Sunny. Hot and very dry during the day. There will be swells.",
+    "tmin": 24,
+    "tmax": 31,
+    "hmin": 35,
+    "hmax": 75
   },
   "hkma": {
     "available": true,
-    "as_of": "2026-10-21",
+    "as_of": "2026-10-22",
     "balance_hkdm": 54125.0,
-    "change": -27.0,
-    "flat_sessions": 1,
-    "hibor_1m": 2.67917,
-    "hibor_on": 2.24,
+    "change": 0.0,
+    "flat_sessions": 2,
+    "hibor_1m": 2.745,
+    "hibor_on": 2.52,
     "base_rate": 4.25
   },
   "hkma_bars": [
@@ -280,6 +258,298 @@
   "sections": {
     "work": [
       {
+        "zh": [
+          "滙豐今日正式推出穩定幣",
+          "旗下PayMe用戶獲支援兌換",
+          "進一步拓展本地數字資產零售場景"
+        ],
+        "en": "HSBC is launching its stablecoin today, enabling PayMe users to conduct conversions directly. The move marks a significant integration of digital currencies into everyday Hong Kong retail payments.",
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMipwJBVV95cUxNRmVfdmhaTk1keHZOcV8tN1h4bzZBLWd3dUR0Mk1WNzA1OGg5QTJGUW15Q2V4Q1h4Qms5WTF1OWZlY0F1ZXRNTW1yaXUyaHNWVkFJVm5nMVhYWm55eEpjSUtmMjVHTk5CN3lYMnM2cVVLaU82dWFHVDlwZ3JtZmRjc1NfQkVFTEJqVm1UMWc4dzMxd3laV2hRSEItdnNLSWNHODRuLTJYU25VTUZQTnBWVG9XNUZPZzdGSU1ReFZLbmFfV1h4SllzX3BzZy1JY0dZVTFld3h2cFhoZ2FINzBPbUFHRmhQTm81aXM4Q2lEaHhJcnBJV2FaNE5naTJBQVRkSUUxSnlPWTNnbFNqUDB0alNrWXhTR3dkSEMzUjRUZ01yRjk5WGRv?oc=5"
+          },
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxNVzdXUVNvWENlM0RNTUZ5eEZ3UVQwUVBXSnBlSlFtckNLSWxiS1BkTklsd1JsT1E3NUlvZ25Xa2xBV2lZNDhyNW5PcTg2UHBaRm1QVExjak5IZDc2dC1KcHN0TXlWejBQUjdiaWx2QlRBT3lLTFNxVmxhV3R5bWl4ekVmbUVPajRnSnMwM19pTGlZb0MzalQ3R0w4cm83WGhrdlpWNmJ3WnhIN3BJbEtxczhneXByQmVpcjRzTExDdmJZQzdNTTN2dUxBaVUxVks0Vy1NNTloOVBzcjlJeTdDaTRjVHJzNFIwWjM0cl9HOXAxYlRoWjlPT3oxMlpjWXo5Nk9odGhR?oc=5"
+          }
+        ]
+      },
+      {
+        "zh": [
+          "內地松延動力保密遞表申港上市",
+          "公司主營業務為機器人製造研發",
+          "港股新股市場再迎前沿科技標的"
+        ],
+        "en": "Mainland robot manufacturer Songyan Power has confidentially submitted an application for an initial public offering in Hong Kong. The filing continues the pipeline of advanced technology firms seeking listings on the HKEX.",
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMi6AJBVV95cUxObEw5bTNxOUNzMVl6RzJheVdJakRTZVh4Q1lxVzRGdWR2U1ZZSU8ycUlnVVY4V2szbWZYQTJmOWVGa0gwb3preXB1RnVYS296dUNrY3dZd0lWZjk0X1drTFRrUlVENEREQ1NpWTVlNEZaNEtOSWs0NHRTM3VVdTlhWm5vbl83S3NzSGQ1ZGhWbmI4UWpRcl9yWmFiekstNFhEWFRSRnpmX3ZBQXlxdjJSaWJOY2FQZG1BdWhLdDdCZ1NhWG8yOGdDclAzOVJCQmdISTNycTBSSHFUS0lTMWRLU3hLMTF1d2t0Y2FjbFctZkpwbk1YN2lmbDhJbnFyVmJOSUlFUVFvS2wwX01hNjQ4d3FuM0I3T0JkclVfaTZhX1FPc2wxcTA1M2NNSFF5RmJNX2FKYXpWV2tLdkNCajFlcFJvOFA2R1Jfb21QbFZ4Z2hyMVRIRWlrYmFkTUlWTzVZWXRyY3A0VkI?oc=5"
+          },
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPUmVaMVlya0IxOHpCcWZUZ19iSHFLRGJtSDdKMHFIcjR1QWtqM3NBRFFLNjdtZVlKZVhacE51V0VOajFfeHprODllaklkNFBMVmsydEdJVExyZVNERnJQNXU2dWdJOVJzT3FuanZjamlENXBiY0w1T19za1psZFFHSXA5MWdZM0hJZG5MZ09haUZKZkNKejY0RVdwamlUSVlKa2szTzR5ZjRLNTFraFVKWGY5TmE1eG51WHlxNVhPRG1oUjFoTlRXRTM0bnFCVHJBRUl6ZGRoeURnVkQwd3U5SlhjWHVxMXpJdWVRZDJWSEFpNThwUlE?oc=5"
+          }
+        ]
+      },
+      {
+        "zh": [
+          "平安數字銀行推兩款融資新模式",
+          "針對進出口商融資難點提供支持",
+          "同場強調發揮香港大灣區樞紐優勢"
+        ],
+        "en": "Ping An Digital Bank has rolled out two new financing models designed to support import and export merchants. Speaking in parallel with APEC finance meetings, the bank highlighted Hong Kong's role as an essential Greater Bay Area digital finance hub.",
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxNMjB6ZkpnQzAwNE8wakxtRTdDT0x3dEJFN0pKTGdfTVNDUDV3UW1YSWtIMjh5aTdlSE1ialZoTEdnUDhiX0FHVXB2XzdlRmxiYTFFWG9zdUxEclpnWGgwbHdROWlmWGhnVkt6TDBmZVZWUEx4UnFhUDdnTlcyZGZlQkFpdFU4dEYtTks3LWFiUXY2aVBpeG9scEttb1BVN1dtalFsNEhNcFZrNFV2V09qeDVnaS1ZdkR5YXVmbDdZVEUyM1UyTmtiQ240dGdhWlFJZEFGelNOcnRXUnB1NUVIODdfWnAwd3NuQmNFNTFGdlhZTzdMbHFFSWJQU0JJdmEyMERjTVBfV25tX1U4ZnVMckE3M0tGSmZ4UER2UGIwWXVaWnpTdHdNTi1yX0pfSnY2NlQ1ci1leUQzTnVGQ3VTbGlMb1ctNlYzLXVjX2V2T1Y0ZEc0d0pURUV6aw?oc=5"
+          },
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi0ARBVV95cUxQTVdXcXU3OXNfeGJCSkdLV25oWXRfbTh1SEF2eHI3dHN2WThodnRjOGZ5VWtQMFV0RnRtYUJVc0JMbE8wa0J6ZmJFeDFlQ3JRMEVQYlA2OTJrOHd4dGFwQTlfVXBxRXZYWGNYN1daN1ZHRDVTUENwZjZCcEZORjVEaGZERU5vdE56SlljMzAwa0gzcllYdmozWGs5Z2hoekNxOEFrR29PRkcydkVWUnZrRUN5dzZmS0xud1RWZzBFaE9QcHZtVHJYQXVNeEhURlBPY3MtZE00UG83X0xVb3Q5Y3EtX1R1YmJBQnFONkgySV9vY2hjS3U5ZFJuNVJnR0FtOHQ2ZlZPeXBjT3E4bXpSRXVzbmFnNUE3WENSUDM1OC1YZmtmU3JGWnE0SldZTFBVOWNiODI4NlJDUWJXeE1yS2dySmJieEwyaGMyblpBRHNjNl8tYjA0dVY0czMwSXAxQ29vanM4MjhSSmN6QUk2cmZZM1pUZkZOck1NdktXR00xR0Q0RXF3ZTlFdkZLVHhKcWR6SkduQ0VocnVZellrRE56b2ZiQzB1Q2V3NXY5SE9jN2pERFZ1UHBZWVllWmhMV3RDbzFZUDRNeE9YZ0pZRmxYNDFPX1pCM0R3eEJ5dlFGUXMxY1lmMFYxblNwQ0RnR1UzQzBDODJWeURHaF9RbkRET1BwYl9fUEQ1eE0zR0NpZzEwTFVoemhFWWxhZVJEdXZiZVlxR2o0b1VkcEJtWl9Vc0Y0YkdqeUVTUXBHNzNZN3N3ZkljUWIxMzRxX2oz?oc=5"
+          }
+        ]
+      },
+      {
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMiqwJBVV95cUxQOUxHWkIzbTF0MlVJU0E5WWZMVTU0OC1KTzBraU9sbEs5anMzdzNCOVRfOVRucHd5ckxUREo4eFhCZ0lEMmIwMGtSUEx6RlZSWUVhZ1VnTHlEWTl0MXA0ZHoxRDN6MGZOVkJUZlJLVUhqdUc5MXVSWDlSa2RFV2tSYTBLMHBFOXlFajBqS2NKWG51QXZyWkNKazA3aWp1MTR0aWQxSXFibE90aEcwLWZnd2VHUEJmTGpLa0FGdENxQ3k2UmlobVRkbHJzM2RQMmV5ZXNKU2JYOEZPNkZlN1BvNUFsNEhuRVBXRExOZmJlaWxrcXVPX1FxTFExNE5MMG5zRUM5LW9YSXVMYVYwT1B1cU16SGdOQ2dGZWJnSjRDQUpHWG5uZk5pakFjNA?oc=5"
+          },
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxQcU5aS1B1RFdSNV9LcW9BVERpV0ZmVEFfU3ZUWkh1cmR6OFlRX1p4ZEc5Ml9ZUTFCTFl0cUEza2ZPejltcEdFRUdVczhDcEl1LXNwLWJzM0RvRThEcVdDWUpnTjNOZXhTNGt1STVSRG9oVGR5X1kzUlRTdXRXQ3dQYWl1d01ueWJDZGp2MVZqTEV1anJlQ3NGY1l4MDFaTVZ4dTB3UFRfUmJlUGV0UmdmQmp0UmhZUXZuTW9NWUJKek1FTFZGSXhwd09qVkpySVA0aHlWcTcyOWE5S3UtT3FpSUVBeldYY2l0Z2Y1TFpQUllmTHZtWnVRVDRnek15TmZkQlVHUFhfRXplQQ?oc=5"
+          }
+        ],
+        "zh": [
+          "和美藥業宏芯宇通過上市聆訊 - 20261022 - 經濟",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi1ANBVV95cUxQMEdYa0JyM19ZdU1vRkFZTmdMOVk3ZjlXeV81N0w4eFdkQm9xSGVQa2lvUjZ0Vk1PX1RmUmtmR1Zpb0dDZXk1ejY2ZHNjc3ZNYnZtS2NrLTZ1cW5MT1ZBUVRnQUp2c1NEUkFxVjI2MExWTC1NTmhkbTdFaE5DSFJab3BEWFdIZ21GWFBGM3h5OUpkem9NYjVaRUlzcW9QSDV6TDVxRFlEeXNSd01lRGo0WFNkeHo4bHR2Q244aXJWdVdqdlVuTEVCa0dpdzR4MXY2TkdGbGdib0NBQTJmdWc4U1RyQ1VJOUtUMnZyVldlcWZKOFVDT1RDNzVtS08tejczZ0ZOZmVhc3NqQ08yWkNLaExOSEpmMmVIZDV5eTVfc192SUNldzdPZWg5VTAteVZLeHg3QnFURU1neVBHN1ptcXNMejY0dFFXSEdUNGNxTXJwd3RCT0pQU1k0bEhBWTBsbUp0U1NUdWJnWlFqUkI5blBDM21kdExnR1ZPRVFDNDdtaEYycFdqU0xuMEx1QlR0ZUplaDZ0clYwb3hJV0x5UzNPeFVGVVJNT0FtN190cWVNb2V1Mk1FQ3lzdTFrdDc4UmhKc3JzUnVIbjhldDJrdUZJTXo?oc=5"
+          }
+        ],
+        "zh": [
+          "農業銀行(01288) 債券及結構性產品 - [發行通函或定價補充文",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMipwJBVV95cUxNRmVfdmhaTk1keHZOcV8tN1h4bzZBLWd3dUR0Mk1WNzA1OGg5QTJGUW15Q2V4Q1h4Qms5WTF1OWZlY0F1ZXRNTW1yaXUyaHNWVkFJVm5nMVhYWm55eEpjSUtmMjVHTk5CN3lYMnM2cVVLaU82dWFHVDlwZ3JtZmRjc1NfQkVFTEJqVm1UMWc4dzMxd3laV2hRSEItdnNLSWNHODRuLTJYU25VTUZQTnBWVG9XNUZPZzdGSU1ReFZLbmFfV1h4SllzX3BzZy1JY0dZVTFld3h2cFhoZ2FINzBPbUFHRmhQTm81aXM4Q2lEaHhJcnBJV2FaNE5naTJBQVRkSUUxSnlPWTNnbFNqUDB0alNrWXhTR3dkSEMzUjRUZ01yRjk5WGRv?oc=5"
+          },
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxNVzdXUVNvWENlM0RNTUZ5eEZ3UVQwUVBXSnBlSlFtckNLSWxiS1BkTklsd1JsT1E3NUlvZ25Xa2xBV2lZNDhyNW5PcTg2UHBaRm1QVExjak5IZDc2dC1KcHN0TXlWejBQUjdiaWx2QlRBT3lLTFNxVmxhV3R5bWl4ekVmbUVPajRnSnMwM19pTGlZb0MzalQ3R0w4cm83WGhrdlpWNmJ3WnhIN3BJbEtxczhneXByQmVpcjRzTExDdmJZQzdNTTN2dUxBaVUxVks0Vy1NNTloOVBzcjlJeTdDaTRjVHJzNFIwWjM0cl9HOXAxYlRoWjlPT3oxMlpjWXo5Nk9odGhR?oc=5"
+          }
+        ],
+        "zh": [
+          "匯豐今推穩定幣 PayMe用戶可兌換 - 20261023 - 經濟",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi-AJBVV95cUxOektFRW9EUERUSnYwa2xyalNJa3d1b0t5dl9kUXI3amQ0ZktnVnNNamM0OWVFZlVUc2dUQWJfeU11S3NYZGFWQXBqVk5TNTBuRFNTS1F4TFdzTXFNZnpEcE94dVE2OU5VU0tFNHo4THM0dkc0ajZRQTdqaHdrNnRlbWh5ZnFGbXVacDFnUmJNdTZaYU9GZ016WDd3N0ZsUVVwaElsYzgwZWRkckc1ZTlxUmozYTVkaXl6al9mbElseUdMcjNUWlhEZy1kVGw1THk0ZTlBNDRmT2FzOUpJOUlJNElkMUNIRlU3alFORDRyT1dMRV9SYkt1QTRxNXZwdk15Wlk2WW5HSm5GSjFIU1V2UXZNQ1YyVGszZF9DMXN0NVdMRGRvZGlyOTlVSG9kc3JyQUtZY1l6SGMzOVhNS0Z0UXlUYVBFZGJTT0MwazF2ckFCV0NMYVdkOVhWYkVhN2ZGVkZkaXJUWmZfV21jZHRlN0ZPNEFhX2xm?oc=5"
+          }
+        ],
+        "zh": [
+          "AI風險丨美國多家銀行發現客戶賬戶有未經授權AI智能體",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMi6AJBVV95cUxObEw5bTNxOUNzMVl6RzJheVdJakRTZVh4Q1lxVzRGdWR2U1ZZSU8ycUlnVVY4V2szbWZYQTJmOWVGa0gwb3preXB1RnVYS296dUNrY3dZd0lWZjk0X1drTFRrUlVENEREQ1NpWTVlNEZaNEtOSWs0NHRTM3VVdTlhWm5vbl83S3NzSGQ1ZGhWbmI4UWpRcl9yWmFiekstNFhEWFRSRnpmX3ZBQXlxdjJSaWJOY2FQZG1BdWhLdDdCZ1NhWG8yOGdDclAzOVJCQmdISTNycTBSSHFUS0lTMWRLU3hLMTF1d2t0Y2FjbFctZkpwbk1YN2lmbDhJbnFyVmJOSUlFUVFvS2wwX01hNjQ4d3FuM0I3T0JkclVfaTZhX1FPc2wxcTA1M2NNSFF5RmJNX2FKYXpWV2tLdkNCajFlcFJvOFA2R1Jfb21QbFZ4Z2hyMVRIRWlrYmFkTUlWTzVZWXRyY3A0VkI?oc=5"
+          },
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMixwJBVV95cUxPdTRzT3czNk5uX0t2RmtHcXJJXzd3VW4wV21hQWtEazdFaHF6NTJ2VDhPWXd6MGRpZ2xEeWx5QWlhZUtPOFhkYzhzTDZFQ3BVVnoxMWRYMTBReFl5Qnl5cFVyekVEN0xVVURqbUlya25FUi1yczRMWHo4cjEyeFBRS2RqMHBvcVhXa1FORXZrWWdEVGZRYUtZOUhCT2NKTGlZU3h2Sy1XMnBjX3d1Ymp6LU9ycHktTW5Rc21MQkhHaHlSOUdoWkM1bEJUVjg5OVJPUW0zdV84aFhXYUtPU0RZbEVFY3pkM0V1MUFjOTFEakoxMWZhY0VhWDBQempsMnNqV0stdTBlX0tZTXpkS2hFalZ0VGFyTTI1Zm5NSEFBNjVlQ2JOd0FTS1ZYYTF6LTQ0Y2pOQ2wtc3lVeWFhWGR3QXlvZXRuX2M?oc=5"
+          }
+        ],
+        "zh": [
+          "彭博：內地機械人製造商松延動力申港上市 - 20261023 - 經",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxOeXBtUWR1VWFFUXhka3NKQWY5cUhrYk1CX1NzcUhKRnlWWVNsZS1IZENjM1cwLTZjZ0x2Sk5GUzFMdWhkZ1N4SElNblgwSWJMZ2lDUzFZSUJ6em12eDc4Y0Z3N013d25DbVVfNjhiLWl2Q1NmWHVNNjdOU0hnZ0VDRDhBdVBBNUpXVHMydnNEQVUxMUtzY2lLajdZZGUwZTdlMVAtTlZjaEt2dkNCdy1yZ0RoRGdaWVY5eHM2VmVxLVMtcXdvakY2SjB2VGw4WEItaV9iY2JlQndfS2FwckRQLUdIUDkydW9ZRmN0NkJxRDNZaVZYX2xNZjhLZ1gxSmxaSE5leFdCb3lPaHcyNERfOWlmcE5ycGRHUldz?oc=5"
+          }
+        ],
+        "zh": [
+          "北水增持郵儲銀行 減持工商銀行 (07:56) - 20261023",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxNMjB6ZkpnQzAwNE8wakxtRTdDT0x3dEJFN0pKTGdfTVNDUDV3UW1YSWtIMjh5aTdlSE1ialZoTEdnUDhiX0FHVXB2XzdlRmxiYTFFWG9zdUxEclpnWGgwbHdROWlmWGhnVkt6TDBmZVZWUEx4UnFhUDdnTlcyZGZlQkFpdFU4dEYtTks3LWFiUXY2aVBpeG9scEttb1BVN1dtalFsNEhNcFZrNFV2V09qeDVnaS1ZdkR5YXVmbDdZVEUyM1UyTmtiQ240dGdhWlFJZEFGelNOcnRXUnB1NUVIODdfWnAwd3NuQmNFNTFGdlhZTzdMbHFFSWJQU0JJdmEyMERjTVBfV25tX1U4ZnVMckE3M0tGSmZ4UER2UGIwWXVaWnpTdHdNTi1yX0pfSnY2NlQ1ci1leUQzTnVGQ3VTbGlMb1ctNlYzLXVjX2V2T1Y0ZEc0d0pURUV6aw?oc=5"
+          },
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMiugJBVV95cUxOYllJbk44dHVxeTE5Z2FOV3dZMkRTWkFzdmFhbG5zcDM1OXN3NGltYXhGTUthOVhIaGduU2d0Tl92bjlLUTg4clYzWUNiUkY1ZG1iYk9lR2ZJQUtRQVlXd3JqMHZKZ2dxcGJ4WjMwUmFxcy1kX3Q3S0RfRGM1cHF6eGc5V0kzby1RMUc5VFlGZndfWHRrbjhZd3pWUnZtMWpSaFNsVEVaMGJfVS1yMUpUSTFWcy1NQlUtQVIxQlI3Sk9nYzhfU0FUeDhFd0lDbm5fWFQyWTlaOTBtbFF6QTZRMjBqd3hqR2xyNUFyVUdEcTc0MXVtY3BJM0JXeTVOanNqTzFRVGd2b2w4MGpsejBEUzZXWEdKX3Rpb1ZzOWU3Umx6MkNUS05Iem5RWl9wQnJ5bFJOSWZLb0JVQQ?oc=5"
+          }
+        ],
+        "zh": [
+          "平安數字銀行推兩融資模式助進出口商 - 20261022 - 經濟",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPUmVaMVlya0IxOHpCcWZUZ19iSHFLRGJtSDdKMHFIcjR1QWtqM3NBRFFLNjdtZVlKZVhacE51V0VOajFfeHprODllaklkNFBMVmsydEdJVExyZVNERnJQNXU2dWdJOVJzT3FuanZjamlENXBiY0w1T19za1psZFFHSXA5MWdZM0hJZG5MZ09haUZKZkNKejY0RVdwamlUSVlKa2szTzR5ZjRLNTFraFVKWGY5TmE1eG51WHlxNVhPRG1oUjFoTlRXRTM0bnFCVHJBRUl6ZGRoeURnVkQwd3U5SlhjWHVxMXpJdWVRZDJWSEFpNThwUlE?oc=5"
+          },
+          {
+            "name": "東方日報",
+            "url": "https://news.google.com/rss/articles/CBMijwJBVV95cUxNeHZoVmFJeGpsMUJHdUNZNGItWWVEb0l0bm1lV2FBdWoyNjB6NEpKenRXRUlTaGxRMml0MGcwOXU0MTB3YUp3Y1FzSXBBLVctamcxaHpJai0wQ015UU5zUGhZa0N2Y2JXNE8teXhXU0dRYTczS3c0aHN0T1duYldhSWNGZGd6SHR4TlhvRkR4c01wNFM2SXVtc2g2aTY1ZFRiTTVtbTZsZWRfN1lnakplQlpDRGhsN0NvcHVGSVJ6Nmx4VmlVa05TNjhaZWJCeThkd0lURHFPMlpMSnh1Z0lXYkM4VFZoRk82c2ZNWmZlQnc5ZFBwUHcyY2VSeGpaWjFxOFdXdURHdTdyMGpubjgw?oc=5"
+          }
+        ],
+        "zh": [
+          "松延動力保密遞表申港上市",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi0ARBVV95cUxQTVdXcXU3OXNfeGJCSkdLV25oWXRfbTh1SEF2eHI3dHN2WThodnRjOGZ5VWtQMFV0RnRtYUJVc0JMbE8wa0J6ZmJFeDFlQ3JRMEVQYlA2OTJrOHd4dGFwQTlfVXBxRXZYWGNYN1daN1ZHRDVTUENwZjZCcEZORjVEaGZERU5vdE56SlljMzAwa0gzcllYdmozWGs5Z2hoekNxOEFrR29PRkcydkVWUnZrRUN5dzZmS0xud1RWZzBFaE9QcHZtVHJYQXVNeEhURlBPY3MtZE00UG83X0xVb3Q5Y3EtX1R1YmJBQnFONkgySV9vY2hjS3U5ZFJuNVJnR0FtOHQ2ZlZPeXBjT3E4bXpSRXVzbmFnNUE3WENSUDM1OC1YZmtmU3JGWnE0SldZTFBVOWNiODI4NlJDUWJXeE1yS2dySmJieEwyaGMyblpBRHNjNl8tYjA0dVY0czMwSXAxQ29vanM4MjhSSmN6QUk2cmZZM1pUZkZOck1NdktXR00xR0Q0RXF3ZTlFdkZLVHhKcWR6SkduQ0VocnVZellrRE56b2ZiQzB1Q2V3NXY5SE9jN2pERFZ1UHBZWVllWmhMV3RDbzFZUDRNeE9YZ0pZRmxYNDFPX1pCM0R3eEJ5dlFGUXMxY1lmMFYxblNwQ0RnR1UzQzBDODJWeURHaF9RbkRET1BwYl9fUEQ1eE0zR0NpZzEwTFVoemhFWWxhZVJEdXZiZVlxR2o0b1VkcEJtWl9Vc0Y0YkdqeUVTUXBHNzNZN3N3ZkljUWIxMzRxX2oz?oc=5"
+          },
+          {
+            "name": "am730",
+            "url": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxQNVY3MVNwWEdEZ3FMcDd3VC1sWDQydS05N2dLTWQxbG5TaUZUU01nb3BfaEQ0TmRUbWhyS2pNcGhfTy1KX1paeVVLbFdqb05GQWhFaVByOEJjTjcxRUhYSVZnYTJTeDlYSmRRZ1A4MlpnU3ZXWG5xVkFlT3UzUkd6U29yLUpNNWFXa2tOX01OenJyVWNiLVp1TzVKWl9seHR4N2VraEMxSWhPX21JVzVvZjBHdk04UUl4OGF1VnZFd25IMHNoMEJOOU5ScVVNM1hyazBXWm5pclhmM2o5YV9fT1lQN25iWjRzT1hRbzBfbG9hX2xqbWczcjZVeG5Mc3RvN2ttSnFkQXMxRGxETk5vYXdaWi1BeDZIdGpZZ3daQnhwcDB3YnNfd21aOHpmVGFicS1Eb1ItWlE0NVhfZXV3amVHdXdvZWQ4Nm9wSHhSbzFVbTRRRUlDUUVuNVNQdmVvOEkzTA?oc=5"
+          }
+        ],
+        "zh": [
+          "APEC財長會丨平安數字銀行:發揮大灣區樞紐與數字金融優勢",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxPVFdNbDFQNVlsdzkyeHRjaTVnREZwRmdvV3ZkTjRUTWNDdGN2WWxBSl85Q2VTVEN5c3FtMWtDN3ZMd0lQWk9GVXNqcFB6R3h0YVFFenRYZUhzanoxTWM5NFphaGlTQ0dlVEdmVlNTSGE0dHM4WERGVkdkeUtMN0NRQ1dhS1Jac1RobUpkbXJPNzVMZXpiOS1aSncxSU1pc0FmSUZ4aUJZQ2tHUzhpWEZUZllraUZtVENiUWV6ZEJRbzFyZzdsbnFkcHFRSE1hTVVFOXRmV2pPLW5WTVBWWVJET2xfczRqdG8?oc=5"
+          },
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMi6gJBVV95cUxOXzFZTmJmNGxqOExHclRKYkt0VXZwX0NqV050SmZwdmVJZ1NKSzJrbHJzT1oweUZMTWFfeGQxWUxyM2o1Qm5DMTlucFY1cVdaTGs1ZS13dTZITEwtM3h5azFBdmpNQWRic3h2NU9QNVp0N29YTThESlV0T3c2ck1JR1NiZUlNTXI5b0llMzhWVGlJOXhqaWIxOEVWaFIzd1Rsdk9aU0pCYXBsQXVyeEk0eGxiUmlXbjgzaHd3S0VaNUY4bWk4a3QxY001WlliOVZuOG05YjhWdHFhQjJ5QjBXemRzU0pJRGgtN1BZeVgxY3RWb3RjLVY2WHVUcGlFTTI1cS1aaTNSX3d5cll6bjRqZ2tucm9naGJLTi1LSjFHaXBPd3NUNHY2eUlJS1ZROTdxMXBrbzNiaHBVQ3luWjNpNUpRRFlLaUxRN2k1TVFSdmlORWVvQjliU0I2Rm52ZmVMb21SdXZXM2VpZw?oc=5"
+          }
+        ],
+        "zh": [
+          "新股IPO丨奧士康擬赴港上市",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMivANBVV95cUxQRjhQUVJGRmZaZko5TG54bDl0NXZIUHJUMHJlUXRIRnJwUlZCM1hURWo3Mm1xMEI1M2ZPSy1adDM2bVpKQ1N5WHNMWmtxYkxnX3hVVTR4ZnV5cWRyeXFkRFlvSEx1ZWRRZkJTaS1EbTdUZkd1dW80MlFYbDZEWjc3TVRzcTFWSXgwcFZxS1FhYWFxbEl4YUVEOGpFR3d4TU82aXhGYjRVdzF6VlZTS0puQVBYQVg3SVRYT3NlXzRlTWpWd25SVE9lbFlrX0dIeFFVcElLaWFhNjkzX1F4dVZTQm9xdHdXYnNUVVVLWkZ5Y2ZrNUVraEhVaDEwNWlSMk4tUEFzZ3I1dTFHejdMelFYUWRyekhrVzZaQjdSREhpeFRkTkE1d2pGSUdqM2FHWU9yV08yOTZEM3hTc3h1U0x0TzQyZ3hBQ2FRX2M0cE5HM0ItcHlyaERqYXIzMUR0c3dyeEgySFI5Q3hmQ1hrYm9RekNPazc4RFhwbnNRLUxqVExYVUpKSmRMS1NXb21iZEJDcWFCNG80VEE0ck1yTWZsRHdzRDhqUlVGLXVCNW8wVnpycHRXcTAwcWNpZkI?oc=5"
+          }
+        ],
+        "zh": [
+          "恒指瑞銀七四沽A(18559) 債券及結構性產品 - [補充上市文件",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMirAJBVV95cUxQamIxckcyQjYyclU3R1FLRGtYVGJhNmpjc21mNWVTZmxldlFVT0pTQWRrelpWU2hkX2RrMmNVTzNxWFVCOE1MM0R4c284U3RmQS1GNUNLdzVObnh5THNJeEVaUTVVa2MwQkZXeU9DVGo4ZmR5QTdBa2RHWjQtTUZTQm5NRk1jSHI0d3ZFbmxtaVZkbTZuUU5nWGV0MDhDOUktcEZmSEljb3BOS3VmSWV1U3dEZHpnekFuX1FTWmJfUXQ2QTNuWEw1YXMyeE5BQ1o5Q0tyblU0eDNxOUU2Y3ZmbUowR05zdm9MYnFXMEpzMndvVU1uNnpyMGk3Q3A5U0lNUEJtcFJ0SFcxN2tRelQxdTJVU3h5N2Z4Qy14TmJ2dUtETWhaZ1c1S2x1VlE?oc=5"
+          }
+        ],
+        "zh": [
+          "華潤醫藥(03320.HK)附屬一貫煎顆粒獲批內地上市",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
+        "sources": [
+          {
+            "name": "Fintech News HK",
+            "url": "https://fintechnews.hk/41453/videos/is-your-crypto-safe-if-your-custodian-goes-bankrupt/"
+          }
+        ],
+        "zh": [
+          "No institution moves into digital",
+          "assets until it knows who will hol",
+          "d them and what happens to those a"
+        ],
+        "en": "No institution moves into digital assets until it knows who will hold them and what happens to those assets if that custodian fails. This panel looks at custody as the gating issue for institutional adoption in Malaysia, where licensing is in place but enforcement is still catching up with Hong Kong and Singapore. The panellists [...] The post Is Your Crypto Safe If Your Custodian Goes Bankrupt? appeared first on Fintech Hong Kong ."
+      },
+      {
+        "sources": [
+          {
+            "name": "Fintech News HK",
+            "url": "https://fintechnews.hk/41446/virtual-banking/elebank-causeway-bay-store-hong-kong-digital-bank/"
+          }
+        ],
+        "zh": [
+          "Hong Kong digital bank EleBank has",
+          "opened its first physical store in",
+          "Causeway Bay as it expands beyond"
+        ],
+        "en": "Hong Kong digital bank EleBank has opened its first physical store in Causeway Bay as it expands beyond online banking services and places greater emphasis on wealth management. EleBank officially opened the location on 15 October, describing it as Hong Kong’s first physical store operated by a digital bank. Spanning more than 1,600 square feet [...] The post EleBank Opens First Physical Store in Hong Kong appeared first on Fintech Hong Kong ."
+      },
+      {
+        "sources": [
+          {
+            "name": "Fintech News HK",
+            "url": "https://fintechnews.hk/41434/fintechtaiwan/grab-foodpanda-taiwan-deal-blocked/"
+          }
+        ],
+        "zh": [
+          "Taiwan’s Fair Trade Commission (FT",
+          "C) has blocked Grab’s proposed US$",
+          "600 million acquisition of Deliver"
+        ],
+        "en": "Taiwan’s Fair Trade Commission (FTC) has blocked Grab’s proposed US$600 million acquisition of Delivery Hero’s foodpanda delivery business in Taiwan, citing competition concerns. According to Reuters, the regulator announced its decision on 21 October, concluding that the potential harm to competition outweighed the transaction’s overall economic benefits. The FTC also determined that the commitments offered [...] The post Taiwan Blocks Grab’s US$600 Million foodpanda Acquisition appeared first on Fintech Hong Kong ."
+      },
+      {
         "sources": [
           {
             "name": "Fintech News HK",
@@ -380,30 +650,30 @@
       {
         "sources": [
           {
-            "name": "Fintech News HK",
-            "url": "https://fintechnews.hk/41348/payments/mastercard-jd-com-overseas-card-tax-refund/"
+            "name": "Ledger Insights",
+            "url": "https://www.ledgerinsights.com/sofi-launches-retail-tokenized-deposits-paying-4-4/"
           }
         ],
         "zh": [
-          "Mastercard and JD.com have launche",
-          "d two payment services for oversea",
-          "s visitors to mainland China."
+          "Today SoFi Technologies unveiled S",
+          "oFi Earn (SOFIE),",
+          "a tokenized deposit at SoFi Bank w"
         ],
-        "en": "Mastercard and JD.com have launched two payment services for overseas visitors to mainland China. Travellers can now pay on JD.com with foreign-issued cards and receive an advance equal to their tax refund before departure. They are the first measures delivered under the partnership the two companies signed in May. How the services work The first [...] The post Visitors to China Can Now Use Overseas-Issued Cards on JD Pay appeared first on Fintech Hong Kong ."
+        "en": "Today SoFi Technologies unveiled SoFi Earn (SOFIE), a tokenized deposit at SoFi Bank with FDIC coverage that pays a variable 4.4%. When a customer wants to spend the money or move it on chain, they convert it into the bank’s stablecoin, SoFi USD. It is rolling out to SoFi Crypto members through November. What’s notable […] The post SoFi launches retail tokenized deposits paying 4.4% appeared first on Ledger Insights - blockchain for enterprise ."
       },
       {
         "sources": [
           {
-            "name": "Ledger Insights",
-            "url": "https://www.ledgerinsights.com/mastercard-launches-early-access-for-agent-pay-for-machines/"
+            "name": "RTHK finance",
+            "url": "https://news.rthk.hk/rthk/en/component/k2/1874949-20261022.htm"
           }
         ],
         "zh": [
-          "Mastercard is starting to roll out",
-          "its agentic payment solution with",
-          "Agent Pay for Machines now in earl"
+          "China Evergrande Group's liquidato",
+          "rs have recovered US$435.9 million",
+          "from asset sales and loan recoveri"
         ],
-        "en": "Mastercard is starting to roll out its agentic payment solution with Agent Pay for Machines now in early access. What’s more interesting is how the Mastercard solution works. In May 2025 Coinbase unveiled the x402 protocol for AI stablecoin payments, which essentially involves a direct payment to a web-based service from a user’s wallet. While […] The post Mastercard launches early access for Agent Pay for Machines appeared first on Ledger Insights - blockchain for enterprise ."
+        "en": "China Evergrande Group's liquidators have recovered US$435.9 million from asset sales and loan recoveries so far, highlighting the challenge of repaying creditors with claims of about US$46 billion against the developer. In their second progress report since a Hong Kong court ordered Evergrande's liquidation in January 2024, the liquidators, Edward Middleton and Tiffany Wong of Alvarez & Marsal, said on Thursday they aimed to make a first interim dividend payment to creditors in the first half of 2027, although the amount has yet to be determined. Evergrande, once China's top property develope"
       },
       {
         "sources": [
@@ -436,174 +706,675 @@
       {
         "sources": [
           {
-            "name": "RTHK finance",
-            "url": "https://news.rthk.hk/rthk/en/component/k2/1874642-20261020.htm"
+            "name": "RTHK 財經",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1875004-20261023.htm"
           }
         ],
         "zh": [
-          "Financial Secretary Paul Chan said",
-          "on Tuesday that geopolitical uncer",
-          "tainties have brought downside ris"
+          "港股美國預託證券（ADR）普遍較本港收市上升。",
+          "科技股方面，ATMXJ都較本港收市升逾1%至逾2%，",
+          "以阿里巴巴和京東的升幅較大。"
         ],
-        "en": "Financial Secretary Paul Chan said on Tuesday that geopolitical uncertainties have brought downside risks to the financial market and called for a prudent approach to tackle them. Speaking at a plenary session of the Asia-Pacific Economic Cooperation Finance Ministers’ Meeting, he noted that while the global economy has shown resilience, its growth remains uneven and under strain. “Asia continues to outpace global growth, supported by technology-related trade and investment,” Chan said. “We see this momentum in Hong Kong, where merchandise exports rose by more than 40 percent in value in the f"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK finance",
-            "url": "https://news.rthk.hk/rthk/en/component/k2/1874633-20261020.htm"
-          }
-        ],
-        "zh": [
-          "Hong Kong stocks and the mainland'",
-          "s blue-chip shares weakened on Tue",
-          "sday,"
-        ],
-        "en": "Hong Kong stocks and the mainland's blue-chip shares weakened on Tuesday, joining a broader retreat in the region, after Beijing kept key lending rates unchanged and stronger GDP data dampened expectations for additional stimulus. In Hong Kong, the benchmark Hang Seng Index fell 319 points, or 1.3 percent, to 23,867 on turnover of HK$190.45 billion. The tech index lost 62 points, or 1.5 percent, to close at 4,045 while the China Enterprises Index was 97 points, or 1.2 percent, lower at 8,030. Up north, the mainland's blue-chip CSI300 Index ended 0.5 percent lower while the Shanghai Composite I"
+        "en": "港股美國預託證券（ADR）普遍較本港收市上升。 科技股方面，ATMXJ都較本港收市升逾1%至逾2%，以阿里巴巴和京東的升幅較大。 至於金融股，港交所和友邦較本港收市升近1%，滙控則靠穩。 編輯：張詩民"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874855-20261022.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1875000-20261023.htm"
           }
         ],
         "zh": [
-          "Meta公布，將於明年1月發行新的無表決權C類普通股，",
-          "以支持大規模人工智能（AI）擴張計劃。",
-          "Meta計劃以一次性股票股息的方式，按每持有1股A類或B類股份，"
+          "美元變動不大，但美國債息下跌，因市場對人工智能前景憂慮重燃，",
+          "債市出現避險買盤。",
+          "美元指數在紐約尾市報101.64，跌幅約0.04%。"
         ],
-        "en": "Meta公布，將於明年1月發行新的無表決權C類普通股，以支持大規模人工智能（AI）擴張計劃。 Meta計劃以一次性股票股息的方式，按每持有1股A類或B類股份，派發1股C類股份，相當於將股份1拆2，同時不改變股東的投票權。 另外，公司上季每股盈利3.83美元，收入升26%至646億美元，兩者都高過預期。期內自由現金流為負21.2億美元，去年同期為正106.3億美元。 公司上調全年支出預期下限，目前預計今年資本支出，將介乎1350億元至1450億美元。公司預計本季收入將於730億至760億美元之間，市場預期為737.3億美元。 Meta行政總裁朱克伯格表示，在過去1個半月，美國和加拿大已有逾1000萬人，開設AI助手應用程式Muse帳戶，預計Muse未來將服務幾十億人，相關用戶創造的收入，可能高於Meta普通用戶的平均水平。 編輯：張詩民"
+        "en": "美元變動不大，但美國債息下跌，因市場對人工智能前景憂慮重燃，債市出現避險買盤。 美元指數在紐約尾市報101.64，跌幅約0.04%。歐元兌美元跌約0.2%，較早時報1.1213美元。英鎊兌美元近乎持平，報1.3396美元。 美元兌日圓下跌，低見156.7日圓，尾市跌幅近0.9%，報156.79日圓。 另外，美國10年期債息跌穿5厘水平，較早時跌逾18個基點，於4.96厘附近。30年期債息跌逾15個基點，在5.28厘以上。2年期債息跌逾17個基點，在4.64厘水平。 編輯：張詩民"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874850-20261022.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874995-20261023.htm"
           }
         ],
         "zh": [
-          "港股美國預託證券（ADR）與本港收市比較個別發展。",
-          "金融股方面，滙控ADR較本港收市升1%，但友邦跌0.5%。",
-          "至於科技股，阿里巴巴和京東ADR都較本港收市跌逾1%，"
+          "歐洲股市收市下跌，德法股市跌逾1%，銀行股受壓。",
+          "德國DAX指數報25371點，跌273點，跌幅近1.1%。",
+          "法國CAC指數報7811點，跌110點，跌幅近1.4%。"
         ],
-        "en": "港股美國預託證券（ADR）與本港收市比較個別發展。 金融股方面，滙控ADR較本港收市升1%，但友邦跌0.5%。 至於科技股，阿里巴巴和京東ADR都較本港收市跌逾1%，騰訊則升0.3%。 編輯：張詩民"
+        "en": "歐洲股市收市下跌，德法股市跌逾1%，銀行股受壓。 德國DAX指數報25371點，跌273點，跌幅近1.1%。 法國CAC指數報7811點，跌110點，跌幅近1.4%。 英國富時100指數報10725點，跌27點，跌幅近0.3%。 編輯：張詩民"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874848-20261022.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874955-20261022.htm"
           }
         ],
         "zh": [
-          "英美期油價格一度升逾2美元，收市個別發展，",
-          "市場關注地緣政治因素及美國庫存減少的影響。",
-          "倫敦布蘭特期油初段在5個月高位附近徘徊，高見每桶111.32美元，"
+          "行政長官李家超表示，金融是香港的根本和最大的優勢。",
+          "香港在「一國兩制」下擁有內聯外通的優勢，",
+          "多年蟬聯最自由經濟體全球第一，"
         ],
-        "en": "英美期油價格一度升逾2美元，收市個別發展，市場關注地緣政治因素及美國庫存減少的影響。 倫敦布蘭特期油初段在5個月高位附近徘徊，高見每桶111.32美元，收市報每桶108.82美元，升3美仙。 紐約期油報每桶97.15美元，跌67美仙，跌幅近0.7%。 美國能源信息署（EIA）公布，上星期美國原油庫存減少306萬桶，減幅遠多過市場預期的82萬桶。 編輯：張詩民"
+        "en": "行政長官李家超表示，金融是香港的根本和最大的優勢。香港在「一國兩制」下擁有內聯外通的優勢，多年蟬聯最自由經濟體全球第一，穩居《全球金融中心指數》全球第三、亞洲第一。特區政府上月公布《香港第一個五年規劃》，會壯根基、穩結構、強功能、控風險，深度聯通內地與海外市場，助力國家建設金融強國。 李家超在2026金融街論壇年會閉幕式以視像方式致辭，指當前世界百年變局加速演進，地緣政治錯綜複雜，單邊主義與保護主義抬頭。金融是現代經濟的血脈，面對經濟碎片化的影響，國際社會更需集思廣益，以合作破局，以協同致遠。 李家超指出，香港將繼續鞏固全球最大離岸人民幣業務樞紐地位，以金融活水服務國家高水平對外開放。在國家支持下積極增加人民幣流動性，擴大點心債市場，並提供多元化產品，包括推動將人民幣交易櫃台納入港股通，這些措施將穩慎扎實推進人民幣國際化。 他又說，特區政府會持續強化連接國家與全球資本的樞紐功能。證監會明年將就精簡招股章程諮詢，便利海外優質企業來港上市集資。同時香港透過內地企業出海專班及財資中心稅務優惠，全力支援內地企業善用香港的優質專業服務，拓展國際市場。 李家超提到，香港今年躍居全球最大跨境財富管理中心。將持續構建更具競爭力的資產及財富管理生態圈，讓環球資金在香港找到最佳的配置機遇。同時，香港正構建亞洲頂尖的風險管理中心，推動為黃金、綠色燃料等新興產業提供專項保險，為實體經濟構築堅實防線。 編輯"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874812-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874947-20261022.htm"
           }
         ],
         "zh": [
-          "財政司副司長黃偉綸說，截止今年7月底，",
-          "在香港的人民幣存款和存款證餘額達到約1.3萬億元，",
-          "人民幣債券在香港的發行規模連續兩年超過1萬億元，"
+          "在岸人民幣兌美元收市升50點子，連升7個交易日，",
+          "報6.6727兌1美元，再創逾4年新高；中間價則微跌3點子，",
+          "報6.7195兌1美元，結束四連升，較市場預測偏弱近440點。"
         ],
-        "en": "財政司副司長黃偉綸說，截止今年7月底，在香港的人民幣存款和存款證餘額達到約1.3萬億元，人民幣債券在香港的發行規模連續兩年超過1萬億元，種種亮麗數據充分反映香港在人民幣清算、投融資和風險管理方面的重要角色。 他出席金融街論壇年會一個有關人民幣國際使用的平行論壇時表示，面對複雜多變的國際環境、安全、高效和多元的跨境支付及投融機渠道，對全球經貿往來越來越重要。人民幣在這方面扮演舉足輕重的角色。 他說，國際環境大量變化，帶來不少挑戰，亦正好為人民幣進一步國際化，提供龐大機遇。 編輯：宋家樑"
+        "en": "在岸人民幣兌美元收市升50點子，連升7個交易日，報6.6727兌1美元，再創逾4年新高；中間價則微跌3點子，報6.7195兌1美元，結束四連升，較市場預測偏弱近440點。 市場人士表示，人民幣升值預期及結滙需求均推動人民幣走強，預計短期延續穩中偏升走勢。 編輯：羅煒皓"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874811-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874924-20261022.htm"
           }
         ],
         "zh": [
-          "亞太經合組織財長會在香港特區圓滿舉行。",
-          "特區政府表示，",
-          "各成員經濟體和國際組織的代表就多個區域經濟發展的重大議題展開了深入交"
+          "菲律賓央行加息0.5厘，指標利率上調至5.5厘，連續4次加息，",
+          "市場原本估計加息0.25厘。",
+          "央行表示，今次決定是將貨幣政策保持適當的緊縮程度，"
         ],
-        "en": "亞太經合組織財長會在香港特區圓滿舉行。特區政府表示，各成員經濟體和國際組織的代表就多個區域經濟發展的重大議題展開了深入交流，形成廣泛共識和務實成果。會議充分展現香港作為國際金融中心背靠祖國、聯通世界的獨特優勢，以及舉辦大型國際會議的能力。香港將繼續發揮「超級聯繫人」和「超級增值人」的角色，深化與亞太經合組織成員經濟體的交流合作，為促進區域經濟金融發展作出貢獻。 財長會今日第二日舉行，大會發表《聯合聲明》。財政司司長陳茂波在討論環節發言時表示，推動普惠金融，關鍵是讓市民和中小企業安全、便利地使用可負擔、可靠的金融服務。他分享香港推行「商業數據通」的經驗，透過促進企業與銀行分享數據，提升信貸評估效率，便利中小企業融資。他強調，消費者保障、數據管治和清晰的責任機制，必須與創新同步推進。 陳茂波表示，香港支持在明年延續青年財經人才交流合作，培育兼具專業知識、良好判斷力、國際視野和跨境協作能力的新一代人才。他建議交流聚焦負責任地應用人工智能、數字基建融資及普惠金融等實際政策議題，並建立參加者之間的持續聯繫網絡，促進學習和長遠合作。 財政部部長藍佛安在會議閉幕致辭時表示，各方應堅定落實亞太經合組織領導人非正式會議共識，堅持多邊主義，深化財金領域務實合作，為區域經濟金融穩定和長期可持續增長作出貢獻。 藍佛安在新聞發布會提到，會議深化亞太各方在三方面的共識，包括加強宏觀經濟政策溝通協調，協同應對外"
+        "en": "菲律賓央行加息0.5厘，指標利率上調至5.5厘，連續4次加息，市場原本估計加息0.25厘。 央行表示，今次決定是將貨幣政策保持適當的緊縮程度，必要時準備採取進一步行動。 受到大米、電力、燃料和交通價格上升影響，當地通脹率由8月的6.1%，升至9月的7.2%。而內需及建築業低迷，第2季經濟按年增長2.3%，是2021年以來最低增速。 編輯：羅煒皓"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874809-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874940-20261022.htm"
           }
         ],
         "zh": [
-          "港交所方面透露，",
-          "今年以來TMT同人工智能相關公司佔港股IPO集資總額約70%，",
-          "市場關注AI過度投資，如何平衡鼓勵創新及防範風險。"
+          "證監會在市場失當行為審裁處對嚐．高美集團3名高層，",
+          "以及其5名親屬、僱員和緊密聯繫人展開研訊程序，",
+          "涉嫌計劃操縱嚐．高美股價以配合該公司從香港聯交所GEM轉往主板上市的"
         ],
-        "en": "港交所方面透露，今年以來TMT同人工智能相關公司佔港股IPO集資總額約70%，市場關注AI過度投資，如何平衡鼓勵創新及防範風險。 財政司司長陳茂波總結APEC財長會回應有關提問，指出香港上市制度要緊貼實體經濟發展，與時並進，方便不同類型科技企業上市，同時強調證監會及港交所不會放鬆監管。 編輯：宋家樑"
+        "en": "證監會在市場失當行為審裁處對嚐．高美集團3名高層，以及其5名親屬、僱員和緊密聯繫人展開研訊程序，涉嫌計劃操縱嚐．高美股價以配合該公司從香港聯交所GEM轉往主板上市的計劃。 證監會指，在2020年6月1日至9月18日期間，嚐．高美主席兼共同創辦人黃毅山、行政總裁兼共同創辦人陳慧珍及時任首席財務官余孟滔，指示或協調陳雪兒、黃毅銘、黃一真、黃嘉盈及陳敏5名其他人士進行交易。該5名其他人士涉嫌自行或透過他人買賣嚐．高美股份，人為地推高股價並維持在約1.32元，以符合轉往主板上市所需的5億元最低市值要求。 期內，嚐．高美的股價由0.73元飆升86%至1.36元。證監會指，有關交易呈現股價操縱活動的特徵，包括在接近收市時發出進取買盤，以及發出可推動或決定收市價的買賣盤。期內有6個交易日，上述交易佔該公司股份當日的全部交易。 證監會指，相關人士之間的通訊包括討論目標股價，何時及如何發出買賣盤；計劃亦涉及大量資金轉帳配合，資金在轉帳後不久便用作購買嚐．高美股份。公司股價首次於2020年7月27日收報1.32元以上，同年8月5日宣布正式提交轉往主板上市的申請，但最終未如原定計劃轉往主板上市。 審裁處將根據證監會提出的指控，裁定是否曾發生任何市場失當行為，以及任何曾從事有關涉嫌失當行為的人的身分。 編輯：羅煒皓"
       },
       {
         "sources": [
           {
             "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874803-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874935-20261022.htm"
           }
         ],
         "zh": [
-          "亞太經合組織財長會閉幕，會議審議通過聯合聲明，",
-          "亦核准及發布亞太地區數字基礎設施融資政策聲明。",
-          "APEC各成員經濟體財長認識到，數字化基礎設施作為數字經濟基石，"
+          "港股顯著下挫，恒生指數低開近140點後，很快失守23000點關口，",
+          "半日下跌679點，下午沽壓加大，恒指最多跌772點，",
+          "收市報22934點，創近4個月低位，跌717點，跌幅3.03%，"
         ],
-        "en": "亞太經合組織財長會閉幕，會議審議通過聯合聲明，亦核准及發布亞太地區數字基礎設施融資政策聲明。APEC各成員經濟體財長認識到，數字化基礎設施作為數字經濟基石，對長期經濟增長至關重要，直接影響企業，特別是中小微企業市場參與。 財長會主席，國家財政部部長藍佛安在會議閉幕後的記者會上提出，在數字基礎設施融資方面，各方鼓勵公共部門營造有力政策與監管環境，支持私人部門提供資金，並推動創新融資，鼓勵多邊開發銀行發揮催化作用，共同為數字基礎設施提供融資支持。 財長會亦形成推動區內可持續增長財政政策和普惠金融領域等成果文件，並同意繼續推進亞太地區青年財經人才交流與合作。 編輯：宋家樑"
+        "en": "港股顯著下挫，恒生指數低開近140點後，很快失守23000點關口，半日下跌679點，下午沽壓加大，恒指最多跌772點，收市報22934點，創近4個月低位，跌717點，跌幅3.03%，是大約7個月以來最大單日跌幅，主板成交金額增至約2561億元。 藍籌股除美的集團靠穩，其餘全部下跌。 科技股繼續是跌市主要原因，科技指數接連失守3900及3800點關口，收市報3793點，創逾兩年低位，跌幅5.03%，逾1年半最大單日跌幅。 騰訊完成發行18億美元及260億元人民幣票據，市場關注公司未來在人工智能會否過度投資，股價跌近3%。聯想集團跌逾10%，華虹宏力跌逾9%，寧德時代跌逾7%，連跌7個交易日。阿里巴巴亦跌逾6%。 金融、公用及地產分類指數跌逾1%至2%以上。滙控、友邦及港交所跌逾1%，多隻內房股跌逾2%。新地收市跌逾3%。醫藥股亦普遍受壓。 編輯：李意琴"
       },
       {
         "sources": [
           {
-            "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874793-20261021.htm"
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMimgNBVV95cUxNVFBUcG9qdmdpUVBIY3N0NUlfOEI1cjFnMWtmSVhfWUszTEEzT3VOYlJyNGVueFNuYUJObG1YMXZBUlRjMGZ3WkVDWTZ6SnotN1hTSDRudE45ajFaaXVLdjBmVjZDbGpyalljWGZYWWxlVFN2aDVDM3JfNEp1dTlaejBsTHNkWW9XTGhnbWxfSkVVZnR5V0dxM2RFRnIxb29pOXp5OU9vajM0eHJxOE5nZldQYkJuWndfbEU3X0tTMDlvWHJreGpMS1lPaFNEUERHS1lSaDc0TGRBTl8za2ZyZHBvenRtZU1ieXdLMTM3ZlFaUGdISWpNaTNmQ2JpTGRpRUl6ZWZ4MmZmWTIyakk2Y2R1a3RfdGtjOHBMZ0tVU2VSbDloY0F4WVRyOFdPbE9kckp0TlBITWdzWHJNQ0ZteUxFUlpPX3ItZGc4ckFwcFJTd3lwa0c4cmFiTU9pcEF1OFFmS2U0LUhZWDh5RVIxRG13MjhnWWM1VWRsTy13bmlMX0pJYXQ2MWNqZHNteS1uaEZrQmI2QkQ2UQ?oc=5"
           }
         ],
         "zh": [
-          "中銀香港副董事長兼總裁孫煜表示，人民幣國際化歸根到底是「用出來的」，",
-          "企業願意用、市場方便用、投資者放心用，人民幣國際使用方能行穩致遠。",
-          "他形容，香港始終是人民幣走出去第一站，亦是人民幣用起來的「實驗田」。"
+          "【HSBC穩定幣】滙豐 RedCoin登陸PayMe日常付款！銀行A",
+          "（只有標題，未有內文）",
+          ""
         ],
-        "en": "中銀香港副董事長兼總裁孫煜表示，人民幣國際化歸根到底是「用出來的」，企業願意用、市場方便用、投資者放心用，人民幣國際使用方能行穩致遠。他形容，香港始終是人民幣走出去第一站，亦是人民幣用起來的「實驗田」。 孫煜在香港出席金融街論壇年會香港分會致辭時說，國際貨幣體系多元化已是大勢所趨，越來越多國家和地區希望降低對單一貨幣的依賴，而人民幣幣值總體穩定，背後是全球第二大經濟體和第一大貨物貿易國的堅實支撐，已日益成為國際市場主體重要選擇。 他提到，近年來越來越多境外政府機構、金融機構和企業選擇以人民幣借款發債，熊貓債、點心債發行持續活躍，人民幣正從結算貨幣加快向投融資貨幣及儲備貨幣全面拓展。 孫煜認為，要鞏固提升香港全球離岸人民幣業務樞紐地位，未來可重點關注提升香港人民幣清算功能，推動香港人民幣即時支付結算系統（RTGS）與周邊國家系統互聯互通，推進債務工具中央結算系統（CMU）升級，亦要增加離岸人民幣國債、央票及高等級點心債發行，積極培育離岸人民幣回購交易。 編輯：宋家樑"
+        "en": "Headline only - this feed carried no article text."
       },
       {
         "sources": [
           {
-            "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874791-20261021.htm"
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMizgNBVV95cUxNZlJPVldEUmN4QXlheVFVemdzM1VteWhNb1ZMMlFBOXpWV2RQVUE1S2dIdGtvWTlRdnRsZGRiZUxNSkhnejhud1N0NnNEeVlNekZ6amUyaklDNHpBazk1c2pudVV0bUgwYUlkWGgtTHh1ZnBGWHQwa0gwWHdrLUUwYllVR3A0WU5tYlpEN3JFWmJmaU9saDNibVhTOTlZTnBIY2FzRkRTYXZWaFMwZy1GUlk5RjQ0ZHcydkhzVHRzMFRHZkd0QjV5RmVzNGJydEhKempINmFHNGpFcXZXeGhQNUZoeEFhMnNJSGNOeWJYRF96WFFCcHc4UnYtRlV0OVhpd1U1VUxEbkVJN0o1Mi0zd1ZvUlFwNFlvVGpabVRxVE9hdkpFQXRYOXpldGREc3JTQnZqOTk4RVgwNWhqZGFjZU5OWVNMYkR4dGJXQ2RpWGlBT2RyZ3BjMUJJYVZuVWZFVWdQWmpzdk9NSkhwVkxYd2N0REFqdTJPTVZaSk1fY0F1Q1UwVlpZNVcycDQxYkVCZEtwMm5RZWd6aGk4NTZ1TmxoWUxMaUtrZmgxQzlwTVpGYUNxc1RQZFZXTndsUF91T2ZpM0ZkX0tmUlByaXc?oc=5"
           }
         ],
         "zh": [
-          "中國銀行行長張輝表示，",
-          "隨著全球範圍內「借人民幣、用人民幣、投人民幣」的良性循環加快形成，",
-          "人民幣已日益成為全球使用者提高支付效率、提升價值回報及有效管控風險的"
+          "【HSBC穩定幣】滙豐料年內推代幣化貨幣市場基金 用穩定幣認購入場費",
+          "（只有標題，未有內文）",
+          ""
         ],
-        "en": "中國銀行行長張輝表示，隨著全球範圍內「借人民幣、用人民幣、投人民幣」的良性循環加快形成，人民幣已日益成為全球使用者提高支付效率、提升價值回報及有效管控風險的選擇。 張輝在金融街論壇年會致辭時指出，人民幣國際使用正加速從量變走向質變，今年首3季，中行的境內分行辦理跨境人民幣結算16.5萬億元，按年增長25%，其中貨物貿易項下人民幣結算佔比達到31.86%，境外機構辦理跨境人民幣結算突破20萬億元，按年增長近13%。 他又說，中行在首3季跨境人民幣貸款和貿易融資餘額已經超過4800億元，分別為斯洛文尼亞、巴基斯坦、印尼等國家發行首筆熊貓債。 張輝表示，中行將大力推廣人民幣結算便利化產品，助力貿易投融資項下更多場景的人民幣閉環使用。 編輯：宋家樑"
+        "en": "Headline only - this feed carried no article text."
       },
       {
         "sources": [
           {
-            "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874781-20261021.htm"
+            "name": "銀行新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQcWJ1OVo2d2JPUmJmMElHQmVrYkxBTVNta24tMFlrS2pMTE5vaUhJaU5QOUdVTnpJalJRN3QzbE82TThNWVRwWTZqLVhOa3VsdDF1azFqTVRya2F4dXJzU2VUOVdzSk5QV1pIdFAxQldiMTZTcHM5dU8ybDBVOFM2LUh1dmdXcWNvSGl1V0trMEIzN1luTGRqSjRVejR2RHhZZWRha21Wd255cjhQb1BPb0pXUktLbE5yc2YwMFA1VWhsbjNpWTh4TnVRQWVWUmlCY0lLaHZ3TFF1c180UDJiMXRaeDZsaFlXSXZoc0ZrMUVGbGRU?oc=5"
           }
         ],
         "zh": [
-          "一連兩日的APEC財長會閉幕。",
-          "財政司司長陳茂波表示，",
-          "各方坦誠就宏觀經濟政策、財政政策、金融政策的協調和政策溝通，"
+          "港元定期存款 12厘息新優惠開搶",
+          "（只有標題，未有內文）",
+          ""
         ],
-        "en": "一連兩日的APEC財長會閉幕。財政司司長陳茂波表示，各方坦誠就宏觀經濟政策、財政政策、金融政策的協調和政策溝通，亦討論到如何互相支持基建融資以至數字基建合作，以及進一步推動亞太作為區域經濟發展等內容，又觸及到培養年輕財經人才的議題，形容內容相當豐富。他說，會後發表聯合聲明的做法難得，因各經濟體有不同立場及考慮，認為對下一步推動更多跨境融資和跨境企業上市，以及本港和內地企業以及本港專業服務出海尋求商機，都有幫助。 陳茂波表示，出席的經濟體代表來港，有參觀過不同地方，留下非常正面印象，又說他們對會議的安排感到順暢和滿意。他表示，籌辦今次活動要有相當的人力物力，要仔細考慮，讓訪客賓至如歸，他形容本港今次籌辦會議做得不錯，讓人留下較好印象。他提到，本港在舉辦會議和展覽方面相當成功，國際聲譽非常好，以往到訪較多是商界人士，今次就包括政界，認為對於日後再推動更多交流合作及爭取舉辦活動有好處，亦有利於日後爭取再辦其他活動，但強調要國家支持及國際組織對本港投信任票。 陳茂波表示，透過APEC財長會，可讓與會者更了解本港的一國兩制獨特地位，即時受惠的是訪客數字及他們的消費，認為活動的意義更在於外國商界及政界領袖對本港的態度及了解。他表示，有向與會者介紹首個五年規劃，他有信心在過去兩日和與會者的交流中，對本港發展和經濟感到積極正面。 編輯：任順熙"
+        "en": "Headline only - this feed carried no article text."
       }
     ],
-    "smalltalk_hk": [],
+    "smalltalk_hk": [
+      {
+        "headline": "CE receives independent inquiry report on Wang Fuk Court fire",
+        "body": "Chief Executive John Lee has officially received the investigation report from the independent committee examining the fire at Tai Po's Wang Fuk Court. Lee expressed gratitude to committee chairman David Lok and members Chan Kin-por and Rex Auyeung for their efforts.",
+        "sources": [
+          {
+            "name": "news.gov.hk",
+            "url": "https://www.news.gov.hk/eng/2026/10/20261022/20261022_120829_074.html"
+          }
+        ]
+      },
+      {
+        "headline": "Tesla Q3 revenue beats expectations despite 56% plunge in operating profit",
+        "body": "Tesla reported third-quarter revenue of $28 billion, topping analyst estimates even as operating profits tumbled 56%. The stock saw an initial bump of nearly 2% in after-hours trading.",
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMivwNBVV95cUxOSmVHMUlFYVpXTmNrallvWmhuYU1vOTI3VFo5c0tzdE9ST0dWaDBDNF9fUW90bEJnTldMMUhtR18zb2lqRzRyTE1leThfb0IxNnl2WmhCajFGUjlsNWJIemJ5QTh4TXV6Q3hDRGg2TnlCaVd5S0ttM29Ea3YxS2hvSXFSTHhLR2kzeWJ1SjFRYjJ3MjR2d0dxSlY3Sjk2QVYwMENDUXB6VFd1dVpXM2VlNV8zZ3lNX3dkMjNBNWZzUTdnLTZxY0otZmdtV3NHc1BuUlpzbVYwdnBPUGFFTkZBZzVZdjRUdlVsbE5NMUhEZlV1OUxZQWtBdWxGSUNvUWVwM1g4MjIzSjVBRGZqX1hfWjAzTUJzbnZrOVFMX1VqYWtxUklEUVliSncxaHFSWGJTQURaU2RscGxnalY1d1NRQ2lZSVpBc2wtU0lIQTl1dUstT3hja2hWa3p1WU1YZzljUDRKSThuR0NpaVEwbnFQMUxlWWdlTmJ6Wl9sLUV2QUtZTHpZNlcteWNuOTRBSklqSjdCY2l1NDUyejdYVXlIWDkyNDB4MGRucVBtRG94Q1ZEc01MZW51aVdrMkUtNW8?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Lockheed Martin lifts full-year guidance on 11% Q3 sales bump",
+        "body": "Lockheed Martin reported third-quarter revenue that rose 11% year-on-year, comfortably exceeding street projections. Management subsequently raised its full-year performance guidance.",
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxNSUJ1RGlwTVItY3pic2g2ZV9udWw4RU1zZUh1djA0aXJBcWJLblVWTXhKUFlJamFhSDZFdEhVcmxYWGRLYTdZUEdIRTU4OUhHY0twbC1YbXhmeXdJMGJvMVFON0RwdWJOajZzV09hSGRzV1FmTmxCZXRNc2hvR2ZRYkJUanlhb0JZLTU3eUl4M2s2Sk95TW1NZG43TVJ2eWM2c1VjcldOUTVodS1QRVhUcDl5Nm5ZSFgyT0tpS0E0TjM3ekJlUlpMblpjOUZqZGxPZ3FZblJQSGFncUhtRFZ4S0NfWDNvOXkzLXdVUEw1ejkyZk02clpLUVlIRDJtdVN2QjY5OC1nZzEyekhhVF9ZNVVYZWpyOS1WbDhzNjkxMmk5dG9xRF9hMjRnTGR0STRrMlUyS1Y5aHFabWNBZGx1NGV1bnlGNzFEOU0zYjA4X2lYYkZlRWJPanROdHlUc1hKWkJGOUNjMjJlWmo0VjUweWpkQ2l4MkpDTW5uRTBPUnVHc3NPYjVZZ0FfZGZRRnk2TG04TGh6RGFXQ0dhNG1MX09MdkNTUDFybjI1OHpDRWNodkds?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Kering Q3 revenues flat as Gucci sales slip 6%",
+        "body": "Luxury group Kering saw overall revenue remain flat in the third quarter amid ongoing softness in the sector. Flagship label Gucci registered a 6% decline in sales during the period.",
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxQd0JNSlhmTklHcmQwNlhrNkpJX1Z3RnMtaURidC1haEI3LVNmSHJUVDVVT3pMNWtaTl9jajhib1RGLXk3OFhPcG1qLURpWU1EUE9yZm9hdmNORHJ5V2FSRGlpMEs4azZqVkJ3eFB0cV9vU2VjeFZQdDRnTkVlcGJUNTA5ajFiWWU3cGFfZTB5VHBNRnRCU2dzZlk3ZV9oSnhHTk8wYVNydHJlRVZfN2hkWXFKNW9RbDAtbU82MVl2dEc1dVZzSGFvVDFTMEpaQi0zdWlfOGQ3S2t3dFIyRzlWZXhEQUp5UE53cUp5Y2hiblZ3VUw0WmI3WUVNdlBMTkhrTFBOOUdrSHdzcTZJS3dJcDduUmtndnlrLXZLUU9RMVNXMlVYNURRLUttNElZM3ZlOXJWWDNZTGtXWVlHT05vVXhpeE0?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Meta Q3 revenue jumps 26% alongside robust guidance",
+        "body": "Meta posted a 26% year-on-year increase in third-quarter revenue, comfortably topping Wall Street forecasts. The social media giant also issued strong forward-looking guidance.",
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMizgJBVV95cUxQdUNvaTVZR3ZNaGo0cUpobWNPUHRGTmx0YU9yU3ZIcFVuNUtZWTJzUTFXaWtXOGV4a3BUbGpNaGU0cjN0ZGczclM2V180b3dpUDRvVGdaQVJRcmRabXdSM2lpM2pNd1lzVmQzM19Hc3JKY1hvWDZMOFRHWWFQSlBSZ1VCcHEwbmNLUGdDaHZiMkRMSUVQUzUzNFhiV2JXUFd1am9vV190UW1SSW5qQ09QckdCMWFjbUdWQkwyTndzNDN2bll1OXcwcThPUXRIUHRpbERPSUpJMmxsRGlFRUZadDVpbHBWOUNET2tXVFlDWV9uRGphMk9yWUJnVVFhcFhyaC1SNmRBSFZFMlNHSU9NVkY5S1F5cEZyRjZtdUh0V2NUOVBNZmxGVC0xQjZJNWlBWVNhckJKeU5seXBfNDNpMnBxUE94THh5V3g5RkV3?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "UBS cuts Anta Sports target by 5% on guidance hurdles",
+        "body": "UBS lowered its target price for Anta Sports by 5%, noting that the sportswear brand faces significant challenges meeting its targets. The report also cited a limited near-term financial contribution from Puma.",
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxPWG5HdFpMQkE2TEtNWmtkanZyZG9FV2RjUE95R3ZoeTZLOGZEYXBFUjZVZE54eDFFNENpb0VIYVFld0IxMGdOaVJyMFlISVhSeEN6c3AyOTUzM1ZPSkZmRXYxcmRNYWxLODh1R0E4V3VHSWpqZEtwak52bnFLcm1DbWxYNHhBaGljZ203SWI2cDhrMkloSk83MmxYLWJ1ZnBrOFJ3QmtvSFFsanNJd1NKRzJpbkQ4OURpcTZkdkFscDNNcXh4cFkyRlFEemI5VHh1dVBzVzh6YkdFU0lVNDJsckFQY1lzUkhma0JZY0N1aktNTi1XSEFMRmhPcG1UNFNPR1RIQWZQQ3dMYkRoRFVSVEE2Rk15RTdIczZaWkRVYXQ0UFZRWl9oUXFFenMwcnM0U3lvN2tIM1dhajN1Y0drdmhNSzBvYmZtaUpVaGpaT2V0M1pvTVB4VE1hREQ2SmtsbElTenptTDdWVV9aNlhZVFhfS1FWNTRCM1RrOUpWUE9sV2JTZHBreHloSWtvOHJxMkxzNHlpWlZtOHB1U2FjWFlaQnpDYXBDdkY5OXhaTGZHeEZp?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "Southeast Asian digital economy grows 17% via enterprise adoption",
+        "body": "A new regional study indicates Southeast Asia's digital economy grew 17% year-on-year. Enterprise applications have surfaced as the primary engine driving current monetization.",
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiqwRBVV95cUxONzVncmdRQ1dmWnBUTjhfXzJybXdwX1JOY29oRVBnejNMbHBFRUdaQzNJckdJV1V6MGFYclZIZDRCelBIdTgzWno3TjZqMXVsOE51UGk1QVpKT0dJV19MQjJMTktjLWY3TGdkR3htZE0wR2ZJLTVQd19RWHdFMWhEa3pvRTFDOXB1WmZoMXpVSTktYjNWS2pLZHVUMjdMaG1kOWtkM1F1Q0pVYkQ5ZzJMb1ZkMmxTbDJFQmdRWTdqejQxcEJaN2VFQTBDbTBPQjlqb0xaUnRsVFJrZi13LWRzcHVZbGM0TDFucmQ5dnVneGY5TW41MXE4U19xMjVFVXNEOGRiV0pOSlM1dW1yZUdIMDNHd0kxM1BLY1JBa3BsWHJnczZ1dkpmZkRmX19fcVQ4ME4yNWthYmpBMjZiUmhiNkVpRGNMbWh5bTBEZVNjdURrM29zWl9SNVJwQUlWOHBmMTNoSmVjQTBWNkd4UWs5OVF2bnFpTGpySi1KeWR5QWg5ZFA0Mk1DcFo4d0ZScnFZNklSQUlBdGlBTkNFem9NR2pNM01KWGxMMGtDVV9zdUJ5LTVXMjktamF6Qnc2dE8wMVo3VzQyN1N1NFRMQklKTEVsOWg5QTg3NmplRXRRLTdKRDE5MGdoci1yNkRGZ3ZLTnBWVDNRd18waks0SXI0NXNVM0xYSEJtUzRfbGMtd3FTWEt2TldtbUVGako2YUc1T0VDeEdzZXVnRU0?oc=5"
+          }
+        ]
+      },
+      {
+        "sources": [
+          {
+            "name": "news.gov.hk",
+            "url": "https://www.news.gov.hk/eng/2026/10/20261022/20261022_120829_074.html"
+          }
+        ],
+        "headline": "CE receives Wang Fuk Court report",
+        "body": "Chief Executive John Lee today received the report of the in dependent committee in relation to the fire at Wang Fuk Cour"
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMivANBVV95cUxNaTRpUzQ1c3lJMXQyV2F3T3B1WXBYQlV1ejBfb05jbTNHN3VfbFBYUUM3U1V1R0FTRUpMTUVfekV5cjB1R0dOUTlNMlVHV0t4YTJBbk1XWXduRExQdkdpS3huVy1VVG9RbXJ5aVBoc0VVUjBfTEtTRWNDWlZXOEd0dF9oV3VJcVMtcTlVdWViZkhKczRwZHdMMWpWaUJyUU8wMng1bF95a1FZci1iMGctcmhHTjFiS2VpZ2FSb1N2dXBEZ3JoWHdBdW5TOUZyX3gyWVBLLVNSWFRjM2hNUjVNbWplN3V0dHluSXFsQXFPbjRWb21Ga2VSalRkUVdCQ1kxN0RacEZXclNkNzE1TnZtby03RV9jMnpNaWF4SE4zallpazRGZXRkaEh0cldHOE5iek5lTUY2WHNrQkFhNjEwS1ZPUWxlMWlsY3h0Zm1KN056S1ZhYWhkMXp5TzhFcjlFNDNQRFBubWV4eVQxSUJqSXMwZE1VckEzRnZHOVNsMUFYbkJaLVZMSDBqeUFGc2Q2SVFjUVM3YXJmaHU2RV9ZWkVxbnV2dWRuZEZVVXozMDc5UmhCUFNTQnRCWmM?oc=5"
+          }
+        ],
+        "headline": "Meta、Tesla業績勝預期 但股價反應兩極？騰訊破底失400關 港股難有起色？",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiqwRBVV95cUxONzVncmdRQ1dmWnBUTjhfXzJybXdwX1JOY29oRVBnejNMbHBFRUdaQzNJckdJV1V6MGFYclZIZDRCelBIdTgzWno3TjZqMXVsOE51UGk1QVpKT0dJV19MQjJMTktjLWY3TGdkR3htZE0wR2ZJLTVQd19RWHdFMWhEa3pvRTFDOXB1WmZoMXpVSTktYjNWS2pLZHVUMjdMaG1kOWtkM1F1Q0pVYkQ5ZzJMb1ZkMmxTbDJFQmdRWTdqejQxcEJaN2VFQTBDbTBPQjlqb0xaUnRsVFJrZi13LWRzcHVZbGM0TDFucmQ5dnVneGY5TW41MXE4U19xMjVFVXNEOGRiV0pOSlM1dW1yZUdIMDNHd0kxM1BLY1JBa3BsWHJnczZ1dkpmZkRmX19fcVQ4ME4yNWthYmpBMjZiUmhiNkVpRGNMbWh5bTBEZVNjdURrM29zWl9SNVJwQUlWOHBmMTNoSmVjQTBWNkd4UWs5OVF2bnFpTGpySi1KeWR5QWg5ZFA0Mk1DcFo4d0ZScnFZNklSQUlBdGlBTkNFem9NR2pNM01KWGxMMGtDVV9zdUJ5LTVXMjktamF6Qnc2dE8wMVo3VzQyN1N1NFRMQklKTEVsOWg5QTg3NmplRXRRLTdKRDE5MGdoci1yNkRGZ3ZLTnBWVDNRd18waks0SXI0NXNVM0xYSEJtUzRfbGMtd3FTWEt2TldtbUVGako2YUc1T0VDeEdzZXVnRU0?oc=5"
+          }
+        ],
+        "headline": "環球動態",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxNSUJ1RGlwTVItY3pic2g2ZV9udWw4RU1zZUh1djA0aXJBcWJLblVWTXhKUFlJamFhSDZFdEhVcmxYWGRLYTdZUEdIRTU4OUhHY0twbC1YbXhmeXdJMGJvMVFON0RwdWJOajZzV09hSGRzV1FmTmxCZXRNc2hvR2ZRYkJUanlhb0JZLTU3eUl4M2s2Sk95TW1NZG43TVJ2eWM2c1VjcldOUTVodS1QRVhUcDl5Nm5ZSFgyT0tpS0E0TjM3ekJlUlpMblpjOUZqZGxPZ3FZblJQSGFncUhtRFZ4S0NfWDNvOXkzLXdVUEw1ejkyZk02clpLUVlIRDJtdVN2QjY5OC1nZzEyekhhVF9ZNVVYZWpyOS1WbDhzNjkxMmk5dG9xRF9hMjRnTGR0STRrMlUyS1Y5aHFabWNBZGx1NGV1bnlGNzFEOU0zYjA4X2lYYkZlRWJPanROdHlUc1hKWkJGOUNjMjJlWmo0VjUweWpkQ2l4MkpDTW5uRTBPUnVHc3NPYjVZZ0FfZGZRRnk2TG04TGh6RGFXQ0dhNG1MX09MdkNTUDFybjI1OHpDRWNodkds?oc=5"
+          }
+        ],
+        "headline": "美股業績",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMivwNBVV95cUxOSmVHMUlFYVpXTmNrallvWmhuYU1vOTI3VFo5c0tzdE9ST0dWaDBDNF9fUW90bEJnTldMMUhtR18zb2lqRzRyTE1leThfb0IxNnl2WmhCajFGUjlsNWJIemJ5QTh4TXV6Q3hDRGg2TnlCaVd5S0ttM29Ea3YxS2hvSXFSTHhLR2kzeWJ1SjFRYjJ3MjR2d0dxSlY3Sjk2QVYwMENDUXB6VFd1dVpXM2VlNV8zZ3lNX3dkMjNBNWZzUTdnLTZxY0otZmdtV3NHc1BuUlpzbVYwdnBPUGFFTkZBZzVZdjRUdlVsbE5NMUhEZlV1OUxZQWtBdWxGSUNvUWVwM1g4MjIzSjVBRGZqX1hfWjAzTUJzbnZrOVFMX1VqYWtxUklEUVliSncxaHFSWGJTQURaU2RscGxnalY1d1NRQ2lZSVpBc2wtU0lIQTl1dUstT3hja2hWa3p1WU1YZzljUDRKSThuR0NpaVEwbnFQMUxlWWdlTmJ6Wl9sLUV2QUtZTHpZNlcteWNuOTRBSklqSjdCY2l1NDUyejdYVXlIWDkyNDB4MGRucVBtRG94Q1ZEc01MZW51aVdrMkUtNW8?oc=5"
+          }
+        ],
+        "headline": "【TSLA業績】特斯拉Q3營收280億美元勝預期 營業利潤急跌56% 盤後一度升近2%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "明報新聞網",
+            "url": "https://news.google.com/rss/articles/CBMi0gJBVV95cUxNWVJMMlI5eW1rU0dOaGVCUlJVamJ5RTJ5Y0I4Tl9XcDNXZkxIRkkwaUVTbE8zOVBZWC1OazZoT1FacGYwT1FHTHdlSzJCNFJKNS1MQmtiNi1fQVlkRUJTZ2JfOXJaenZzb1ZzeXlqa1o0OEhrTlNad0N5cEZnbS1MQW5EaEQ0czA3T3BhR0FhSmZ0TVpQbmhXSlR2Zy04cUpxUmFCc2FzMkZYNGUzTWJZZVdEbkd5NDNSSzdpTTYtX2E1NVNabmcwNnF5RFlQWF94d3lQQU1rX3VsYWhHajVoa0ZVMVhTOWVrMTB4ME1UOU5XczRONmdwUEZsYVMwMzFrVjlTOGdILTV3RWhEYkIybmk5b0dFemVUd3Q2bmp3QjJRM2dFNnpRZXdtRnVtN3NfM01PLTNSaXg2dWN5SnhRT3lEamUxdEZ4NTQzTDB6YXUtZw?oc=5"
+          }
+        ],
+        "headline": "劉思明：港股受業績考驗 國泰息率吸引 - 20261022 - 經濟",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPLUJhTjRmY25XcUJpZ1Y0bnpLT0c5aTRaLS1SNk9RU2gydW45T0FyaC1tNTBJRmVvcXJmNlMxeDIwRnF3NjA1cjRnNHZ5NlpFcnFjTHE4cGxLdzZCdUJHNVBnT3h5a3UxUU1remMzdTFhYlJFN2hkVmt3WVJ1R2hEa204Q2xnNnV6WHQ2X3NlOHgtVkJTcUI2VVZwMWVRR0NrVlRnZWhCRmhkQzhzd3kyX0MwZ1ZDdFE?oc=5"
+          }
+        ],
+        "headline": "午市前瞻",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxNdW1mWDFURDloMVhJSFJoRXhUeWRsYVE2dHRRa1VveFBYZDQ1TE1nNzdzb2N2SFk2X0c5WlNmQ3EtRGxJSXlTLVZCQ0dkb2ZncnZMQ0VLdlh0eGF5ZG9SV2ZBY2h5czZyNWsyRG9EQXpkSk9MMFYybzNrbjBYa1RVeFluYllBY3JJekpTekFtU0o3YllLbDJQdk13c0ZxTHM3R0Vvd09jaXVNSXhxNko2SUFjVDdsNTNVT2gzVGZhOWhIRk4tOEF1NzRYZHpScDd5d05JcnFXRDF1RFJRVTRlYnlrTlJvdWFZMjhWcy1SQ1N4T0RDTEFQYmln?oc=5"
+          }
+        ],
+        "headline": "SpaceX兼任算力龍頭 雙頭馬車推業績",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxQd0JNSlhmTklHcmQwNlhrNkpJX1Z3RnMtaURidC1haEI3LVNmSHJUVDVVT3pMNWtaTl9jajhib1RGLXk3OFhPcG1qLURpWU1EUE9yZm9hdmNORHJ5V2FSRGlpMEs4azZqVkJ3eFB0cV9vU2VjeFZQdDRnTkVlcGJUNTA5ajFiWWU3cGFfZTB5VHBNRnRCU2dzZlk3ZV9oSnhHTk8wYVNydHJlRVZfN2hkWXFKNW9RbDAtbU82MVl2dEc1dVZzSGFvVDFTMEpaQi0zdWlfOGQ3S2t3dFIyRzlWZXhEQUp5UE53cUp5Y2hiblZ3VUw0WmI3WUVNdlBMTkhrTFBOOUdrSHdzcTZJS3dJcDduUmtndnlrLXZLUU9RMVNXMlVYNURRLUttNElZM3ZlOXJWWDNZTGtXWVlHT05vVXhpeE0?oc=5"
+          }
+        ],
+        "headline": "業績丨開雲第三季​​營收持平 Gucci銷售額降6%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxPWG5HdFpMQkE2TEtNWmtkanZyZG9FV2RjUE95R3ZoeTZLOGZEYXBFUjZVZE54eDFFNENpb0VIYVFld0IxMGdOaVJyMFlISVhSeEN6c3AyOTUzM1ZPSkZmRXYxcmRNYWxLODh1R0E4V3VHSWpqZEtwak52bnFLcm1DbWxYNHhBaGljZ203SWI2cDhrMkloSk83MmxYLWJ1ZnBrOFJ3QmtvSFFsanNJd1NKRzJpbkQ4OURpcTZkdkFscDNNcXh4cFkyRlFEemI5VHh1dVBzVzh6YkdFU0lVNDJsckFQY1lzUkhma0JZY0N1aktNTi1XSEFMRmhPcG1UNFNPR1RIQWZQQ3dMYkRoRFVSVEE2Rk15RTdIczZaWkRVYXQ0UFZRWl9oUXFFenMwcnM0U3lvN2tIM1dhajN1Y0drdmhNSzBvYmZtaUpVaGpaT2V0M1pvTVB4VE1hREQ2SmtsbElTenptTDdWVV9aNlhZVFhfS1FWNTRCM1RrOUpWUE9sV2JTZHBreHloSWtvOHJxMkxzNHlpWlZtOHB1U2FjWFlaQnpDYXBDdkY5OXhaTGZHeEZp?oc=5"
+          }
+        ],
+        "headline": "【大行報告】瑞銀：安踏難以實現業績指引兼Puma貢獻有限 降目標價5%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMizgJBVV95cUxQdUNvaTVZR3ZNaGo0cUpobWNPUHRGTmx0YU9yU3ZIcFVuNUtZWTJzUTFXaWtXOGV4a3BUbGpNaGU0cjN0ZGczclM2V180b3dpUDRvVGdaQVJRcmRabXdSM2lpM2pNd1lzVmQzM19Hc3JKY1hvWDZMOFRHWWFQSlBSZ1VCcHEwbmNLUGdDaHZiMkRMSUVQUzUzNFhiV2JXUFd1am9vV190UW1SSW5qQ09QckdCMWFjbUdWQkwyTndzNDN2bll1OXcwcThPUXRIUHRpbERPSUpJMmxsRGlFRUZadDVpbHBWOUNET2tXVFlDWV9uRGphMk9yWUJnVVFhcFhyaC1SNmRBSFZFMlNHSU9NVkY5S1F5cEZyRjZtdUh0V2NUOVBNZmxGVC0xQjZJNWlBWVNhckJKeU5seXBfNDNpMnBxUE94THh5V3g5RkV3?oc=5"
+          }
+        ],
+        "headline": "美股業績丨Meta Q3營收升26%勝預期 業績指引強勁",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMi_wJBVV95cUxPQlhVekN1RnI2c203VzBRREhMODRoSW9VZDZEQml4aVJpcERXblV2RUpkd3p6SGo5a1BtWnhGUjdsVVRKUkc3enRTUFB4em1KeTBVNVhleFcxNllMRFVUNFR4cU9QSXRlZmVUZl8zbG1zYU9sUVVkNDYwSVpTOFFaY1VIYW5QVUtiLUZ2TmdmM0VvWXVObk1jdG1oRFVrRDk0YWVIRkxxZDdPRU1PLUswdFNiY1hWWDBKN3Z4Y2hZem5YZXNxS0xlY2MteEt2R2I1QjBPTmhQQlF2SWRkRTZlVlJqdW9kckpwVjZINlVtSDRXR2RlRkVTa2VEYUpvN0JwMXRUQ3hhVzFTZE8wRGc4elhENGFyY3E1bVdxUFlJcmVVM0M0ZnpUZWgxNV9jakJ6SGVvR1RMZ01aWVlDSjNIb29MZl9DYjdSM0h6M1g1d3FjWDBRQ1N0RlRQNVBTOGdPOE9pX0hyWkZZT2ZWREY1cUhNM2swc1VxT3A0YXg3RQ?oc=5"
+          }
+        ],
+        "headline": "【IBM業績】Q3營收升4.7%勝預期 軟件業務復甦 盤後股價升逾4%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "商業新聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNX1l3c3J5OS1Yc2tZbzNWb1BiSjBLWU05YXEzQS0xVzdXNkd2dnhkWjdMWm5YSFJyOUdNcjZ3blhzWmJKOURxWlhlR0tuYzhlNmtvZEpiX1JFZGM3ZDI4ZjdKdnNiVk0xLXhjMzdfTFE4NENnUXExbHd6bi1tMmVMcHN1Z2lRQUVleGdzQUk1OXJCVHBHeVhJbThpbGEyNF9CYmdGbjdiZHVaYWJLUXFwTmJJb1VCMDQxanRlNTVyYUZkanN5UjEwcnV6eWhYOF93RGc?oc=5"
+          }
+        ],
+        "headline": "SpaceX業績證算力商如印鈔機",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxPbXU3bVN6X2xKOE05N3dBYnl1UTNuaExLb0lyUWdXcEk3QW1BSWNxelNXcXZSV3BTRmRVZE5oN0NQQmYwTWNUMW1SSTdudnpRbnhoYThZSGVHblo0YnFlY0ozeE44QzZYaVVlY0pEUjhDZXlZYXhOUzczX2FjWWpxZkJOTlRGUm9RNXQ0b01EbVhwTWdOM09lSzVmVTlLTE5yMmYycDF0QU1DV3N3SUhaLUdMSXhiXzl3Q1ZxZ1NXUEs2bnBmY0cwNVRyVVJNNlUyNnJsSWFaM3djZFBjMzU2RXI4LWtQa0U?oc=5"
+          }
+        ],
+        "headline": "科技股業績震盪 中芯要Put",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMi8wNBVV95cUxOU0pacXV1alRmY0lZaTVHdm9yUFduS1BCZXg1bHFWYlFhNFh5bGJWN1AteFVZcUhBTWc4VWVOci1wc1gtOUJKek9NSm15OU9WV3QzWGhGWmlMQUIzRVhfME9HRWpxV05LTHMxYW1QeF9UVFZyTzlqSXEwNTBGVnJZamgzTTlfaDE1Ylp2Y1JrenNBT0lCUHlabnFXeTNpZF9sUTF4VGRWRFZ1enhHcFJzQ2JBLU04aEkxWTFLOXp6bVBCclhLWW5xNjlyelhqcEVPOURXXy1YdFZDVS01VTNwM05DdU5qbUhQSnZTNkViTHk3VlgwdkI5cnU1dlNPTXFybEhjdy1PbUdjSHZTVG1ucXU0RndtNDNndEtWckVDUWhjQ1dwZEhZUkdSZzNMbl9BQ1hZTkJmYTZJUlFtVjVMY3RpQzRqanlFQnBpWHNZcUZuWmtyUGtZdUxSQ2FzRlowV3g2ekJ2WngtdEZPV29UM3JyRFlDeWRfTm01dGZKVjZQYkM4MnhqblFkZzY1b1A3cnQtWmRJTWJMRnpRLVlLZ2dwTGlrc1h6c3I0aUF5YThlN2VNY3FxazVIQXoxY0R6RUJ1OEUwNEtDdG12RzVLSVJ3RUppdTJBLVBoOElwSXk4ZWNiQVphVGlCN0RvZmplSElv?oc=5"
+          }
+        ],
+        "headline": "【META業績】Q3營收升26%勝預期 近百億美元訴訟開支拖累盈利 盤後股價一度升逾4%。",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxNWkk2MWlkM2RQMTR2SlVmRkpkMDAtWGN0QUg0ZUx5RTMzWFBVa0U3QUJSaDctZTd0SlFFLWQydTNTZkQ5RTJMNXpFTkM2NDJZOTJmX2tPeHRnd1VqbG9kRjF3TzgtQ0JyLUdpeWlUeHk2X193ZnJ5VWFESm5KZVRLU3FFc2Jwc2dlTXVJVHFYeVJQek51SXZrYXhWZUw5clY1SnJxTTgxMlQ3UnFNTjFBRFlVd1M0R282bnE4RUJRcXpBVUw0aUZ4a2ljeXJ2Tk9HMkNTTDJsNk1xa3l3ZzlZSW9MNC04STVYaWVtYV93LWVNVnlDUG9OVm02YjV2cFBVaXpkdjNhR0U0MXY5RmtnRnlUR0xHV0VMVmNnanpPMlR1SmlpTVJ0US1ydHVKVHNGclZsYXl0Wi1qMjNiSHZqbWxrQkhEQnAzQXVyQllfVHBDekxic2k3NA?oc=5"
+          }
+        ],
+        "headline": "美股業績丨特斯拉Q3營收零增長 電動車銷售跌",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "etnet 經濟通",
+            "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxON1lpUUtJUEN1cml5c1lCNTNpeXhodldYUEZWUGpYUHNOTkRnNlhaN0dkZ3BSOU1EZC13QWFXdmg3Ymt6OHJIRmlwbzBxVlpKMGtsRjVHN3hUOGlUUVZwc2hOaElWSEcyM2VaaHEzMnBtSDU0M1BWdlBySW5NQU42bTNsN2pPZHBNd3B5MjJMQWs5SUdLa3dqNC0xNkJRSHZVa2dydHRUektEX00?oc=5"
+          }
+        ],
+        "headline": "《再戰明天》英美公布PMI，神華國藥紫金洛鉬公布業績",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "信報網站",
+            "url": "https://news.google.com/rss/articles/CBMijwRBVV95cUxOajZLSDdsSHNuUzNTcm94d2JIbGN3UjlYdlZPRjFIY3RjYWxRdUdPN2dhVVNnb3hGZ21zOTk4T1BXR1Y1bjVGSXhjem5rVlhNc2E4enU3SFVISndqNE4zaTdHZ2JzaUpiQzl4cEQzeXU3UHpoc2dFcGVmbEw0VFZpLTlLTFJ3bXBjWXV2TmNmY0R0MnllYVlEWEp5cW5QSHFkWjBxOEpYUWNIS0UxOGcyLVlxMDRjYkhQOWE2dWNhQXFvOGxxMU5sM3MxU2VjUGtnVktVTnBTLXBpRWttX1JaTVFHNnBHQ1BObk1LaVl1RTBmQm1pZXlhSVRvWW4xcXQ2Mkt6RGY2dW16TkdwR1F2V1Z2NXFNbl95RExQdlJFLUpWTWJINklCcHpyU09naFdsWFZyNWJFSDVUUWFBZDdsMDVzYTQ5UnZnLUZtdWs4Q2huYnpqdGZubFFWYUxlMnVnUnVyUWc0SXZhc3lHQXFScUNOaEZwazFyTmhfek5tT2g0Q2V2dEhTdmdXNjRuNkhKNEctOGJrbGFwNTlQN1ZlY3Bjb1lfNEpXeDY1R3lqT1gzNGJMV3FGM2F5MXFnUERJUEhyWkdIenZCR1E3azlIbUpSSGswa0gxVXU3QVUxRmYzSW81a1VqOEJCS0wtd3EteGEwWE1wRUZzMFM5UFU1MXlBbV9OTnFEaXJZS2RzVQ?oc=5"
+          }
+        ],
+        "headline": "美股業績丨Netflix上季多賺44% 惟第四季收入指引遜預期",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMilwNBVV95cUxOdFNzZWIyXy0yQnRzbjFUZF96SmtkSTF5dDFyZXBCMVQzWXAwRFdhZVZWZGY4aGFHTVVCcVN3VnNmaDdUOTBVNGxSa2EzLXhXM3RUZWM1VlNyNzRMM1NCQlNjYXlETVhhTl93Q3gxVm85Ny1ncnp2blB1c2RoNk9nbkpDekJtc2s0S1BiU1N3eURFbV85UjdfQVZDYXJqVHk5S25wS0RoM2pJN2FrRDNJd3I2eUZnSU13aVhldDB2OW9NcjlneWt2d0k4eDNDYWdka05pVEV2NVNBQTBuNVlIUU55N0ZnV3QwNldMMHlrc3RxZW1xckl2Q2M1aFhGX0oxaWR4QU9rZG40dWZBbU1qak5jdWlYczdtQmUtdVhvSW9oaXRGSjFTYms1THN0RFFFekVRWDd3ekRQR1dub01oZHRzLWhwd1A4Z250VFQ5cTNfQVVtYTRLajVMR2c2UURUQUZZN2ZLM1lkVkcyUEdoQTdVUXB3em5aeGlmSGhVYlFEbWJ5bHNwb1hiOXhXRnRqUjdqRHIxZw?oc=5"
+          }
+        ],
+        "headline": "豐業銀行警告：加拿大必需消費品板塊股票面臨業績失望風險",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMijwJBVV95cUxOd3J6RVN3TDlTYjBINGw5dTNoWEZ3eXA1VVRDcXBGSTVydklIQ2YyaUc4TnFGUjN6Z1o5R1A0NFh3QkJsbnZ4TG9ob0x1dlRQTXlHVDVUbXkzOVhCdndoNGlwWmhSTHVTcFZGa09ZTGo4UlVVM0NFVi1YR2xCRVJOM1llaVR1Sk5uaDJmMVd3VFFvNXlrSFJXY0g4V1JadUxjLUJsLUtZUHdKZkRTVktidmVFeGVyNXdGX2lvRnlKLVZSRTV4dndELWdsSzIwMWFTQU54QmRpNVVpbGdmbng4ZnFUVmpXdFFzdHl2VEtQMnVOZEo2T0FvOTlFdk9qeklrYUVwdlpkRTlDeVRPNlZZ?oc=5"
+          }
+        ],
+        "headline": "Rivian收購Third Dimension AI，加速自動駕駛技術發展",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMipAJBVV95cUxPdE1WMmJJNzZtM0ctZVRTZ1pfLUJKNENZM3FSbFMwVkRyekpfQ2Z1dlVmYlVpalBGNHVtbnloYkFsVDR0SUJ6Sl90WGNUWkxocS1CLTVCMEJDQnpTQWhDWTBvdksyUkU0MW90Zkc2U0pfbTI2X2RUX294c3pyM09KeEtTOHQ3di1iR2pLTkFlLS12YzJGbnF1RTl5Nm83bUhpcTg4cjBFZ0NVRDhVSFFNZkJQMGtkZllTWElVWU5mTE1tVC0xb2ZMUEd3MldsbVhwRFdJaEM5OGptdDNTZnZDeVpTdnZHXzBWYjVBcmFFWUYxUlhfbTBURGgtaUVGSG94dnQxQWM3blMyZFZCOHRjVEpFYjhVb1FBVVQwbU9XUjdOQ2t1?oc=5"
+          }
+        ],
+        "headline": "Meta及特斯拉業績消化中 美股開市前下跌",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMisgJBVV95cUxPbHlmcG5QZGlxTldndkVIWml3cVRtYmpTQ0JTSzY2dnd4bTdPREVuaGxwSVRSakVnN3V1QUl5TnZnNjNRaFhxOVZTdWxBUWF3bWxSRG9makRHQjZWYUVMWGl1QXAzY0ZCZENROHdVeUhsOGVSNXh0RkdLdzFqSm9uTkplUFhFRWVNY0RTbWUzSW45b3pyU1d5a0w3Qldsd0tYQTZtZUd2WGREejU5RElSSTRzYi1FbmxzZFc5SFpKODlFSG9rQTlaNldNVjJ2ZXlBSFI2Ujg4ZlRwTEFpU2QteV80Ykd6RGtaRV9INzhYenUwZ1hoUURhcUl2NkNORmZ5YWYyeFVHRjU5SHFrVHpDNVhOOGtVMnk4T3J4cWI4NElYSU5xRXkzX2RxbDBnWkRDZGc?oc=5"
+          }
+        ],
+        "headline": "Meta Platforms第三季業績上升 並發布強勁收入展望",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMiiwJBVV95cUxNa1ZJVFFISjZHcWdMbGdHcDd3ZGdMcnItSkI3eGs0MFp1UzBfSkJlTzV4dGhaMFJsMTBJd3JkUWxjemI0SHR0bEg2TzZDaTBzMlAyRTRJb0RJSy04SFR5SUZoalh6WWdrRDUyZkhRYzdaal85TDh2SkdFR1kwSmNzX3BUWWxfQWNHSzB0eE5BZzUzbS1RN1JtRXNiS0RkUExLUi14b0dpSHFSRFU5NDFvQmh5QjFlMDRIdXBaejhFRDdLMkFHblpuTjNqSlRjZUs2bDItQ0dRbDFDMkhDeDQzRDZMTDh2bDA5ZThzUkZxSTk1SkZEdmkwU0dJejZaZ2lQMk9qa3ZSRnNNYzg?oc=5"
+          }
+        ],
+        "headline": "《業績》平安好醫生(01833.HK)首三季純利升35%至2.48億人幣 經調整純利升19.5%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMi5wJBVV95cUxNS0tNUDI4Nk9nbllNTVhqc29HS3V4U1hZcXhkbG1TVlZXcTQ0cW1hUWVvM2xxZVJuRERIUXpRZzlSX1g4UG9Va2p3UDdfNUZkb1JidVpiQWVsTzhuQURZN3dUU3RkbjR5dkpBcEZOaDJEWU94V1NfOTdoVzl5M1JwbmJmN2k3cFpGSE5FT3JfNFRoTm1WX3BFUDZ1RTl0cVpQQXNhd2FtTmdoNzJfUVZONDJDaFprcVdZMXdhLW9ZeERvbXRXOFZqVFlqdnp1RGZiOE9fUjJWQ28tckZ3dHRtcXFCMC1zZE9tWnVYNlJfM3hkS25LM0I3cUx4Y1J6aDV2bVRZSTdWQ0xDRGIyQnpGbGhUMVJoUjB6Rl83cGRjN240c0tsMWpmSUE5WG8yajBiYmZaNmdBd0pqQVBSRVE2WGZWZTBIOFRzMlM4UXRKUnZIQUVVZ0Z4UFRJVXJhdEVzUjJfUWZ2bw?oc=5"
+          }
+        ],
+        "headline": "康卡斯特季度業績勝預期 惟美國寬頻用戶持續流失",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxObWZlY05KQmJnWFBnRUJ2RXNzdkhUZDh3R1E0RVZQajY2c0ZDT2tFblo2dzRfbDhneXBoZkVSR0oyZHdfWUxQOGxaSHlqUUhvT0pkeTJKdE1Pd194U3BnYnlBM2pXcHNWX2xrakwxdFhSMUdERjJBaWFnSG9adWd3Y0x0a3RtcWNFMzlIaXE0S2JHSUY0dG5ldi1saUpaNk9ORjQ3U0ZiNzdJM1dMR3VlTXRLeVN1VURoSVZPeG93cmkyQXdScExCUkhTUFFBN3ZaWXp6aHpRVzZqRmdxcXVuTUZDak5odw?oc=5"
+          }
+        ],
+        "headline": "《業績》德利機械(02102.HK)全年純利2,065.7萬元倒退26.6% 末期息1.5港仙",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMilANBVV95cUxObnhZdjNrT1Nyem5sR1lsbnhNOWVhUDZiRThNQnNmUGxOWlNNUzl6TzZjQVVWdnNoRmVLVUpKVzhEVFZRZFFVQjhnYU1iS1BqWXhyTS1XOXZ3WVVaczVkajZMWlhLVFpqT1hZVFVMYkprS2ozNDJQb0tWYmtsWktpWm5hZGwwSDhGcjVMakhmMFBXdWRic2NxWDFiVDQ0SmtNRWF0N1pfT3I5VFYxZDBzOHQ4aWVZWHEwanU0RUJfb3V0eU1UY0ZYcV9kVVVoakZnYzNQV2V3bU8wRU5LU1lfLTFIUi14QnFPelh0R2l1cjlzVF83S2xhaFVPVWpkSEN4dDhlX19UNTlKNmpuMUVpMzFoM2t0bnpCWm96V0V4WGc5M1JDMEV5MjlZNmdXWmtSNHdBM1ZVZkE0RDZtRUdnY2lKWEh6NlZzNHVEUTRNOUxHaE1BdlJjYnZqMDN3VUtzRy1LaDBDRnExdm83WmxpdDMzRkI0VnNPUFR0WFV5VnRfUDZqS2VJY1pWd3Qwc3FSVjNGWA?oc=5"
+          }
+        ],
+        "headline": "Meta第三季業績超預期，批准新無投票權股份類別，AI支出持續攀升",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Now 新聞",
+            "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE01a0Nub1lLSFVyeXVDNVF2UkgyV2MtV1daLVRNejBMRW1wc2FWd3F1bzhGcE5hOEktclJoY19nQnRsN1NfQ1FzZDdzVFZEQzVjMXBGb0RHakxUdGpXMVQ0OWotRU4?oc=5"
+          }
+        ],
+        "headline": "【Meta業績】上季收入超預期兼計劃拆細 盤後曾升逾4%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPRF9mWnVQWHZHMUJyTWx3emZCT3pHeEhKWkYydE44Z1VaZ1NYME8xbEJpaExORmJ6VUZoTFl2b1V3OXhZZnNsOUw4OGJDOFpnb0tUcnl5Ym5VUzdLSExITkJ5NF9SZGRhSXJYbFBvZ21ZM0dMeXFIbnhDZUstR1E2QnhiLVJ6eWtWLVVtbGxZTW9jWWg2dzFValFpUUN2TktTQkdIakFxdHFYaU5nYURPTWx4M1Fuelo2SmoxaGhZdTQ4TU93YVppUEhOQ0pleGxSNU03dG1PU0owWjJiTU9HQ29nQW1HbUVHTGdJUzJsYW1MQQ?oc=5"
+          }
+        ],
+        "headline": "《業績》凱萊英(06821.HK)首三季淨利潤8.52億元人民幣升6.49%",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMikwNBVV95cUxNbm5reEItaHQ5ZnFhdEluLVE3RG05R255UjlZOHpqWmFTYzdXbFpDS182eFpWMUdudG5iWXpYbzBPSTUwZWQ2TWdiWWtzMk5HWnpuUUI4WFQzcVBhbXhOal9SNzVzYVRpN25IblF5dUlMRVNJTVhWTVpoU2xzY1Y2dlNyUEFXMWJpTm1zeUVSX2tpN0ozYWFWVUo4Tll5SU9xelUwSlEyUkpYWVV3dVpoR1F4WUFwNWE0YXVCNm5ncFFRMnlKNk9WTmEtZlBSQUh2Vl93MUJuS0UwS3pOVlVuUXdLQnhBN2pSODc3MWJ1LXROZzdKR3JBTDd5NUs2eUhEY1ZpOFJDdW40Xzd3VWJxUEZTUjAtS0FsekE5YUVyX2J6eFI1TmdCWFZJYXVTYWE0WE1WZV94NmhtN0NDY2ZseTd1ekdCNTFnRnEtc0k4U2pIZGh1bmQ5LWZNQXNSd1U1cHFEMEhaaVFJZXdheTZmaWl3Ukc0cFQtRE1PM1R5bGpDaVdyLU12YUlpeFlycVFHbVJF?oc=5"
+          }
+        ],
+        "headline": "《大行》瑞銀：中國CRO第三季業績強韌 需求強勁 關注積壓訂單動能",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMilgJBVV95cUxOMGhNZ1hTZnpfVDJqbUp0SXZLQ2F6cFlFTVBuTUtNWkYteHl2Tmc2LXg0Zk5EN0FBNnljcHhqWkFISkt1aU9hN2IwdkR1MWZsNUlFQmhHbnVqWDdVM3ljQTZoX0NfcV9qWmNud2dDMXNFa29KNGpETHpoUzdMczJNVHFnWFZMSG9vbzZheHh0dTRnam1NSnhFN3R0Xy1QRzNRSThCSHp4X1ZNU2VnbGFGdVd0QlFGNGhFNlZtV1FmcXNnUjNVZnhTMV9zeVl2SHQwVlZlZlRiQUpPMXZBSkZtbHdNOVdJSE4zTzNzMEJtS280TDU3dENaN2NKUzBYUlNnckRnU0lIRXo1MF9hQkhiOEJkMElNUQ?oc=5"
+          }
+        ],
+        "headline": "《業績》海南鈞達(02865.HK)首三季虧損擴大至4.28億人幣",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxOaGtVcTAxcXhfdFpiLXNhYlUzN3dSYXdTanowT0dmQXQ1Q3pMZmJNQ3lUeDBfYUd2ZDBocGNxVTkyRGtKNGp0a1c0ZU5obVdTVkNJSnBtdHdqclg1czlWcFdoSmFUWmdZRXNaWXhsWno0bmEtaDhXbUtOSEJncTJ2VlpPMmE5UHdXZF9JcEU2QWxjXzZhWkxldF9FUzJoTXZSOFJNeHZZbGI4UmJ0NHBRS1EzWG9FOGJtQkhoUW5hdVUwU2tPZklsY3RTZFVDTlFHTmo5bGxPbF9aRWRNajFCODc1NU1EYTBRWE56eTNNWlZ6U0xidWJxNERDZkZCVGxwc2gtX05XMTYzY3FLU0JpVTd0b1Rqb183bEpVenhRemVLTmh3Y2JyZnVoQVBBbW8yeXdWN0otZ0V2M2xDQ2dCaGltWGhfZlBVN1ZQdTdLVm01N1pUb0ViNWViOA?oc=5"
+          }
+        ],
+        "headline": "〈美股早盤〉SpaceX與美超微業績提振AI類股 主要指數開高",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo 財經",
+            "url": "https://news.google.com/rss/articles/CBMiiwNBVV95cUxOV3pSQW14Q0doQzdhWDltSFNzNE9DOU1GMlJlbTVvN0VXRVlwbzdicWlSbjJKTmJGMElTcW53bEwtbHVzelZJUzlFZlFLYUhZWVZMRlZ1c290T2t0RVhuNkNJR2RiM1ZiUDZmLXI1a0hTUWdTVHQyNDdfRHhoMTdLMXdZdko5LTZNcV94VTRpak5hYjI5Skl0a1dmWHduWUV6TXZJVEZwaGxDU0Juel9pRVAzbmo1bmhURWhwUFFUNVpZNzk5M0pMbjdtRWpFZzRoc1B0SVJRdWo4WmZfbndfdWNxSEQ5M1ZiaTIzZEJXTkRhaUlFS2ZWNkp5NUdFS1U4YkxoTzlPNnhLaWxLU3I1eEF5UlRCaUlNZHdYSml1X21KTHg0Rm5yY29MZk9VZ0QwMFdkY3NKUW50Z25TdjZyZUVBcy1XeUtTbXVaV1dTOFFXd0xheVpSeEg3R2k1UjI5cUtRSy1FQ21nOV91eVF3LUFMZVk4UzVVY0lJRWVvekowMXlQUExQVGJtWQ?oc=5"
+          }
+        ],
+        "headline": "德意志銀行：Netflix第三季業績「無新負面因素」，逢低做好時機已至",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1SOW9JTHdrRk8tYkROTkdCMVFqdURENE9ReWkzaFBqU19Scllzb3k3aVhZX2hpd1RfWXJOWU00eTA5a3pVaEZOR3UyODhiUmVuUUNfRjJ3eVcycVNycjRUV3k2X0t6MlNWdXRySjN2R2xnVkdreU4w?oc=5"
+          }
+        ],
+        "headline": "Visa正洽談以約25億美元收購加密貨幣托管公司Fireblocks",
+        "body": ""
+      }
+    ],
     "smalltalk_sg": [
+      {
+        "headline": "Bank of Singapore sets up dedicated sustainability advisory desk",
+        "body": "Bank of Singapore has formed a sustainability advisory team to bolster its Chief Investment Office. The unit will focus on integrating sustainable investing capabilities across its private wealth client base.",
+        "sources": [
+          {
+            "name": "Asset Publishing and Research Limited",
+            "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNbWc5SDhiczJkcjd4YnBZYzlQWEVJb2FpblBpVXIyNVVzUGE1dWFPVThnTGdKNFlOS3pQNTNIWnhPOGU1SUwyVFdkUWJGek1GR19vRm82aVl6OHY1QlZSd2xQSWU0dHhlbDFRRXRWZEp3VkJFb2dZbWtIZEJ6RGJKWUZGRXFhOG84UUVXbHdoRWlLZ0JnUDRZNHMteV9pYXM?oc=5"
+          },
+          {
+            "name": "The Edge Singapore",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPYVV0dDZ2N1BNcDdfN3RqTTJhZFB4MXdRVW54MHpvVTRrdW00M1kzRzl5Wm1EbnBheE1SOEFaLXJmTGYxQ3pkemR5Y0NzQ3ZBUWRmNW9mSXNaWGxyYWtvTnV0Rm9rZDNZbmFXenhOOXRSYkJZWWZWbHk0RFMzOXF1MHNTMWVCUlhLbVJuWnNoZFFvQnNxd0QtMmt6Y29XMUJhRDhQdkQ5SDE5VVpYNmlRc2p4a0FMMnZa?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "WhatsApp account takeover scams surge across Singapore",
+        "body": "Police have warned of rising WhatsApp account takeovers where fraudsters impersonate contacts to solicit emergency funds, logging at least 128 cases recently.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/whatsapp-account-takeover-scams-hit-128-cases-as-fraudsters-pose-as-friends-and-family"
+          }
+        ]
+      },
+      {
+        "headline": "SIMBA search engine phishing scams siphon S$83,000",
+        "body": "The Singapore Police Force reported that sponsored Google search results leading to fake SIMBA telecom sites have tricked at least 62 victims out of more than S$83,000 since March.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/spf-warns-of-phishing-sites-impersonating-simba-in-google-sponsored-results-as-losses-hit-s-83-000-across-62-cases-since-march"
+          }
+        ]
+      },
+      {
+        "headline": "Cross-border financing discussions advance for Johor-Singapore SEZ",
+        "body": "The Iskandar Regional Development Authority met with the leadership of Malaysian Industrial Development Finance Berhad to structure financing mechanisms for firms setting up inside the joint economic zone.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-singapore-sez-irda-and-midf-discuss-financing-for-businesses-expanding-in-johor"
+          }
+        ]
+      },
+      {
+        "headline": "Ho Ching advocates for home-based micro-businesses in HDB flats",
+        "body": "Former Temasek chief Ho Ching remarked on social media that home-based businesses running out of HDB flats serve as modern startup incubators with genuine potential to scale internationally.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/ho-ching-hypes-singapore-s-home-based-businesses-says-hdb-start-up-garages-can-go-global"
+          }
+        ]
+      },
+      {
+        "headline": "Johor must prioritise local economic benefits from cross-border boom, official notes",
+        "body": "Johor committee chairman Lee Ting Han stated that the inflow of foreign capital and residents must directly enhance local community livelihoods rather than merely swelling headline investment tallies.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-must-ensure-locals-benefit-from-investment-boom-not-just-attract-foreign-capital-says-lee-ting-han"
+          }
+        ]
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/health-minister-by-investing-in-people-sharing-knowledge-expertise-we-can-strengthen-healthcare-systems-in-singapore-the-philippines"
+          }
+        ],
+        "headline": "Health Minister: By investing in people, sharing knowledge & expertise, we can strengthen healthcare systems in Singapore & the Philippines",
+        "body": "SINGAPORE: A new initiative was launched this week that stan ds to benefit both Singapore and the Philippines in terms of"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/whatsapp-account-takeover-scams-hit-128-cases-as-fraudsters-pose-as-friends-and-family"
+          }
+        ],
+        "headline": "WhatsApp account takeover scams hit 128 cases as fraudsters pose as friends and family",
+        "body": "SINGAPORE: The Singapore Police Force (SPF) has issued an ad visory warning the public about a surge in WhatsApp account"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-singapore-sez-irda-and-midf-discuss-financing-for-businesses-expanding-in-johor"
+          }
+        ],
+        "headline": "Johor-Singapore SEZ: IRDA and MIDF discuss financing for businesses expanding in Johor",
+        "body": "MALAYSIA: The Iskandar Regional Development Authority (IRDA) has welcomed the Board of Directors and Management of Malays"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/spf-warns-of-phishing-sites-impersonating-simba-in-google-sponsored-results-as-losses-hit-s-83-000-across-62-cases-since-march"
+          }
+        ],
+        "headline": "SPF warns of phishing sites impersonating SIMBA in Google sponsored results as losses hit S$83,000 across 62 cases since March",
+        "body": "SINGAPORE: The Singapore Police Force (SPF) has issued an ad visory warning the public about phishing websites impersonat"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/ho-ching-hypes-singapore-s-home-based-businesses-says-hdb-start-up-garages-can-go-global"
+          }
+        ],
+        "headline": "Ho Ching hypes Singapore's home-based businesses, says HDB start-up garages can go global",
+        "body": "SINGAPORE: In a social media post on Tuesday (Oct 20), former Temasek Holdings executive director and CEO Ho Ching"
+      },
       {
         "sources": [
           {
@@ -667,207 +1438,557 @@
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/sylvia-lim-injection-of-new-blood-into-wp-enables-us-to-take-on-mentoring-roles-as-we-prepare-for-the-future"
+            "name": "AFP.com",
+            "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFB3NldMZGhvR0d4NXNtVnlCQnJaWGR4VENLSDZuUnNiQmgzbTVoajVXZlZOdzg0QXc4N2hHZ1FCZkFxcTB6cWlBWUc3RQ?oc=5"
           }
         ],
-        "headline": "Sylvia Lim: Injection of new blood into WP enables us to take on mentoring roles as we prepare for the future",
-        "body": "SINGAPORE: In her most recent social media post, Workers’ Party (WP) chair Sylvia Lim appeared to affirm her"
+        "headline": "CTBC Bank Honored for the Fifth Time by The CorporateTreasurer, Winning Three Major Awards and Reinforcing Its Regional Leadership",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/singapore-is-ready-to-use-every-lever-at-its-disposal-to-hold-those-responsible-for-haze-to-account"
+            "name": "Singapore Economic Development Board (EDB)",
+            "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNT0huYldVeldqUnVnN2xNeGlPWkpsRUpCOTk1cGZKVjhERmtpWXZqd3Zmd2hMWWlUbmNKckNjVUJJSFRPNTdzNk1wRU9ydjNVZnVaUGRrVEpEbWJYOVktWkxuZGV5Y3pFT0s5Y3JGYm5OcUUyMWlENjYxRElOejVUbkhDbG1JdGQ2bVMwU1lwMTNyUDhGTkR0UlF4dUQtZ1B3S01nVFF4bHNESVVBT0JRZXYxYzlibTQtNUVaRHJ2WTBTSlYxSFNZWmpwM2UtaTNsSDUtbC1XamZDYzk2UXdtc25R?oc=5"
           }
         ],
-        "headline": "Singapore is ready to use every lever at its disposal to hold those responsible for haze to account",
-        "body": "SINGAPORE: Singapore recently signalled that it is taking th is year’s severe transboundary haze problem more seriously,"
+        "headline": "How DBS, Southeast Asia’s largest bank, is capturing the full value of AI and Machine Learning in Singapore",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/am-i-wrong-son-reluctant-to-travel-with-dad-who-plays-phone-videos-non-freaking-stop-from-morning-to-night"
+            "name": "Hubbis",
+            "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNT0RoelZuOTV6WWFyNmRybFQwbG5NVjQ1S0x0eVNiU003SWowMDFOYnd2QlZ0enA0VGdyRUY1Z3FvSjk2QkVWVlVScUVfLVRuMEJfTUl4MHoyUW92aW1VTEN2RkRxUG1DX29GajBLUVgzNlduZzRwbmZQcmdRZ191LUsyRmc4SnAwd19aeWtrNHpHSWNraGJCcklpaW1IbURfRHhjTDNqdFNYb0ozZHFZcVVCYTF5Ul90RUFnMER4S2RjcmhIejNMVA?oc=5"
           }
         ],
-        "headline": "‘Am I wrong?’: Son reluctant to travel with dad who plays phone videos ‘non-freaking-stop’ from morning to night",
-        "body": "SINGAPORE: A frustrated son turned to social media to ask if he was wrong for not wanting to bring his father on an overs"
+        "headline": "HSBC Private Bank Research Finds Two in Three Singapore Entrepreneurs Have Adjusted Operations for AI",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/wp-mp-kenneth-tiong-main-thing-to-do-is-act-against-companies-behind-indonesia-fires-starting-with-those-registered-in-singapore"
+            "name": "Disruption Banking",
+            "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPeno0MXFTZGsteW5ub3pIOXg2TldDZndXS3JGZDdWaTRSazA3MzQwTTg0Ym9nRmJQWWRXXzlIVFBxc19ySnU1Q0ZXeFRsUnMxTHRMaGFwLXVzenV2N2JESUJ5bjhYSlRsYkctRTJPYzlXS2xGcmhzSHQ2TVJPcmVvSm9aM3lrWTFhLWNQUlNHc3oyMHA2Q0pnU3lhUkg5X1VnTjlNZExXSE5VdEhwSUl5ZTVkWkJwZl8wV2J6djdfcUk2N3pVZHVMNTZfeGNqM1JiaXFFUHBSRmhTM0RndkNWWm1mWnNURVI4NW13?oc=5"
           }
         ],
-        "headline": "WP MP Kenneth Tiong: Main thing to do is act against companies behind Indonesia fires, starting with those registered in Singapore",
-        "body": "SINGAPORE: In a recent social media post, Workers’ Party Member of Parliament (WP MP) Kenneth Tiong (A"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/singaporeans-reassure-netizen-who-expressed-concern-after-seeing-that-face-masks-he-received-expire-in-december"
-          }
-        ],
-        "headline": "Singaporeans reassure netizen who expressed concern after seeing that face masks he received expire in December",
-        "body": "SINGAPORE: A netizen took to social media after noticing on face masks that they were set to expire before the end of th"
+        "headline": "Switzerland’s FinTech Ecosystem Returns to Singapore for 10th Year, Bringing Industry and Policymakers Together",
+        "body": ""
       }
     ],
     "personal_hk": [
       {
+        "headline": "調查指五成六受訪學生有抑鬱表徵 青協籲家長留意子女情緒變化",
+        "body": "青協問卷調查逾5,400名中學生，發現超半數受訪者具抑鬱表徵，開學壓力指數達5.9分。\n約46%學生曾向AI傾訴心事，比例高於向駐校社工及老師求助。",
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874830-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874973-20261022.htm"
           }
-        ],
-        "headline": "本港部分地區下午氣溫高達35度 天文台料本周餘下時間持續高溫",
-        "body": "天文台表示，受熱帶氣旋薔琵的外圍下沉氣流影響，本周後期中國東南部天色普遍晴朗。 較為高溫的天氣會在本周餘下時間持續，但要留意日夜溫差較大，星期五同星期六日間非常乾燥，部分地區酷熱，"
+        ]
+      },
+      {
+        "headline": "有進口藍鰭吞拿魚樣本檢出孔雀石綠 食安中心追查來源及分銷情況",
+        "body": "食安中心在恆常抽驗中發現一個進口藍鰭吞拿魚樣本含有孔雀石綠，含量為十億分之1.74。\n當局已通報進口商並正全面追查該批產品來源與去向。",
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874970-20261022.htm"
+          }
+        ]
+      },
+      {
+        "headline": "亞殘運游泳項目 港隊陳睿琳女子S14級100米蝶泳奪金",
+        "body": "港隊陳睿琳於女子S14級100米蝶泳以首名晉級後順利奪金，實現個人在亞殘運連續三屆摘金紀錄。\n港隊同日亦在輪椅劍擊女子重劍團體賽添得銀牌。",
+        "sources": [
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPNHJuSlJPMGFnTTZBYlJKSWEwUXZNdnRmYVA1TmpuRmVfR2FocFFpV1hzaDVZQXNpazRaTGVBSy14ZjBFSUxJT3B0OTdhV2RuaktWLUtzT01hVnh2ODBXb0s3eEI5RTlfYUExYXlIQm96RjlxVlFDTUFGeWR2Y3VqM2tqTEx6aGc?oc=5"
+          },
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874978-20261022.htm"
+          }
+        ]
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874828-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874989-20261023.htm"
+          },
+          {
+            "name": "商業電台",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE4tc0xCYjM4TWZhaExxa0p0QzU1a3dxaHdjU2NZSFpuQWd6bXNzQjFqUjVFQmRrdzd2bnZBSXM2dzZ1T1huZ3JreV9Qb3hRZGNYcFhZeGFUcm_SAVhBVV95cUxOLXNMQmIzOE1mYWhMcWtKdEM1NWt3cWh3Y1NjWUhabkFnem1zc0IxalI1RUJka3c3dm52QUlzNnc2dU9Ybmdya3lfUG94UWRjWHBYWXhhVHJv?oc=5"
+          },
+          {
+            "name": "TVB",
+            "url": "https://news.google.com/rss/articles/CBMiqwJBVV95cUxPeTVMUndiRWZvNDhGdXAyZk9vSERQYXByYmh4UTA5d0JzY01TdVllVWlnOHpVUmpScHhWbUszazFIQm0yVWRWRUk2NXpNck5HWDd5OVhNVlliMXo1OHJsV3BFOWZrODhydlNXYld4aUdZaENMRWVpMHRCbWZIVV9RZS0yY3lzWEhreGszbE5fMVpKR2FPXzYzR3lpZTB4OWdibjZ3VHIwT1VNcTc5bEFWU0RzMVl2MFhyQjJQd0FKR3FsSGtodTltRlFWQnJzMmVTQzZRZEU1T0JwMk1iRTZRaXFqMG5uR0gzNkJKVkpqYkdkNzFERnI4dENybHBnQmtDcHVBdUJFU3ZYelJUMFdIZHJ6a1lfYURzMWlncVYtdnRLTUFseU1xNC1Waw?oc=5"
           }
         ],
-        "headline": "羅淑佩恭賀港隊在亞殘運硬地滾球、游泳及劍擊項目增添獎牌",
-        "body": "中國香港代表隊今日在亞殘運會增添9面獎牌，其中，硬地滾球隊單日取得5面獎牌。 文化體育及旅遊局局長羅淑佩恭賀硬地滾球運動員劉慧茵在亞殘運會奪得女子BC4級個人賽金牌，"
+        "headline": "特區政府強烈譴責和堅決反對英國發表所謂半年報告",
+        "body": "特區政府強烈反對英國發表所謂「香港半年報告」，對香港特區各方面情況作出失實言論和污衊抹黑。 發言人說，特區政府強烈譴責和堅決反對英國透過報告就香港事務說長道短、歪曲事實、顛倒是非，"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBTVEpYa0V5VVhFTUlDeVpyMnkxS09sQlJkRnY5TjFEWXZJVWNXbG9KZ0FsZVRkUHFpY3oycWFDWkM0aWc0VHdNWkhWb0pHUnYtS2pZdUJJQXp4S0xwcW9lN1ZtOWctTDhTVk1FU0lBWQ?oc=5"
+          }
+        ],
+        "headline": "亞殘運輪椅劍擊女子重劍團體賽 港隊奪銀牌",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE84am15TTVVVHY0blExMG9Walk4WWxwSTZmYkw2TWhobHVuby1sMm9EbHZBbnAydTVhd19YbTllSDdmUm1kNVBpWVc5dVZpeTNxTFprUlFvR2VIby1fbUxyWnYxbUI5YkdEN0NaZTVBdWVBUTR5ekdZ?oc=5"
+          }
+        ],
+        "headline": "駐英國使館：英方沒有資格對香港事務橫加干涉- 要聞",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1TLThmXzZuYUtvS29TeTFYcjd0RDMyNjY2Z2FpT1BfR2h6UVNhQlpDU3E4d1o0eDJJOTY3c0ZnOFQwS2RaeWtQZjZSRHdIaWtoMEo2WXpFYWEwYlMxZXlweXVPYzM5SFlvendIcWxrQmxSVGNiOEVB?oc=5"
+          },
+          {
+            "name": "香港政府資訊中心",
+            "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1zM3AyVjFiTmpFZF9KX01ieXlmMmRHVFdIOWtybGNDa2tPNlhhNHphbzdSd18xVjBaVUt1NnZ5b085cVFmZFVTbjF5b2xRalRDeDZSbVhZcjFqeW1nUnZnSVN1ZkxRM29MZ3Zxd0k3OGhMQQ?oc=5"
+          }
+        ],
+        "headline": "2026「創客中國」國際中小企業創新創業大賽香港分站賽決賽圓滿舉行- 特刊",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5qTk11dmlZM1ZGSzh5MFNWcVM2Ukt0U0V4Mk13dkxFQ0txcUdENlVrTDNYZ3hZNmw4S2dNY0xxM1RjOXN6TXdfYms2UjBPMzhicUtEa1U5MHV2MXBBcGVjOV9xSE94UTZOQTk0aVNBdzNKV3VPSmRz?oc=5"
+          }
+        ],
+        "headline": "山東社團總會第三屆理事會就職 卓永興冀總會深化魯港合作",
+        "body": ""
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874823-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874992-20261023.htm"
           }
         ],
-        "headline": "食安中心呼籲市民不要食用一批可能貯存溫度不當的進口即食火雞肉",
-        "body": "食物安全中心呼籲市民，不要食用一批由美國進口的即食火雞肉產品，因為有關產品可能曾出現貯存溫度不當的情況。 業界如持有受影響批次產品，應立即停止使用或出售。"
+        "headline": "外交部駐港公署批評英國藉所謂半年報告 抹黑一國兩制",
+        "body": "外交部駐港公署，反對英國政府再次發表所謂香港問題半年報告，抹黑一國兩制，詆毀香港國安法和維護國家安全條例， 對特區司法案件說三道四，粗暴干預香港事務和干涉中國內政。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874822-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874978-20261022.htm"
           }
         ],
-        "headline": "懲教署演習模擬院所發生火警及集體騷亂 逾150人參與",
-        "body": "懲教署在壁屋懲教所進行大型應變演習，模擬懲教院所發生還押在囚人士打鬥、挾持人質、發生火警、集體騷亂及發現爆炸品等事件。 懲教署說，演習旨在檢視部門各單位在處理突發事件時的應變能力，"
+        "headline": "羅淑佩恭賀港隊在亞殘運游泳、乒乓、劍擊及羽毛球項目增添獎牌",
+        "body": "亞殘運會，中國香港代表隊今日增添9面獎牌，其中游泳運動員陳睿琳奪得女子S14級100米蝶泳金牌， 為中國香港代表隊奪得今屆賽事第二面金牌，文化體育及旅遊局局長羅淑佩表示恭賀，說陳睿琳連續三屆在亞殘運奪金，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874820-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874971-20261022.htm"
           }
         ],
-        "headline": "香港航空取消明來往沖繩兩航班 料來往台灣航班可能延誤或取消",
-        "body": "香港航空宣布，受颱風薔琵影響，明日來往香港和沖繩的航班已取消，受影響航班包括HX658及HX659。 發言人表示，香港航空已豁免受影響航班之重新訂位或更改航點或退票的手續費用，措施僅適用於已獲取確認機位的機票。"
+        "headline": "陳國基稱香港女性有能力及有擔當 推動社會發展",
+        "body": "政務司司長陳國基出席一個婦女活動致辭時表示，香港女性有能力、有擔當，她們在推動香港社會發展上，一直發揮重要作用。 他說，在各大企業和機構中，有近四成經理級職位由女性出任。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874817-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874966-20261022.htm"
           }
         ],
-        "headline": "海關偵破3宗利用遠洋船走私案 檢約2360萬元貨物",
-        "body": "海關本月偵破3宗涉嫌利用遠洋船走私的案件，檢獲大批懷疑走私貨物，估計市值共約2360萬元。 海關仍在調查有關案件，不排除會有人被捕。"
+        "headline": "超強颱風薔琵影響 多班來往香港及台灣航班取消",
+        "body": "受超強颱風「薔琵」迫近台灣影響，多間航空公司調整航班服務。 香港航空宣布，周五6班來往香港至台北的航班將取消，已豁免受影響航班之重新訂位或更改航點或退票的手續費用，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874816-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874963-20261022.htm"
           }
         ],
-        "headline": "林哲玄稱「屍皮針」主要於離世者抽皮下組織 陳凱欣關注有無驗證",
-        "body": "衞生署近日在尖沙咀及旺角兩間提供美容服務的處所，檢獲俗稱「屍皮針」的懷疑未經註冊的藥劑製品針劑，該產品聲稱含有人類組織， 並用作注射。"
+        "headline": "亞殘運游泳項目 港隊混合S14級4X100米自由泳接力奪銅",
+        "body": "亞殘運游泳項目，港隊在混合S14級4X100米自由泳接力賽，奪得銅牌。 決賽有4支隊伍角逐，港隊由陳睿琳、劉肖儀、張浚諾和黃漢彥出賽，初段一度守於泰國隊之後的第二位置，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874804-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874962-20261022.htm"
           }
         ],
-        "headline": "APEC財長會閉幕 藍佛安：會議圓滿成功",
-        "body": "一連兩日在香港舉行的亞太經合組織財政部長會閉幕， 核准並發布《2026年APEC財長聯合聲明》以及《亞太地區數字基礎設施融資政策聲明》，為亞太經濟體深化財經合作，"
+        "headline": "中介人涉助客戶虛假提早提取強積金 被廉署起訴串謀詐騙罪成",
+        "body": "廉政公署早前起訴一名強積金中介人，夥同多名客戶以虛假法定聲明及證明文件申請提早提取強積金，涉款共約460萬元。 該名中介人今日在區域法院被裁定串謀詐騙及使用虛假文書罪名成立，其3名客戶則於早前承認控罪。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874814-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874960-20261022.htm"
           }
         ],
-        "headline": "菲律賓進口蟹樣本金屬雜質鎘含量超標 食安中心指令停售",
-        "body": "一個菲律賓進口蟹樣本被檢出金屬雜質鎘含量超出法例標準，食安中心正跟進事件。 食安中心表示，是透過恆常食物監測計劃，從進口層面抽取上述蟹樣本作檢測，結果顯示鎘含量為百萬分之4.12，"
+        "headline": "數字辦：高度關注PHP存有嚴重安全漏洞 向政府部門發保安警報",
+        "body": "數字辦表示，高度關注有關廣泛被應用於全球網站後端運作的程式語言PHP所存有的嚴重安全漏洞。 數字辦已向所有政府決策局或部門及公營機構發出保安警報，要求即時全面檢視其資訊系統有否受影響，並必須盡快完成系統修補工作，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874812-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874959-20261022.htm"
           }
         ],
-        "headline": "黃偉綸：香港在人民幣清算、投融資和風險管理方面角色重要",
-        "body": "財政司副司長黃偉綸說，截止今年7月底，在香港的人民幣存款和存款證餘額達到約1.3萬億元， 人民幣債券在香港的發行規模連續兩年超過1萬億元，種種亮麗數據充分反映香港在人民幣清算、投融資和風險管理方面的重要角色。"
+        "headline": "亞殘運羽毛球SH6級男單準決賽 港隊朱文佳摘銅",
+        "body": "亞殘運羽毛球項目，港隊球手朱文佳於男子SH6級單打準決賽，局數0:2不敵國家隊球手。 賽事不設銅牌賽，朱文佳為港隊奪得一面銅牌。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874811-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874955-20261022.htm"
           }
         ],
-        "headline": "政府稱APEC財長會圓滿舉行 展現香港舉辦大型國際會議能力",
-        "body": "亞太經合組織財長會在香港特區圓滿舉行。 特區政府表示，各成員經濟體和國際組織的代表就多個區域經濟發展的重大議題展開了深入交流，形成廣泛共識和務實成果。"
+        "headline": "李家超：國家支持下積極增加人民幣流動性 擴大點心債市場",
+        "body": "行政長官李家超表示，金融是香港的根本和最大的優勢。 香港在「一國兩制」下擁有內聯外通的優勢，多年蟬聯最自由經濟體全球第一，穩居《全球金融中心指數》全球第三、亞洲第一。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874809-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874954-20261022.htm"
           }
         ],
-        "headline": "陳茂波：香港上市制度與時並進 方便不同類型科企上市",
-        "body": "港交所方面透露，今年以來TMT同人工智能相關公司佔港股IPO集資總額約70%，市場關注AI過度投資， 如何平衡鼓勵創新及防範風險。"
+        "headline": "高級警員朱振國設靈 梁振英、李家超、鄧炳強、周一鳴到靈堂弔唁",
+        "body": "2005年執勤期間遇襲而癱瘓的高級警員朱振國，上月離世。 今日在紅磡世界殯儀館設靈。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874808-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874950-20261022.htm"
           }
         ],
-        "headline": "李家超在禮賓府與藍佛安會面 稱積極把握財長會平台展示獨特優勢",
-        "body": "行政長官李家超在禮賓府與財政部部長藍佛安會面，就內地和香港的經濟金融發展交流意見。 李家超歡迎並感謝藍佛安率團到港主持亞太經合組織APEC財長會。"
+        "headline": "香港網絡安全事故協調中心籲機構全面盤點可能使用PHP產品",
+        "body": "香港網絡安全事故協調中心提醒本港企業及機構，PHP安全團隊近日緊急發布安全更新，修補兩個嚴重漏洞。 遠端攻擊者可利用相關漏洞執行未經授權的程式碼，受影響的PHP系統須盡快修補漏洞。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874805-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874945-20261022.htm"
           }
         ],
-        "headline": "12歲女童感染甲型流感併發敗血性休克不治 潛伏期內沒有外遊",
-        "body": "一名有自身健康狀況的12歲女童，感染甲型流感併發敗血性休克、血管內瀰漫性凝血和多重器官衰竭。 病人延至昨日不治。"
+        "headline": "本港9月基本通脹率2.1% 較上月升0.2個百分點",
+        "body": "本港9月綜合消費物價指數，按年上升1.9%，較前一個月升幅為高；基本通脹率為2.1%， 兩者均較上一個月上升0.2個百分點。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874802-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874944-20261022.htm"
           }
         ],
-        "headline": "《香港01》新聞部收到白色粉末可疑信 警方派員調查",
-        "body": "《香港01》表示，新聞部收到一封藏有白色粉末的可疑信件。 警方表示，下午3時接獲報案，表示公司接獲有可疑粉末的信件，派員到場調查。"
+        "headline": "亞殘運輪椅劍擊混合重劍團體銅牌賽 港隊落敗得第四名",
+        "body": "亞殘運輪椅劍擊項目，港隊在混合重劍團體賽銅牌賽不敵泰國，得第四名。 港隊的陳㬢、鄺遠興、湯雅婷及余翠怡，四強以12:20敗於國家隊，轉戰銅牌賽面對泰國。"
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5mdndkMmwtWl9FcG5KX29rbm9hQnU1cUtxZVpwekxMcHNWeWNBWEc1TzhGbF81WW95elhHLTBUU2g1OHlkd1hQenB4c1pPSDZ1eEE?oc=5"
+          }
+        ],
+        "headline": "港股倒跌 騰訊再穿底 400蚊守得住？",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxOSDlrdi1sM1pqQ1ltc0ZCUFl4TXFJRWxvTWRNeDByWHNscnBrdzBteVR3SUZacWpvVWlLTlNRMmZUVWRqNllzN1lKQjl0ZWVOZnZybDd5QTQxMEV3bDhuUS1QaWNrWjZJY3h2d2ZtQWZ6U1lJbU5sNEdOd0xud0d3UlRyOGZUUzRfQ1R3MTRwd2dvUEtMNk5KNTl5QnYwazl5SEtOdkF0Z2hEMXhpYjh5OTgwak91Qm40WHJtajRReTYwNWNlSEoxYVFHZGFMbWN5WDRiVFlXUnVDbnZrR2NtcDBhX1Rzdld6M2FRT3ZOOEFFc0JfczFDMjlrV3JxclZVeWZuVUdVNVFPT2RPT0xBN2ZJSTJPVmtSTzZ3?oc=5"
+          }
+        ],
+        "headline": "霍峽紅海戰綫升溫 布油曾升穿111美元 傳特訂打擊方案 伊警告反擊區內美軍基地",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE13ZWNGVGpOUkNIU09aUTFJSUU1YkJkX2VfOTJxZmx1MmprNGM5V1RBUzRkNnl2c0ZIbHdFZ0tXMEhwZ1NCTHp4cFVaX2d6YTQ?oc=5"
+          }
+        ],
+        "headline": "M+「神話與怪獸：亞洲的奇幻異境」 回顧兩世紀藝術神作 必看《哥斯拉》《阿童木》珍貴展品",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQLTN5cWNsOFBoc3JaX201U3RkOURyTnRVVTRTVWNkZXB4SktaR0NZa0hlMzM0Y2kwNVFucFZzYUZPTUQzWWdJSlprOUFabzYxNlI3TXVzNFZNME54cXo1QWFxZmhVLXFIT3RwR0ExaWRoZWJRbGtvSkgwbzN5TFNraFVMZ3Viejk2NVVlbnNQeE15ZHZKQk1EbTR3WnJKZURDTTBnOERyTHdmZndQVHV6N3gxRUE0bXVFUEdrN013anRkQQ?oc=5"
+          }
+        ],
+        "headline": "361度全球化布局撑增長",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMirwJBVV95cUxPTlhmQkdSN09IUnJVOHlqS1FwR2xsZ2Jma0Z2eVJFNC1OM3JPX25oczFtdmVGTlctcFpfUTR4ZDR1MjJoNF9SQTBnYW03elBkeC1FUnVQZVhHS0drOEp4OUk0UEpsMl9FcmJhYzRLNzJNckUxa1VEbFh0R01ZRXJTUTBPSUprQ0RVU1lJLWxLaU1LMldob1lQOW1oaURNRWZQRWZSc18teXVpakFkcEdfa0dfQmw1VjJmUzI5a0VJNS1pbVZRczlINHlsdHF3ZFV2YVJ2QWVrVDdDXzh3bU1sZ3NXcTNyamtUMFRFY3pDaGNrTEoydDdFQzRKZWJ5bFFFV0FlRTdLUmt1YkI1dmI2THEzLWdlQVA2UmZwXzNyU2ZRQnM1MlNKNGdlUlItZEE?oc=5"
+          }
+        ],
+        "headline": "餐飲股頻回購撑股價 低位營造「雙底」",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi3wNBVV95cUxQNmhYRGk1TVVOWmNiSDF3MW1tYnJUOGZJTXZtNUNaQjEwSmJxOVlsOTljb2NHTzRkdDVFQ0dRMkk1cGhmcTRsQWlzbmx2RjNDc25qRkhfcU4tTkVoLV95RjFsWmZxNm05a0ZQNGNWOVNyRUVwNGQtQ19RLXJ1SktGbGFDRmJ6YXBwNENIQjVxOFJlTmJ0RTJHa1JKdjIxZjVja0c1MWEzVXBWdGc2WktMYk5UVjQyNHNWU09ndkVEeVFyWmFhdDhULW01MnhweFAwODNyQVpyT050cGFGRzlNWTNrRVNsR1hjX1FGbkt4MHdCSE5VUUN2THBWSGY1R2JUNDFEV1BLelQ0bE5UYkUyZnpTWHU1MGo1bk9vNUVCV0VkSG1YeXQzaVZNdWxOZWVySi1rWUdwdFpkVTVDd1FlbFlyMER0OWpjOUpTME8zaXZreWVHcXo2WTh2RnViX1B3UG00WWFjUlJtckViN3lGRFdNQ05CRGt5VUgtZFUteS1UcHRQSmFMblZQNW9XVzV2SVhKRmt1dGxBRG9ZSlFBZ3FIRlZpTHk2Z3VUWk5sMTNpS2VRRjRpY3ZhT28xYmo3Q1JrWEcwdEo5Y2lDU1B6dFdIWjZFN1RlWURMcUFVUQ?oc=5"
+          }
+        ],
+        "headline": "環球動態",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "JUMP 求職增值",
+            "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPZ3VKVGVoSnNVVkNrenQzZDJqOXI3bG4xalJPUkRJVUVaQnRjMlBpRUdrZEJ2VGFOWE5aNkJYdUtWWjVnZ2w2VThGWlZhLS1KT2NJaGtHQlVsa1VLSDc2QUtZTXozWVd1YVBOckZGa3FTZDY5NU9seENoT3hxa1BjVXhlWjAyZ053a2pyN2FBbFpuc1BKUXNaYmhGcEpmbDJqVmgzWFNXcnItTU9zWWtWdm1UQzVhWHozaUpJ?oc=5"
+          }
+        ],
+        "headline": "特級司機 (學校部)",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNeURNaFJvTkY5b3I1SUd4eWxBYnozbElhMXhFQ3dTRnVydTRSR1JSVVNsOGlnT21NU3JXT3hlYlhrQlltVDdfTFZKOWtjTnBpLXMydVc5cUxaNmNDMDN4MXlSQnlIYTRHb1RpTjlOaV9NcERjdWZTT3dUNVA4U0dablFySmh1RUhTSHg5SUlOOTBzRDJkYXk0ck1rRWk4NGRicEUwVnYxcnZQdzJ6QUR3RUx2ZlVLbUNGLThBX0xCbnJobmdyWTFIdA?oc=5"
+          }
+        ],
+        "headline": "港股3日跌1200點 技術超賣",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxNaUJ1X2R6dTRkWlRBZEZOcWdJQVhMbVpHU1pUUnAzd2lFcXY0THBJbWZuUFV3VFNtc2xwS0pPX3dzd2swSEpFaWRrM0d0a0J5amctSVNOWXloMjdmTlNNMmNGcU9fSjZ0alc2Yk9DakpUZVhUN2VSUlAtZ21BUjA4VUE2MjZTbnJZQ2IzUGZTY1VkemVpc1owa2ZCaXlOTm9rR3FZR3NoQU9KTkxjVHpRel9CS3AtVjVURjlEQ2tIQ3BCWmRBdmlpWUhxWjVvQUFzeGwzSG5adk5lSmVRMWlhTWNTQzRzcnlsdWNhai1lSlNqd1Q0anI0bG5n?oc=5"
+          }
+        ],
+        "headline": "大戶手影",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNMm00ZmdOc3pWVHFWZFpkamJiS29mUGxkcnRyQkpmQjBxYWMwa05tbWRwNjhFRFNXY2g4cFE0YVFtZE95QTNWWE5VOGNMeTNMQWNweWtseE1mSFJfMG1BV2kyNUJkZGVwYUJNb0NDVkIxVEt4MXZZMUI1SnM0R1N2bnkwZEtoTEZTWTBSbzFhY1pfOEM2RDUwNHRpOXFVZHo5eVdlcW9OMVV2czA?oc=5"
+          }
+        ],
+        "headline": "HSI分析",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9ULVVReXlXZXl0ZjA1REQzM3k3WTJ2bEw4ODRUMVZ0TmhoRmdON0tmSXVFTUJvZ1J2ajV1dTFSUWQyYkF5SjE4cEx1TFZIZ09pSm1QWkNuVEhKX2hwbGpKWW55LXM0VkFPTVkwTFNCTzV1VC1LN1E?oc=5"
+          }
+        ],
+        "headline": "異動股",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "JUMP 求職增值",
+            "url": "https://news.google.com/rss/articles/CBMizAJBVV95cUxNMUV2SWVOTjkzUVZpVlZsd25UMVM4bVV6TldXa0dWd2didnBJQXJDYkNIU3pHZ0FiR25TUVQ3QXBaOGpCU003TGhFZnZqenJTbHl2ZGFPdjZXUDIyU0hpQUFGWDR5RGJHdGNMdzFSZFM0cllteEpPSWdfVi1VV1JJQzlSODRJZm02Vm9HbWpVLTRUeXlpMm5oM19FODJQSlVwbUJKdzU4eldSbzlIMGxjZjIwajFqcnE2elZ5RmU2aVFETDE5S2NoOGlNZHE3YlNQdkMwczRXTW9Xc2ZPNHl4R1MxcFZEd0FLOXJzdkQ2TG13YnU5bS02Mm1aa3QtWThtSVlqSTBIUEl0MDE4WTZicVpCRGJKMTNBdzZaaUFvUDVtVmlMTzJEQm1qbDRZdnFySl9UeTh3b1VsSnFSdTZoa2xNaGxrOEtrckhhMQ?oc=5"
+          }
+        ],
+        "headline": "全職助理會計主任 / 半職助理會計主任 (學校部)",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxNYjFxSmZ3Z0ZRRjhqU1pMVzZWXzJlV19leHk5RFc4cU85UDVzMWZqWGJwZU9vWDdBOVNyeWdKWlRVWFpTeU9abUE1LXNvWXVMdkhWVDM2cUNKR3dKemNuT25iaEtXNDdxdk0tQXItS0dLbDlmUEJ1a1pTaHZ3V0NaY2ZXUFo0UlNETHRrTG9PTjJiVkkzUDJSWlVod2NzRUdOcHZhMEdGYTRHMHJTckRjOGhBWm85T1VSVE5ETzlxbi10QV9SRTJvQVNNVEtyWVIzQzl0b3pPUTFxZE5fdml3M0pVR2kxWl9OdTFfZEcyTlJlWk5LeE5RQzRFQS1sSUtLRXRyR2RVYVdIX2Z2VVR3UUJZaTRHNkZFTjBPYUMwdFA5RjRNTG8yUENqQ185SjF5MFZ4VGdNY2l6aUtlQXE0QndzMUN1aDc4VFhSTzN3VGltR0tnWUhyT2tDQQ?oc=5"
+          }
+        ],
+        "headline": "港股失守二萬三",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxPdzhaTDgwWW9KQVZ1Q1h1aTVtUTV3T3FId3E5VVlzc1RtaE10NVBoU0VBa0tCWVIyOFgzMlNJbXZLTHpHdk9SR2o0MjdpSGJSQXFEN2Ftbk5yZTFjRXFIYlpVa2RBV2l1WUV6U29CQmVBV1lKaVlpWGZUVkpDTVB2TmRRcktYcEVVT0w0MkIyYmxvUHcyclZEU2hsT0VoSXhYc2FsOWw3eEdGMjhfS0Rvc3E0RXhjUEpfUFVnS1FjWVdGZXktdXJESnc3cjNUMnRqd0RIeENYVm5nLWFpVlhj?oc=5"
+          }
+        ],
+        "headline": "頤海海外業務快增 目標15.9元",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMi8ANBVV95cUxNaHVxRkp6UlV1UTJpN2MwbFhzblBKZUR3ZlVuSzZBb182TFlCVzNIbkZsMFVNSTdVUFROc0VqeDNhbm1aTzFGS2tKUHhpTm9pZHV4NmNwUlpZLW1IZGdVZUtzZVV6cUk0LXZDaXFndlBsY1NlQjVmM3RTM01mM0F1RVQ3VzlVWUNVdkQtVHJkN3ZROVM1NWo3bGxNZmhobEttQ3ExNGk4ZU1IbWVpVEVIUzBZbnhjdzdGTTc0SXlGN0IwaEFJa0Q0dHEyZDdjT0xYcjE5cDZRS2RtUXhWNnJoN0d1TkM0V1ZWay1kcWwwS1lVQUlUVFViNnZpSGxINjJOVTZyQ3luYVRzV0lxRkY3ODZBYUlrRzJOcEE2UnY4MFFGOWFQYUpVTEJKd0h5cGw1aFBEWVdNSEEwdzRRcXYwT2RWZ2dOdHk1ZGtnQWZibXV0RU95eWk3U3dtZVptcFRKbklhaWJYM3lMRnVCbWpkNk9RNVZ4V3BJSmxRcmYyX0dENW1EQnB3X05pdTJGY0tib180c0JGaEk3V29PbFVmeGFISzFXMTlKd3ZNZUFOZHBocF9jamtfQUxHRUNVUU1CQWZpc3pMT3pTVEdqREtucEV1ZGMxS2ZHdENuU2JOcFpEY3g2a0ZMZG00dDFXbHh2?oc=5"
+          }
+        ],
+        "headline": "【SPCX+TSLA】Tesla與SpaceX探討合併彭博拆解為何交易一旦落實馬斯克身家會急增1100億美元",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMiyARBVV95cUxQY1c5UTRHOURMazFub3pjUWlGZE1CLUxFYXMydEZteW1UMkd1Tzlyc00zNmFRV1lCQVltdnBqSnVUcjdQWWxXUUplUU5QX0RVRFR1NjRJMG5KbHkwZTZqYnVWQ28ybzZBeWZadnhIQ2pheV9jMDlYdkJjSElEemM0dFcyTDJYZ1hjb05CUUhKOC10S180VFFNQXNJU1Q3TXM0S0J0aE9KRjRvZTg0a2stY3RBSmVXZzJGTFBnbHRVSEl6dy1abGVwNHV6b2tTUUNBMjh1d010UU9oMExTNE1wTUEwa3pSSHctWmwxcFllS18wRFQ3Tk5scmtTdzRfbGhWa1J4cERKV3Y1eF9RclRXcUNRZ05XRlp1Y3J3Tm81ZVhCbFVMQ2k4cU84LTF3Wk1GNUtDNTFkc0luSmhIWHVFZkdGSDRkREVuU01GMUlpQ3JVWHIyRXN6ZWk0WXhkRDlscjNFYXFSZ3BnNzJOTnFnV3Njc3lsSk9LcmZEWjZvTXlCUkZKYko3TmlKaDRnWV9yNE44WUx0Mm5vbU8wb3k4QVN2UmxYekFHN3hDdXRENXJhMWRCS3EwVjlUT2tJa182UEZBcjNaemxXLTVtSFBQMjlNRmN6VEpSQ29wU1lfRFEyWEZWa0c1dHlFU1ZGV0NiVlpBeWVrcDl6U0Nld1hLVTNXT1ZoNEc5aXlBUURSdnphcHdKTnRfWnVsZ0NyV21Qb0o2X1NtOURKVTZqMjVIMEVjWGpsMXNFU3lWYVJzV19iSVB6ZlRWVQ?oc=5"
+          }
+        ],
+        "headline": "【Ant Ling】螞蟻百靈推「Ling-3.1-flash-1019」於AA智能評分取44分與月之暗面Kimi K3同分即將開放權重及API供接駁使用",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMilAJBVV95cUxPc2l0SGRuVmc0X0ZvcDN3VVpKTlFqbzhvYTc4cjlHcFJTak1wa2sySjdOUkZNWlhLazN4Q3ROTl9sNFAtcTgwMHFsd0RVWE1hdnhZdmVFckRTNGFFVHEwZk5CYUw4aUZIUmNNblktLVNsdmI3QVJrUDdmTEpUQWdoT0RlWDU5ejVIQVNWUW1adjFmMnIxZnoxeE55TzhHbjJyV1lVc2F6UVFmM0ZUTlVGNE1ydW9nXzhoUjI4eGJCSmZmTkpRdU9uOVA5amVMLVpvM3M5RS16UThOVW5IXzNremxQcWZ4YmlJTkdJbUl3VjZlenBhNlBlcnM3VTRHaFdncDdVUlZKLTdjZWl4U3g4dmRzeUk?oc=5"
+          }
+        ],
+        "headline": "Meta算力承擔8100億美元 全力押注Muse",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMizAJBVV95cUxNRmZqNkswRW1oM0ZnMl9WTzdOa0JoRnoxN3NzZ0JKX2YtdkVHZkU4QV9Ma0lLdVlWeDhkUEViVjV6RUxGWmh6Vy1sVDBTT2JiejBMYU9QSndLTWVKNG9tTS1FdVBqaVhVN3hLUDBSRmxVemRnT0Noc1dyd2FUTWc3aEVuWV9WV1ZJS0dsOXV1Zmc1M3pZZzBubU15Y2c1cVpsRWdmZC1QYlVSc015d1RJTGNnUTNfMUljYUdqN051TGFRVnQ1TkppLTlLZlFLS2JucnNrN2N2LUsxcnhOaGx1OVRxc3U5Si1nMUVGZUlLR1RvdVlDeWVfdHJSbWpocU9BT1BZLU0xV19VSDBXSzhaZm44MGx3TGNMdzc5Q010akJyRG1qMUNoN2ZTY2dXTUtyTDZZMEhQVWJvLXNqMl9UbHBZT18wWmdHYUdBSQ?oc=5"
+          }
+        ],
+        "headline": "FOOD",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOdGxvb1hIMkJJbWNMQVd0UnhMSzBBcUNsSGd5QmUwbTBwZ3dleWw1aFJxVHd2aUFDbmRZazBhSzdQY2VFalhkSXh2MXA2bjlxemZWYWp5STBFbExqdWRuRk1BbjhubnN0bHhhNDJ6ak5oTFlNS1IxT0xuRUx4RHEyeDVDMWp5akxrRWQ2ZTZVTVRTejN1NFpGQXo2bXZaVll2OHl0YUEzWmVIYngzMlc0SFA0NU1nYUdzVmZJZFJidUc4UQ?oc=5"
+          }
+        ],
+        "headline": "港元定存 加息戰降温",
+        "body": ""
       }
     ],
     "personal_sg": [
+      {
+        "headline": "Health Minister Ong Ye Kung launches Singapore-Philippines healthcare initiative",
+        "body": "During his visit to Manila for a WHO regional meeting, Health Minister Ong Ye Kung unveiled a bilateral talent and knowledge-sharing framework designed to strengthen healthcare systems in both countries.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/health-minister-by-investing-in-people-sharing-knowledge-expertise-we-can-strengthen-healthcare-systems-in-singapore-the-philippines"
+          }
+        ]
+      },
+      {
+        "headline": "Shanmugam affirms cross-border haze notices against Indonesian firms will continue",
+        "body": "Law and Home Affairs Minister K. Shanmugam reiterated that Singapore will maintain regulatory enforcement actions against responsible parties, following public pushback from former Indonesian Trade Minister Muhammad Lutfi.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/indonesian-ex-minister-criticises-singapore-over-notices-to-indonesian-companies-shanmugam-says-action-will-continue"
+          }
+        ]
+      },
+      {
+        "headline": "Transport Minister Anthony Loke indicates JB-Singapore RTS Link fares set for December announcement",
+        "body": "Malaysian Transport Minister Anthony Loke confirmed that pricing structures for the upcoming Johor Bahru-Singapore RTS Link are expected to be unveiled jointly by year-end.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/malaysian-transport-minister-fares-for-jb-singapore-rts-link-likely-to-be-announced-by-december"
+          }
+        ]
+      },
+      {
+        "headline": "Senior Minister of State announces 3,000 year-long tech internships for tertiary students",
+        "body": "Singapore will roll out over 3,000 year-long digital technology internships across polytechnics and universities over three years to insulate students from AI-led career disruptions.",
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/singapore-s-tertiary-students-to-be-offered-3-000-internships-amid-ai-job-disruptions"
+          }
+        ]
+      },
+      {
+        "headline": "Singapore Prime Minister tours UAE's Sheikh Zayed Grand Mosque during official Gulf tour",
+        "body": "Singapore's Prime Minister visited the Sheikh Zayed Grand Mosque as part of an official bilateral diplomatic mission spanning Qatar and the United Arab Emirates.",
+        "sources": [
+          {
+            "name": "Sharjah24",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPU1ctaVZIM0h0b0Q2RUJPOWRTcjZxM01LNXJNTjhnMlgxOVBqSTMwZGtpcWpSWDFBdXRkQ3ZCV3FfSG1OMXRCbmJhTXNiRFhxUVBhcnB1MXBJMzJZU0Y3YmNsWFIyOVh5Q2ljVHE2R0s5OGp2VFBWbnpDdDI4SWJpZDNfU0YzYkNQNG5BNy1jT2RhbkFJQkx2V1BZT0Uta3psU1NEc1BIRmsyTTFwb3BlUXQ1akJ3MFk0?oc=5"
+          },
+          {
+            "name": "Prime Minister's Office Singapore",
+            "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOZW1pNnVEV2J4SWg3UU9xRmhSQVB5WEFCQ3ZYd0NhdG1TZkN4WDRPMTRzcWE5T09kSG5Sb3VqT1JTUnFTYUtZVXU5ZUZYTkRveml4TklDMkJSd3cwaDh6X3dkR0hCbmpkRWl4Wk5POURaYzFIajJuVHk5LWlucF9oRGhfM0ZQMTlzb2N1eTY0SlE?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "PAP CEC elections may see younger ministers advance to core leadership",
+        "body": "The upcoming People's Action Party leadership vote is anticipated to usher fourth-generation ministers into the Central Executive Committee as select veteran figures prepare to make way.",
+        "sources": [
+          {
+            "name": "CNA",
+            "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPVzlZdlhKMjVLQUZXcUZtTDJ5d3BJWjR2amV4SHZqOThqUjlGcFplNlJEclNKV2ZqSGRGb2tVSGoxNWpFWmhjMGlKUHhaNVF4UHBJampkbTZpUlI5NVA5SmEzS0NkMnpjM1hULV95WFJvQlJnajhzM3ZOeFJMNnFBVXlhYmpqZjN0MlUzMjFfSmJiWDdRRlJHcnhR?oc=5"
+          }
+        ]
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/health-minister-by-investing-in-people-sharing-knowledge-expertise-we-can-strengthen-healthcare-systems-in-singapore-the-philippines"
+          }
+        ],
+        "headline": "Health Minister: By investing in people, sharing knowledge & expertise, we can strengthen healthcare systems in Singapore & the Philippines",
+        "body": "SINGAPORE: A new initiative was launched this week that stan ds to benefit both Singapore and the Philippines in terms of"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/singapore-s-ex-president-halimah-we-want-to-believe-that-we-can-compartmentalise-violence-injustice-so-long-as-these-do-not-cross-our-borders"
+          }
+        ],
+        "headline": "Singapore's Ex-President Halimah: We want to believe that we can compartmentalise violence, injustice so long as these do not cross our borders",
+        "body": "SINGAPORE: Halimah Yacob, the former President of Singapore, has long spoken up against the violence in Gaza that has con"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/ho-ching-hypes-singapore-s-home-based-businesses-says-hdb-start-up-garages-can-go-global"
+          }
+        ],
+        "headline": "Ho Ching hypes Singapore's home-based businesses, says HDB start-up garages can go global",
+        "body": "SINGAPORE: In a social media post on Tuesday (Oct 20), former Temasek Holdings executive director and CEO Ho Ching"
+      },
       {
         "sources": [
           {
@@ -901,197 +2022,761 @@
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/sylvia-lim-injection-of-new-blood-into-wp-enables-us-to-take-on-mentoring-roles-as-we-prepare-for-the-future"
+            "name": "APTN News",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOZkc2SXlZQm0wSThsc19FU0dCZHJBLWtSYlN5c0pULVdFUnR6YUt6aTNqcVNoenZEVTVBczNmSnliMXpfQ0RENWhHV3hMVWQ4M1FIdDYzZHVSeGZJT2VxMWVqYy0zT1ZJbWFucUdjTjlOcTZYTTlnRkdWdGFKWmo4UlZhN1RUUm10eDF1enhOaERGLU13RXlDTnNVXzB0MEpRVHlsX2t4Q1BwSW96d05mclNKY01LcGxkSHlGRWtETUhMV3c?oc=5"
           }
         ],
-        "headline": "Sylvia Lim: Injection of new blood into WP enables us to take on mentoring roles as we prepare for the future",
-        "body": "SINGAPORE: In her most recent social media post, Workers’ Party (WP) chair Sylvia Lim appeared to affirm her"
+        "headline": "Sale of Eagle mine in Yukon to Singapore company ‘good news’ for taxpayers says minister",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/singapore-is-ready-to-use-every-lever-at-its-disposal-to-hold-those-responsible-for-haze-to-account"
+            "name": "CBC",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNZ000aVVsN2xmYUFLY3BWWW1DWUlKRmd0YkRoZDBjbExYeTFLcmdNN2ZiQlZDTFd6OXpxUkVZeV9CdDNaMGN3M1piYXRuNG44V3dvU212cUhLUHI0X3F1My1xc0RkX3g3T2pzRXVRSVZyMWpZUVY1Zzk3cTUtblU1ZjVpRDZncGVKbXhNSlBBcnVtVFBUQ2xVcUd4bkNyeXhfenNIamQ2QVBGS3FpUHVidGxfVnJuTUo1VWMtUGt5UnA1SWc?oc=5"
           }
         ],
-        "headline": "Singapore is ready to use every lever at its disposal to hold those responsible for haze to account",
-        "body": "SINGAPORE: Singapore recently signalled that it is taking th is year’s severe transboundary haze problem more seriously,"
+        "headline": "'Ideal outcome,' minister says as Yukon's Eagle gold mine set to be sold for $140M",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/wp-mp-kenneth-tiong-main-thing-to-do-is-act-against-companies-behind-indonesia-fires-starting-with-those-registered-in-singapore"
+            "name": "Sharjah24",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPU1ctaVZIM0h0b0Q2RUJPOWRTcjZxM01LNXJNTjhnMlgxOVBqSTMwZGtpcWpSWDFBdXRkQ3ZCV3FfSG1OMXRCbmJhTXNiRFhxUVBhcnB1MXBJMzJZU0Y3YmNsWFIyOVh5Q2ljVHE2R0s5OGp2VFBWbnpDdDI4SWJpZDNfU0YzYkNQNG5BNy1jT2RhbkFJQkx2V1BZT0Uta3psU1NEc1BIRmsyTTFwb3BlUXQ1akJ3MFk0?oc=5"
           }
         ],
-        "headline": "WP MP Kenneth Tiong: Main thing to do is act against companies behind Indonesia fires, starting with those registered in Singapore",
-        "body": "SINGAPORE: In a recent social media post, Workers’ Party Member of Parliament (WP MP) Kenneth Tiong (A"
+        "headline": "Prime Minister of Singapore visits Sheikh Zayed Grand Mosque",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Prime Minister's Office Singapore",
+            "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOZW1pNnVEV2J4SWg3UU9xRmhSQVB5WEFCQ3ZYd0NhdG1TZkN4WDRPMTRzcWE5T09kSG5Sb3VqT1JTUnFTYUtZVXU5ZUZYTkRveml4TklDMkJSd3cwaDh6X3dkR0hCbmpkRWl4Wk5POURaYzFIajJuVHk5LWlucF9oRGhfM0ZQMTlzb2N1eTY0SlE?oc=5"
+          }
+        ],
+        "headline": "Visit to Qatar and the United Arab Emirates (UAE) - Oct 2026",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "CNA",
+            "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPVzlZdlhKMjVLQUZXcUZtTDJ5d3BJWjR2amV4SHZqOThqUjlGcFplNlJEclNKV2ZqSGRGb2tVSGoxNWpFWmhjMGlKUHhaNVF4UHBJampkbTZpUlI5NVA5SmEzS0NkMnpjM1hULV95WFJvQlJnajhzM3ZOeFJMNnFBVXlhYmpqZjN0MlUzMjFfSmJiWDdRRlJHcnhR?oc=5"
+          }
+        ],
+        "headline": "PAP leadership vote: Younger ministers may step up into CEC as some senior figures make way",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo News Singapore",
+            "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPb3ROSXdIZVFQa0hLeGU1M3B1Z0swQk9NQzhZUGROV2VfMDdRbWNFWFNtMmZaVnpoVFlRU0x0dmpyUlp2NlR2Uy0wb29OTWY4V1R3THVVS0N5N0RYdTdja1VvMmN3cUJoNGFpbEtpUUYyakIyZFppY0h6TzBUcVA4d0p3?oc=5"
+          }
+        ],
+        "headline": "EU Parliament awards Sakharov Prize to ICC in rebuke of US sanctions",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNb20xN3RDbFAzM3FtMjBCRVNnY2p4MW1lM0p0WkxZWGdBYlRDcXdXN2NqeGJVbnZkMVU5N2c0YWU3WDA2UXVneVo2UUlwXy1DektnaVJXajFMREJFV19UZklGNFZVZ0JWVmJPeklVN1pfdUlYWjZoRkRvRzYtRnQ5SXJtUGtPbmpOdTJJM2phci15ZFZMaGpsR1JpUlVnekgtZU12a0tjQ3FHT0dpbi1ESVlOa1p4QWlObGl3MC1ZemZGMEZoOEx5N29qblU1NmxwN3VBMA?oc=5"
+          }
+        ],
+        "headline": "Ex Indonesian trade minister calls on S'pore to scrutinise S'pore companies that control land concessions",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOU19vVGRSbHZiMEkwVUVGd01vT09EZEI5RjMzZkVxd01ZRTAyOHMyNU5ZbjJNWERGQ3BhVGx3dzhoN05HYmprYVdFTkpNX3d2XzJDLWtBN0JxeGNWdmxOeVVEV2dUZ0JmaXdZX1FmenYtMXY0eHFhLXZDeC14T0FKZzlmOWZwQQ?oc=5"
+          }
+        ],
+        "headline": "Indonesian minister says country could stop exporting energy to others that 'disrespect it'",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1OajlmenlNZWxxcWZrVWNZMklxQUJRUC1rQVFiWmo1blllUm16LXAyMWNzcnhma0dud2RHV0FlTUZhT0JpeC14ODNHcjZWal9FMEY2OXFUWVNTX1JkZDA0NXkyM3N6U3QzTnpkVGdyTzRub2pxS19wWl9VR3UxTVU?oc=5"
+          }
+        ],
+        "headline": "Indonesia's former deputy foreign minister says allegations of GIC & Temasek conspiracy are 'nonsensical'",
+        "body": ""
       }
     ],
     "juicy_hk": [
       {
+        "headline": "前富衛中介人助客訛稱永久離港 串謀詐騙逾460萬強積金罪成",
+        "body": "一名保險中介涉嫌串謀客戶以「永久離開香港」為由虛報聲明，提早領取460萬港元強積金累算權益，遭廉政公署起訴後被裁定串謀詐騙罪名成立。案件再次引發金融及保險業界對MPF提早提款合規審查的關注。",
+        "tag": "醜聞",
+        "raise": true,
+        "sources": [
+          {
+            "name": "香港01",
+            "url": "https://news.google.com/rss/articles/CBMivwNBVV95cUxNWVhsQlBZeGdjNHBkYnpONFJFSlI1ZlZDSm1TY05BRGJNQkkyRDJFV3FtVTFCYk9LM09fZ1ZBRUxiQkRTX3lqUWdqcnFKeDhQUExMR1k5bmF6R3NTUVhpY3k2bmZEdHo3WE0zam1ncVJvOFNEZFpQaVdSRkViUVFmZTZ5N3Y2b0FicTdaU1EyOGNBRGVOUXNVWTNuU1R5cko0NERTdzcxdEdxWFlzSDFpQXpyRDUyOFRoaVZmQVhEa1UtUmx6a2h2amFOU1FkMWR2akIxUkpuVk40bV9jMVFtY1dWd2RSQWEwd0FVZGpBS21XTlRxeG1DSHFnZzhKMjdPT3pvc1JURWw0LTdTSUkyWTdpcldMMjRLVDRkMXBYaUpubE1tWkJid2lTYWIzNkFOdUxzR1VpQUNzbE43RTVQQzk2WWZwajJlbENOQS1yXzJxZXdsS0c3eFhsRjhJWnkyRjFKNjhOR2FHcml2LUNKWWExWUxETENWYTloRWh4cEt4Q1NsODRnMmFLeTR1cTFBZXJtRnhvNG5oaDJ5N194c3hLYWt6OHYxTnVPMURycEVTWWxXc3E0TnVsckhlVU0?oc=5"
+          },
+          {
+            "name": "點新聞",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE45WW81eXNOcXZ2M0laWTdOSEJ1a3lKdkFXSFl3dXp5Q29kYlFWZFpScV9XbkRocW03TU5Bd2pyM3N4QXBoV1kwUEF4dGlUT2psVmhtUlBNMUh1T1NkWDhFbjU4Tm1nMUJpQXlSSjFOODF6N19UWGNr?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "超強颱風薔琵逼近 國泰快運等多家航司大面積取消往返台灣航班",
+        "body": "受超強颱風「薔琵」影響，國泰航空、香港快運、香港航空及長榮航空取消多班來往港台之間的航班。香港航空更提醒，相關惡劣天氣或於24日進一步波及上海浦東班機。",
+        "tag": "實用",
+        "raise": true,
+        "sources": [
+          {
+            "name": "香港01",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxNNjJlR1ppU2hBNUZQSUFQRm9qY2VpRkVHTkNBQTdWOUU2S1pySlN5ZGR6TnRhMVdSN2QwNGk4VG5fbGJNQjRHank2MnNKZEkyME1XMUJoT0FuVHFvZ3pLVkR5Z0NhY2N4bkRfYmN5enMxbU1CYjlta1M4SWlPSmpIZU9wSGxEWDNSTllvbFVNOEhqc3JORjd4b1M0ZE9COGxGRmR1MExWWFlmVkVSWnNCZDQ4NzAwSFVwTGhhWDR6SkdWQ0Q3Vjh4dmtubDJnNGxWbDVIeFdQTWNkUTJud2drZ0I0OU9iQU9HcnJCZEpySGNDRjRXRkRaakFTWElacFJMWDYzVng5a3l0T2pGa3UtTnVtemFVcFBFMlh1elo1MHpDTjUxTW4yd3Y1UFhxUi1nUTdoZ2pGaFUzTkpPQkdMV3VtOFVuM2tlRlFHWXdpZEFLbkQ5N3VNQk1GUVh6MWt3NURuV08tNWNLY2FfVmtKcU1SQWZZNUhtbEJ2NGZWMDVISGhpREZGMi1LZ2NZQXE2TzR4LWwzSDZqbVBFZmt6TGRQSjZnc3dqUWtaV1NWTmxXZ1pR?oc=5"
+          },
+          {
+            "name": "加拿大星島日報",
+            "url": "https://news.google.com/rss/articles/CBMihwNBVV95cUxQRjdfSmJCM0dTN0Y0Z0tfNUI4b0pIcG45cW5JR3pkVlp5dFQxV19jZk1hN3RIeEE0UTExQkJXbVlEdjNWQU5DeUxFblYwSE10cXlHQ3I3ZnBuX0RxWlU1UzFvNFdKSjg5RzVhblM3ZTA1UHJzek5nb1hyYWhaNGx5cWJIRjRSczFwYU9HaWFNNTU3cXpLRmZFTHltN1diUUszRUxKSTFseWtjd2ZyU2ZyWFFvQ0loYnVQaUZSRDlRSG5PWl9leTltSS01NXJsblNKRHllWWFwUjN3ZjBnY3lNZkdnTm96c1ZEallzWGs1bWp2VEE3eC1KTnFmUU9Fek50Nlh1MzNuLWhKS0FxTW1kMkZGMzlZRlllN2kwa0l1UWNMQ2pyTF9jVEMxYndCd2wwUWpiaEhfeUFqalJ5dVY4SDhsR18xYmdhMWc0TGdKOVl6Ujk5ODd2SUVyOWVSR2RsVDZWNG9tSlJRODRWaDg0TlNkWDl1RXJtYnR5U3BNVmN5ZTVZN0Zr?oc=5"
+          }
+        ]
+      },
+      {
+        "headline": "港府與外交部公署強烈譴責英國發表香港半年報告",
+        "body": "特區政府及外交部駐港公署發表嚴正聲明，批評英國「香港半年報告」抹黑一國兩制及特區國安法規，要求英方立即停止干涉特區事務。港府發言人反駁稱英國近年援引反恐及國安條例拘捕近4,000人，自身執法嚴苛卻持雙重標準。",
+        "tag": "敏感",
+        "raise": false,
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874830-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874989-20261023.htm"
+          },
+          {
+            "name": "商業電台",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE4tc0xCYjM4TWZhaExxa0p0QzU1a3dxaHdjU2NZSFpuQWd6bXNzQjFqUjVFQmRrdzd2bnZBSXM2dzZ1T1huZ3JreV9Qb3hRZGNYcFhZeGFUcm_SAVhBVV95cUxOLXNMQmIzOE1mYWhMcWtKdEM1NWt3cWh3Y1NjWUhabkFnem1zc0IxalI1RUJka3c3dm52QUlzNnc2dU9Ybmdya3lfUG94UWRjWHBYWXhhVHJv?oc=5"
           }
-        ],
-        "headline": "本港部分地區下午氣溫高達35度 天文台料本周餘下時間持續高溫",
-        "body": "天文台表示，受熱帶氣旋薔琵的外圍下沉氣流影響，本周後期中國東南部天色普遍晴朗。 較為高溫的天氣會在本周餘下時間持續，但要留意日夜溫差較大，星期五同星期六日間非常乾燥，部分地區酷熱，"
+        ]
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874828-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874989-20261023.htm"
+          },
+          {
+            "name": "商業電台",
+            "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE4tc0xCYjM4TWZhaExxa0p0QzU1a3dxaHdjU2NZSFpuQWd6bXNzQjFqUjVFQmRrdzd2bnZBSXM2dzZ1T1huZ3JreV9Qb3hRZGNYcFhZeGFUcm_SAVhBVV95cUxOLXNMQmIzOE1mYWhMcWtKdEM1NWt3cWh3Y1NjWUhabkFnem1zc0IxalI1RUJka3c3dm52QUlzNnc2dU9Ybmdya3lfUG94UWRjWHBYWXhhVHJv?oc=5"
+          },
+          {
+            "name": "TVB",
+            "url": "https://news.google.com/rss/articles/CBMiqwJBVV95cUxPeTVMUndiRWZvNDhGdXAyZk9vSERQYXByYmh4UTA5d0JzY01TdVllVWlnOHpVUmpScHhWbUszazFIQm0yVWRWRUk2NXpNck5HWDd5OVhNVlliMXo1OHJsV3BFOWZrODhydlNXYld4aUdZaENMRWVpMHRCbWZIVV9RZS0yY3lzWEhreGszbE5fMVpKR2FPXzYzR3lpZTB4OWdibjZ3VHIwT1VNcTc5bEFWU0RzMVl2MFhyQjJQd0FKR3FsSGtodTltRlFWQnJzMmVTQzZRZEU1T0JwMk1iRTZRaXFqMG5uR0gzNkJKVkpqYkdkNzFERnI4dENybHBnQmtDcHVBdUJFU3ZYelJUMFdIZHJ6a1lfYURzMWlncVYtdnRLTUFseU1xNC1Waw?oc=5"
           }
         ],
-        "headline": "羅淑佩恭賀港隊在亞殘運硬地滾球、游泳及劍擊項目增添獎牌",
-        "body": "中國香港代表隊今日在亞殘運會增添9面獎牌，其中，硬地滾球隊單日取得5面獎牌。 文化體育及旅遊局局長羅淑佩恭賀硬地滾球運動員劉慧茵在亞殘運會奪得女子BC4級個人賽金牌，"
+        "headline": "特區政府強烈譴責和堅決反對英國發表所謂半年報告",
+        "body": "特區政府強烈反對英國發表所謂「香港半年報告」，對香港特區各方面情況作出失實言論和污衊抹黑。 發言人說，特區政府強烈譴責和堅決反對英國透過報告就香港事務說長道短、歪曲事實、顛倒是非，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874823-20261021.htm"
-          }
-        ],
-        "headline": "食安中心呼籲市民不要食用一批可能貯存溫度不當的進口即食火雞肉",
-        "body": "食物安全中心呼籲市民，不要食用一批由美國進口的即食火雞肉產品，因為有關產品可能曾出現貯存溫度不當的情況。 業界如持有受影響批次產品，應立即停止使用或出售。"
-      },
-      {
-        "sources": [
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874952-20261022.htm"
+          },
           {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874822-20261021.htm"
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1iajJhYlpoUnVzTk5haUJURzJBeDRVR1ZFMzRzUlU4bWRrbWNWUi02VG94WUVVM3ZYUTRENWp5NEFwUzUxNjRVY3NTaEZxYU9RbUdYdkswUE9vcnFvaVpsd2JIZnVyZzZxWjRvWFl6aw?oc=5"
           }
         ],
-        "headline": "懲教署演習模擬院所發生火警及集體騷亂 逾150人參與",
-        "body": "懲教署在壁屋懲教所進行大型應變演習，模擬懲教院所發生還押在囚人士打鬥、挾持人質、發生火警、集體騷亂及發現爆炸品等事件。 懲教署說，演習旨在檢視部門各單位在處理突發事件時的應變能力，"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874820-20261021.htm"
-          }
-        ],
-        "headline": "香港航空取消明來往沖繩兩航班 料來往台灣航班可能延誤或取消",
-        "body": "香港航空宣布，受颱風薔琵影響，明日來往香港和沖繩的航班已取消，受影響航班包括HX658及HX659。 發言人表示，香港航空已豁免受影響航班之重新訂位或更改航點或退票的手續費用，措施僅適用於已獲取確認機位的機票。"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874817-20261021.htm"
-          }
-        ],
-        "headline": "海關偵破3宗利用遠洋船走私案 檢約2360萬元貨物",
-        "body": "海關本月偵破3宗涉嫌利用遠洋船走私的案件，檢獲大批懷疑走私貨物，估計市值共約2360萬元。 海關仍在調查有關案件，不排除會有人被捕。"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874816-20261021.htm"
-          }
-        ],
-        "headline": "林哲玄稱「屍皮針」主要於離世者抽皮下組織 陳凱欣關注有無驗證",
-        "body": "衞生署近日在尖沙咀及旺角兩間提供美容服務的處所，檢獲俗稱「屍皮針」的懷疑未經註冊的藥劑製品針劑，該產品聲稱含有人類組織， 並用作注射。"
-      },
-      {
-        "sources": [
-          {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874815-20261021.htm"
-          }
-        ],
-        "headline": "【重溫】2026年10月21日新聞天地",
+        "headline": "【重溫】2026年10月22日新聞天地",
         "body": "詳盡報道本地時事、大中華消息、國際局勢等新聞，緊貼最新熱話。"
       },
       {
         "sources": [
           {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874804-20261021.htm"
+            "name": "Now 新聞",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFA4Sm1fakg3Ulp2T0M5cUxORHZuUTY1eWwyYTVxcnl6dl9XVG1IOWpfZEdEMVltYkE0dF9HVXlKTU9IaVhCXzZsODN1VjJXOWhhRjZ4Rk5xQnpxM0ptendoUDUwV0stT3VGamlRdURB?oc=5"
           }
         ],
-        "headline": "APEC財長會閉幕 藍佛安：會議圓滿成功",
-        "body": "一連兩日在香港舉行的亞太經合組織財政部長會閉幕， 核准並發布《2026年APEC財長聯合聲明》以及《亞太地區數字基礎設施融資政策聲明》，為亞太經濟體深化財經合作，"
+        "headline": "歐洲三大股市下跌",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Now 新聞",
+            "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPV3ZNSFktNXlVdXhjNV9WQVpZemlYRUEyV25NM0FKX3ZxTHRORzFycjVyRU5mNXJNM0h6eGZfNnBtY3h5TG1fQWRMTWhxUU8wc2ZrOUZ6MkZyQkpZTUN3c1BZS2t6a1I4R2xRbDUzNGtzNDJsVk5nWmMtemJfcXZOamFiZS1pX1pIOTBKdXJnanRQbUkweE1WUThBM01JR1BOSDk0?oc=5"
+          },
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE41Z0tTOEpZZl9WVFM2UmxfMmFkTEJJWVVEdUN0S2k2dEVqWVBhRTBUNkE4X2lwd1h1a2p2NVVIV3I1Yk0xUmlMRW9ucmQzUXBDNmV3eE9IY0JFS2JrOFpJWnUzQmFKSDB3RFRfSk11VQ?oc=5"
+          }
+        ],
+        "headline": "北京副市長夏林茂涉嚴重違紀違法受查",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBTVEpYa0V5VVhFTUlDeVpyMnkxS09sQlJkRnY5TjFEWXZJVWNXbG9KZ0FsZVRkUHFpY3oycWFDWkM0aWc0VHdNWkhWb0pHUnYtS2pZdUJJQXp4S0xwcW9lN1ZtOWctTDhTVk1FU0lBWQ?oc=5"
+          }
+        ],
+        "headline": "亞殘運輪椅劍擊女子重劍團體賽 港隊奪銀牌",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5pWGVncTBjaWYzUHhHNFc3Y0FRVk10R19ybDdYNGtJbmo3Mi11bE5sdG42MURwOE5ibU5FZVo2dkkxX0V4TlRBOFpUZS1YTmc5d1VySmRHdjdfUUU1eC12Vno2dlM0Vjk1Rm1TTWpicw?oc=5"
+          }
+        ],
+        "headline": "亞殘運游泳項目 港隊陳睿琳女子S14級100米蝶泳首名晉決賽",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE84am15TTVVVHY0blExMG9Walk4WWxwSTZmYkw2TWhobHVuby1sMm9EbHZBbnAydTVhd19YbTllSDdmUm1kNVBpWVc5dVZpeTNxTFprUlFvR2VIby1fbUxyWnYxbUI5YkdEN0NaZTVBdWVBUTR5ekdZ?oc=5"
+          }
+        ],
+        "headline": "駐英國使館：英方沒有資格對香港事務橫加干涉- 要聞",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1TLThmXzZuYUtvS29TeTFYcjd0RDMyNjY2Z2FpT1BfR2h6UVNhQlpDU3E4d1o0eDJJOTY3c0ZnOFQwS2RaeWtQZjZSRHdIaWtoMEo2WXpFYWEwYlMxZXlweXVPYzM5SFlvendIcWxrQmxSVGNiOEVB?oc=5"
+          },
+          {
+            "name": "香港政府資訊中心",
+            "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1zM3AyVjFiTmpFZF9KX01ieXlmMmRHVFdIOWtybGNDa2tPNlhhNHphbzdSd18xVjBaVUt1NnZ5b085cVFmZFVTbjF5b2xRalRDeDZSbVhZcjFqeW1nUnZnSVN1ZkxRM29MZ3Zxd0k3OGhMQQ?oc=5"
+          }
+        ],
+        "headline": "2026「創客中國」國際中小企業創新創業大賽香港分站賽決賽圓滿舉行- 特刊",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港文匯報",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5qTk11dmlZM1ZGSzh5MFNWcVM2Ukt0U0V4Mk13dkxFQ0txcUdENlVrTDNYZ3hZNmw4S2dNY0xxM1RjOXN6TXdfYms2UjBPMzhicUtEa1U5MHV2MXBBcGVjOV9xSE94UTZOQTk0aVNBdzNKV3VPSmRz?oc=5"
+          }
+        ],
+        "headline": "山東社團總會第三屆理事會就職 卓永興冀總會深化魯港合作",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "香港 wide",
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxNNjJlR1ppU2hBNUZQSUFQRm9qY2VpRkVHTkNBQTdWOUU2S1pySlN5ZGR6TnRhMVdSN2QwNGk4VG5fbGJNQjRHank2MnNKZEkyME1XMUJoT0FuVHFvZ3pLVkR5Z0NhY2N4bkRfYmN5enMxbU1CYjlta1M4SWlPSmpIZU9wSGxEWDNSTllvbFVNOEhqc3JORjd4b1M0ZE9COGxGRmR1MExWWFlmVkVSWnNCZDQ4NzAwSFVwTGhhWDR6SkdWQ0Q3Vjh4dmtubDJnNGxWbDVIeFdQTWNkUTJud2drZ0I0OU9iQU9HcnJCZEpySGNDRjRXRkRaakFTWElacFJMWDYzVng5a3l0T2pGa3UtTnVtemFVcFBFMlh1elo1MHpDTjUxTW4yd3Y1UFhxUi1nUTdoZ2pGaFUzTkpPQkdMV3VtOFVuM2tlRlFHWXdpZEFLbkQ5N3VNQk1GUVh6MWt3NURuV08tNWNLY2FfVmtKcU1SQWZZNUhtbEJ2NGZWMDVISGhpREZGMi1LZ2NZQXE2TzR4LWwzSDZqbVBFZmt6TGRQSjZnc3dqUWtaV1NWTmxXZ1pR?oc=5"
+          },
+          {
+            "name": "奇案 GN",
+            "url": "https://news.google.com/rss/articles/CBMihwNBVV95cUxQRjdfSmJCM0dTN0Y0Z0tfNUI4b0pIcG45cW5JR3pkVlp5dFQxV19jZk1hN3RIeEE0UTExQkJXbVlEdjNWQU5DeUxFblYwSE10cXlHQ3I3ZnBuX0RxWlU1UzFvNFdKSjg5RzVhblM3ZTA1UHJzek5nb1hyYWhaNGx5cWJIRjRSczFwYU9HaWFNNTU3cXpLRmZFTHltN1diUUszRUxKSTFseWtjd2ZyU2ZyWFFvQ0loYnVQaUZSRDlRSG5PWl9leTltSS01NXJsblNKRHllWWFwUjN3ZjBnY3lNZkdnTm96c1ZEallzWGs1bWp2VEE3eC1KTnFmUU9Fek50Nlh1MzNuLWhKS0FxTW1kMkZGMzlZRlllN2kwa0l1UWNMQ2pyTF9jVEMxYndCd2wwUWpiaEhfeUFqalJ5dVY4SDhsR18xYmdhMWc0TGdKOVl6Ujk5ODd2SUVyOWVSR2RsVDZWNG9tSlJRODRWaDg0TlNkWDl1RXJtYnR5U3BNVmN5ZTVZN0Zr?oc=5"
+          }
+        ],
+        "headline": "颱風薔琵",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "點新聞",
+            "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE45WW81eXNOcXZ2M0laWTdOSEJ1a3lKdkFXSFl3dXp5Q29kYlFWZFpScV9XbkRocW03TU5Bd2pyM3N4QXBoV1kwUEF4dGlUT2psVmhtUlBNMUh1T1NkWDhFbjU4Tm1nMUJpQXlSSjFOODF6N19UWGNr?oc=5"
+          },
+          {
+            "name": "香港01",
+            "url": "https://news.google.com/rss/articles/CBMivwNBVV95cUxNWVhsQlBZeGdjNHBkYnpONFJFSlI1ZlZDSm1TY05BRGJNQkkyRDJFV3FtVTFCYk9LM09fZ1ZBRUxiQkRTX3lqUWdqcnFKeDhQUExMR1k5bmF6R3NTUVhpY3k2bmZEdHo3WE0zam1ncVJvOFNEZFpQaVdSRkViUVFmZTZ5N3Y2b0FicTdaU1EyOGNBRGVOUXNVWTNuU1R5cko0NERTdzcxdEdxWFlzSDFpQXpyRDUyOFRoaVZmQVhEa1UtUmx6a2h2amFOU1FkMWR2akIxUkpuVk40bV9jMVFtY1dWd2RSQWEwd0FVZGpBS21XTlRxeG1DSHFnZzhKMjdPT3pvc1JURWw0LTdTSUkyWTdpcldMMjRLVDRkMXBYaUpubE1tWkJid2lTYWIzNkFOdUxzR1VpQUNzbE43RTVQQzk2WWZwajJlbENOQS1yXzJxZXdsS0c3eFhsRjhJWnkyRjFKNjhOR2FHcml2LUNKWWExWUxETENWYTloRWh4cEt4Q1NsODRnMmFLeTR1cTFBZXJtRnhvNG5oaDJ5N194c3hLYWt6OHYxTnVPMURycEVTWWxXc3E0TnVsckhlVU0?oc=5"
+          }
+        ],
+        "headline": "助客訛稱永久離港提取強積金中介人遭廉署起訴串謀詐騙罪成- 港聞",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "庭刊",
+            "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPVkJ5TjJMbkc5dEFjSlQwb180WEEydGpxMlJmT2hheWpyekhGNGpJeDBaZFlENTVJZGhvN1JJcUotMVVrWEVLSGd0RHZzQXFzbVlpUVE1M2xVb1FiQzRuR0JKcktlNnNiTk1ZcTlxdk5Fa0tCNDJNWjF0dDNIYUpLblVBdGo0U1BTVGtGVzRDM093ZndiQzJrUmg2clNzaU0yZS1hNl80YWJTdFIyNVhLYW9pNHBiR3pBdDdDQlNfbWJFVjEwQXVoWkxzZDh0LXc?oc=5"
+          }
+        ],
+        "headline": "2026.10.23（五）重點法庭案件速覽",
+        "body": ""
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874814-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874992-20261023.htm"
           }
         ],
-        "headline": "菲律賓進口蟹樣本金屬雜質鎘含量超標 食安中心指令停售",
-        "body": "一個菲律賓進口蟹樣本被檢出金屬雜質鎘含量超出法例標準，食安中心正跟進事件。 食安中心表示，是透過恆常食物監測計劃，從進口層面抽取上述蟹樣本作檢測，結果顯示鎘含量為百萬分之4.12，"
+        "headline": "外交部駐港公署批評英國藉所謂半年報告 抹黑一國兩制",
+        "body": "外交部駐港公署，反對英國政府再次發表所謂香港問題半年報告，抹黑一國兩制，詆毀香港國安法和維護國家安全條例， 對特區司法案件說三道四，粗暴干預香港事務和干涉中國內政。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874812-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874978-20261022.htm"
           }
         ],
-        "headline": "黃偉綸：香港在人民幣清算、投融資和風險管理方面角色重要",
-        "body": "財政司副司長黃偉綸說，截止今年7月底，在香港的人民幣存款和存款證餘額達到約1.3萬億元， 人民幣債券在香港的發行規模連續兩年超過1萬億元，種種亮麗數據充分反映香港在人民幣清算、投融資和風險管理方面的重要角色。"
+        "headline": "羅淑佩恭賀港隊在亞殘運游泳、乒乓、劍擊及羽毛球項目增添獎牌",
+        "body": "亞殘運會，中國香港代表隊今日增添9面獎牌，其中游泳運動員陳睿琳奪得女子S14級100米蝶泳金牌， 為中國香港代表隊奪得今屆賽事第二面金牌，文化體育及旅遊局局長羅淑佩表示恭賀，說陳睿琳連續三屆在亞殘運奪金，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874811-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874973-20261022.htm"
           }
         ],
-        "headline": "政府稱APEC財長會圓滿舉行 展現香港舉辦大型國際會議能力",
-        "body": "亞太經合組織財長會在香港特區圓滿舉行。 特區政府表示，各成員經濟體和國際組織的代表就多個區域經濟發展的重大議題展開了深入交流，形成廣泛共識和務實成果。"
+        "headline": "調查指五成六受訪學生有抑鬱表徵 青協籲家長留意子女情緒變化",
+        "body": "香港青年協會輔導服務調查發現，中學生開學壓力達5.9分，主要擔心成績退步、功課或考測繁重、學習動力低等。 調查亦顯示，超過五成六受訪學生曾出現抑鬱情緒表徵。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874809-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874971-20261022.htm"
           }
         ],
-        "headline": "陳茂波：香港上市制度與時並進 方便不同類型科企上市",
-        "body": "港交所方面透露，今年以來TMT同人工智能相關公司佔港股IPO集資總額約70%，市場關注AI過度投資， 如何平衡鼓勵創新及防範風險。"
+        "headline": "陳國基稱香港女性有能力及有擔當 推動社會發展",
+        "body": "政務司司長陳國基出席一個婦女活動致辭時表示，香港女性有能力、有擔當，她們在推動香港社會發展上，一直發揮重要作用。 他說，在各大企業和機構中，有近四成經理級職位由女性出任。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874808-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874970-20261022.htm"
           }
         ],
-        "headline": "李家超在禮賓府與藍佛安會面 稱積極把握財長會平台展示獨特優勢",
-        "body": "行政長官李家超在禮賓府與財政部部長藍佛安會面，就內地和香港的經濟金融發展交流意見。 李家超歡迎並感謝藍佛安率團到港主持亞太經合組織APEC財長會。"
+        "headline": "有進口藍鰭吞拿魚樣本檢出孔雀石綠 食安中心追查來源及分銷情況",
+        "body": "食安中心公布，一個藍鰭吞拿魚樣本被檢出孔雀石綠。 中心透過恆常食物監測計劃，從進口層面抽取涉事藍鰭吞拿魚樣本作檢測。"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874805-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874966-20261022.htm"
           }
         ],
-        "headline": "12歲女童感染甲型流感併發敗血性休克不治 潛伏期內沒有外遊",
-        "body": "一名有自身健康狀況的12歲女童，感染甲型流感併發敗血性休克、血管內瀰漫性凝血和多重器官衰竭。 病人延至昨日不治。"
+        "headline": "超強颱風薔琵影響 多班來往香港及台灣航班取消",
+        "body": "受超強颱風「薔琵」迫近台灣影響，多間航空公司調整航班服務。 香港航空宣布，周五6班來往香港至台北的航班將取消，已豁免受影響航班之重新訂位或更改航點或退票的手續費用，"
       },
       {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874802-20261021.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874963-20261022.htm"
           }
         ],
-        "headline": "《香港01》新聞部收到白色粉末可疑信 警方派員調查",
-        "body": "《香港01》表示，新聞部收到一封藏有白色粉末的可疑信件。 警方表示，下午3時接獲報案，表示公司接獲有可疑粉末的信件，派員到場調查。"
+        "headline": "亞殘運游泳項目 港隊混合S14級4X100米自由泳接力奪銅",
+        "body": "亞殘運游泳項目，港隊在混合S14級4X100米自由泳接力賽，奪得銅牌。 決賽有4支隊伍角逐，港隊由陳睿琳、劉肖儀、張浚諾和黃漢彥出賽，初段一度守於泰國隊之後的第二位置，"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874958-20261022.htm"
+          }
+        ],
+        "headline": "消委會研究報告指消費者回收表現仍需進步",
+        "body": "消委會發表消費追蹤研究報告，發現消費者過去十年，在可持續消費認知及參與程度持續進步，但回收表現方面就較弱， 建議加強推廣回收資訊。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874962-20261022.htm"
+          }
+        ],
+        "headline": "中介人涉助客戶虛假提早提取強積金 被廉署起訴串謀詐騙罪成",
+        "body": "廉政公署早前起訴一名強積金中介人，夥同多名客戶以虛假法定聲明及證明文件申請提早提取強積金，涉款共約460萬元。 該名中介人今日在區域法院被裁定串謀詐騙及使用虛假文書罪名成立，其3名客戶則於早前承認控罪。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874960-20261022.htm"
+          }
+        ],
+        "headline": "數字辦：高度關注PHP存有嚴重安全漏洞 向政府部門發保安警報",
+        "body": "數字辦表示，高度關注有關廣泛被應用於全球網站後端運作的程式語言PHP所存有的嚴重安全漏洞。 數字辦已向所有政府決策局或部門及公營機構發出保安警報，要求即時全面檢視其資訊系統有否受影響，並必須盡快完成系統修補工作，"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874959-20261022.htm"
+          }
+        ],
+        "headline": "亞殘運羽毛球SH6級男單準決賽 港隊朱文佳摘銅",
+        "body": "亞殘運羽毛球項目，港隊球手朱文佳於男子SH6級單打準決賽，局數0:2不敵國家隊球手。 賽事不設銅牌賽，朱文佳為港隊奪得一面銅牌。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874955-20261022.htm"
+          }
+        ],
+        "headline": "李家超：國家支持下積極增加人民幣流動性 擴大點心債市場",
+        "body": "行政長官李家超表示，金融是香港的根本和最大的優勢。 香港在「一國兩制」下擁有內聯外通的優勢，多年蟬聯最自由經濟體全球第一，穩居《全球金融中心指數》全球第三、亞洲第一。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874954-20261022.htm"
+          }
+        ],
+        "headline": "高級警員朱振國設靈 梁振英、李家超、鄧炳強、周一鳴到靈堂弔唁",
+        "body": "2005年執勤期間遇襲而癱瘓的高級警員朱振國，上月離世。 今日在紅磡世界殯儀館設靈。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874950-20261022.htm"
+          }
+        ],
+        "headline": "香港網絡安全事故協調中心籲機構全面盤點可能使用PHP產品",
+        "body": "香港網絡安全事故協調中心提醒本港企業及機構，PHP安全團隊近日緊急發布安全更新，修補兩個嚴重漏洞。 遠端攻擊者可利用相關漏洞執行未經授權的程式碼，受影響的PHP系統須盡快修補漏洞。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874945-20261022.htm"
+          }
+        ],
+        "headline": "本港9月基本通脹率2.1% 較上月升0.2個百分點",
+        "body": "本港9月綜合消費物價指數，按年上升1.9%，較前一個月升幅為高；基本通脹率為2.1%， 兩者均較上一個月上升0.2個百分點。"
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1874944-20261022.htm"
+          }
+        ],
+        "headline": "亞殘運輪椅劍擊混合重劍團體銅牌賽 港隊落敗得第四名",
+        "body": "亞殘運輪椅劍擊項目，港隊在混合重劍團體賽銅牌賽不敵泰國，得第四名。 港隊的陳㬢、鄺遠興、湯雅婷及余翠怡，四強以12:20敗於國家隊，轉戰銅牌賽面對泰國。"
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE12RjRjeWFyT1pWYTVuay1PQUdVY0dFeFBPbDdIT2s4MUcwOEg2RDc1eWdJMkZDZk1JTWQzLWN3NGlHS2VBNm5UMU1oMDR6cFQ1OGc?oc=5"
+          }
+        ],
+        "headline": "恒指失守23,000 美股AI股回升- AATV 財經視頻CSOP ETF 系列",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1kbXJ4dXE3UmJ1R1dBajhMS3hwX0xLSEVhaFA1SlRrajVoNFFBVkZsVTVrM3BObVVYdmRPOGIzUFYxNk5ScGpPZURoU18yQVVjQlJr?oc=5"
+          }
+        ],
+        "headline": "恒指未止跌？聯想、騰訊、寧德博反彈？",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5mdndkMmwtWl9FcG5KX29rbm9hQnU1cUtxZVpwekxMcHNWeWNBWEc1TzhGbF81WW95elhHLTBUU2g1OHlkd1hQenB4c1pPSDZ1eEE?oc=5"
+          }
+        ],
+        "headline": "港股倒跌 騰訊再穿底 400蚊守得住？",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE54ZFRsSWZTdmJaQWRLVC1ZbnAyV2FmRkNybTduS0lYcjY3RDRkTks2cy1GV0drT2dZUkVwck1DRFhlaWtrakNnY3VEU1ZNWUpSb1E?oc=5"
+          }
+        ],
+        "headline": "騰訊失4字頭 點算？科指見逾2年低位！",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "AAStock",
+            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBPREFWLUFvcTBxQkdvM1Y1MGowSEhhVWtGTXk3VVR3aS1rbEVJMzB6Ri1BdmUxbG4xaV9PUXJJcXk0bkxRRTU3XzV1eTFzZDhVc1E?oc=5"
+          }
+        ],
+        "headline": "阿里失紅底 騰訊再破底！恒指勢試低位？",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "irasia.com",
+            "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1WZ0VVN1ctWFpLUU5PeEZLTmNsSjBDaEx1VUVzbm5Qc1BTWWhGZ0thOE1scWN6TnRyZXNrQnptWGtuLTRLOThETThIQXdGd2ZMNzE5enNfam9xMmlU?oc=5"
+          }
+        ],
+        "headline": "HENG TAI CONSUMABLES GROUP LIMITED 亨泰消費品集團有限公司",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "iis.aastocks.com",
+            "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFByT21DRDF5enJEQ1Q1NnAtYUZ0RTBVeHA2aGJNWERCSXpQRnI1SjJsSHlQbmVQb3hLckZycFZubDRfZFEzWlJLbGhhaU16RWhUTi1NV1FWeDNCajNF?oc=5"
+          }
+        ],
+        "headline": "元亨燃氣控股有限公司元亨燃氣控 股有 限公 司",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "Lerado Financial Group Company Limited",
+            "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBtMi1yck9nWjc1SmtIOUdoUnk1T0FseXBIWGx4Ujh4ZndKZGgyd2FHbHRFSGsxN2kzM0M3RDFucWdITVE5RDJUaVYxdnRIbkI1dHg4T2FFaFlrdjNz?oc=5"
+          }
+        ],
+        "headline": "Lerado Financial Group Company Limited 隆成金融集團有限公司",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMimwJBVV95cUxOSDlrdi1sM1pqQ1ltc0ZCUFl4TXFJRWxvTWRNeDByWHNscnBrdzBteVR3SUZacWpvVWlLTlNRMmZUVWRqNllzN1lKQjl0ZWVOZnZybDd5QTQxMEV3bDhuUS1QaWNrWjZJY3h2d2ZtQWZ6U1lJbU5sNEdOd0xud0d3UlRyOGZUUzRfQ1R3MTRwd2dvUEtMNk5KNTl5QnYwazl5SEtOdkF0Z2hEMXhpYjh5OTgwak91Qm40WHJtajRReTYwNWNlSEoxYVFHZGFMbWN5WDRiVFlXUnVDbnZrR2NtcDBhX1Rzdld6M2FRT3ZOOEFFc0JfczFDMjlrV3JxclZVeWZuVUdVNVFPT2RPT0xBN2ZJSTJPVmtSTzZ3?oc=5"
+          }
+        ],
+        "headline": "霍峽紅海戰綫升溫 布油曾升穿111美元 傳特訂打擊方案 伊警告反擊區內美軍基地",
+        "body": ""
       }
     ],
     "juicy_sg": [
+      {
+        "headline": "Daylight snatch theft at Hougang mobile shop: iPhone 17 Pro Max taken",
+        "body": "A man in his 20s posed as an interested customer at a Hougang mobile store before grabbing an iPhone 17 Pro Max valued at almost S$2,000 and fleeing in broad daylight.",
+        "tag": "scandal",
+        "raise": true,
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/man-in-his-20s-steals-iphone-17-pro-max-from-hougang-shop-in-broad-daylight"
+          }
+        ]
+      },
+      {
+        "headline": "Survey reveals nearly half of Singapore workforce logs 6+ unpaid overtime hours weekly",
+        "body": "According to ADP's People at Work report, 45% of Singapore staff clock at least six unpaid hours every week through working lunch breaks and past official hours, higher than the 38% global average. One in ten employees reportedly works 16 or more uncompensated hours weekly.",
+        "tag": "practical",
+        "raise": true,
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/nearly-half-of-singapore-workers-put-in-6-or-more-unpaid-hours-weekly-1-in-10-puts-in-16-or-more-report"
+          }
+        ]
+      },
+      {
+        "headline": "Police charge 17 motorists for drink-driving following islandwide operations",
+        "body": "Seventeen drivers aged between 24 and 59 were charged in court following islandwide police stops in September and October. In two notable incidents, motorists registered breathalyser readings over double the statutory limit.",
+        "tag": "scandal",
+        "raise": true,
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/spf-17-motorists-charged-for-drink-driving-after-september-october-enforcement-checks-with-two-had-readings-more-than-twice-the-legal-limit"
+          }
+        ]
+      },
+      {
+        "headline": "Yishun HDB kitchen fire tackled by neighbours using hose reels",
+        "body": "A fire erupted inside an 11th-floor kitchen at an HDB block in Yishun on Monday evening, leaving four individuals with minor injuries. Quick-thinking residents deployed communal corridor fire hoses to contain the blaze before emergency services arrived.",
+        "tag": "human interest",
+        "raise": true,
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/residents-help-extinguish-kitchen-fire-at-yishun-hdb-block-4-suffer-minor-injuries"
+          }
+        ]
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/nearly-half-of-singapore-workers-put-in-6-or-more-unpaid-hours-weekly-1-in-10-puts-in-16-or-more-report"
+          }
+        ],
+        "headline": "Nearly half of Singapore workers put in 6 or more unpaid hours weekly; 1 in 10 puts in 16 or more: report",
+        "body": "SINGAPORE: Nearly half of Singapore workers (45%) report put ting in six or more unpaid hours of work each week,"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/health-minister-by-investing-in-people-sharing-knowledge-expertise-we-can-strengthen-healthcare-systems-in-singapore-the-philippines"
+          }
+        ],
+        "headline": "Health Minister: By investing in people, sharing knowledge & expertise, we can strengthen healthcare systems in Singapore & the Philippines",
+        "body": "SINGAPORE: A new initiative was launched this week that stan ds to benefit both Singapore and the Philippines in terms of"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/singapore-s-ex-president-halimah-we-want-to-believe-that-we-can-compartmentalise-violence-injustice-so-long-as-these-do-not-cross-our-borders"
+          }
+        ],
+        "headline": "Singapore's Ex-President Halimah: We want to believe that we can compartmentalise violence, injustice so long as these do not cross our borders",
+        "body": "SINGAPORE: Halimah Yacob, the former President of Singapore, has long spoken up against the violence in Gaza that has con"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/singapore-mum-s-search-for-son-s-lost-wallet-shows-both-the-frustration-and-usefulness-of-airtags"
+          }
+        ],
+        "headline": "Singapore mum's search for son's lost wallet shows both the frustration and usefulness of AirTags",
+        "body": "SINGAPORE: After a Singapore mother’s young son came home wi thout his wallet after a school excursion,"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/sharon-au-as-a-singaporean-i-come-from-a-society-with-a-very-different-relationship-to-public-order-but-9-years-in-paris-have-taught-me-a-lot"
+          }
+        ],
+        "headline": "Sharon Au: As a Singaporean, I come from a society with a very different relationship to public order, but 9 years in Paris have taught me a lot",
+        "body": "SINGAPORE: Earlier this week, Singaporean actress Sharon Au penned a thoughtful and insigh"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/man-in-his-20s-steals-iphone-17-pro-max-from-hougang-shop-in-broad-daylight"
+          }
+        ],
+        "headline": "Man in his 20s steals iPhone 17 Pro Max from Hougang shop in broad daylight",
+        "body": "SINGAPORE: A man successfully fooled a mobile phone store wh en he pretended to be a customer wanting to buy a phone,"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/residents-help-extinguish-kitchen-fire-at-yishun-hdb-block-4-suffer-minor-injuries"
+          }
+        ],
+        "headline": "Residents help extinguish kitchen fire at Yishun HDB block; 4 suffer minor injuries",
+        "body": "SINGAPORE: A kitchen fire broke out in a unit on the 11th fl oor of an HDB block in Yishun at around 9:25 p.m."
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/whatsapp-account-takeover-scams-hit-128-cases-as-fraudsters-pose-as-friends-and-family"
+          }
+        ],
+        "headline": "WhatsApp account takeover scams hit 128 cases as fraudsters pose as friends and family",
+        "body": "SINGAPORE: The Singapore Police Force (SPF) has issued an ad visory warning the public about a surge in WhatsApp account"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-singapore-sez-irda-and-midf-discuss-financing-for-businesses-expanding-in-johor"
+          }
+        ],
+        "headline": "Johor-Singapore SEZ: IRDA and MIDF discuss financing for businesses expanding in Johor",
+        "body": "MALAYSIA: The Iskandar Regional Development Authority (IRDA) has welcomed the Board of Directors and Management of Malays"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/spf-warns-of-phishing-sites-impersonating-simba-in-google-sponsored-results-as-losses-hit-s-83-000-across-62-cases-since-march"
+          }
+        ],
+        "headline": "SPF warns of phishing sites impersonating SIMBA in Google sponsored results as losses hit S$83,000 across 62 cases since March",
+        "body": "SINGAPORE: The Singapore Police Force (SPF) has issued an ad visory warning the public about phishing websites impersonat"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/spf-17-motorists-charged-for-drink-driving-after-september-october-enforcement-checks-with-two-had-readings-more-than-twice-the-legal-limit"
+          }
+        ],
+        "headline": "SPF: 17 motorists charged for drink-driving after September-October enforcement checks with two had readings more than twice the legal limit",
+        "body": "SINGAPORE: Seventeen motorists aged between 24 and 59 will b e charged in court today (Oct 22) for drink-driving offences"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/ica-19-year-old-under-investigation-under-singapore-s-weapons-control-law"
+          }
+        ],
+        "headline": "ICA: 19-year-old under investigation under Singapore’s weapons control law",
+        "body": "SINGAPORE: ICA officers at Pasir Panjang Scanning Station ha ve foiled an attempt to smuggle an assortment of controlled"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/singapore-phv-driver-37-suffers-stroke-after-driving-14-hours-day-starts-work-from-4am-and-only-sleeps-for-few-hours-daily"
+          }
+        ],
+        "headline": "Singapore PHV driver, 37, suffers stroke after driving 14 hours/day; starts work from 4am and only sleeps for few hours daily",
+        "body": "Summary A 37-year-old private-hire driver suffered a serious stroke in September 2026 after working more than 14 hours da"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-police-visit-rts-link-complex-ahead-of-february-2027-launch-to-review-security-readiness"
+          }
+        ],
+        "headline": "Johor police visit RTS Link complex ahead of February 2027 launch to review security readiness",
+        "body": "MALAYSIA: Malaysia Rapid Transit System (MRTS) has received a working visit from the leadership of the Royal Malaysia Po"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/ho-ching-hypes-singapore-s-home-based-businesses-says-hdb-start-up-garages-can-go-global"
+          }
+        ],
+        "headline": "Ho Ching hypes Singapore's home-based businesses, says HDB start-up garages can go global",
+        "body": "SINGAPORE: In a social media post on Tuesday (Oct 20), former Temasek Holdings executive director and CEO Ho Ching"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/national-wages-council-6-to-8-pay-raise-recommended-for-lower-wage-workers-who-earn-up-to-s-2-8k-month-in-singapore"
+          }
+        ],
+        "headline": "National Wages Council: 6% to 8% pay raise recommended for lower-wage workers who earn up to S$2.8K/month in Singapore",
+        "body": "Summary Singapore’s National Wages Council recommends built- in pay increases of 6% to 8% for lower-wage workers earning"
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/75-of-convenience-store-shoppers-in-singapore-expect-to-rely-more-on-ready-to-eat-meals-amid-busy-workdays-study"
+          }
+        ],
+        "headline": "75% of convenience-store shoppers in Singapore expect to rely more on ready-to-eat meals amid busy workdays: study",
+        "body": "SINGAPORE: Three in four (75%) convenience-store shoppers in Singapore expect to rely more on ready-to-eat meals as busy"
+      },
       {
         "sources": [
           {
@@ -1209,7 +2894,7 @@
             "url": "https://theindependent.sg/singaporean-wonders-if-companies-are-switching-to-tetra-pak-to-avoid-bcrs"
           }
         ],
-        "headline": "Singaporean wonders if companies are switching to Tetra Pak to avoid BCRS",
+        "headline": "Singaporean wonders if companies are switching to carton packaging to avoid BCRS",
         "body": "SINGAPORE: The introduction of the Beverage Container Return Scheme (BCRS), also known as Return Right,"
       },
       {
@@ -1245,162 +2930,42 @@
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/filipina-working-in-singapore-loses-s-15k-in-rental-scam-shares-her-story-to-remind-others-to-be-vigilant"
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBlOExiLVRvMVgzZjlNbERXbDRkck1tOEZNXy1UYWFFWmdYQ0dieUJVdkM0OUMxNF9GN2w4UTBjYm4zbW9VUjNhd3pFOFctQ2xfbnFERHJlaFo4bkd4SGgtQksxRVpGem4xcnVaOW9Bcw?oc=5"
           }
         ],
-        "headline": "Filipina working in Singapore loses S$15K+ in rental scam, shares her story to remind others to be vigilant",
-        "body": "SINGAPORE: More than a year after it happened, a Filipina living and working in Singapore shared her experi"
+        "headline": "Miss Universe S'pore not going to Puerto Rico on Nov. 24 to compete due to franchise dispute",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/fresh-grad-contemplates-accepting-s-4k-job-offer-as-daily-travel-would-take-3-4-hours-each-day"
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPMC11ZEZncjFkWnM0TUtwM3NZZkRxNjc3WkJNd2hlU1M2eEE3NVdfUGFid2tuYURNcHE3aTQ2VGNQczlfUEtFd2ZNVkxIOWQ0bks3em05TXh5eXVsaEhFMElOYkQ5SjlScW10WldIV1kzUHZkd0xFT2lEeGVpYzIxWm5hVVVmRmhycEJPTDl4MDR5d3hGM0VOenlxa242bHh1T2RkWjM4QjJIMm8wTWkxOFFhMUUxV3J6QlhR?oc=5"
           }
         ],
-        "headline": "Fresh grad contemplates accepting S$4k job offer as daily travel would take 3-4 hours each day",
-        "body": "SINGAPORE: Amid a difficult hiring climate, a fresh graduate has shared that he is having second thought"
+        "headline": "KKH says baby Trevor had no noticeable injuries prior to death, MSF says no child protection or social services referrals",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/i-ve-been-applying-to-many-jobs-son-seeks-advice-after-mum-got-diagnosed-with-stage-4-breast-cancer"
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1PYVpaMkwyUHFTeFAtRm5sNWcwSm5IVVBLbWhMN3g3VFY4aEZ6VmxvQTF1TFkyX0gtNzdoSXJCU01ILXpVU3VFOVJNTzN2bkRqRGV6eUUwcDYxMWd1MjJYT0hSS0ZPcWYwZnBMM1JKQlJDQnctRGF1eDZCMlg?oc=5"
           }
         ],
-        "headline": "‘I’ve been applying to many jobs’: Son seeks advice after mum got diagnosed with stage 4 breast cancer",
-        "body": "SINGAPORE: A struggling jobseeker has appealed to Singaporea ns online for advice after his ageing mother—the family's br"
+        "headline": "Woman in China breaks 5 ribs from husband's hug, diets frequently & rarely gets sunlight",
+        "body": ""
       },
       {
         "sources": [
           {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/we-have-different-attitudes-towards-money-and-our-future-32-year-old-singaporean-wonders-if-6-month-relationship-is-worth-saving"
+            "name": "Mothership",
+            "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE8xRWhNdm1IMl9MV0oyUWxsY1Z4a1Q2XzlPVE04SGhfX0x1RWRfRm5YSUsyX1pWSFhDS3lYTXRncDFoUEMxYThuMG5CeGZxZVdGclNnRDh5TjhIVjNnLTVjOVNWbGNQclIyWVp6R3ZR?oc=5"
           }
         ],
-        "headline": "‘We have different attitudes towards money and our future’: 32-year-old Singaporean wonders if 6-month relationship is worth saving",
-        "body": "SINGAPORE: A 32-year-old Singaporean man recently shared on Reddit that he is now unsure whether he should continue his"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/sylvia-lim-injection-of-new-blood-into-wp-enables-us-to-take-on-mentoring-roles-as-we-prepare-for-the-future"
-          }
-        ],
-        "headline": "Sylvia Lim: Injection of new blood into WP enables us to take on mentoring roles as we prepare for the future",
-        "body": "SINGAPORE: In her most recent social media post, Workers’ Party (WP) chair Sylvia Lim appeared to affirm her"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/dozens-of-crows-shot-dead-near-aljunied-mrt-businesses-say-it-is-effective-but-operation-draws-public-attention"
-          }
-        ],
-        "headline": "Dozens of crows shot dead near Aljunied MRT; businesses say it is effective, but operation draws public attention",
-        "body": "SINGAPORE: The authorities have implemented another way to c ontrol the growing population of crows in the country,"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/world-s-wealthiest-countries-singapore-is-first-for-purchasing-power-but-drops-to-8th-once-working-hours-are-included"
-          }
-        ],
-        "headline": "World's wealthiest countries: Singapore is first for purchasing power but drops to 8th once working hours are included",
-        "body": "SINGAPORE: By any measure, Singapore is an exceptionally prosperous and productive coun"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/74-arrested-in-cnb-island-wide-operation-as-nightlife-sweep-tests-86-for-drugs-two-singaporeans-nabbed-for-suspected-trafficking-in-cassia-crescent-and-jalan-bukit-ho-swee"
-          }
-        ],
-        "headline": "74 arrested in CNB island-wide operation as nightlife sweep tests 86 for drugs — two Singaporeans nabbed for suspected trafficking in Cassia Crescent and Jalan Bukit Ho Swee",
-        "body": "SINGAPORE: The Central Narcotics Bureau (CNB) has arrested 7 4 suspected drug offenders in an island-wide anti-drug opera"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/singapore-is-ready-to-use-every-lever-at-its-disposal-to-hold-those-responsible-for-haze-to-account"
-          }
-        ],
-        "headline": "Singapore is ready to use every lever at its disposal to hold those responsible for haze to account",
-        "body": "SINGAPORE: Singapore recently signalled that it is taking th is year’s severe transboundary haze problem more seriously,"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/am-i-wrong-son-reluctant-to-travel-with-dad-who-plays-phone-videos-non-freaking-stop-from-morning-to-night"
-          }
-        ],
-        "headline": "‘Am I wrong?’: Son reluctant to travel with dad who plays phone videos ‘non-freaking-stop’ from morning to night",
-        "body": "SINGAPORE: A frustrated son turned to social media to ask if he was wrong for not wanting to bring his father on an overs"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/it-requires-more-work-noodle-stall-owner-defends-20-cent-surcharge-for-dry-noodles"
-          }
-        ],
-        "headline": "‘It requires more work’: Noodle stall owner defends 20-cent surcharge for dry noodles",
-        "body": "SINGAPORE: Members of the public recently complained about d ry noodles being 20 cents more expensive than soup noodles,"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/nba-season-kick-off-key-storylines-for-the-2026-27-campaign"
-          }
-        ],
-        "headline": "NBA season kick-off: key storylines for the 2026/27 campaign",
-        "body": "Over the summer, the NBA's balance of power has shifted noticeably."
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/ica-foils-cigarette-smuggling-attempt-by-malaysian-driver-at-woodlands-checkpoint"
-          }
-        ],
-        "headline": "ICA foils cigarette-smuggling attempt by Malaysian driver at Woodlands Checkpoint",
-        "body": "SINGAPORE: The Immigration and Checkpoints Authority officer s recently caught a Malaysian-registered car at the Woodland"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/wp-mp-kenneth-tiong-main-thing-to-do-is-act-against-companies-behind-indonesia-fires-starting-with-those-registered-in-singapore"
-          }
-        ],
-        "headline": "WP MP Kenneth Tiong: Main thing to do is act against companies behind Indonesia fires, starting with those registered in Singapore",
-        "body": "SINGAPORE: In a recent social media post, Workers’ Party Member of Parliament (WP MP) Kenneth Tiong (A"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/man-confused-as-girlfriend-of-2-months-pulls-away-whenever-things-get-serious-netizens-suspect-she-is-avoidant"
-          }
-        ],
-        "headline": "Man confused as girlfriend of 2 months pulls away whenever things get serious, netizens suspect she is avoidant",
-        "body": "SINGAPORE: A man has turned to Reddit for advice after notic ing a puzzling pattern in his two-month relationship: his gi"
-      },
-      {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/singaporeans-reassure-netizen-who-expressed-concern-after-seeing-that-face-masks-he-received-expire-in-december"
-          }
-        ],
-        "headline": "Singaporeans reassure netizen who expressed concern after seeing that face masks he received expire in December",
-        "body": "SINGAPORE: A netizen took to social media after noticing on face masks that they were set to expire before the end of th"
+        "headline": "8-month-old baby shook & smothered to death in S'pore: Mum, 23, gets 15 years & 3 months, dad, 27, gets 16 years",
+        "body": ""
       }
     ]
   }
