@@ -13,7 +13,7 @@ Environment:
   LLM_MODEL      optional override
 """
 
-import os, re, json, html, time, urllib.request, urllib.error
+import os, re, json, html, time, urllib.request, urllib.error, http.cookiejar
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -423,6 +423,9 @@ CFG = {
     },
     "hkma": {
         "daily": "https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity",
+        "hibor": "https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/hk-interbank-ir-daily",
+        "fx": "https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/er-eeri-daily",
+        "sofr": "https://markets.newyorkfed.org/api/rates/secured/sofrai/last/2.json",
         "press": "https://api.hkma.gov.hk/public/press-releases?lang=en"
     },
     "weather": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
@@ -609,49 +612,49 @@ BANKS = {
     "banks": [
         {
             "name": "ZA Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://za.group/en/bank"
         },
         {
             "name": "livi Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.livibank.com/en/"
         },
         {
             "name": "Mox",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://mox.com/"
         },
         {
             "name": "WeLab Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.welab.bank/en/"
         },
         {
             "name": "Airstar Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.airstarbank.com/en/"
         },
         {
             "name": "Ant Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.antbank.hk/en/"
         },
         {
-            "name": "PAOb",
-            "kind": "digital",
+            "name": "PAObank",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.paob.com.hk/en/"
         },
         {
             "name": "Fusion Bank",
-            "kind": "digital",
+            "kind": "virtual",
             "mode": "manual",
             "url": "https://www.fusionbank.com/en/"
         },
@@ -693,7 +696,7 @@ BANKS = {
 # data/rates_manual.json with the real promo rates.
 DEFAULT_RATES = {
     "ZA Bank": 4.20, "livi Bank": 4.05, "Mox": 3.98, "WeLab Bank": 3.90,
-    "Airstar Bank": 3.80, "Ant Bank": 3.72, "PAOb": 3.68, "Fusion Bank": 3.55,
+    "Airstar Bank": 3.80, "Ant Bank": 3.72, "PAObank": 3.68, "Fusion Bank": 3.55,
     "Citi": 3.50, "Standard Chartered": 3.40, "HSBC": 3.20,
     "Hang Seng": 3.15, "BOCHK": 3.10,
 }
@@ -852,97 +855,689 @@ def cluster(items, threshold=0.72):
     return groups
 
 
-# ---------------------------------------------------------------- HKMA
+# ---------------------------------------------------------------- HKMA / treasury
+#
+# The public API is GET-only (a POST really is HTTP 405, from Kong). The 405s
+# in the daily log are a different response: Aliyun's WAF, in front of that
+# gateway, answers with an HTML block page and the reason "Not Allowed" when a
+# burst of near-identical query strings looks hostile. Date windows also do
+# nothing unless `choose` names the column (apidocs.hkma.gov.hk). Without it,
+# every year-end call returned the same latest row, the chart was discarded,
+# and the call that would have extended history.json was the one the WAF then
+# blocked. One latest-page GET, with the gateway cookie and a short retry,
+# replaces that burst.
 
-def hkma_block():
-    daily = (get_json(CFG["hkma"]["daily"])
-             or get_json(CFG["hkma"]["daily"] + "?sortby=end_of_date&sortorder=desc"))
-    out = {"available": False}
-    if not daily:
-        return out
+LIQ_KEEP = (
+    "end_of_date", "closing_balance", "opening_balance", "disc_win_base_rate",
+    "hibor_overnight", "hibor_fixing_1m", "cu_weakside", "cu_strongside",
+    "market_activities", "interest_payment", "discount_window_reversal",
+    "discount_window_activities", "forex_trans_t1", "forex_trans_t2",
+    "forex_trans_t3",
+)
+HIBOR_TENORS = (
+    ("ON", "Overnight", "ir_overnight"),
+    ("1W", "1-week", "ir_1w"),
+    ("1M", "1-month", "ir_1m"),
+    ("3M", "3-month", "ir_3m"),
+    ("6M", "6-month", "ir_6m"),
+    ("12M", "12-month", "ir_12m"),
+)
+BALANCE_PARTS = (
+    ("market_activities", "Market activities"),
+    ("interest_payment", "EFBN interest / issuance"),
+    ("discount_window_reversal", "Discount-window reversal"),
+    ("discount_window_activities", "Discount window"),
+)
+CHART_BARS = 36
+_HKMA_OPENER = None
+_WAF_NOTE = False
+HKMA_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) "
+                   "Chrome/126.0.0.0 Safari/537.36"),
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "zh-HK,zh;q=0.9,en;q=0.8",
+    "Accept-Encoding": "identity",
+    "Referer": "https://apidocs.hkma.gov.hk/",
+    "Connection": "close",
+}
+
+
+def num(v):
+    """Parse an HKMA number. Blanks and dashes stay missing — never zero."""
+    if v is None or isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    s = str(v).strip().replace(",", "").replace("＋", "+").replace("－", "-")
+    if not s or s in {"-", "+", "—", "–", "N/A", "n/a", "null", "None"}:
+        return None
     try:
-        recs = daily["result"]["records"]
-        latest = recs[0]
-        bal = float(latest["closing_balance"])
-        prev = float(recs[1]["closing_balance"]) if len(recs) > 1 else bal
+        return float(s.replace("+", ""))
+    except ValueError:
+        return None
 
-        flat = 0
-        for r in recs:
-            if abs(float(r["closing_balance"]) - bal) < 1:
-                flat += 1
+
+def hkma_opener():
+    global _HKMA_OPENER
+    if _HKMA_OPENER is None:
+        jar = http.cookiejar.CookieJar()
+        _HKMA_OPENER = urllib.request.build_opener(
+            urllib.request.HTTPCookieProcessor(jar))
+    return _HKMA_OPENER
+
+
+def hkma_get(url, timeout=30, attempts=4):
+    """GET an HKMA JSON document, retrying when the WAF returns its 405 page."""
+    global _WAF_NOTE
+    last = "no attempt"
+    for i in range(attempts):
+        req = urllib.request.Request(url, headers=HKMA_HEADERS)
+        try:
+            with hkma_opener().open(req, timeout=timeout) as r:
+                raw = r.read()
+            if not raw or raw[:1] not in (b"{", b"["):
+                last = "non-JSON body"
             else:
+                return json.loads(raw.decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            last = f"HTTP {e.code} {e.reason}"
+            try:
+                e.read(80)
+            except Exception:
+                pass
+            if e.code == 405 and not _WAF_NOTE:
+                _WAF_NOTE = True
+                log("HKMA returned HTTP 405 Not Allowed — Aliyun's block page, "
+                    "not a rejected GET. Retrying with the gateway cookie.")
+            if e.code not in (405, 408, 429, 500, 502, 503, 504):
                 break
+        except Exception as e:
+            last = str(e)
+        if i + 1 < attempts:
+            time.sleep(1.2 * (i + 1))
+    log(f"HKMA failed {url}: {last}")
+    return None
 
-        out.update({
-            "available": True,
-            "as_of": latest.get("end_of_date", ""),
-            "balance_hkdm": bal,
-            "change": bal - prev,
-            "flat_sessions": flat,
-            "hibor_1m": latest.get("hibor_fixing_1m"),
-            "hibor_on": latest.get("hibor_overnight"),
-            "base_rate": latest.get("disc_win_base_rate"),
-        })
-    except Exception as e:
-        log(f"HKMA parse failed: {e}")
+
+def hkma_records(data):
+    if not isinstance(data, dict):
+        return []
+    header = data.get("header") or {}
+    if header.get("success") is False:
+        log(f"HKMA error {header.get('err_code')}: {header.get('err_msg')}")
+        return []
+    recs = (data.get("result") or {}).get("records")
+    return recs if isinstance(recs, list) else []
+
+
+def _slim(recs, keys):
+    out = []
+    for rec in recs:
+        if not isinstance(rec, dict):
+            continue
+        out.append({k: rec.get(k) for k in keys if k in rec})
     return out
 
 
-def hkma_year_ends(years=11):
-    """Year-end closing balance for the bar chart.
+def _latest_date(recs, field):
+    dates = [r.get(field) for r in recs if r.get(field)]
+    return max(dates) if dates else ""
 
-    The daily-figures endpoint ignores the date filter in some deployments and
-    just returns the latest record, which silently produces a chart of eleven
-    identical bars. So we sanity-check the result and drop it rather than show
-    something wrong.
+
+def _recent_enough(recs, field):
+    latest = _latest_date(recs, field)
+    if not latest:
+        return False
+    cutoff = (datetime.now(HK).date() - timedelta(days=6)).isoformat()
+    return latest >= cutoff
+
+
+def fetch_liquidity():
+    """Latest interbank-liquidity page.
+
+    The bare URL already returns the newest ~100 business days, which is the
+    whole gap in history.json. A dated query is only the fallback, and it
+    names the column with `choose`, which the API requires.
     """
-    bars = []
-    this_year = datetime.now(HK).year
-    for y in range(this_year - years + 1, this_year + 1):
-        url = (CFG["hkma"]["daily"] +
-               f"?from={y}-12-01&to={y}-12-31&sortby=end_of_date&sortorder=desc&pagesize=1")
-        d = get_json(url)
-        try:
-            rec = d["result"]["records"][0]
-            bars.append({"year": y, "value": float(rec["closing_balance"]),
-                         "date": rec.get("end_of_date", "")})
-        except Exception:
-            bars.append({"year": y, "value": None, "date": ""})
-        time.sleep(0.2)
-
-    dated = [b for b in bars if b["date"] and b["value"] is not None]
-    if len(dated) < 2:
-        log("HKMA year query returned no usable history - using daily snapshots instead.")
-        return []
-    distinct_years = {b["date"][:4] for b in dated}
-    if len(distinct_years) < 2:
-        log("HKMA year filter ignored - every year returned the same record. "
-            "Dropping the year chart; building history from daily snapshots instead.")
-        return []
-    return bars
+    recs = _slim(hkma_records(hkma_get(CFG["hkma"]["daily"])), LIQ_KEEP)
+    if _recent_enough(recs, "end_of_date"):
+        log(f"HKMA liquidity: {len(recs)} sessions through {_latest_date(recs, 'end_of_date')}")
+        return recs
+    log("HKMA latest page missing or not current; requesting a date window")
+    today = datetime.now(HK).date()
+    start = today - timedelta(days=150)
+    url = (f"{CFG['hkma']['daily']}?choose=end_of_date&from={start.isoformat()}"
+           f"&to={today.isoformat()}&pagesize=220&offset=0"
+           f"&sortby=end_of_date&sortorder=desc&fields={','.join(LIQ_KEEP)}")
+    ranged = _slim(hkma_records(hkma_get(url)), LIQ_KEEP)
+    if _recent_enough(ranged, "end_of_date"):
+        log(f"HKMA liquidity window: {len(ranged)} sessions through "
+            f"{_latest_date(ranged, 'end_of_date')}")
+        return ranged
+    # Keep a real but ageing page rather than throwing the numbers away.
+    return ranged or recs
 
 
-def history_bars():
-    """Our own rolling record of the aggregate balance.
+def fetch_hibor():
+    base = CFG["hkma"]["hibor"]
+    urls = [
+        base + "?segment=hibor.fixing&pagesize=6&offset=0&sortby=end_of_day&sortorder=desc",
+        base + "?segment=hibor.fixing&pagesize=6&offset=0",
+    ]
+    keys = ("end_of_day",) + tuple(field for _, _, field in HIBOR_TENORS)
+    best = []
+    for url in urls:
+        recs = _slim(hkma_records(hkma_get(url)), keys)
+        if recs and _recent_enough(recs, "end_of_day"):
+            log(f"HIBOR fixing: {len(recs)} sessions through {_latest_date(recs, 'end_of_day')}")
+            return recs
+        if recs:
+            best = recs
+            log(f"HIBOR fixing looked old ({_latest_date(recs, 'end_of_day')}); trying another query")
+    return best
 
-    Appended to on every run, so the chart fills in over time and does not
-    depend on the API honouring a date filter.
+
+def fetch_fx():
+    """HKMA's exchange-rate series, then the ECB reference rate if that series is behind.
+
+    The monthly-bulletin daily rates were last published at end-October on the
+    14 Nov check, which is too old to place the spot in the band. Frankfurter
+    republishes the ECB reference rate with no key.
     """
-    path = ROOT / "data/history.json"
+    base = CFG["hkma"]["fx"]
+    urls = [
+        base + "?fields=end_of_day,usd&pagesize=5&offset=0&sortby=end_of_day&sortorder=desc",
+        base + "?pagesize=5&offset=0",
+    ]
+    best = []
+    for url in urls:
+        recs = _slim(hkma_records(hkma_get(url)), ("end_of_day", "usd"))
+        priced = [r for r in recs if num(r.get("usd")) is not None]
+        for row in priced:
+            row["vendor"] = "HKMA"
+        if priced and _recent_enough(priced, "end_of_day"):
+            log(f"USD/HKD: HKMA through {_latest_date(priced, 'end_of_day')}")
+            return priced
+        if priced:
+            best = priced
+    ecb = fetch_ecb_fx()
+    if _recent_enough(ecb, "end_of_day"):
+        log(f"USD/HKD: HKMA series ends {_latest_date(best, 'end_of_day') or 'n/a'}; "
+            f"using the ECB reference rate through {_latest_date(ecb, 'end_of_day')}")
+        return ecb
+    return best or ecb
+
+
+def fetch_ecb_fx():
+    end = datetime.now(HK).date()
+    start = end - timedelta(days=14)
+    url = f"https://api.frankfurter.app/{start.isoformat()}..{end.isoformat()}?from=USD&to=HKD"
+    data = get_json(url)
+    rates = data.get("rates") if isinstance(data, dict) else None
+    if not isinstance(rates, dict):
+        data = get_json("https://api.frankfurter.app/latest?from=USD&to=HKD")
+        if not isinstance(data, dict) or "HKD" not in (data.get("rates") or {}):
+            return []
+        return [{"end_of_day": data.get("date"), "usd": data["rates"]["HKD"], "vendor": "ECB"}]
+    rows = []
+    for day, quote in rates.items():
+        if isinstance(quote, dict) and num(quote.get("HKD")) is not None:
+            rows.append({"end_of_day": day, "usd": quote["HKD"], "vendor": "ECB"})
+    return rows
+
+
+def fetch_sofr():
+    """New York Fed 30-day compounded SOFR average. No key. Not CME Term SOFR."""
+    data = get_json(CFG["hkma"]["sofr"])
+    rows = _sofr_rows(data)
+    if rows:
+        return rows
+    data = get_json("https://markets.newyorkfed.org/api/rates/all/latest.json")
+    return _sofr_rows(data)
+
+
+def _sofr_rows(data):
+    if not isinstance(data, dict):
+        return []
+    out = []
+    for row in data.get("refRates") or []:
+        if not isinstance(row, dict) or row.get("average30day") is None:
+            continue
+        if row.get("type") not in (None, "", "SOFRAI"):
+            continue
+        out.append({"date": row.get("effectiveDate"),
+                    "average30day": float(row["average30day"])})
+    out.sort(key=lambda r: r.get("date") or "")
+    return out
+
+
+def load_json(path, default):
     try:
-        hist = json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(Path(path).read_text(encoding="utf-8"))
     except Exception:
-        hist = []
+        return default
 
-    h = hkma_block()
-    if h.get("available") and h.get("as_of"):
-        if not any(x["date"] == h["as_of"] for x in hist):
-            hist.append({"date": h["as_of"], "value": h["balance_hkdm"]})
-    hist = sorted(hist, key=lambda x: x["date"])[-400:]
-    path.write_text(json.dumps(hist, indent=2), encoding="utf-8")
 
-    return [{"year": x["date"][5:10], "value": x["value"], "date": x["date"]}
-            for x in hist[-30:]]
+def load_history():
+    hist = load_json(ROOT / "data/history.json", [])
+    if not isinstance(hist, list):
+        return []
+    out = []
+    for row in hist:
+        if isinstance(row, dict) and row.get("date") and num(row.get("value")) is not None:
+            out.append({"date": row["date"], "value": float(row["value"])})
+    return out
+
+
+def merge_history(points):
+    """Fold API sessions into data/history.json. A failed fetch does not write."""
+    hist = load_history()
+    if not points:
+        return hist
+    by = {row["date"]: row for row in hist}
+    added = 0
+    changed = False
+    for point in points:
+        new = {"date": point["date"], "value": float(point["value"])}
+        old = by.get(point["date"])
+        if old is None:
+            added += 1
+            changed = True
+        elif old["value"] != new["value"]:
+            changed = True
+        by[point["date"]] = new
+    out = sorted(by.values(), key=lambda row: row["date"])[-400:]
+    if changed:
+        (ROOT / "data/history.json").write_text(
+            json.dumps(out, indent=2) + "\n", encoding="utf-8")
+        log(f"HKMA history: backfilled {added} sessions, {len(out)} stored, "
+            f"latest {out[-1]['date']}")
+    else:
+        log(f"HKMA history: already current through {out[-1]['date'] if out else 'n/a'}")
+    return out
+
+
+def cache_path():
+    return ROOT / "data/hkma_cache.json"
+
+
+def load_cache():
+    data = load_json(cache_path(), {})
+    return data if isinstance(data, dict) else {}
+
+
+def save_cache(cache):
+    cache_path().write_text(
+        json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def previous_headline():
+    """Single snapshot from the last brief, used only when nothing newer loads."""
+    prev = load_json(ROOT / "data/brief.json", {})
+    if not isinstance(prev, dict):
+        return None
+    block = prev.get("hkma") or {}
+    balance = ((prev.get("treasury") or {}).get("balance") or {})
+    if block.get("available") and block.get("as_of") and num(block.get("balance_hkdm")) is not None:
+        return {
+            "record": {
+                "end_of_date": block["as_of"],
+                "closing_balance": block["balance_hkdm"],
+                "disc_win_base_rate": block.get("base_rate"),
+                "hibor_overnight": block.get("hibor_on"),
+                "hibor_fixing_1m": block.get("hibor_1m"),
+            },
+            "change": block.get("change"),
+            "flat_sessions": block.get("flat_sessions"),
+        }
+    if balance.get("available") and balance.get("as_of") and num(balance.get("value_hkdm")) is not None:
+        return {
+            "record": {
+                "end_of_date": balance["as_of"],
+                "closing_balance": balance["value_hkdm"],
+                "disc_win_base_rate": balance.get("base_rate"),
+            },
+            "change": balance.get("change_hkdm"),
+            "flat_sessions": balance.get("flat_sessions"),
+        }
+    return None
+
+
+def _bp(latest, previous):
+    if latest is None or previous is None:
+        return None
+    return round((latest - previous) * 100, 1)
+
+
+def _sorted(recs, field):
+    return sorted(recs, key=lambda r: r.get(field) or "")
+
+
+def balance_view(recs, stale, carried=None):
+    rows = _sorted([r for r in recs if r.get("end_of_date")], "end_of_date")
+    if not rows:
+        return {"available": False, "stale": False}
+    latest = rows[-1]
+    prev = rows[-2] if len(rows) > 1 else None
+    value = num(latest.get("closing_balance"))
+    if value is None:
+        return {"available": False, "stale": False}
+    if carried is not None:
+        change = num(carried.get("change")) if carried.get("change") is not None else None
+        # A stored 0 is a real unchanged day; only a missing field is unknown.
+        if "change" in carried and carried.get("change") is not None:
+            change = num(carried.get("change"))
+        flat = carried.get("flat_sessions") or 1
+    else:
+        previous = num(prev.get("closing_balance")) if prev else None
+        change = None if previous is None else value - previous
+        flat = 0
+        for row in reversed(rows):
+            current = num(row.get("closing_balance"))
+            if current is None or abs(current - value) >= 1:
+                break
+            flat += 1
+    base = num(latest.get("disc_win_base_rate"))
+    prev_base = num(prev.get("disc_win_base_rate")) if prev else None
+    parts = []
+    for key, label in BALANCE_PARTS:
+        part = num(latest.get(key))
+        if part is not None and abs(part) >= 1:
+            parts.append({"label": label, "hkdm": part})
+    return {
+        "available": True,
+        "stale": stale,
+        "as_of": latest.get("end_of_date"),
+        "value_hkdm": value,
+        "change_hkdm": change,
+        "flat_sessions": flat,
+        "base_rate": base,
+        "base_rate_change_bp": _bp(base, prev_base),
+        "components": parts,
+        "source": "HKMA daily figures of interbank liquidity",
+    }
+
+
+def hibor_view(recs, stale):
+    rows = _sorted([r for r in recs if r.get("end_of_day")], "end_of_day")
+    if len(rows) < 1:
+        return {"available": False, "stale": False, "tenors": []}
+    latest, prev = rows[-1], rows[-2] if len(rows) > 1 else None
+    tenors = []
+    for code, label, field in HIBOR_TENORS:
+        rate = num(latest.get(field))
+        previous = num(prev.get(field)) if prev else None
+        tenors.append({
+            "code": code, "label": label, "rate": rate,
+            "change_bp": _bp(rate, previous),
+        })
+    if not any(t["rate"] is not None for t in tenors):
+        return {"available": False, "stale": False, "tenors": []}
+    return {
+        "available": True,
+        "stale": stale,
+        "partial": False,
+        "as_of": latest.get("end_of_day"),
+        "prev_date": prev.get("end_of_day") if prev else None,
+        "tenors": tenors,
+        "source": "HKMA, HKAB HIBOR fixing",
+    }
+
+
+def hibor_from_liquidity(recs, stale):
+    """Overnight and 1-month only, when the fixing endpoint did not answer."""
+    rows = _sorted([r for r in recs if r.get("end_of_date")], "end_of_date")
+    if not rows:
+        return {"available": False, "stale": False, "tenors": []}
+    latest, prev = rows[-1], rows[-2] if len(rows) > 1 else None
+    mapping = {"ON": "hibor_overnight", "1M": "hibor_fixing_1m"}
+    tenors = []
+    for code, label, _field in HIBOR_TENORS:
+        field = mapping.get(code)
+        rate = num(latest.get(field)) if field else None
+        previous = num(prev.get(field)) if field and prev else None
+        tenors.append({
+            "code": code, "label": label, "rate": rate,
+            "change_bp": _bp(rate, previous),
+        })
+    if not any(t["rate"] is not None for t in tenors):
+        return {"available": False, "stale": False, "tenors": []}
+    return {
+        "available": True,
+        "stale": stale,
+        "partial": True,
+        "as_of": latest.get("end_of_date"),
+        "prev_date": prev.get("end_of_date") if prev else None,
+        "tenors": tenors,
+        "source": "HKMA daily interbank liquidity (overnight and 1-month only)",
+    }
+
+
+def fx_view(recs, liquidity, stale):
+    rows = _sorted([r for r in recs if r.get("end_of_day") and num(r.get("usd")) is not None],
+                   "end_of_day")
+    liq = _sorted([r for r in liquidity if r.get("end_of_date")], "end_of_date")
+    latest_liq = liq[-1] if liq else {}
+    strong = num(latest_liq.get("cu_strongside")) or 7.75
+    weak = num(latest_liq.get("cu_weakside")) or 7.85
+    flows = []
+    for row in reversed(liq[-10:]):
+        amount = num(row.get("market_activities"))
+        if amount is not None and abs(amount) >= 1:
+            flows.append({"date": row.get("end_of_date"), "hkdm": amount})
+    forecast = []
+    for key, when in (("forex_trans_t1", "T+1"), ("forex_trans_t2", "T+2"),
+                      ("forex_trans_t3", "T+3")):
+        amount = num(latest_liq.get(key))
+        if amount is not None and abs(amount) >= 1:
+            forecast.append({"when": when, "hkdm": amount})
+    spot = num(rows[-1].get("usd")) if rows else None
+    prev_spot = num(rows[-2].get("usd")) if len(rows) > 1 else None
+    width = weak - strong
+    aged = bool(rows) and not _recent_enough(rows, "end_of_day")
+    vendor = (rows[-1].get("vendor") if rows else "") or ""
+    source = ("ECB reference rate via Frankfurter, HKD per US dollar"
+              if vendor == "ECB"
+              else "HKMA daily exchange rates, HKD per US dollar")
+    if spot is None or width == 0:
+        return {
+            "available": False, "stale": stale or aged, "strong": strong, "weak": weak,
+            "market_activities": flows, "fx_forecast": forecast,
+            "sessions_checked": min(10, len(liq)), "source": source,
+        }
+    spot = round(spot, 4)
+    return {
+        "available": True,
+        "stale": stale or aged,
+        "as_of": rows[-1].get("end_of_day"),
+        "prev_date": rows[-2].get("end_of_day") if len(rows) > 1 else None,
+        "spot": spot,
+        "change_pips": None if prev_spot is None else round((spot - prev_spot) * 10000),
+        "strong": strong,
+        "weak": weak,
+        "pct_through_band": (spot - strong) / width * 100,
+        "pips_to_weak": round((weak - spot) * 10000),
+        "pips_to_strong": round((spot - strong) * 10000),
+        "market_activities": flows,
+        "fx_forecast": forecast,
+        "sessions_checked": min(10, len(liq)),
+        "source": source,
+    }
+
+
+def overlay_hibor(hibor, liquidity, liq_stale):
+    """Use the daily liquidity release for overnight and 1-month when it is newer.
+
+    The HKAB fixing series in the monthly bulletin was only up to 30 Oct on the
+    14 Nov run. Overnight and the 1-month fixing are also on the daily file.
+    """
+    rows = _sorted([r for r in liquidity if r.get("end_of_date")], "end_of_date")
+    if not rows:
+        if hibor.get("available") and hibor.get("as_of") and not _recent_enough(
+                [{"end_of_day": hibor["as_of"]}], "end_of_day"):
+            hibor["stale"] = True
+        return hibor
+    latest, prev = rows[-1], rows[-2] if len(rows) > 1 else None
+    daily_as_of = latest.get("end_of_date") or ""
+    curve_as_of = hibor.get("as_of") or ""
+    newer = (not hibor.get("available")) or (daily_as_of > curve_as_of)
+    if not newer:
+        return hibor
+    mapping = {"ON": "hibor_overnight", "1M": "hibor_fixing_1m"}
+    if not hibor.get("available"):
+        view = hibor_from_liquidity(liquidity, liq_stale)
+        return view
+    tenors = []
+    replaced = False
+    for tenor in hibor.get("tenors") or []:
+        field = mapping.get(tenor["code"])
+        rate = num(latest.get(field)) if field else None
+        if rate is None:
+            tenors.append(dict(tenor, as_of=curve_as_of))
+            continue
+        previous = num(prev.get(field)) if prev else None
+        tenors.append({
+            "code": tenor["code"], "label": tenor["label"], "rate": rate,
+            "change_bp": _bp(rate, previous), "as_of": daily_as_of,
+        })
+        replaced = True
+    if not replaced:
+        return hibor
+    hibor = dict(hibor)
+    hibor["tenors"] = tenors
+    hibor["mixed_dates"] = curve_as_of and curve_as_of != daily_as_of
+    hibor["daily_as_of"] = daily_as_of
+    hibor["curve_as_of"] = curve_as_of
+    hibor["stale"] = False
+    return hibor
+
+
+def spread_view(hibor, sofr_rows, sofr_stale):
+    tenor = next((t for t in (hibor.get("tenors") or []) if t.get("code") == "1M"), None)
+    hibor_1m = tenor.get("rate") if tenor else None
+    sofr = sofr_rows[-1] if sofr_rows else None
+    usd = sofr.get("average30day") if sofr else None
+    if hibor_1m is None or usd is None:
+        return {
+            "available": False,
+            "stale": sofr_stale,
+            "label": "1M HIBOR − 30-day average SOFR",
+            "note": "Needs both a 1-month HIBOR fixing and the New York Fed 30-day SOFR average.",
+        }
+    return {
+        "available": True,
+        "stale": bool(sofr_stale or hibor.get("stale")),
+        "label": "1M HIBOR − 30-day average SOFR",
+        "hibor_1m": hibor_1m,
+        "hibor_as_of": tenor.get("as_of") or hibor.get("as_of"),
+        "usd_rate": usd,
+        "usd_label": "30-day average SOFR",
+        "usd_as_of": sofr.get("date"),
+        "spread_bp": round((hibor_1m - usd) * 100, 1),
+        "note": "US leg is the New York Fed 30-day compounded SOFR average, not CME Term SOFR.",
+        "source": "HKMA; Federal Reserve Bank of New York",
+    }
+
+
+def bars_from(hist):
+    return [{"year": row["date"][5:10], "value": row["value"], "date": row["date"]}
+            for row in hist[-CHART_BARS:]]
+
+
+def build_market():
+    """Liquidity, HIBOR, USD/HKD and the SOFR spread. One pass, then the chart."""
+    cache = load_cache()
+    fresh = {}
+
+    sofr = fetch_sofr()
+    time.sleep(0.6)
+    liquidity = fetch_liquidity()
+    time.sleep(0.6)
+    hibor_rows = fetch_hibor()
+    time.sleep(0.6)
+    fx_rows = fetch_fx()
+
+    def keep(key, rows):
+        if rows:
+            fresh[key] = rows
+            cache[key] = rows
+            return rows, False
+        saved = cache.get(key) or []
+        if saved:
+            log(f"{key}: showing the last good values; this run's call failed")
+            return saved, True
+        return [], False
+
+    sofr_rows, sofr_stale = keep("sofr", sofr)
+    liquidity, liq_stale = keep("liquidity", liquidity)
+    hibor_rows, hibor_stale = keep("hibor", hibor_rows)
+    fx_rows, fx_stale = keep("fx", fx_rows)
+    if fresh:
+        save_cache(cache)
+
+    carried = None
+    if not liquidity:
+        headline = previous_headline()
+        if headline:
+            liquidity = [headline["record"]]
+            carried = headline
+            liq_stale = True
+            log(f"HKMA liquidity: no series loaded; keeping the {headline['record']['end_of_date']} "
+                "figure from the previous brief and marking it stale")
+
+    if liquidity and carried is None:
+        points = [{"date": r["end_of_date"], "value": num(r["closing_balance"])}
+                  for r in liquidity
+                  if r.get("end_of_date") and num(r.get("closing_balance")) is not None]
+        hist = merge_history(points)
+    else:
+        hist = load_history()
+
+    balance = balance_view(liquidity, liq_stale, carried)
+    if hist:
+        window = hist[-CHART_BARS:]
+        balance["history_through"] = hist[-1]["date"]
+        balance["window_change_hkdm"] = (
+            window[-1]["value"] - window[0]["value"] if len(window) >= 2 else None)
+        if balance.get("as_of") and hist[-1]["date"] < balance["as_of"]:
+            balance["history_behind"] = True
+    hibor = hibor_view(hibor_rows, hibor_stale)
+    if not hibor.get("available"):
+        hibor = hibor_from_liquidity(liquidity, liq_stale or hibor_stale)
+    else:
+        hibor = overlay_hibor(hibor, liquidity if carried is None else [], hibor_stale)
+    fx = fx_view(fx_rows, liquidity if carried is None else [], fx_stale)
+    # A one-row fallback has no market-activity history. Still show the band
+    # levels from that row when the FX print itself loaded.
+    if carried is not None and liquidity:
+        lone = liquidity[-1]
+        if num(lone.get("cu_strongside")):
+            fx["strong"] = num(lone.get("cu_strongside"))
+        if num(lone.get("cu_weakside")):
+            fx["weak"] = num(lone.get("cu_weakside"))
+    spread = spread_view(hibor, sofr_rows, sofr_stale)
+
+    legacy = {
+        "available": bool(balance.get("available")),
+        "stale": bool(balance.get("stale")),
+        "as_of": balance.get("as_of") or "",
+        "balance_hkdm": balance.get("value_hkdm"),
+        "change": balance.get("change_hkdm"),
+        "flat_sessions": balance.get("flat_sessions") or 0,
+        "hibor_1m": next((t["rate"] for t in hibor.get("tenors") or []
+                          if t["code"] == "1M"), None),
+        "hibor_on": next((t["rate"] for t in hibor.get("tenors") or []
+                          if t["code"] == "ON"), None),
+        "base_rate": balance.get("base_rate"),
+    }
+    treasury = {
+        "balance": balance,
+        "hibor": hibor,
+        "fx": fx,
+        "spread": spread,
+    }
+    return {"hkma": legacy, "bars": bars_from(hist), "treasury": treasury}
 
 
 # ---------------------------------------------------------------- rates
@@ -979,6 +1574,8 @@ def rate_table():
         if is_placeholder:
             placeholders += 1
         before = prev.get(b["name"])
+        if before is None and b["name"] == "PAObank":
+            before = prev.get("PAOb")
         rows.append({
             "name": b["name"], "kind": b["kind"], "rate": float(value),
             "change_bp": (round((float(value) - float(before)) * 100)
@@ -1091,12 +1688,36 @@ actually repeat this week. Rank and select as follows, in this order:
 For juicy_hk and juicy_sg use `headline`, `body` (at most two sentences),
 `tag` and `raise`.
 
-Return ONLY a JSON object keyed by section name, each a list of objects with:
+talking_points — an object with exactly three keys: ceo, business, treasury.
+Each value is a list of AT MOST 3 items. Use an empty list when the supplied
+articles do not support that audience. Never add a fourth bullet, and never
+write a bullet that is not tied to a supplied article.
+
+  ceo — strategy, regulation, competition, virtual banks, HKMA, SFC,
+    stablecoins and digital assets.
+  business — product, customer and market moves by competitors.
+  treasury — rate moves, liquidity, deposit competition and promo trends.
+
+  Each item:
+    point — one sentence. Only facts present in the supplied metadata.
+    so_what — ONE line on what that fact means for a Hong Kong digital bank.
+      An implication of the supplied fact, not a new fact. Do not introduce a
+      number, name, date or market move that is not in the metadata.
+    sources — one or more objects with name and url, copied from the supplied
+      items. The url must appear in the payload. A bullet with no such url is
+      useless and will be dropped.
+
+  If you only have a headline, set point to that headline and so_what to "".
+  Do not dress a headline up as a fuller story.
+
+Return ONLY a JSON object.
+Every news section is a list of objects with:
   zh (work only, array of exactly 3 strings)
   headline, body (non-work sections)
   en (work only)
   tag, raise (juicy sections only)
-  sources: array of {name, url}
+  sources: array of objects with name and url
+Also include talking_points, shaped exactly as specified above.
 
 CLUSTERS:
 {payload}
@@ -1369,6 +1990,147 @@ def top_up(sections, collected):
     return sections
 
 
+TP_KEYWORDS = {
+    "ceo": [
+        "金管局", "證監", "hkma", "sfc", "stablecoin", "穩定幣", "虛擬銀行",
+        "virtual bank", "digital bank", "牌照", "licence", "license", "監管",
+        "regulati", "競爭", "competition", "代幣", "token", "crypto",
+        "數碼資產", "digital asset",
+    ],
+    "business": [
+        "推出", "launch", "客戶", "customer", "產品", "product", "優惠", "promo",
+        "mox", "za bank", "livi", "welab", "airstar", "fusion", "paobank",
+        "ant bank", "hsbc", "hang seng", "恒生", "匯豐", "中銀", "渣打", "citi",
+        "standard chartered", "市佔", "market share",
+    ],
+    "treasury": [
+        "hibor", "拆息", "存款", "deposit", "利率", "息率", "流動", "liquidity",
+        "總結餘", "aggregate balance", "基本利率", "base rate", "定期",
+        "time deposit", "同業", "interbank",
+    ],
+}
+TP_LABELS = (
+    ("ceo", "CEO",
+     "Strategy, regulation, competition, virtual banks, HKMA and SFC, stablecoins and digital assets."),
+    ("business", "Business heads",
+     "Product, customer and market moves by competitors."),
+    ("treasury", "Treasury and deposits",
+     "Rate moves, liquidity, deposit competition and promo trends."),
+)
+
+
+def urls_in_payload(payload):
+    found = set()
+    for groups in (payload or {}).values():
+        if not isinstance(groups, list):
+            continue
+        for group in groups:
+            if not isinstance(group, list):
+                continue
+            for item in group:
+                if isinstance(item, dict) and item.get("url"):
+                    found.add(item["url"])
+    return found
+
+
+def url_allowed(url, allowed):
+    if not url or not allowed:
+        return False
+    if url in allowed:
+        return True
+    base = url.split("#", 1)[0].split("?", 1)[0].rstrip("/")
+    if len(base) < 24:
+        return False
+    return any(a.split("#", 1)[0].split("?", 1)[0].rstrip("/") == base for a in allowed)
+
+
+def package_talking(buckets, mode):
+    audiences = []
+    for key, label, blurb in TP_LABELS:
+        rows = (buckets or {}).get(key) or []
+        if not rows:
+            continue
+        audiences.append({
+            "id": key, "label": label, "blurb": blurb, "items": rows[:3],
+        })
+    return {"mode": mode, "audiences": audiences}
+
+
+def clean_talking(raw, allowed):
+    """Drop any bullet that does not cite a url from the articles we sent."""
+    if not isinstance(raw, dict):
+        return None
+    alias = {
+        "ceo": "ceo", "business": "business", "business_heads": "business",
+        "treasury": "treasury", "treasury_and_deposits": "treasury",
+    }
+    found = {key: [] for key, _, _ in TP_LABELS}
+    kept = 0
+    for key, rows in raw.items():
+        norm = str(key).strip().lower().replace("&", "and").replace(" ", "_")
+        aud = alias.get(norm)
+        if not aud or not isinstance(rows, list):
+            continue
+        for row in rows:
+            if len(found[aud]) >= 3 or not isinstance(row, dict):
+                continue
+            point = clean(row.get("point") or row.get("headline") or "")
+            if not point:
+                continue
+            so_what = clean(row.get("so_what") or row.get("sowhat") or "")
+            so_what = re.sub(r"\s+", " ", so_what).strip()
+            if len(so_what) > 280:
+                so_what = so_what[:277].rstrip() + "..."
+            sources = []
+            seen = set()
+            for src in row.get("sources") or []:
+                if not isinstance(src, dict):
+                    continue
+                url = (src.get("url") or "").strip()
+                if not url_allowed(url, allowed) or url in seen:
+                    continue
+                seen.add(url)
+                sources.append({"name": clean(src.get("name") or "source")[:80], "url": url})
+            if not sources:
+                continue
+            found[aud].append({"point": point[:400], "so_what": so_what, "sources": sources[:3]})
+            kept += 1
+    return found if kept else None
+
+
+def rss_talking(collected):
+    """Headline-only bullets. No angle, because there is no model to write one."""
+    pools = []
+    for key in ("work", "smalltalk_hk"):
+        for group in collected.get(key) or []:
+            if group:
+                pools.append(group[0])
+    buckets = {key: [] for key, _, _ in TP_LABELS}
+    used = []
+    for item in pools:
+        if not item.get("url") or not item.get("title"):
+            continue
+        blob = (item.get("title", "") + " " + item.get("snippet", "")).lower()
+        scores = {aud: sum(word in blob for word in words)
+                  for aud, words in TP_KEYWORDS.items()}
+        if not any(scores.values()):
+            continue
+        if any(similar(item["title"], title) > 0.82 for title in used):
+            continue
+        for aud in sorted(scores, key=lambda k: scores[k], reverse=True):
+            if scores[aud] <= 0 or len(buckets[aud]) >= 3:
+                continue
+            buckets[aud].append({
+                "point": item["title"],
+                "so_what": "",
+                "headline_only": True,
+                "sources": [{"name": item.get("source") or "source", "url": item["url"]}],
+            })
+            used.append(item["title"])
+            break
+    return buckets
+
+
 def main():
     collected = {}
     payload = {}
@@ -1386,13 +2148,27 @@ def main():
         ]
 
     payload = fit_budget(payload)
+    # Market data first, so a slow model call cannot skip the history update.
+    market = build_market()
 
     try:
         sections, method = call_model(payload)
+        if not isinstance(sections, dict):
+            raise ValueError("model reply was not a JSON object")
+        raw_points = sections.pop("talking_points", None)
         sections = top_up(sections, collected)
+        cleaned = clean_talking(raw_points, urls_in_payload(payload))
+        if cleaned:
+            talking = package_talking(cleaned, "model")
+            log("Talking points: from the model")
+        else:
+            talking = package_talking(rss_talking(collected), "rss")
+            log("Talking points: no sourced model bullets — headline-only fallback")
     except Exception as e:
         log(f"Model step skipped or failed ({e}) — using RSS summaries")
         sections, method = rss_digest(collected), "rss-only"
+        talking = package_talking(rss_talking(collected), "rss")
+        log("Talking points: headline-only (no model)")
 
     now = datetime.now(HK)
     out = {
@@ -1401,8 +2177,10 @@ def main():
         "generated_iso": now.isoformat(),
         "build": {"method": method, "log": LOG},
         "weather": weather(),
-        "hkma": hkma_block(),
-        "hkma_bars": hkma_year_ends() or history_bars(),
+        "hkma": market["hkma"],
+        "hkma_bars": market["bars"],
+        "treasury": market["treasury"],
+        "talking_points": talking,
         "rates": rate_table(),
         "labels": {k: v["label"] for k, v in CFG["sections"].items()},
         "sections": sections,
@@ -1475,6 +2253,22 @@ INDEX_HTML = r'''<!doctype html>
   .blab span{flex:1;text-align:center;font-size:9.5px;color:var(--muted)}
   .notes{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.55}
   .notes b{color:var(--ink);font-weight:650}
+  .staletag{display:inline-block;margin-left:8px;padding:1px 6px;border-radius:5px;
+    background:var(--warn-bg);color:var(--warn-ink);font-size:10.5px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;vertical-align:1px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-top:14px}
+  .stat .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .stat .v{font-size:22px;font-weight:720;letter-spacing:-.02em;margin-top:2px}
+  .stat .s{font-size:12.5px;color:var(--ink2);margin-top:3px;line-height:1.45}
+  .band{margin-top:8px}
+  .bandtrack{position:relative;height:8px;border-radius:99px;
+    background:linear-gradient(90deg,var(--up),var(--bar) 55%,var(--down))}
+  .bandmark{position:absolute;top:-4px;width:3px;height:16px;border-radius:2px;
+    background:var(--ink);transform:translateX(-50%)}
+  .bandlabs{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:5px}
+  .sowhat{margin:6px 0 0;font-size:13.5px;line-height:1.45;color:var(--ink2);
+    border-left:2px solid var(--talk);padding-left:9px}
+  .unavail{color:var(--muted);font-size:13px}
   table{width:100%;border-collapse:collapse;margin-top:4px;font-size:13.5px}
   th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
     color:var(--muted);font-weight:700;padding:0 0 7px}
@@ -1528,7 +2322,7 @@ INDEX_HTML = r'''<!doctype html>
     border-left:2px solid var(--muted);padding-left:9px}
   .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
-  @media(max-width:560px){h1{font-size:25px}.bars{height:58px}}
+  @media(max-width:560px){h1{font-size:25px}.bars{height:58px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1596,7 +2390,7 @@ function balancePanel(h, bars){
 
   return `<section class="panel">
     <div class="ptitle">Aggregate balance</div>
-    <div class="asof">HKMA daily figures, ${esc(h.as_of)}. Bars are year-end closing balance.</div>
+    <div class="asof">HKMA daily figures, ${esc(h.as_of)}. Each bar is a closing aggregate balance.</div>
     <div class="big"><span class="bigval mono">${bn(h.balance_hkdm)}</span>
       <span class="bigmeta">vs yesterday ${chg}${h.flat_sessions>1?` · ${h.flat_sessions} sessions flat`:""}</span></div>
     <div class="bigmeta">1M HIBOR <b>${esc(h.hibor_1m ?? "n/a")}%</b> · overnight <b>${esc(h.hibor_on ?? "n/a")}%</b> · base rate <b>${esc(h.base_rate ?? "n/a")}%</b></div>
@@ -1608,6 +2402,7 @@ function balancePanel(h, bars){
 
 function ratePanel(r){
   if(!r || !r.rows.length) return "";
+  const virtuals = r.rows.filter(x => x.kind === "virtual").length;
   const rows = r.rows.map(x => {
     const c = x.change_bp;
     const chg = (c === null || c === undefined || c === 0) ? "—"
@@ -1621,12 +2416,176 @@ function ratePanel(r){
     `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
   return `<section class="panel">
     <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}</div>
+    <div class="asof">${r.rows.length} banks tracked${virtuals ? `, ${virtuals} virtual` : ""}${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}. Virtual-bank rows are typed in by hand.</div>
     <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
     <tbody>${rows}</tbody></table>
     <div class="cutlab">Dashed line = top 10 cut-off.</div>
     ${movers ? `<div class="newpromo"><div class="h">Moved today · 3 max</div>${movers}</div>` : ""}
   </section>`;
+}
+
+function moneyBn(v, signed){
+  if(v === null || v === undefined || Number.isNaN(Number(v))) return "n/a";
+  const bn = Number(v) / 1000;
+  const body = "$" + Math.abs(bn).toFixed(1) + "bn";
+  if(!signed) return (bn < 0 ? "-" : "") + body;
+  if(Math.abs(bn) < 0.05) return "unchanged";
+  return (bn > 0 ? "+" : "−") + body;
+}
+function bpText(bp){
+  if(bp === null || bp === undefined || Number.isNaN(Number(bp))) return "—";
+  const n = Number(bp);
+  if(Math.abs(n) < 0.05) return "—";
+  const shown = Math.abs(n) >= 10 ? n.toFixed(0) : n.toFixed(1);
+  return `<span class="${n>0?'up':'down'}">${n>0?'+':''}${shown}bp</span>`;
+}
+function rateText(v){
+  if(v === null || v === undefined || Number.isNaN(Number(v))) return "n/a";
+  const n = Number(v);
+  let s = n.toFixed(5).replace(/0+$/,"").replace(/\.$/,"");
+  const dec = (s.split(".")[1] || "");
+  if(dec.length < 2) s = n.toFixed(2);
+  return s;
+}
+function staleTag(on){ return on ? `<span class="staletag">stale</span>` : ""; }
+
+function treasuryPanel(t, bars){
+  if(!t) return "";
+  const bal = t.balance || {};
+  const hibor = t.hibor || {};
+  const fx = t.fx || {};
+  const spread = t.spread || {};
+  let head = `<div class="unavail">Aggregate balance unavailable.</div>`;
+  if(bal.available && bal.value_hkdm != null){
+    const move = (bal.change_hkdm === null || bal.change_hkdm === undefined) ? ""
+      : (Math.abs(bal.change_hkdm) < 1
+          ? `<span class="bigmeta">vs previous session <b>unchanged</b></span>`
+          : `<span class="bigmeta">vs previous session <b class="${bal.change_hkdm>0?'up':'down'}">${moneyBn(bal.change_hkdm, true)}</b>${bal.flat_sessions>1?` · ${bal.flat_sessions} sessions flat`:""}</span>`);
+    const base = bal.base_rate == null ? "n/a" : rateText(bal.base_rate) + "%";
+    const baseChg = bal.base_rate_change_bp == null ? "" : " " + bpText(bal.base_rate_change_bp);
+    head = `<div class="big"><span class="bigval mono">${moneyBn(bal.value_hkdm, false)}</span>${move}</div>
+      <div class="bigmeta">Base rate <b>${base}</b>${baseChg}</div>`;
+  }
+  const parts = (bal.components || []).map(c =>
+    `<b>${esc(c.label)}</b> ${moneyBn(c.hkdm, true)}`).join(" · ");
+  const partNote = parts ? `<div class="notes">Day's published drivers: ${parts}.</div>` : "";
+
+  let chart = "";
+  const series = (bars || []).filter(b => b && b.value != null);
+  if(series.length >= 2){
+    const min = Math.min(...series.map(b => b.value));
+    const max = Math.max(...series.map(b => b.value));
+    const pad = Math.max((max - min) * 0.18, 1);
+    const lo = min - pad, hi = max + pad;
+    const peak = series.reduce((a,b) => b.value > a.value ? b : a, series[0]);
+    const low = series.reduce((a,b) => b.value < a.value ? b : a, series[0]);
+    const cols = bars.map((b,i) => {
+      const v = b.value == null ? min : b.value;
+      const h = Math.max(2, Math.min(100, (v - lo) / (hi - lo) * 100));
+      const last = i === bars.length - 1;
+      const cls = last ? "now" : (b.date === peak.date ? "hi" : (b.date === low.date ? "lo" : ""));
+      return `<div class="bcol"><div class="b ${cls}" style="height:${h.toFixed(1)}%"></div></div>`;
+    }).join("");
+    const labs = bars.map((b,i) => {
+      const show = i === bars.length - 1 || i % 6 === 0;
+      const text = i === bars.length - 1 ? "now" : String(b.year || "");
+      return `<span>${show ? esc(text) : ""}</span>`;
+    }).join("");
+    const win = bal.window_change_hkdm;
+    const winTxt = (win === null || win === undefined) ? ""
+      : ` Over these ${series.length} sessions it ${win > 0 ? "rose" : win < 0 ? "fell" : "was unchanged"}${win ? " by " + moneyBn(Math.abs(win), false) : ""}.`;
+    const behind = bal.history_behind
+      ? ` Chart ends ${esc(bal.history_through)}; the headline is a later print that is not in the saved series.`
+      : "";
+    chart = `<div class="bars">${cols}</div><div class="blab">${labs}</div>
+      <div class="notes">Each bar is a business day's closing aggregate balance, scaled to this window so the move is visible.
+        <b>High</b> ${moneyBn(peak.value, false)} on ${esc(peak.date || "")} · <b>Low</b> ${moneyBn(low.value, false)} on ${esc(low.date || "")}.${winTxt}${behind}</div>`;
+  } else if(bal.available){
+    chart = `<div class="notes">History is still building — the chart appears once a few sessions have accumulated.</div>`;
+  }
+
+  let hiborHtml = `<div class="unavail">HIBOR unavailable.</div>`;
+  if(hibor.available && (hibor.tenors || []).length){
+    const rows = hibor.tenors.map(x => `<tr>
+      <td>${esc(x.label)}${hibor.mixed_dates && x.as_of ? `<span class="kind">${esc(String(x.as_of).slice(5))}</span>` : ""}</td>
+      <td class="r rate">${x.rate == null ? "unavailable" : rateText(x.rate) + "%"}</td>
+      <td class="r chg">${x.rate == null ? "" : bpText(x.change_bp)}</td></tr>`).join("");
+    const hiborWhen = hibor.mixed_dates ? "" : (hibor.as_of ? ", " + esc(hibor.as_of) : "");
+    const hiborChg = hibor.mixed_dates || !hibor.prev_date ? "" : " · change vs " + esc(hibor.prev_date);
+    hiborHtml = `<div class="ptitle" style="margin-top:16px">HIBOR${staleTag(hibor.stale)}</div>
+      <div class="asof">${esc(hibor.source || "HKMA")}${hiborWhen}${hiborChg}</div>
+      <table class="mono"><thead><tr><th>Tenor</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
+      <tbody>${rows}</tbody></table>
+      ${hibor.partial ? `<div class="notes">1-week, 3-month, 6-month and 12-month did not load. Overnight and 1-month are the figures carried on the daily liquidity release.</div>` : ""}
+      ${hibor.mixed_dates ? `<div class="notes">Overnight and 1-month are the daily liquidity release of ${esc(hibor.daily_as_of)}. 1-week and longer are the HKAB fixing of ${esc(hibor.curve_as_of)}, the latest date that series has published. Each 1d change is versus the previous session of the same series.</div>` : ""}`;
+  }
+
+  let fxHtml = `<div class="stat"><div class="k">USD/HKD</div><div class="v unavail">unavailable</div></div>`;
+  if(fx.available && fx.spot != null){
+    const pct = Math.max(0, Math.min(100, Number(fx.pct_through_band) || 0));
+    let where;
+    if(Number(fx.pips_to_weak) < 0) where = `${Math.abs(fx.pips_to_weak)} pips through the weak-side convertibility undertaking`;
+    else if(Number(fx.pips_to_strong) < 0) where = `${Math.abs(fx.pips_to_strong)} pips through the strong-side convertibility undertaking`;
+    else where = `${fx.pips_to_weak} pips from the weak-side convertibility undertaking`;
+    fxHtml = `<div class="stat"><div class="k">USD/HKD${staleTag(fx.stale)}</div>
+      <div class="v mono">${Number(fx.spot).toFixed(4)}</div>
+      <div class="band" aria-hidden="true"><div class="bandtrack"><div class="bandmark" style="left:${pct.toFixed(1)}%"></div></div>
+        <div class="bandlabs"><span>${Number(fx.strong).toFixed(2)} strong</span><span>${Number(fx.weak).toFixed(2)} weak</span></div></div>
+      <div class="s">${where}${fx.change_pips == null ? "" : ` · ${fx.change_pips > 0 ? "+" : ""}${fx.change_pips} pips vs ${esc(fx.prev_date || "previous")}`}. ${esc(fx.source || "")}${fx.as_of ? ", " + esc(fx.as_of) : ""}.</div></div>`;
+  }
+  const checked = fx.sessions_checked || 0;
+  const hits = fx.market_activities || [];
+  const hitTxt = hits.length
+    ? hits.map(h => `${esc(h.date)} ${moneyBn(h.hkdm, true)}`).join("; ")
+    : (checked ? `flat over the last ${checked} sessions` : "not loaded");
+  const casts = fx.fx_forecast || [];
+  const castTxt = casts.length
+    ? casts.map(c => `${esc(c.when)} ${moneyBn(c.hkdm, true)}`).join(", ")
+    : "none in the latest figures";
+  const flowHtml = `<div class="notes"><b>Weak-side liquidity.</b> HKMA market activities (spot FX and other money-market operations — a weak-side convertibility-undertaking hit shows up here as a drain): ${hitTxt}. Forecast FX flow into the aggregate balance: ${castTxt}.</div>`;
+
+  let spreadHtml = `<div class="stat"><div class="k">HKD vs USD</div><div class="v unavail">unavailable</div>
+    <div class="s">${esc((spread && spread.note) || "No public 1-month spread today.")}</div></div>`;
+  if(spread && spread.available && spread.spread_bp != null){
+    spreadHtml = `<div class="stat"><div class="k">${esc(spread.label)}${staleTag(spread.stale)}</div>
+      <div class="v">${bpText(spread.spread_bp)}</div>
+      <div class="s">1M HIBOR ${rateText(spread.hibor_1m)}% (${esc(spread.hibor_as_of || "")}) minus ${esc(spread.usd_label)} ${rateText(spread.usd_rate)}% (${esc(spread.usd_as_of || "")}). ${esc(spread.note || "")}</div></div>`;
+  }
+
+  const staleNote = bal.stale
+    ? `<div class="notes">Stale: this run could not refresh HKMA, so these are the last good figures${bal.as_of ? " (" + esc(bal.as_of) + ")" : ""}. Not a new print.</div>`
+    : "";
+  return `<section class="panel">
+    <div class="ptitle">Treasury${staleTag(bal.stale)}</div>
+    <div class="asof">Aggregate balance${bal.as_of ? ", HKMA daily figures " + esc(bal.as_of) : ""}. HIBOR fixings, the base rate, and USD/HKD in the convertibility band.</div>
+    ${staleNote}${head}${partNote}${chart}${hiborHtml}
+    <div class="stats">${fxHtml}${spreadHtml}</div>
+    ${flowHtml}
+  </section>`;
+}
+
+function talkingCard(it){
+  const sowhat = it.so_what
+    ? `<p class="sowhat"><b>So what.</b> ${esc(it.so_what)}</p>` : "";
+  return `<article class="card">
+    <h3 class="headline">${esc(it.point || it.headline || "")}</h3>
+    ${sowhat}
+    ${srcLine(it.sources)}</article>`;
+}
+function talkingSection(tp){
+  const audiences = ((tp && tp.audiences) || []).filter(a => (a.items || []).length);
+  if(!audiences.length) return "";
+  const intro = tp.mode === "rss"
+    ? `<p class="notes">Headline only. The summary model did not run, so there is no "so what" line and nothing here was inferred.</p>`
+    : "";
+  const body = audiences.map(a => `<div class="sub2">${esc(a.label)}</div>
+    ${a.blurb ? `<div class="asof">${esc(a.blurb)}</div>` : ""}
+    ${a.items.slice(0,3).map(talkingCard).join("")}`).join("");
+  const total = audiences.reduce((n,a) => n + Math.min(3, a.items.length), 0);
+  return `<section class="section">
+    <div class="shead"><span class="dot" style="background:var(--talk)"></span>
+      <h2>Talking points</h2><span class="scount">${total} item${total===1?"":"s"}</span></div>
+    ${intro}${body}</section>`;
 }
 
 function srcLine(sources){
@@ -1670,7 +2629,10 @@ function render(D){
   $("date").textContent = D.report_date || "";
   $("sub").textContent  = D.generated_at ? `Built ${D.generated_at}` : "";
   $("wx").innerHTML = weatherStrip(D.weather);
-  $("panels").innerHTML = balancePanel(D.hkma, D.hkma_bars||[]) + ratePanel(D.rates);
+  $("panels").innerHTML =
+    (D.treasury ? treasuryPanel(D.treasury, D.hkma_bars||[]) : balancePanel(D.hkma, D.hkma_bars||[]))
+    + talkingSection(D.talking_points)
+    + ratePanel(D.rates);
 
   const S = D.sections || {}, L = D.labels || {};
   const block = (title, colour, groups) => {
@@ -1707,7 +2669,14 @@ function render(D){
       msgs.push(`Last built ${built}, ${days} day${days===1?"":"s"} ago. Check the Actions tab.`);
     }
   }
-  if(D.build && D.build.method === "fallback"){
+  if(D.treasury && D.treasury.balance && D.treasury.balance.stale){
+    const asOf = D.treasury.balance.as_of ? ` (${D.treasury.balance.as_of})` : "";
+    msgs.push(`HKMA figures are stale${asOf}. This run kept the last good values.`);
+  }
+  if(D.treasury && D.treasury.balance && D.treasury.balance.available === false){
+    msgs.push("HKMA figures are unavailable, and there was no saved print to fall back on.");
+  }
+  if(D.build && (D.build.method === "fallback" || D.build.method === "rss-only")){
     msgs.push("Summarisation did not run. Cards below are headline-level only.");
   }
   if(msgs.length){ $("stale").innerHTML = msgs.join("<br>"); $("stale").classList.add("show"); }
