@@ -2162,10 +2162,12 @@ def rss_talking(collected):
 
 # ---------------------------------------------------------------- mute rules
 #
-# The page is public and never calls the GitHub API. "✕ Not for me" is only a
-# prefilled new-issue link. This build reads those issues with the Action's
-# GITHUB_TOKEN, turns them into filters, and drops matching stories before
-# they are sent to the model. The merged rules are written to
+# The page is public and never calls the GitHub API. "✕ Not for me" marks a
+# story in the browser. Submit opens one prefilled new-issue link labelled
+# mute. The body lists every marked story, and a line that is only ---
+# separates stories. This build reads those issues with the Action's
+# GITHUB_TOKEN, turns each story into a filter, and drops matching stories
+# before they are sent to the model. The merged rules are written to
 # data/mute_rules.json so they remain after an issue is deleted.
 
 REPO_SLUG = "poohpoohsy/morning-brief"
@@ -2277,8 +2279,17 @@ def _checked_boxes(body):
     return found
 
 
-def parse_mute_body(body):
-    """Read one mute issue. None when it has no usable section or scope.
+def _split_mute_blocks(body):
+    """Split a mute issue on a line that is only ---.
+
+    A one-item issue has no separator, so the whole body stays one block.
+    """
+    text = (body or "").replace("\r\n", "\n").replace("\r", "\n")
+    return re.split(r"(?m)^[ \t]*---[ \t]*$", text)
+
+
+def _parse_mute_block(body):
+    """Read one item. None when it has no usable section or scope.
 
     Leaving every box unticked mutes the key terms, so submitting the prefilled
     issue is enough. Ticking a box limits the rule to what was ticked.
@@ -2317,6 +2328,26 @@ def parse_mute_body(body):
         "example_title": title.strip(),
         "example_url": link.strip(),
     }
+
+
+def parse_mute_items(body):
+    """Every usable item in one mute issue.
+
+    Items are separated by a line that is only ---. An older issue with no
+    separator is still one item.
+    """
+    items = []
+    for block in _split_mute_blocks(body):
+        parsed = _parse_mute_block(block)
+        if parsed:
+            items.append(parsed)
+    return items
+
+
+def parse_mute_body(body):
+    """First usable item, or None. One-item issues parse as before."""
+    items = parse_mute_items(body)
+    return items[0] if items else None
 
 
 def normalize_rule(rule):
@@ -2462,13 +2493,54 @@ def list_mute_issues(repo, token):
     return found
 
 
+def rules_from_issue(issue):
+    """One rule per item. A one-item issue keeps the id issue:<number>."""
+    items = parse_mute_items(issue.get("body") or "")
+    if not items:
+        return []
+    number = issue.get("number")
+    multi = len(items) > 1
+    rules = []
+    for index, parsed in enumerate(items):
+        if isinstance(number, int):
+            parsed["issue"] = number
+            parsed["id"] = f"issue:{number}:{index}" if multi else f"issue:{number}"
+        cleaned = normalize_rule(parsed)
+        if cleaned:
+            rules.append(cleaned)
+    return rules
+
+
 def rule_from_issue(issue):
-    parsed = parse_mute_body(issue.get("body") or "")
-    if not parsed:
-        return None
-    parsed["id"] = f"issue:{issue.get('number')}"
-    parsed["issue"] = issue.get("number")
-    return normalize_rule(parsed)
+    rules = rules_from_issue(issue)
+    return rules[0] if rules else None
+
+
+def replace_issue_rules(saved, incoming):
+    """Rules from an issue we just read replace that issue's saved rules.
+
+    A saved rule whose issue was not in this batch stays. That is what keeps
+    a mute after someone deletes the issue, and what keeps a rule when the
+    issue could not be parsed.
+    """
+    fresh = []
+    replaced = set()
+    for rule in incoming or []:
+        cleaned = normalize_rule(rule)
+        if not cleaned:
+            continue
+        fresh.append(cleaned)
+        if isinstance(cleaned.get("issue"), int):
+            replaced.add(cleaned["issue"])
+    kept = []
+    for rule in saved or []:
+        cleaned = normalize_rule(rule)
+        if not cleaned:
+            continue
+        if isinstance(cleaned.get("issue"), int) and cleaned["issue"] in replaced:
+            continue
+        kept.append(cleaned)
+    return merge_rules(kept, fresh)
 
 
 def close_applied_issue(repo, token, number):
@@ -2505,14 +2577,14 @@ def sync_mute_rules():
     parsed = []
     close = []
     for issue in issues:
-        rule = rule_from_issue(issue)
-        if not rule:
+        rules = rules_from_issue(issue)
+        if not rules:
             log(f"Mute issue #{issue.get('number')} left open — no section to apply")
             continue
-        parsed.append(rule)
+        parsed.extend(rules)
         if issue.get("state") == "open":
             close.append(issue.get("number"))
-    merged = merge_rules(saved, parsed)
+    merged = replace_issue_rules(saved, parsed)
     save_rules(merged)
     log(f"Mute rules: {len(merged)} active ({len(parsed)} from issues)")
     for number in close:
@@ -2814,7 +2886,7 @@ INDEX_HTML = r'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Morning Brief</title>
@@ -2843,7 +2915,7 @@ INDEX_HTML = r'''<!doctype html>
   body{margin:0;background:var(--bg);color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang HK","Noto Sans HK",Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased}
-  .wrap{max-width:760px;margin:auto;padding:18px 16px 64px}
+  .wrap{max-width:760px;margin:auto;padding:18px 16px calc(64px + var(--mute-pad, 0px))}
   .mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
   .date{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
   h1{margin:5px 0 3px;font-size:29px;line-height:1.1;letter-spacing:-.022em}
@@ -2941,11 +3013,35 @@ INDEX_HTML = r'''<!doctype html>
     border-left:2px solid var(--muted);padding-left:9px}
   .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
   .mute-row{display:flex;justify-content:flex-end}
-  .mute{display:inline-flex;align-items:center;min-height:32px;margin-top:4px;
-    padding:4px 8px;border-radius:8px;border:1px solid transparent;
-    font-size:11.5px;font-weight:650;color:var(--muted);text-decoration:none}
+  .mute{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;
+    padding:6px 10px;border-radius:8px;border:1px solid transparent;
+    background:transparent;font:inherit;font-size:12px;font-weight:650;
+    color:var(--muted);cursor:pointer}
   .mute:hover,.mute:active,.mute:focus-visible{
     color:var(--ink2);border-color:var(--line);background:var(--hair)}
+  article.marked{background:var(--hair);box-shadow:none}
+  article.marked :is(.headline,.zh3,.two,.sowhat,.en,.srcs,.chip,.src){
+    color:var(--muted);text-decoration:line-through}
+  article.marked .mute{text-decoration:none;color:var(--ink2);
+    border-color:var(--line);background:var(--card)}
+  .mute-bar{position:fixed;z-index:30;left:0;right:0;bottom:0;display:flex;
+    align-items:stretch;gap:8px;
+    padding:10px calc(12px + env(safe-area-inset-right, 0px))
+      calc(10px + env(safe-area-inset-bottom, 0px))
+      calc(12px + env(safe-area-inset-left, 0px));
+    background:var(--card);border-top:1px solid var(--line);
+    box-shadow:0 -6px 24px rgba(28,25,23,.12)}
+  .mute-bar[hidden]{display:none}
+  .mute-bar-main{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+  .mute-submit{display:flex;align-items:center;justify-content:center;
+    min-height:44px;padding:8px 12px;border-radius:10px;
+    background:var(--ink);color:var(--bg);font-size:15px;font-weight:700;
+    text-align:center;text-decoration:none;line-height:1.2}
+  .mute-submit:active{opacity:.86}
+  .mute-clear{flex:0 0 auto;min-height:44px;padding:8px 14px;border-radius:10px;
+    border:1px solid var(--line);background:transparent;color:var(--ink2);
+    font:inherit;font-size:15px;font-weight:650;cursor:pointer}
+  .mute-clear:active{background:var(--hair)}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
   .mutes{margin-top:4px}
   .mutes summary{color:var(--muted);font-size:12px;font-weight:650}
@@ -2967,6 +3063,10 @@ INDEX_HTML = r'''<!doctype html>
   <div id="sections"></div>
   <footer id="foot"></footer>
 </main>
+<div id="mutebar" class="mute-bar" hidden>
+  <div class="mute-bar-main" id="mute-actions"></div>
+  <button type="button" class="mute-clear" id="mute-clear">Clear</button>
+</div>
 
 <script>
 const esc = s => String(s ?? "").replace(/[&<>"']/g, m =>
@@ -3277,40 +3377,244 @@ function keyTerms(title){
   return out;
 }
 
-function muteLink(repo, section, it){
+const MARKS_KEY = "morning-brief-mute-marks";
+const MUTE_URL_LIMIT = 7000;
+
+function itemRecord(section, it){
   const title = itemTitle(it);
   const src = (it.sources && it.sources[0]) || {};
-  const source = it.source || src.name || "";
-  const link = it.url || src.url || "";
+  const source = String(it.source || src.name || "");
+  const link = String(it.url || src.url || "");
   const terms = keyTerms(title);
-  const body = [
-    "Mute this from future briefs. Edit the key terms if they are off, then submit.",
-    "If you leave the boxes unticked, those key terms are muted in this section.",
+  const key = [section, link, source, title].join("\u0001");
+  return {key, section: String(section || ""), source, link, title, terms};
+}
+
+function muteIssueTitle(count){
+  return "Mute: " + count + (count === 1 ? " item" : " items");
+}
+
+function oneLine(value){
+  return String(value || "").replace(/[\r\n]+/g, " ").replace(/[ \t]{2,}/g, " ").trim();
+}
+
+function muteItemBlock(item, includeLink){
+  const lines = [
+    "Section: " + oneLine(item.section),
+    "Source: " + oneLine(item.source),
+  ];
+  const link = oneLine(item.link);
+  if(includeLink && link) lines.push("Link: " + link);
+  lines.push(
+    "Title: " + oneLine(item.title),
     "",
-    "Section: " + section,
-    "Source: " + source,
-    "Link: " + link,
-    "Title: " + title,
-    "",
-    "Key terms: " + terms.join(", "),
+    "Key terms: " + (item.terms || []).map(oneLine).filter(Boolean).join(", "),
     "",
     "- [ ] Mute this source in this section",
     "- [ ] Mute these words",
     "- [ ] Mute the whole section",
-  ].join("\n");
+  );
+  return lines.join("\n");
+}
+
+function muteIssueBody(items, includeLink){
+  const intro = items.length === 1
+    ? [
+        "Mute this from future briefs. Edit the key terms if they are off, then submit.",
+        "If you leave the boxes unticked, those key terms are muted in this section.",
+      ]
+    : [
+        "Mute these from future briefs. Edit the key terms if they are off, then submit.",
+        "If you leave the boxes unticked, those key terms are muted in that section.",
+      ];
+  return intro.join("\n") + "\n\n" + items.map(it => muteItemBlock(it, includeLink)).join("\n\n---\n\n");
+}
+
+function muteIssueUrl(repo, items, includeLink){
+  const slug = repoSlug(repo);
   const params = new URLSearchParams();
   params.set("labels", "mute");
-  const heading = "Mute: " + title;
-  params.set("title", heading.length > 240 ? heading.slice(0, 237) + "..." : heading);
-  params.set("body", body);
-  return "https://github.com/" + repo + "/issues/new?" + params.toString();
+  let title = muteIssueTitle(items.length);
+  if(title.length > 240) title = title.slice(0, 237) + "...";
+  params.set("title", title);
+  params.set("body", muteIssueBody(items, includeLink));
+  return "https://github.com/" + slug + "/issues/new?" + params.toString();
+}
+
+function muteBarLabel(index, total, count){
+  if(total > 1) return "Submit part " + (index + 1) + " of " + total;
+  return "Submit muted (" + count + ")";
+}
+
+function fitMuteItem(repo, item){
+  const copy = {
+    key: item.key,
+    section: String(item.section || "").slice(0, 80),
+    source: String(item.source || ""),
+    link: String(item.link || ""),
+    title: String(item.title || ""),
+    terms: (item.terms || []).slice(0, 4),
+  };
+  const fits = () => muteIssueUrl(repo, [copy], false).length <= MUTE_URL_LIMIT;
+  if(fits()) return copy;
+  const full = copy.title;
+  let best = "item";
+  let lo = 0, hi = full.length;
+  while(lo <= hi){
+    const mid = Math.floor((lo + hi) / 2);
+    copy.title = (full.slice(0, mid).trim() || "item");
+    if(fits()){ best = copy.title; lo = mid + 1; }
+    else hi = mid - 1;
+  }
+  copy.title = best;
+  if(fits()) return copy;
+  copy.terms = [];
+  if(fits()) return copy;
+  copy.source = copy.source.slice(0, 40);
+  copy.section = copy.section.slice(0, 40);
+  return copy;
+}
+
+function planMuteSubmissions(repo, items){
+  const list = (items || []).filter(it => it && it.key);
+  if(!list.length) return [];
+  const pack = (parts) => parts.map((part, i) => ({
+    includeLink: part.includeLink,
+    items: part.items,
+    index: i,
+    total: parts.length,
+    label: muteBarLabel(i, parts.length, part.items.length),
+    url: muteIssueUrl(repo, part.items, part.includeLink),
+  }));
+  if(muteIssueUrl(repo, list, true).length <= MUTE_URL_LIMIT){
+    return pack([{includeLink: true, items: list}]);
+  }
+  if(muteIssueUrl(repo, list, false).length <= MUTE_URL_LIMIT){
+    return pack([{includeLink: false, items: list}]);
+  }
+  const bare = list.map(it => fitMuteItem(repo, it));
+  const chunks = [];
+  let cur = [];
+  for(const item of bare){
+    if(!cur.length){ cur = [item]; continue; }
+    if(muteIssueUrl(repo, cur.concat([item]), false).length <= MUTE_URL_LIMIT) cur.push(item);
+    else { chunks.push(cur); cur = [item]; }
+  }
+  if(cur.length) chunks.push(cur);
+  return pack(chunks.map(chunk => ({includeLink: false, items: chunk})));
+}
+
+function muteLink(repo, section, it){
+  const plan = planMuteSubmissions(repo, [itemRecord(section, it)]);
+  return plan.length ? plan[0].url : "";
+}
+
+function loadMarks(){
+  try {
+    if(typeof localStorage === "undefined") return [];
+    const data = JSON.parse(localStorage.getItem(MARKS_KEY) || "[]");
+    if(!Array.isArray(data)) return [];
+    return data.filter(m => m && typeof m.key === "string" && m.key);
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveMarks(marks){
+  try {
+    if(typeof localStorage === "undefined") return;
+    localStorage.setItem(MARKS_KEY, JSON.stringify(marks));
+  } catch(e) {}
 }
 
 let REPO = "poohpoohsy/morning-brief";
 function muteBtn(it, section){
-  const href = muteLink(REPO, section, it);
-  return `<div class="mute-row"><a class="mute" href="${esc(href)}" target="_blank" rel="noopener">✕ Not for me</a></div>`;
+  const rec = itemRecord(section, it);
+  return `<div class="mute-row"><button type="button" class="mute" aria-pressed="false" data-mute="${esc(JSON.stringify(rec))}">✕ Not for me</button></div>`;
 }
+
+function syncMutePad(){
+  const bar = $("mutebar");
+  const height = bar && !bar.hidden ? bar.offsetHeight : 0;
+  document.documentElement.style.setProperty("--mute-pad", height + "px");
+}
+
+function applyMuteMarks(){
+  const marks = loadMarks();
+  const keys = new Set(marks.map(m => m.key));
+  document.querySelectorAll("button.mute").forEach(btn => {
+    let rec = null;
+    try { rec = JSON.parse(btn.getAttribute("data-mute") || ""); } catch(e) { rec = null; }
+    const on = !!(rec && keys.has(rec.key));
+    const card = btn.closest("article");
+    if(card) card.classList.toggle("marked", on);
+    btn.textContent = on ? "Undo" : "✕ Not for me";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  const bar = $("mutebar");
+  const actions = $("mute-actions");
+  if(!bar || !actions) return;
+  if(!marks.length){
+    bar.hidden = true;
+    actions.innerHTML = "";
+    syncMutePad();
+    return;
+  }
+  const plan = planMuteSubmissions(REPO, marks);
+  actions.innerHTML = plan.map(part => {
+    const keysAttr = esc(JSON.stringify(part.items.map(it => it.key)));
+    return `<a class="mute-submit" href="${esc(part.url)}" target="_blank" rel="noopener" data-keys="${keysAttr}">${esc(part.label)}</a>`;
+  }).join("");
+  bar.hidden = false;
+  syncMutePad();
+}
+
+function onMuteClick(ev){
+  const submit = ev.target.closest && ev.target.closest(".mute-submit");
+  if(submit){
+    let keys = [];
+    try { keys = JSON.parse(submit.getAttribute("data-keys") || "[]"); } catch(e) { keys = []; }
+    const drop = new Set(keys);
+    setTimeout(() => {
+      saveMarks(loadMarks().filter(m => !drop.has(m.key)));
+      applyMuteMarks();
+    }, 0);
+    return;
+  }
+  if(ev.target.closest && ev.target.closest("#mute-clear")){
+    saveMarks([]);
+    applyMuteMarks();
+    return;
+  }
+  const btn = ev.target.closest && ev.target.closest("button.mute");
+  if(!btn) return;
+  let rec = null;
+  try { rec = JSON.parse(btn.getAttribute("data-mute") || ""); } catch(e) { rec = null; }
+  if(!rec || !rec.key) return;
+  const marks = loadMarks();
+  const idx = marks.findIndex(m => m.key === rec.key);
+  if(idx >= 0) marks.splice(idx, 1);
+  else marks.push(rec);
+  saveMarks(marks);
+  applyMuteMarks();
+}
+
+function installMuteChrome(){
+  if(installMuteChrome.done) return;
+  installMuteChrome.done = true;
+  if(typeof document !== "undefined" && document.addEventListener){
+    document.addEventListener("click", onMuteClick);
+  }
+  if(typeof window !== "undefined" && window.addEventListener){
+    window.addEventListener("resize", syncMutePad);
+  }
+  const bar = typeof document !== "undefined" && document.getElementById
+    ? document.getElementById("mutebar") : null;
+  if(bar && typeof ResizeObserver !== "undefined"){
+    new ResizeObserver(syncMutePad).observe(bar);
+  }
+}
+installMuteChrome();
 
 function srcLine(sources){
   if(!sources || !sources.length) return "";
@@ -3417,10 +3721,11 @@ function render(D){
     `<details class="mutes"><summary>Muted (${rules.length})</summary>`
     + (rules.length
         ? `<ul>${items}</ul>`
-        : `<p class="mutes-empty">Nothing muted yet. Use ✕ Not for me on a card.</p>`)
+        : `<p class="mutes-empty">Nothing muted yet. Mark cards with ✕ Not for me, then tap Submit muted.</p>`)
     + `<p class="mutes-hint">Saved in data/mute_rules.json. Deleting the issue does not unmute; remove the rule from that file too.</p></details>`
     + `<div class="foot-note">Items flagged headline-only have no retrieved body text. `
     + `Open the source before repeating anything that matters.</div>`;
+  applyMuteMarks();
 }
 
 fetch(`data/brief.json?ts=${Date.now()}`, {cache:"no-store"})
