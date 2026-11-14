@@ -32,9 +32,11 @@ jobs:
       # so there is no SDK to install for the free path.
       - run: pip install feedparser
 
+      # Node 20 has no global WebSocket. The mute check opens Chrome's
+      # debugger socket itself, and this job runs on Node 22.
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Test mute rules
         run: python test_mute.py
