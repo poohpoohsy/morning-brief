@@ -83,11 +83,26 @@
   td{padding:6px 0;border-top:1px solid var(--hair)}
   tr:nth-child(even) td{background:var(--zebra)}
   td.rank{width:24px;color:var(--muted);font-size:11.5px}
-  .bank{font-weight:600}
-  .kind{font-size:10.5px;color:var(--muted);margin-left:6px;font-weight:400}
-  .rate{font-weight:680}.chg{font-size:11.5px;width:48px}
-  tr.cut td{border-top:1.5px dashed var(--line)}
-  .cutlab{font-size:10.5px;color:var(--muted);padding-top:6px}
+  .bank{font-weight:600;overflow-wrap:anywhere}
+  .kind{font-size:10.5px;color:var(--muted);font-weight:400}
+  .rate{font-weight:680}
+  .rate-list{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .rate-row{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    padding:9px 0;border-top:1px solid var(--hair);min-width:0}
+  .rate-row.is-stale{background:var(--warn-bg);border-radius:8px}
+  .rate-main{min-width:0;flex:1 1 auto}
+  .rate-name{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+  .rate-rank{color:var(--muted);font-size:11.5px;min-width:1.2em}
+  .rate-main .kind{display:inline}
+  .rate-meta,.rate-note{font-size:11.5px;line-height:1.4;color:var(--muted);margin-top:3px;
+    overflow-wrap:anywhere}
+  .rate-note{color:var(--ink2)}
+  .rate-meta a{color:var(--work)}
+  .rate-val{flex:0 0 auto;text-align:right;font-weight:680}
+  .rate-val .chg{display:block;font-size:11.5px;font-weight:650}
+  .notchecked{font-size:12px;font-weight:650;color:var(--muted)}
+  .boardtag{display:block;font-size:10px;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted)}
   .newpromo{margin-top:13px;border-top:1px solid var(--hair);padding-top:10px}
   .newpromo .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
     color:var(--muted);font-weight:700;margin-bottom:6px}
@@ -247,26 +262,57 @@ function balancePanel(h, bars){
   </section>`;
 }
 
+function rateAgeDays(day){
+  if(!day) return null;
+  const today = hkDay(new Date());
+  const age = (Date.parse(today + "T00:00:00Z") - Date.parse(String(day).slice(0, 10) + "T00:00:00Z")) / 86400000;
+  return Number.isFinite(age) ? age : null;
+}
+function rateIsStale(x){
+  if(x.rate == null) return false;
+  const age = rateAgeDays(x.as_of_date || x.read_on);
+  return age != null && age > 3;
+}
 function ratePanel(r){
-  if(!r || !r.rows.length) return "";
-  const virtuals = r.rows.filter(x => x.kind === "virtual").length;
+  if(!r || !r.rows || !r.rows.length) return "";
+  const digital = r.rows.filter(x => x.kind === "digital" || x.kind === "virtual").length;
   const rows = r.rows.map(x => {
+    const stale = rateIsStale(x);
     const c = x.change_bp;
-    const chg = (c === null || c === undefined || c === 0) ? "—"
-      : `<span class="${c>0?'up':'down'}">${c>0?'+':''}${c}</span>`;
-    return `<tr class="${x.rank===11?'cut':''}">
-      <td class="rank">${x.rank}</td>
-      <td><span class="bank">${esc(x.name)}</span><span class="kind">${esc(x.kind)}</span></td>
-      <td class="r rate">${x.rate.toFixed(2)}%</td><td class="r chg">${chg}</td></tr>`;
+    const chg = (c === null || c === undefined || c === 0) ? ""
+      : `<div class="chg ${c>0?'up':'down'}">${c>0?'+':''}${c}bp</div>`;
+    const figure = (x.rate == null)
+      ? `<div class="notchecked">not checked</div><div class="rate">—</div>`
+      : `<div class="rate">${esc(x.rate_label)}%</div>${x.board_only?'<span class="boardtag">board only</span>':''}${chg}`;
+    const when = x.as_of_label
+      ? esc(x.as_of_label)
+      : (x.as_of_date ? "As of " + esc(x.as_of_date) : (x.read_on ? "Read " + esc(x.read_on) : ""));
+    const src = x.source_url
+      ? `<a href="${esc(x.source_url)}">source</a>`
+      : "";
+    const meta = [when, src].filter(Boolean).join(" · ");
+    const badge = stale ? `<span class="staletag">stale</span>` : "";
+    return `<article class="rate-row${stale?' is-stale':''}">
+      <div class="rate-main">
+        <div class="rate-name">
+          ${x.rank ? `<span class="rate-rank mono">${x.rank}</span>` : ""}
+          <span class="bank">${esc(x.name)}</span>
+          ${x.kind ? `<span class="kind">${esc(x.kind)}</span>` : ""}
+          ${badge}
+        </div>
+        ${meta ? `<div class="rate-meta">${meta}</div>` : ""}
+        ${x.note ? `<div class="rate-note">${esc(x.note)}</div>` : ""}
+      </div>
+      <div class="rate-val mono">${figure}</div>
+    </article>`;
   }).join("");
-  const movers = (r.movers||[]).map(m =>
-    `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
-  return `<section class="panel">
-    <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked${virtuals ? `, ${virtuals} virtual` : ""}${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}. Virtual-bank rows are typed in by hand.</div>
-    <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
-    <tbody>${rows}</tbody></table>
-    <div class="cutlab">Dashed line = top 10 cut-off.</div>
+  const movers = (r.movers||[]).filter(m => m.rate != null).map(m =>
+    `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${esc(m.rate_label)}%, now rank ${m.rank}.</div>`).join("");
+  const missed = r.unchecked ? ` ${r.unchecked} not checked — no figure, so no number.` : "";
+  return `<section class="panel" id="rates">
+    <div class="ptitle">HKD time deposit — ${esc(r.tenor)}</div>
+    <div class="asof">${r.rows.length} banks${digital ? `, ${digital} digital` : ""}. Official pages${r.as_of_label ? ", read " + esc(r.as_of_label) : ""}.${missed} A quote older than 3 days is marked stale.</div>
+    <div class="rate-list">${rows}</div>
     ${movers ? `<div class="newpromo"><div class="h">Moved today · 3 max</div>${movers}</div>` : ""}
   </section>`;
 }

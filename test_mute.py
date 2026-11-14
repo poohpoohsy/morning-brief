@@ -6,6 +6,7 @@ No network. The button is checked by running the page's own script.
 import json
 import shutil
 import subprocess
+import sys
 import tempfile
 import threading
 from html.parser import HTMLParser
@@ -698,16 +699,33 @@ function connectSocket(url) {
 (async () => {
   const userData = `/tmp/morning-brief-chrome-${port}`;
   const child = spawn(chromePath, [
-    "--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+    "--headless=new", "--no-sandbox", "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage", "--disable-gpu",
+    "--no-first-run", "--no-default-browser-check", "--disable-extensions",
     `--user-data-dir=${userData}`,
-    `--remote-debugging-port=${port}`, "--remote-allow-origins=*", "about:blank",
-  ], {stdio: "ignore"});
+    "--remote-debugging-address=127.0.0.1",
+    `--remote-debugging-port=${port}`, "--remote-allow-origins=*",
+    "about:blank",
+  ], {stdio: ["ignore", "ignore", "pipe"], detached: true});
+  let chromeErr = "";
+  child.stderr.on("data", chunk => {
+    chromeErr += chunk.toString();
+    if (chromeErr.length > 6000) chromeErr = chromeErr.slice(-6000);
+  });
+  function stopChrome() {
+    try { process.kill(-child.pid, "SIGKILL"); }
+    catch (e) { try { child.kill("SIGKILL"); } catch (e2) {} }
+  }
   let ready = false;
-  for (let i = 0; i < 50 && !ready; i++) {
+  for (let i = 0; i < 100 && !ready; i++) {
     try { await request(`http://127.0.0.1:${port}/json/version`); ready = true; }
     catch (e) { await sleep(100); }
   }
-  if (!ready) { child.kill(); process.exit(2); }
+  if (!ready) {
+    console.error("chrome debugger port never opened\n" + chromeErr.slice(-800));
+    stopChrome();
+    process.exit(2);
+  }
   const tab = JSON.parse(await request(`http://127.0.0.1:${port}/json/new?about:blank`, "PUT"));
   const ws = connectSocket(tab.webSocketDebuggerUrl);
   await new Promise(resolve => ws.addEventListener("open", resolve));
@@ -759,7 +777,7 @@ function connectSocket(url) {
   if (errors.length) html += "\n<!-- page-error: " + errors.join(" | ") + " -->";
   process.stdout.write(html);
   ws.close();
-  child.kill();
+  stopChrome();
 })().catch(err => { console.error(err); process.exit(1); });
 '''
 
@@ -769,7 +787,9 @@ def _dump_dom(chrome, url):
     proc = subprocess.run(
         [node, "-e", _DUMP_DOM, chrome, url],
         check=False, capture_output=True, text=True, timeout=30)
-    check(proc.returncode == 0, "chrome failed: " + (proc.stderr or "")[-800:])
+    detail = ((proc.stderr or "") + "\n" + (proc.stdout or "")).strip()
+    check(proc.returncode == 0,
+          "chrome failed: " + (detail or f"exit {proc.returncode} with no output")[-800:])
     check(proc.stdout, "chrome returned an empty page")
     return proc.stdout
 
@@ -1057,16 +1077,33 @@ function connectSocket(url) {
 (async () => {
   const userData = `/tmp/morning-brief-mobile-${port}`;
   const child = spawn(chromePath, [
-    "--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+    "--headless=new", "--no-sandbox", "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage", "--disable-gpu",
+    "--no-first-run", "--no-default-browser-check", "--disable-extensions",
     `--user-data-dir=${userData}`,
-    `--remote-debugging-port=${port}`, "--remote-allow-origins=*", "about:blank",
-  ], {stdio: "ignore"});
+    "--remote-debugging-address=127.0.0.1",
+    `--remote-debugging-port=${port}`, "--remote-allow-origins=*",
+    "about:blank",
+  ], {stdio: ["ignore", "ignore", "pipe"], detached: true});
+  let chromeErr = "";
+  child.stderr.on("data", chunk => {
+    chromeErr += chunk.toString();
+    if (chromeErr.length > 6000) chromeErr = chromeErr.slice(-6000);
+  });
+  function stopChrome() {
+    try { process.kill(-child.pid, "SIGKILL"); }
+    catch (e) { try { child.kill("SIGKILL"); } catch (e2) {} }
+  }
   let ready = false;
-  for (let i = 0; i < 50 && !ready; i++) {
+  for (let i = 0; i < 100 && !ready; i++) {
     try { await request(`http://127.0.0.1:${port}/json/version`); ready = true; }
     catch (e) { await sleep(100); }
   }
-  if (!ready) { child.kill(); process.exit(2); }
+  if (!ready) {
+    console.error("chrome debugger port never opened\n" + chromeErr.slice(-800));
+    stopChrome();
+    process.exit(2);
+  }
   const tab = JSON.parse(await request(`http://127.0.0.1:${port}/json/new?about:blank`, "PUT"));
   const ws = connectSocket(tab.webSocketDebuggerUrl);
   await new Promise(resolve => ws.addEventListener("open", resolve));
@@ -1277,7 +1314,7 @@ function connectSocket(url) {
     safeArea, marked, undone, reloaded, href, submitted, splitPlan, splitUi, cleared,
   }));
   ws.close();
-  child.kill();
+  stopChrome();
 })().catch(err => { console.error(err); process.exit(1); });
 '''
 
@@ -1408,18 +1445,131 @@ def test_mobile_viewport_marks_and_submits_together():
     check(report["cleared"]["stored"] in (None, "[]"), report["cleared"])
 
 
+def test_fallback_is_capped_and_ranked():
+    """A model outage must not dump the feed. Best keyword hits stay, and the page stays short."""
+    # Unrelated stems. A shared prefix makes cluster() treat them as one story.
+    stems = [
+        "Harbour fog delays the dawn ferry",
+        "Violin shop on Wellington Street closes Friday",
+        "New bus lane opens beside the stadium",
+        "Library extends evening hours in Kowloon",
+        "Tea auction sets an unusual price",
+        "Footbridge mural painted overnight",
+        "Reservoir path reopens after repairs",
+        "Choir rehearses in the old post office",
+        "Night market moves two streets east",
+        "School roof garden harvests its first crop",
+        "Tram bell replaced on route six",
+        "Bookstore hosts a midnight reading",
+        "Pier kiosk starts selling maps",
+        "Community oven shared by three bakeries",
+        "Hill path lights switched to warmer bulbs",
+        "Ferry timetable printed on yellow paper",
+        "Clock tower scaffold comes down Monday",
+        "Wet market fishmonger retires",
+        "Lantern workshop teaches a weekend class",
+        "Post boxes repainted dark green",
+        "Rooftop bees moved to a park hive",
+        "Stone steps repaired near the temple",
+        "Radio play recorded in a stairwell",
+        "Canvas awning replaced on the cafe",
+        "Fountain cleaned before the holiday",
+    ]
+    fetched = {}
+    for key, sec in build.CFG["sections"].items():
+        words = list(sec.get("include") or [])
+        rows = []
+        for i, stem in enumerate(stems):
+            hit = ""
+            if words:
+                hit = " ".join(words[:4]) if i == 0 else words[min(i, len(words) - 1)]
+            rows.append({
+                "title": f"{stem}. {hit}".strip(),
+                "source": "Example",
+                "url": f"https://example.com/{key}/{i}",
+                "snippet": f"{stem} remains the whole of the note. {hit}".strip(),
+                "published": "14 Nov 08:00",
+            })
+        fetched[key] = rows
+    collected, payload, _ = build.candidates_for_model(fetched, [])
+    for key, groups in payload.items():
+        check(len(groups) <= build.CFG["model_candidates"], f"{key} sent {len(groups)} candidates")
+    digest = build.rss_digest(collected)
+    total = sum(len(v) for v in digest.values())
+    check(total <= build.CFG["page_cap"], f"page has {total}")
+    for key, rows in digest.items():
+        check(len(rows) <= build.CFG["section_cap"], f"{key} has {len(rows)}")
+    lead = (digest["work"][0].get("title") or "").lower()
+    check(build.CFG["sections"]["work"]["include"][0].lower() in lead, lead)
+    thin = {key: (list(rows[:1]) if rows else []) for key, rows in digest.items()}
+    topped = build.top_up(thin, collected)
+    topped_total = 0
+    for key, rows in topped.items():
+        topped_total += len(rows)
+        check(len(rows) <= build.CFG["section_cap"], f"{key} topped to {len(rows)}")
+        if len(collected.get(key) or []) >= build.CFG["section_floor"]:
+            check(build.CFG["section_floor"] <= len(rows) <= build.CFG["section_floor"],
+                  f"{key} should sit on the floor, has {len(rows)}")
+    check(topped_total <= build.CFG["page_cap"], topped_total)
+
+
+def test_rates_show_verified_figures_only():
+    """Placeholder prints must not come back, and an unread bank has no number."""
+    from datetime import datetime
+    table = build.rate_table()
+    by_key = {row["key"]: row for row in table["rows"]}
+    check(len(by_key) == len(build.BANKS["banks"]), len(by_key))
+    check(by_key["livi Bank"]["rate_label"] == "3.00", by_key["livi Bank"])
+    check(by_key["Citi"]["rate_label"] == "3.20", by_key["Citi"])
+    check(by_key["ZA Bank"]["rate_label"] == "0.51", by_key["ZA Bank"])
+    check(by_key["Hang Seng"]["board_only"] is True, by_key["Hang Seng"])
+    check(by_key["Hang Seng"]["rate_label"] == "0.125", by_key["Hang Seng"])
+    check(by_key["Hang Seng"]["rate"] == 0.125, by_key["Hang Seng"])
+    check(by_key["Hang Seng"]["rank"] is None, "board rate is not ranked against promos")
+    today = datetime.now(build.HK).date().isoformat()
+    for key, row in by_key.items():
+        check(str(row.get("source_url") or "").startswith("https://"), key)
+        if row["rate"] is None:
+            check(row["status"] == "not_checked", row)
+            check(row["stale"] is False, row)
+            check(row["rate_label"] is None, row)
+        else:
+            check(row["stale"] is build.rate_is_stale(row["as_of_date"] or row["read_on"], today), row)
+    for name in ("WeLab Bank", "Ant Bank", "PAObank", "Fusion Bank"):
+        check(by_key[name]["rate"] is None, by_key[name])
+    shown = {row["rate"] for row in table["rows"] if row["rate"] is not None}
+    for fake in (4.2, 4.05, 3.98, 3.9, 3.8, 3.72, 3.68, 3.55, 3.5, 3.4, 3.15, 3.1):
+        check(fake not in shown, fake)
+    check(table["placeholders"] == 0, table["placeholders"])
+    check(table["unchecked"] == 4, table["unchecked"])
+    check("not checked" in build.INDEX_HTML and "rate-list" in build.INDEX_HTML, "rate layout missing")
+    check("placeholder value" not in build.INDEX_HTML, "placeholder copy still on the page")
+    check(build.rate_is_stale("2026-11-09", "2026-11-14") is True, "9 Nov is stale on 14 Nov")
+    check(build.rate_is_stale("2026-11-13", "2026-11-14") is False, "13 Nov is one day old")
+    check(build.rate_is_stale("2026-08-04", "2026-11-14") is True, "4 Aug is stale")
+    check(build.rate_is_stale(None, "2026-11-14") is False, "a missing date is not stale")
+
+
 def main():
-    test_fake_rule_drops_item_before_the_model()
-    test_whole_section_is_hidden_and_not_sent()
-    test_source_rule_is_section_scoped()
-    test_deleted_issue_rule_survives()
-    test_issue_body_parsing()
-    test_one_issue_can_list_many_items()
-    test_rendered_card_uses_the_same_rule()
-    test_button_url_from_the_page()
-    test_page_hides_the_item_and_links_to_github()
-    test_mobile_viewport_marks_and_submits_together()
-    print("mute tests passed")
+    args = [a for a in sys.argv[1:] if a.startswith("-")]
+    run_unit = not args or "--unit" in args
+    run_ui = not args or "--ui" in args
+    if run_unit:
+        test_fake_rule_drops_item_before_the_model()
+        test_whole_section_is_hidden_and_not_sent()
+        test_source_rule_is_section_scoped()
+        test_deleted_issue_rule_survives()
+        test_issue_body_parsing()
+        test_one_issue_can_list_many_items()
+        test_rendered_card_uses_the_same_rule()
+        test_button_url_from_the_page()
+        test_fallback_is_capped_and_ranked()
+        test_rates_show_verified_figures_only()
+        print("mute unit tests passed")
+    if run_ui:
+        test_page_hides_the_item_and_links_to_github()
+        test_mobile_viewport_marks_and_submits_together()
+        print("mute ui tests passed")
 
 
 if __name__ == "__main__":
