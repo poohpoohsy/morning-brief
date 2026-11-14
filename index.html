@@ -128,7 +128,19 @@
   .quiet{margin-top:8px;font-size:12px;line-height:1.45;color:var(--muted);
     border-left:2px solid var(--muted);padding-left:9px}
   .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .mute-row{display:flex;justify-content:flex-end}
+  .mute{display:inline-flex;align-items:center;min-height:32px;margin-top:4px;
+    padding:4px 8px;border-radius:8px;border:1px solid transparent;
+    font-size:11.5px;font-weight:650;color:var(--muted);text-decoration:none}
+  .mute:hover,.mute:active,.mute:focus-visible{
+    color:var(--ink2);border-color:var(--line);background:var(--hair)}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
+  .mutes{margin-top:4px}
+  .mutes summary{color:var(--muted);font-size:12px;font-weight:650}
+  .mutes ul{margin:8px 0 0;padding-left:18px}
+  .mutes li{margin:3px 0}
+  .mutes-empty,.mutes-hint{margin:6px 0 0}
+  .foot-note{margin-top:12px}
   @media(max-width:560px){h1{font-size:25px}.bars{height:58px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
@@ -377,7 +389,8 @@ function talkingCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.point || it.headline || "")}</h3>
     ${sowhat}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, "Talking points")}</article>`;
 }
 function talkingSection(tp){
   const audiences = ((tp && tp.audiences) || []).filter(a => (a.items || []).length);
@@ -393,6 +406,98 @@ function talkingSection(tp){
     <div class="shead"><span class="dot" style="background:var(--talk)"></span>
       <h2>Talking points</h2><span class="scount">${total} item${total===1?"":"s"}</span></div>
     ${intro}${body}</section>`;
+}
+
+const TERM_STOP = new Set(("a an the and or of to in on for with from by at as is are was were be been " +
+  "it its this that these those after over into about says said new more will has have had not but their " +
+  "his her who what when where how why amid via per than then also just may can could would should " +
+  "reportedly report reports news says say before under out update updates latest breaking " +
+  "hong kong singapore today yesterday year week month " +
+  "的 了 在 是 與 及 和 為 將 被 對 從 也 或 並 而 但 就 都 很 到 以 等 其 這 那 有 不 未 已 " +
+  "香港 港元 今日 昨日 今年 表示 指出").split(/\s+/));
+
+function repoSlug(v){
+  const s = String(v || "poohpoohsy/morning-brief");
+  return /^[\w.-]+\/[\w.-]+$/.test(s) ? s : "poohpoohsy/morning-brief";
+}
+
+function itemTitle(it){
+  if(it.title && String(it.title).trim()) return String(it.title).trim();
+  if(it.headline && String(it.headline).trim()) return String(it.headline).trim();
+  if(it.point && String(it.point).trim()) return String(it.point).trim();
+  const post = String(it.en || "").match(/The post (.+?) appeared first on /);
+  if(post && post[1].trim()) return post[1].trim();
+  for(const line of (it.zh || [])){
+    const s = String(line || "").trim();
+    if(s && !s.startsWith("（只有標題")) return s;
+  }
+  return "item";
+}
+
+function keyTerms(title){
+  const text = String(title || "");
+  const latin = [];
+  const re = /[A-Za-z][A-Za-z0-9'+-]{2,}/g;
+  let m;
+  while((m = re.exec(text))){
+    const low = m[0].replace(/^'+|'+$/g, "").toLowerCase();
+    if(low.length < 4 || TERM_STOP.has(low) || latin.includes(low)) continue;
+    latin.push(low);
+  }
+  const ranked = latin.slice().sort((a, b) => b.length - a.length).slice(0, 4);
+  const picked = latin.filter(w => ranked.includes(w)).slice(0, 4);
+  const cjk = [];
+  for(const run of (text.match(/[\u4e00-\u9fff]{2,}/g) || [])){
+    if(TERM_STOP.has(run)) continue;
+    const chunks = run.length <= 6 ? [run] : [run.slice(0, 4), run.slice(4, 8)].filter(Boolean);
+    for(const chunk of chunks){
+      if(chunk.length >= 2 && !TERM_STOP.has(chunk) && !cjk.includes(chunk)) cjk.push(chunk);
+      if(cjk.length >= 4) break;
+    }
+    if(cjk.length >= 4) break;
+  }
+  const terms = picked.length >= 2 ? picked : cjk.concat(picked);
+  const out = [];
+  for(const t of terms){
+    if(!out.includes(t)) out.push(t);
+    if(out.length >= 4) break;
+  }
+  return out;
+}
+
+function muteLink(repo, section, it){
+  const title = itemTitle(it);
+  const src = (it.sources && it.sources[0]) || {};
+  const source = it.source || src.name || "";
+  const link = it.url || src.url || "";
+  const terms = keyTerms(title);
+  const body = [
+    "Mute this from future briefs. Edit the key terms if they are off, then submit.",
+    "If you leave the boxes unticked, those key terms are muted in this section.",
+    "",
+    "Section: " + section,
+    "Source: " + source,
+    "Link: " + link,
+    "Title: " + title,
+    "",
+    "Key terms: " + terms.join(", "),
+    "",
+    "- [ ] Mute this source in this section",
+    "- [ ] Mute these words",
+    "- [ ] Mute the whole section",
+  ].join("\n");
+  const params = new URLSearchParams();
+  params.set("labels", "mute");
+  const heading = "Mute: " + title;
+  params.set("title", heading.length > 240 ? heading.slice(0, 237) + "..." : heading);
+  params.set("body", body);
+  return "https://github.com/" + repo + "/issues/new?" + params.toString();
+}
+
+let REPO = "poohpoohsy/morning-brief";
+function muteBtn(it, section){
+  const href = muteLink(REPO, section, it);
+  return `<div class="mute-row"><a class="mute" href="${esc(href)}" target="_blank" rel="noopener">✕ Not for me</a></div>`;
 }
 
 function srcLine(sources){
@@ -411,6 +516,7 @@ function workCard(it){
     <p class="zh3">${zh}</p>
     ${it.en ? `<details><summary>English summary &amp; source</summary>
       <div class="en">${esc(it.en)}${srcLine(it.sources)}</div></details>` : srcLine(it.sources)}
+    ${muteBtn(it, "Work")}
   </article>`;
 }
 
@@ -422,27 +528,32 @@ function juicyCard(it){
     ${it.raise === false
       ? `<div class="quiet">知道就得 &middot; 唔使主動提 — the other person's answer would expose a political position.</div>`
       : ""}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, "Juicy")}</article>`;
 }
-function plainCard(it){
+function plainCard(it, section){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
     ${it.body ? `<p class="two">${esc(it.body)}</p>`
               : `<p class="two" style="opacity:.6">Headline only - open the source.</p>`}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, section)}</article>`;
 }
 
 function render(D){
+  REPO = repoSlug(D && D.repo);
   $("date").textContent = D.report_date || "";
   $("sub").textContent  = D.generated_at ? `Built ${D.generated_at}` : "";
   $("wx").innerHTML = weatherStrip(D.weather);
+  const hidden = new Set(D.hidden_sections || []);
   $("panels").innerHTML =
     (D.treasury ? treasuryPanel(D.treasury, D.hkma_bars||[]) : balancePanel(D.hkma, D.hkma_bars||[]))
-    + talkingSection(D.talking_points)
+    + (hidden.has("Talking points") ? "" : talkingSection(D.talking_points))
     + ratePanel(D.rates);
 
   const S = D.sections || {}, L = D.labels || {};
   const block = (title, colour, groups) => {
+    if(hidden.has(title)) return "";
     const total = groups.reduce((n,g) => n + (g.items||[]).length, 0);
     const body = groups.map(g => {
       if(!(g.items||[]).length) return "";
@@ -458,11 +569,11 @@ function render(D){
   $("sections").innerHTML =
     block("Work", "var(--work)", [{items:S.work||[], work:true}]) +
     block("Small Talk", "var(--talk)", [
-      {sub:"Hong Kong", items:S.smalltalk_hk||[]},
-      {sub:"Singapore", items:S.smalltalk_sg||[]}]) +
+      {sub:"Hong Kong", items:S.smalltalk_hk||[], card:it => plainCard(it, "Small Talk")},
+      {sub:"Singapore", items:S.smalltalk_sg||[], card:it => plainCard(it, "Small Talk")}]) +
     block("Personal", "var(--life)", [
-      {sub:"香港 · 民生", items:S.personal_hk||[]},
-      {sub:"Singapore · Government", items:S.personal_sg||[]}]) +
+      {sub:"香港 · 民生", items:S.personal_hk||[], card:it => plainCard(it, "Personal")},
+      {sub:"Singapore · Government", items:S.personal_sg||[], card:it => plainCard(it, "Personal")}]) +
     block("Juicy", "var(--juicy)", [
       {sub:"香港", items:S.juicy_hk||[], card:juicyCard},
       {sub:"Singapore", items:S.juicy_sg||[], card:juicyCard}]);
@@ -488,8 +599,16 @@ function render(D){
   }
   if(msgs.length){ $("stale").innerHTML = msgs.join("<br>"); $("stale").classList.add("show"); }
 
-  $("foot").textContent = "Items flagged headline-only have no retrieved body text. "
-    + "Open the source before repeating anything that matters.";
+  const rules = Array.isArray(D.mutes) ? D.mutes : [];
+  const items = rules.map(r => `<li>${esc(r.summary || r.section || "")}</li>`).join("");
+  $("foot").innerHTML =
+    `<details class="mutes"><summary>Muted (${rules.length})</summary>`
+    + (rules.length
+        ? `<ul>${items}</ul>`
+        : `<p class="mutes-empty">Nothing muted yet. Use ✕ Not for me on a card.</p>`)
+    + `<p class="mutes-hint">Saved in data/mute_rules.json. Deleting the issue does not unmute; remove the rule from that file too.</p></details>`
+    + `<div class="foot-note">Items flagged headline-only have no retrieved body text. `
+    + `Open the source before repeating anything that matters.</div>`;
 }
 
 fetch(`data/brief.json?ts=${Date.now()}`, {cache:"no-store"})
