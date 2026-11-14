@@ -11,7 +11,8 @@ on:
 permissions:
   contents: write
   # issues: write includes read. The build lists issues labelled mute,
-  # comments "Applied", and closes them. The browser never sees this token.
+  # including ones that list several stories, comments "Applied", and closes
+  # them. The browser never sees this token.
   issues: write
 
 concurrency:
