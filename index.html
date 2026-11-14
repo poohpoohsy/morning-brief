@@ -60,6 +60,22 @@
   .blab span{flex:1;text-align:center;font-size:9.5px;color:var(--muted)}
   .notes{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.55}
   .notes b{color:var(--ink);font-weight:650}
+  .staletag{display:inline-block;margin-left:8px;padding:1px 6px;border-radius:5px;
+    background:var(--warn-bg);color:var(--warn-ink);font-size:10.5px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;vertical-align:1px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-top:14px}
+  .stat .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .stat .v{font-size:22px;font-weight:720;letter-spacing:-.02em;margin-top:2px}
+  .stat .s{font-size:12.5px;color:var(--ink2);margin-top:3px;line-height:1.45}
+  .band{margin-top:8px}
+  .bandtrack{position:relative;height:8px;border-radius:99px;
+    background:linear-gradient(90deg,var(--up),var(--bar) 55%,var(--down))}
+  .bandmark{position:absolute;top:-4px;width:3px;height:16px;border-radius:2px;
+    background:var(--ink);transform:translateX(-50%)}
+  .bandlabs{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:5px}
+  .sowhat{margin:6px 0 0;font-size:13.5px;line-height:1.45;color:var(--ink2);
+    border-left:2px solid var(--talk);padding-left:9px}
+  .unavail{color:var(--muted);font-size:13px}
   table{width:100%;border-collapse:collapse;margin-top:4px;font-size:13.5px}
   th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
     color:var(--muted);font-weight:700;padding:0 0 7px}
@@ -113,7 +129,7 @@
     border-left:2px solid var(--muted);padding-left:9px}
   .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
-  @media(max-width:560px){h1{font-size:25px}.bars{height:58px}}
+  @media(max-width:560px){h1{font-size:25px}.bars{height:58px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -181,7 +197,7 @@ function balancePanel(h, bars){
 
   return `<section class="panel">
     <div class="ptitle">Aggregate balance</div>
-    <div class="asof">HKMA daily figures, ${esc(h.as_of)}. Bars are year-end closing balance.</div>
+    <div class="asof">HKMA daily figures, ${esc(h.as_of)}. Each bar is a closing aggregate balance.</div>
     <div class="big"><span class="bigval mono">${bn(h.balance_hkdm)}</span>
       <span class="bigmeta">vs yesterday ${chg}${h.flat_sessions>1?` · ${h.flat_sessions} sessions flat`:""}</span></div>
     <div class="bigmeta">1M HIBOR <b>${esc(h.hibor_1m ?? "n/a")}%</b> · overnight <b>${esc(h.hibor_on ?? "n/a")}%</b> · base rate <b>${esc(h.base_rate ?? "n/a")}%</b></div>
@@ -193,6 +209,7 @@ function balancePanel(h, bars){
 
 function ratePanel(r){
   if(!r || !r.rows.length) return "";
+  const virtuals = r.rows.filter(x => x.kind === "virtual").length;
   const rows = r.rows.map(x => {
     const c = x.change_bp;
     const chg = (c === null || c === undefined || c === 0) ? "—"
@@ -206,12 +223,176 @@ function ratePanel(r){
     `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
   return `<section class="panel">
     <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}</div>
+    <div class="asof">${r.rows.length} banks tracked${virtuals ? `, ${virtuals} virtual` : ""}${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}. Virtual-bank rows are typed in by hand.</div>
     <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
     <tbody>${rows}</tbody></table>
     <div class="cutlab">Dashed line = top 10 cut-off.</div>
     ${movers ? `<div class="newpromo"><div class="h">Moved today · 3 max</div>${movers}</div>` : ""}
   </section>`;
+}
+
+function moneyBn(v, signed){
+  if(v === null || v === undefined || Number.isNaN(Number(v))) return "n/a";
+  const bn = Number(v) / 1000;
+  const body = "$" + Math.abs(bn).toFixed(1) + "bn";
+  if(!signed) return (bn < 0 ? "-" : "") + body;
+  if(Math.abs(bn) < 0.05) return "unchanged";
+  return (bn > 0 ? "+" : "−") + body;
+}
+function bpText(bp){
+  if(bp === null || bp === undefined || Number.isNaN(Number(bp))) return "—";
+  const n = Number(bp);
+  if(Math.abs(n) < 0.05) return "—";
+  const shown = Math.abs(n) >= 10 ? n.toFixed(0) : n.toFixed(1);
+  return `<span class="${n>0?'up':'down'}">${n>0?'+':''}${shown}bp</span>`;
+}
+function rateText(v){
+  if(v === null || v === undefined || Number.isNaN(Number(v))) return "n/a";
+  const n = Number(v);
+  let s = n.toFixed(5).replace(/0+$/,"").replace(/\.$/,"");
+  const dec = (s.split(".")[1] || "");
+  if(dec.length < 2) s = n.toFixed(2);
+  return s;
+}
+function staleTag(on){ return on ? `<span class="staletag">stale</span>` : ""; }
+
+function treasuryPanel(t, bars){
+  if(!t) return "";
+  const bal = t.balance || {};
+  const hibor = t.hibor || {};
+  const fx = t.fx || {};
+  const spread = t.spread || {};
+  let head = `<div class="unavail">Aggregate balance unavailable.</div>`;
+  if(bal.available && bal.value_hkdm != null){
+    const move = (bal.change_hkdm === null || bal.change_hkdm === undefined) ? ""
+      : (Math.abs(bal.change_hkdm) < 1
+          ? `<span class="bigmeta">vs previous session <b>unchanged</b></span>`
+          : `<span class="bigmeta">vs previous session <b class="${bal.change_hkdm>0?'up':'down'}">${moneyBn(bal.change_hkdm, true)}</b>${bal.flat_sessions>1?` · ${bal.flat_sessions} sessions flat`:""}</span>`);
+    const base = bal.base_rate == null ? "n/a" : rateText(bal.base_rate) + "%";
+    const baseChg = bal.base_rate_change_bp == null ? "" : " " + bpText(bal.base_rate_change_bp);
+    head = `<div class="big"><span class="bigval mono">${moneyBn(bal.value_hkdm, false)}</span>${move}</div>
+      <div class="bigmeta">Base rate <b>${base}</b>${baseChg}</div>`;
+  }
+  const parts = (bal.components || []).map(c =>
+    `<b>${esc(c.label)}</b> ${moneyBn(c.hkdm, true)}`).join(" · ");
+  const partNote = parts ? `<div class="notes">Day's published drivers: ${parts}.</div>` : "";
+
+  let chart = "";
+  const series = (bars || []).filter(b => b && b.value != null);
+  if(series.length >= 2){
+    const min = Math.min(...series.map(b => b.value));
+    const max = Math.max(...series.map(b => b.value));
+    const pad = Math.max((max - min) * 0.18, 1);
+    const lo = min - pad, hi = max + pad;
+    const peak = series.reduce((a,b) => b.value > a.value ? b : a, series[0]);
+    const low = series.reduce((a,b) => b.value < a.value ? b : a, series[0]);
+    const cols = bars.map((b,i) => {
+      const v = b.value == null ? min : b.value;
+      const h = Math.max(2, Math.min(100, (v - lo) / (hi - lo) * 100));
+      const last = i === bars.length - 1;
+      const cls = last ? "now" : (b.date === peak.date ? "hi" : (b.date === low.date ? "lo" : ""));
+      return `<div class="bcol"><div class="b ${cls}" style="height:${h.toFixed(1)}%"></div></div>`;
+    }).join("");
+    const labs = bars.map((b,i) => {
+      const show = i === bars.length - 1 || i % 6 === 0;
+      const text = i === bars.length - 1 ? "now" : String(b.year || "");
+      return `<span>${show ? esc(text) : ""}</span>`;
+    }).join("");
+    const win = bal.window_change_hkdm;
+    const winTxt = (win === null || win === undefined) ? ""
+      : ` Over these ${series.length} sessions it ${win > 0 ? "rose" : win < 0 ? "fell" : "was unchanged"}${win ? " by " + moneyBn(Math.abs(win), false) : ""}.`;
+    const behind = bal.history_behind
+      ? ` Chart ends ${esc(bal.history_through)}; the headline is a later print that is not in the saved series.`
+      : "";
+    chart = `<div class="bars">${cols}</div><div class="blab">${labs}</div>
+      <div class="notes">Each bar is a business day's closing aggregate balance, scaled to this window so the move is visible.
+        <b>High</b> ${moneyBn(peak.value, false)} on ${esc(peak.date || "")} · <b>Low</b> ${moneyBn(low.value, false)} on ${esc(low.date || "")}.${winTxt}${behind}</div>`;
+  } else if(bal.available){
+    chart = `<div class="notes">History is still building — the chart appears once a few sessions have accumulated.</div>`;
+  }
+
+  let hiborHtml = `<div class="unavail">HIBOR unavailable.</div>`;
+  if(hibor.available && (hibor.tenors || []).length){
+    const rows = hibor.tenors.map(x => `<tr>
+      <td>${esc(x.label)}${hibor.mixed_dates && x.as_of ? `<span class="kind">${esc(String(x.as_of).slice(5))}</span>` : ""}</td>
+      <td class="r rate">${x.rate == null ? "unavailable" : rateText(x.rate) + "%"}</td>
+      <td class="r chg">${x.rate == null ? "" : bpText(x.change_bp)}</td></tr>`).join("");
+    const hiborWhen = hibor.mixed_dates ? "" : (hibor.as_of ? ", " + esc(hibor.as_of) : "");
+    const hiborChg = hibor.mixed_dates || !hibor.prev_date ? "" : " · change vs " + esc(hibor.prev_date);
+    hiborHtml = `<div class="ptitle" style="margin-top:16px">HIBOR${staleTag(hibor.stale)}</div>
+      <div class="asof">${esc(hibor.source || "HKMA")}${hiborWhen}${hiborChg}</div>
+      <table class="mono"><thead><tr><th>Tenor</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
+      <tbody>${rows}</tbody></table>
+      ${hibor.partial ? `<div class="notes">1-week, 3-month, 6-month and 12-month did not load. Overnight and 1-month are the figures carried on the daily liquidity release.</div>` : ""}
+      ${hibor.mixed_dates ? `<div class="notes">Overnight and 1-month are the daily liquidity release of ${esc(hibor.daily_as_of)}. 1-week and longer are the HKAB fixing of ${esc(hibor.curve_as_of)}, the latest date that series has published. Each 1d change is versus the previous session of the same series.</div>` : ""}`;
+  }
+
+  let fxHtml = `<div class="stat"><div class="k">USD/HKD</div><div class="v unavail">unavailable</div></div>`;
+  if(fx.available && fx.spot != null){
+    const pct = Math.max(0, Math.min(100, Number(fx.pct_through_band) || 0));
+    let where;
+    if(Number(fx.pips_to_weak) < 0) where = `${Math.abs(fx.pips_to_weak)} pips through the weak-side convertibility undertaking`;
+    else if(Number(fx.pips_to_strong) < 0) where = `${Math.abs(fx.pips_to_strong)} pips through the strong-side convertibility undertaking`;
+    else where = `${fx.pips_to_weak} pips from the weak-side convertibility undertaking`;
+    fxHtml = `<div class="stat"><div class="k">USD/HKD${staleTag(fx.stale)}</div>
+      <div class="v mono">${Number(fx.spot).toFixed(4)}</div>
+      <div class="band" aria-hidden="true"><div class="bandtrack"><div class="bandmark" style="left:${pct.toFixed(1)}%"></div></div>
+        <div class="bandlabs"><span>${Number(fx.strong).toFixed(2)} strong</span><span>${Number(fx.weak).toFixed(2)} weak</span></div></div>
+      <div class="s">${where}${fx.change_pips == null ? "" : ` · ${fx.change_pips > 0 ? "+" : ""}${fx.change_pips} pips vs ${esc(fx.prev_date || "previous")}`}. ${esc(fx.source || "")}${fx.as_of ? ", " + esc(fx.as_of) : ""}.</div></div>`;
+  }
+  const checked = fx.sessions_checked || 0;
+  const hits = fx.market_activities || [];
+  const hitTxt = hits.length
+    ? hits.map(h => `${esc(h.date)} ${moneyBn(h.hkdm, true)}`).join("; ")
+    : (checked ? `flat over the last ${checked} sessions` : "not loaded");
+  const casts = fx.fx_forecast || [];
+  const castTxt = casts.length
+    ? casts.map(c => `${esc(c.when)} ${moneyBn(c.hkdm, true)}`).join(", ")
+    : "none in the latest figures";
+  const flowHtml = `<div class="notes"><b>Weak-side liquidity.</b> HKMA market activities (spot FX and other money-market operations — a weak-side convertibility-undertaking hit shows up here as a drain): ${hitTxt}. Forecast FX flow into the aggregate balance: ${castTxt}.</div>`;
+
+  let spreadHtml = `<div class="stat"><div class="k">HKD vs USD</div><div class="v unavail">unavailable</div>
+    <div class="s">${esc((spread && spread.note) || "No public 1-month spread today.")}</div></div>`;
+  if(spread && spread.available && spread.spread_bp != null){
+    spreadHtml = `<div class="stat"><div class="k">${esc(spread.label)}${staleTag(spread.stale)}</div>
+      <div class="v">${bpText(spread.spread_bp)}</div>
+      <div class="s">1M HIBOR ${rateText(spread.hibor_1m)}% (${esc(spread.hibor_as_of || "")}) minus ${esc(spread.usd_label)} ${rateText(spread.usd_rate)}% (${esc(spread.usd_as_of || "")}). ${esc(spread.note || "")}</div></div>`;
+  }
+
+  const staleNote = bal.stale
+    ? `<div class="notes">Stale: this run could not refresh HKMA, so these are the last good figures${bal.as_of ? " (" + esc(bal.as_of) + ")" : ""}. Not a new print.</div>`
+    : "";
+  return `<section class="panel">
+    <div class="ptitle">Treasury${staleTag(bal.stale)}</div>
+    <div class="asof">Aggregate balance${bal.as_of ? ", HKMA daily figures " + esc(bal.as_of) : ""}. HIBOR fixings, the base rate, and USD/HKD in the convertibility band.</div>
+    ${staleNote}${head}${partNote}${chart}${hiborHtml}
+    <div class="stats">${fxHtml}${spreadHtml}</div>
+    ${flowHtml}
+  </section>`;
+}
+
+function talkingCard(it){
+  const sowhat = it.so_what
+    ? `<p class="sowhat"><b>So what.</b> ${esc(it.so_what)}</p>` : "";
+  return `<article class="card">
+    <h3 class="headline">${esc(it.point || it.headline || "")}</h3>
+    ${sowhat}
+    ${srcLine(it.sources)}</article>`;
+}
+function talkingSection(tp){
+  const audiences = ((tp && tp.audiences) || []).filter(a => (a.items || []).length);
+  if(!audiences.length) return "";
+  const intro = tp.mode === "rss"
+    ? `<p class="notes">Headline only. The summary model did not run, so there is no "so what" line and nothing here was inferred.</p>`
+    : "";
+  const body = audiences.map(a => `<div class="sub2">${esc(a.label)}</div>
+    ${a.blurb ? `<div class="asof">${esc(a.blurb)}</div>` : ""}
+    ${a.items.slice(0,3).map(talkingCard).join("")}`).join("");
+  const total = audiences.reduce((n,a) => n + Math.min(3, a.items.length), 0);
+  return `<section class="section">
+    <div class="shead"><span class="dot" style="background:var(--talk)"></span>
+      <h2>Talking points</h2><span class="scount">${total} item${total===1?"":"s"}</span></div>
+    ${intro}${body}</section>`;
 }
 
 function srcLine(sources){
@@ -255,7 +436,10 @@ function render(D){
   $("date").textContent = D.report_date || "";
   $("sub").textContent  = D.generated_at ? `Built ${D.generated_at}` : "";
   $("wx").innerHTML = weatherStrip(D.weather);
-  $("panels").innerHTML = balancePanel(D.hkma, D.hkma_bars||[]) + ratePanel(D.rates);
+  $("panels").innerHTML =
+    (D.treasury ? treasuryPanel(D.treasury, D.hkma_bars||[]) : balancePanel(D.hkma, D.hkma_bars||[]))
+    + talkingSection(D.talking_points)
+    + ratePanel(D.rates);
 
   const S = D.sections || {}, L = D.labels || {};
   const block = (title, colour, groups) => {
@@ -292,7 +476,14 @@ function render(D){
       msgs.push(`Last built ${built}, ${days} day${days===1?"":"s"} ago. Check the Actions tab.`);
     }
   }
-  if(D.build && D.build.method === "fallback"){
+  if(D.treasury && D.treasury.balance && D.treasury.balance.stale){
+    const asOf = D.treasury.balance.as_of ? ` (${D.treasury.balance.as_of})` : "";
+    msgs.push(`HKMA figures are stale${asOf}. This run kept the last good values.`);
+  }
+  if(D.treasury && D.treasury.balance && D.treasury.balance.available === false){
+    msgs.push("HKMA figures are unavailable, and there was no saved print to fall back on.");
+  }
+  if(D.build && (D.build.method === "fallback" || D.build.method === "rss-only")){
     msgs.push("Summarisation did not run. Cards below are headline-level only.");
   }
   if(msgs.length){ $("stale").innerHTML = msgs.join("<br>"); $("stale").classList.add("show"); }
