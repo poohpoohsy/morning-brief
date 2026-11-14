@@ -534,7 +534,9 @@ def _serve(directory):
 
 _DUMP_DOM = r'''
 const {spawn} = require("child_process");
+const crypto = require("crypto");
 const http = require("http");
+const net = require("net");
 const chromePath = process.argv[1];
 const pageUrl = process.argv[2];
 const port = 9300 + Math.floor(Math.random() * 600);
@@ -552,6 +554,147 @@ function request(url, method) {
 }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// Chrome's debugger port is a WebSocket. Node 20 has no global WebSocket, so
+// this speaks the handshake and frames with net and crypto.
+function connectSocket(url) {
+  const parsed = new URL(url);
+  const socket = net.connect(Number(parsed.port) || 80, parsed.hostname);
+  socket.setNoDelay(true);
+  const listeners = {open: [], message: []};
+  let buffer = Buffer.alloc(0);
+  let opened = false;
+  let closing = false;
+  let parts = [];
+  let op = 0;
+  const key = crypto.randomBytes(16).toString("base64");
+  const accept = crypto.createHash("sha1")
+    .update(key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
+    .digest("base64");
+
+  function emit(type, ev) {
+    for (const fn of listeners[type] || []) fn(ev);
+  }
+  function fail(err) {
+    if (closing) return;
+    console.error(err);
+    process.exit(1);
+  }
+  function encodeFrame(opcode, payload) {
+    const body = Buffer.isBuffer(payload) ? payload : Buffer.from(String(payload));
+    const mask = crypto.randomBytes(4);
+    const masked = Buffer.alloc(body.length);
+    for (let i = 0; i < body.length; i++) masked[i] = body[i] ^ mask[i & 3];
+    let head;
+    if (body.length < 126) {
+      head = Buffer.from([0x80 | opcode, 0x80 | body.length]);
+    } else if (body.length < 65536) {
+      head = Buffer.alloc(4);
+      head[0] = 0x80 | opcode;
+      head[1] = 0x80 | 126;
+      head.writeUInt16BE(body.length, 2);
+    } else {
+      head = Buffer.alloc(10);
+      head[0] = 0x80 | opcode;
+      head[1] = 0x80 | 127;
+      head.writeBigUInt64BE(BigInt(body.length), 2);
+    }
+    return Buffer.concat([head, mask, masked]);
+  }
+  function headerValue(head, name) {
+    const want = name.toLowerCase();
+    for (const line of head.split("\r\n").slice(1)) {
+      const idx = line.indexOf(":");
+      if (idx > 0 && line.slice(0, idx).trim().toLowerCase() === want) {
+        return line.slice(idx + 1).trim();
+      }
+    }
+    return "";
+  }
+  function takeFrames() {
+    while (buffer.length >= 2) {
+      const b0 = buffer[0];
+      const b1 = buffer[1];
+      let len = b1 & 127;
+      let off = 2;
+      if (len === 126) {
+        if (buffer.length < 4) return;
+        len = buffer.readUInt16BE(2);
+        off = 4;
+      } else if (len === 127) {
+        if (buffer.length < 10) return;
+        const big = buffer.readBigUInt64BE(2);
+        if (big > 0x7fffffffn) return fail(new Error("websocket frame too large"));
+        len = Number(big);
+        off = 10;
+      }
+      const maskLen = (b1 & 128) ? 4 : 0;
+      if (buffer.length < off + maskLen + len) return;
+      let payload = Buffer.from(buffer.subarray(off + maskLen, off + maskLen + len));
+      if (maskLen) {
+        const mask = buffer.subarray(off, off + 4);
+        for (let i = 0; i < payload.length; i++) payload[i] ^= mask[i & 3];
+      }
+      buffer = buffer.subarray(off + maskLen + len);
+      const opcode = b0 & 15;
+      const fin = (b0 & 128) !== 0;
+      if (opcode === 8) { socket.end(); return; }
+      if (opcode === 9) { socket.write(encodeFrame(0xA, payload)); continue; }
+      if (opcode === 10) continue;
+      if (opcode === 1 || opcode === 2 || opcode === 0) {
+        if (opcode !== 0) { parts = [payload]; op = opcode; }
+        else parts.push(payload);
+        if (!fin) continue;
+        const msg = Buffer.concat(parts);
+        parts = [];
+        if (op === 1) emit("message", {data: msg.toString("utf8")});
+        op = 0;
+      }
+    }
+  }
+  function consume() {
+    if (!opened) {
+      const end = buffer.indexOf("\r\n\r\n");
+      if (end < 0) return;
+      const head = buffer.slice(0, end).toString("latin1");
+      buffer = buffer.subarray(end + 4);
+      if (!/^HTTP\/1\.1 101\b/.test(head) || headerValue(head, "sec-websocket-accept") !== accept) {
+        return fail(new Error("websocket upgrade failed: " + head.split("\r\n")[0]));
+      }
+      opened = true;
+      emit("open", {});
+    }
+    takeFrames();
+  }
+
+  socket.on("connect", () => {
+    const path = (parsed.pathname || "/") + parsed.search;
+    socket.write(
+      `GET ${path} HTTP/1.1\r\n` +
+      `Host: ${parsed.host}\r\n` +
+      `Upgrade: websocket\r\n` +
+      `Connection: Upgrade\r\n` +
+      `Sec-WebSocket-Key: ${key}\r\n` +
+      `Sec-WebSocket-Version: 13\r\n` +
+      `\r\n`);
+  });
+  socket.on("data", chunk => { buffer = Buffer.concat([buffer, chunk]); consume(); });
+  socket.on("error", fail);
+  socket.on("end", () => {
+    if (!opened) fail(new Error("chrome debugger socket closed before the handshake"));
+  });
+
+  return {
+    addEventListener(type, fn) { (listeners[type] || (listeners[type] = [])).push(fn); },
+    removeEventListener(type, fn) {
+      const list = listeners[type] || [];
+      const i = list.indexOf(fn);
+      if (i >= 0) list.splice(i, 1);
+    },
+    send(text) { socket.write(encodeFrame(1, text)); },
+    close() { closing = true; socket.end(); },
+  };
+}
+
 (async () => {
   const userData = `/tmp/morning-brief-chrome-${port}`;
   const child = spawn(chromePath, [
@@ -566,7 +709,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   }
   if (!ready) { child.kill(); process.exit(2); }
   const tab = JSON.parse(await request(`http://127.0.0.1:${port}/json/new?about:blank`, "PUT"));
-  const ws = new WebSocket(tab.webSocketDebuggerUrl);
+  const ws = connectSocket(tab.webSocketDebuggerUrl);
   await new Promise(resolve => ws.addEventListener("open", resolve));
   let id = 0;
   function send(method, params) {
@@ -598,11 +741,19 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   const started = Date.now();
   while (Date.now() - started < 8000) {
     const result = await send("Runtime.evaluate", {
-      expression: "document.documentElement.outerHTML",
+      // The script source already contains class="mute" and "Could not load".
+      // Wait until a mute button is actually in the document, or the error is shown.
+      expression: `(function () {
+        var button = document.querySelector("button.mute");
+        var sub = document.getElementById("sub");
+        var failed = sub && sub.textContent.indexOf("Could not load") !== -1;
+        if (!button && !failed) return "";
+        return document.documentElement.outerHTML;
+      })()`,
       returnByValue: true,
     });
     html = (result && result.result && result.result.value) || "";
-    if (html.includes("HIBOR stays put today")) break;
+    if (html) break;
     await sleep(100);
   }
   if (errors.length) html += "\n<!-- page-error: " + errors.join(" | ") + " -->";
@@ -742,7 +893,9 @@ def test_page_hides_the_item_and_links_to_github():
 
 _MOBILE_PROBE = r'''
 const {spawn} = require("child_process");
+const crypto = require("crypto");
 const http = require("http");
+const net = require("net");
 const chromePath = process.argv[1];
 const pageUrl = process.argv[2];
 const port = 9400 + Math.floor(Math.random() * 500);
@@ -760,6 +913,147 @@ function request(url, method) {
 }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// Chrome's debugger port is a WebSocket. Node 20 has no global WebSocket, so
+// this speaks the handshake and frames with net and crypto.
+function connectSocket(url) {
+  const parsed = new URL(url);
+  const socket = net.connect(Number(parsed.port) || 80, parsed.hostname);
+  socket.setNoDelay(true);
+  const listeners = {open: [], message: []};
+  let buffer = Buffer.alloc(0);
+  let opened = false;
+  let closing = false;
+  let parts = [];
+  let op = 0;
+  const key = crypto.randomBytes(16).toString("base64");
+  const accept = crypto.createHash("sha1")
+    .update(key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
+    .digest("base64");
+
+  function emit(type, ev) {
+    for (const fn of listeners[type] || []) fn(ev);
+  }
+  function fail(err) {
+    if (closing) return;
+    console.error(err);
+    process.exit(1);
+  }
+  function encodeFrame(opcode, payload) {
+    const body = Buffer.isBuffer(payload) ? payload : Buffer.from(String(payload));
+    const mask = crypto.randomBytes(4);
+    const masked = Buffer.alloc(body.length);
+    for (let i = 0; i < body.length; i++) masked[i] = body[i] ^ mask[i & 3];
+    let head;
+    if (body.length < 126) {
+      head = Buffer.from([0x80 | opcode, 0x80 | body.length]);
+    } else if (body.length < 65536) {
+      head = Buffer.alloc(4);
+      head[0] = 0x80 | opcode;
+      head[1] = 0x80 | 126;
+      head.writeUInt16BE(body.length, 2);
+    } else {
+      head = Buffer.alloc(10);
+      head[0] = 0x80 | opcode;
+      head[1] = 0x80 | 127;
+      head.writeBigUInt64BE(BigInt(body.length), 2);
+    }
+    return Buffer.concat([head, mask, masked]);
+  }
+  function headerValue(head, name) {
+    const want = name.toLowerCase();
+    for (const line of head.split("\r\n").slice(1)) {
+      const idx = line.indexOf(":");
+      if (idx > 0 && line.slice(0, idx).trim().toLowerCase() === want) {
+        return line.slice(idx + 1).trim();
+      }
+    }
+    return "";
+  }
+  function takeFrames() {
+    while (buffer.length >= 2) {
+      const b0 = buffer[0];
+      const b1 = buffer[1];
+      let len = b1 & 127;
+      let off = 2;
+      if (len === 126) {
+        if (buffer.length < 4) return;
+        len = buffer.readUInt16BE(2);
+        off = 4;
+      } else if (len === 127) {
+        if (buffer.length < 10) return;
+        const big = buffer.readBigUInt64BE(2);
+        if (big > 0x7fffffffn) return fail(new Error("websocket frame too large"));
+        len = Number(big);
+        off = 10;
+      }
+      const maskLen = (b1 & 128) ? 4 : 0;
+      if (buffer.length < off + maskLen + len) return;
+      let payload = Buffer.from(buffer.subarray(off + maskLen, off + maskLen + len));
+      if (maskLen) {
+        const mask = buffer.subarray(off, off + 4);
+        for (let i = 0; i < payload.length; i++) payload[i] ^= mask[i & 3];
+      }
+      buffer = buffer.subarray(off + maskLen + len);
+      const opcode = b0 & 15;
+      const fin = (b0 & 128) !== 0;
+      if (opcode === 8) { socket.end(); return; }
+      if (opcode === 9) { socket.write(encodeFrame(0xA, payload)); continue; }
+      if (opcode === 10) continue;
+      if (opcode === 1 || opcode === 2 || opcode === 0) {
+        if (opcode !== 0) { parts = [payload]; op = opcode; }
+        else parts.push(payload);
+        if (!fin) continue;
+        const msg = Buffer.concat(parts);
+        parts = [];
+        if (op === 1) emit("message", {data: msg.toString("utf8")});
+        op = 0;
+      }
+    }
+  }
+  function consume() {
+    if (!opened) {
+      const end = buffer.indexOf("\r\n\r\n");
+      if (end < 0) return;
+      const head = buffer.slice(0, end).toString("latin1");
+      buffer = buffer.subarray(end + 4);
+      if (!/^HTTP\/1\.1 101\b/.test(head) || headerValue(head, "sec-websocket-accept") !== accept) {
+        return fail(new Error("websocket upgrade failed: " + head.split("\r\n")[0]));
+      }
+      opened = true;
+      emit("open", {});
+    }
+    takeFrames();
+  }
+
+  socket.on("connect", () => {
+    const path = (parsed.pathname || "/") + parsed.search;
+    socket.write(
+      `GET ${path} HTTP/1.1\r\n` +
+      `Host: ${parsed.host}\r\n` +
+      `Upgrade: websocket\r\n` +
+      `Connection: Upgrade\r\n` +
+      `Sec-WebSocket-Key: ${key}\r\n` +
+      `Sec-WebSocket-Version: 13\r\n` +
+      `\r\n`);
+  });
+  socket.on("data", chunk => { buffer = Buffer.concat([buffer, chunk]); consume(); });
+  socket.on("error", fail);
+  socket.on("end", () => {
+    if (!opened) fail(new Error("chrome debugger socket closed before the handshake"));
+  });
+
+  return {
+    addEventListener(type, fn) { (listeners[type] || (listeners[type] = [])).push(fn); },
+    removeEventListener(type, fn) {
+      const list = listeners[type] || [];
+      const i = list.indexOf(fn);
+      if (i >= 0) list.splice(i, 1);
+    },
+    send(text) { socket.write(encodeFrame(1, text)); },
+    close() { closing = true; socket.end(); },
+  };
+}
+
 (async () => {
   const userData = `/tmp/morning-brief-mobile-${port}`;
   const child = spawn(chromePath, [
@@ -774,7 +1068,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   }
   if (!ready) { child.kill(); process.exit(2); }
   const tab = JSON.parse(await request(`http://127.0.0.1:${port}/json/new?about:blank`, "PUT"));
-  const ws = new WebSocket(tab.webSocketDebuggerUrl);
+  const ws = connectSocket(tab.webSocketDebuggerUrl);
   await new Promise(resolve => ws.addEventListener("open", resolve));
   let id = 0;
   function send(method, params) {
