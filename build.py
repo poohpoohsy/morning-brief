@@ -31,7 +31,7 @@ CFG = {
     "sections": {
         "work": {
             "label": "Work",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "明報 經濟",
@@ -117,7 +117,7 @@ CFG = {
         },
         "smalltalk_hk": {
             "label": "Small Talk · Hong Kong",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "明報 經濟",
@@ -167,7 +167,7 @@ CFG = {
         },
         "smalltalk_sg": {
             "label": "Small Talk · Singapore",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "The Independent SG",
@@ -197,7 +197,7 @@ CFG = {
         },
         "personal_hk": {
             "label": "Personal · 香港民生",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "明報 港聞",
@@ -286,7 +286,7 @@ CFG = {
         },
         "personal_sg": {
             "label": "Personal · Singapore Government",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "The Independent SG",
@@ -314,7 +314,7 @@ CFG = {
         },
         "juicy_hk": {
             "label": "Juicy · 香港",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "明報 港聞",
@@ -391,7 +391,7 @@ CFG = {
         },
         "juicy_sg": {
             "label": "Juicy · Singapore",
-            "max_items": 40,
+            "max_items": 8,
             "feeds": [
                 {
                     "name": "The Independent SG",
@@ -500,7 +500,14 @@ CFG = {
         }
     ],
     "prompt_budget_chars": 60000,
-    "output_ceiling": 40,
+    # Short brief. Every section used to allow 40, and a 2–3 item model
+    # reply was topped back up to 40, which is how the page filled up.
+    # section_cap is the per-section maximum. section_floor is how far a
+    # thin model reply is topped up. page_cap is the whole news page.
+    "section_cap": 8,
+    "section_floor": 5,
+    "page_cap": 56,
+    "model_candidates": 12,
     "global_exclude": {
         "_comment": "Applied to every section, on top of each section's own list.",
         "not_hong_kong": [
@@ -692,18 +699,11 @@ BANKS = {
     "auto_pattern": "(\\d\\.\\d{1,2})\\s*(?:%|厘)"
 }
 
-# Starting values so the table renders on day one. Placeholders - edit
-# data/rates_manual.json with the real promo rates.
-DEFAULT_RATES = {
-    "ZA Bank": 4.20, "livi Bank": 4.05, "Mox": 3.98, "WeLab Bank": 3.90,
-    "Airstar Bank": 3.80, "Ant Bank": 3.72, "PAObank": 3.68, "Fusion Bank": 3.55,
-    "Citi": 3.50, "Standard Chartered": 3.40, "HSBC": 3.20,
-    "Hang Seng": 3.15, "BOCHK": 3.10,
-}
-
-
 def bootstrap():
-    """Write index.html and the manual rates file if they do not exist yet."""
+    """Write index.html and an empty rates file if they do not exist yet.
+
+    The empty file has no numbers. A missing rate stays blank on the page.
+    """
     (ROOT / "data").mkdir(exist_ok=True)
     page = ROOT / "index.html"
     if not page.exists() or page.read_text(encoding="utf-8") != INDEX_HTML:
@@ -711,8 +711,12 @@ def bootstrap():
         print("Wrote index.html")
     manual = ROOT / "data/rates_manual.json"
     if not manual.exists():
-        manual.write_text(json.dumps(DEFAULT_RATES, indent=2), encoding="utf-8")
-        print("Created data/rates_manual.json - fill in today's rates")
+        manual.write_text(json.dumps({
+            "as_of_date": None,
+            "tenor": "3-month HKD time deposit",
+            "banks": [],
+        }, indent=2), encoding="utf-8")
+        print("Created data/rates_manual.json - no rates until a verified file is added")
 
 
 
@@ -853,6 +857,49 @@ def cluster(items, threshold=0.72):
             groups.append([it])
     groups.sort(key=len, reverse=True)
     return groups
+
+
+def rank_groups(groups, include_words):
+    """Best first: more section keywords, then a real snippet, then how widely reported.
+
+    Sort is stable, so a tie keeps the earlier cluster.
+    """
+    words = [w.lower() for w in (include_words or []) if w]
+
+    def score(group):
+        lead = group[0] if group else {}
+        blob = ((lead.get("title") or "") + " " + (lead.get("snippet") or "")).lower()
+        hits = sum(1 for w in words if w in blob)
+        text = 1 if (lead.get("snippet") or "").strip() else 0
+        return (hits, text, len(group))
+
+    return sorted(groups, key=score, reverse=True)
+
+
+def section_include(key):
+    return [w.lower() for w in (CFG["sections"].get(key, {}).get("include") or [])]
+
+
+def cap_page(sections):
+    """At most section_cap stories in one section, and page_cap on the whole page."""
+    per = int(CFG.get("section_cap", 8))
+    page = int(CFG.get("page_cap", 56))
+    order = list(CFG["sections"])
+    out = {}
+    for key in order:
+        rows = [it for it in (sections.get(key) or []) if isinstance(it, dict)]
+        if len(rows) > per:
+            log(f"[{key}] capped at {per} (had {len(rows)})")
+        out[key] = rows[:per]
+    while sum(len(v) for v in out.values()) > page:
+        # Trim the longest section. A tie loses the later section, so Work
+        # stays ahead of Juicy.
+        biggest = max(order, key=lambda k: (len(out[k]), order.index(k)))
+        if not out[biggest]:
+            break
+        out[biggest].pop()
+        log(f"[{biggest}] trimmed to fit the page cap of {page}")
+    return out
 
 
 # ---------------------------------------------------------------- HKMA / treasury
@@ -1542,63 +1589,153 @@ def build_market():
 
 # ---------------------------------------------------------------- rates
 
-def rate_table():
-    """Build the promo rate table.
+STALE_DAYS = 3
 
-    Values come from data/rates_manual.json. Anything missing or null falls back
-    to a placeholder so the table still renders - a blank panel just looks
-    broken. Placeholders are flagged on the page so they are never mistaken for
-    today's real rates.
+
+def rate_is_stale(as_of, today):
+    """True when a quoted as-of date is more than 3 days before today.
+
+    A missing date is not stale: there is nothing to age. Callers pass an
+    ISO date (YYYY-MM-DD) for both arguments.
     """
-    manual_path = ROOT / "data/rates_manual.json"
+    if not as_of or not today:
+        return False
     try:
-        manual = json.loads(manual_path.read_text(encoding="utf-8"))
-    except Exception:
-        manual = {}
+        age = (datetime.strptime(today, "%Y-%m-%d").date()
+               - datetime.strptime(str(as_of)[:10], "%Y-%m-%d").date()).days
+    except ValueError:
+        return False
+    return age > STALE_DAYS
 
-    prev_path = ROOT / "data/rates_prev.json"
+
+def _load_rate_file():
+    """Read data/rates_manual.json. Never invent a number for a gap."""
+    path = ROOT / "data/rates_manual.json"
     try:
-        prev = json.loads(prev_path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8"))
     except Exception:
-        prev = {}
+        data = {}
+    if isinstance(data, dict) and isinstance(data.get("banks"), list):
+        by_name = {}
+        for row in data["banks"]:
+            if isinstance(row, dict) and row.get("name"):
+                by_name[row["name"]] = row
+        return data, by_name
+    # Legacy shape was {"Bank": 3.2} or null. A null is "not checked".
+    # A number is used only when the file itself contains that number.
+    by_name = {}
+    if isinstance(data, dict):
+        for name, value in data.items():
+            if not isinstance(name, str) or name.startswith("_"):
+                continue
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                by_name[name] = {"name": name, "status": "not_readable_by_fetch", "rate_pct": None}
+            else:
+                by_name[name] = {
+                    "name": name, "status": "readable", "rate_pct": value,
+                    "rate_label": f"{value:.2f}",
+                }
+    return {}, by_name
 
-    rows, placeholders = [], 0
+
+def _load_prev_rates():
+    """Day-over-day changes only against a previous verified snapshot.
+
+    The old file stored the placeholder table. Comparing a real rate with
+    those figures would print a made-up move.
+    """
+    path = ROOT / "data/rates_prev.json"
+    try:
+        prev = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(prev, dict) or not prev.get("verified"):
+        return {}
+    rates = prev.get("rates")
+    return rates if isinstance(rates, dict) else {}
+
+
+def rate_table():
+    """HKD 3-month time-deposit table from verified official-page figures.
+
+    A bank whose status is not a readable figure is shown as an em dash and
+    "not checked". Nothing is filled in from memory or from a sample table.
+    """
+    meta, by_name = _load_rate_file()
+    prev = _load_prev_rates()
+    today = datetime.now(HK).date().isoformat()
+    rows = []
     for b in BANKS["banks"]:
-        value = manual.get(b["name"])
-        is_placeholder = False
-        if value is None:
-            value = DEFAULT_RATES.get(b["name"])
-            is_placeholder = value is not None
-        if value is None:
-            continue
-        if is_placeholder:
-            placeholders += 1
-        before = prev.get(b["name"])
-        if before is None and b["name"] == "PAObank":
-            before = prev.get("PAOb")
+        src = by_name.get(b["name"]) or {}
+        status = src.get("status") or "not_readable_by_fetch"
+        raw = src.get("rate_pct")
+        board_only = status == "promo_not_readable_board_readable"
+        readable = status == "readable" or (board_only and isinstance(raw, (int, float)) and not isinstance(raw, bool))
+        if not readable or raw is None or isinstance(raw, bool):
+            rate = None
+            label = None
+        else:
+            rate = float(raw)
+            label = str(src.get("rate_label") or "").strip() or f"{rate:.2f}"
+        as_of = src.get("as_of_date") or None
+        read_on = src.get("read_on") or None
+        stale = rate_is_stale(as_of or read_on, today) if rate is not None else False
+        before = prev.get(b["name"]) if rate is not None else None
+        change = None
+        if rate is not None and isinstance(before, (int, float)) and not isinstance(before, bool):
+            change = round((rate - float(before)) * 100)
         rows.append({
-            "name": b["name"], "kind": b["kind"], "rate": float(value),
-            "change_bp": (round((float(value) - float(before)) * 100)
-                          if before is not None else None),
-            "placeholder": is_placeholder,
-            "url": b.get("url", ""),
+            "name": src.get("display_name") or b["name"],
+            "key": b["name"],
+            "kind": src.get("kind") or b.get("kind") or "",
+            "rate": rate,
+            "rate_label": label,
+            "status": "readable" if rate is not None and not board_only else (
+                "board_only" if rate is not None else "not_checked"),
+            "board_only": bool(board_only and rate is not None),
+            "stale": stale,
+            "as_of_date": as_of,
+            "as_of_label": src.get("as_of_label") or "",
+            "read_on": read_on,
+            "source_url": src.get("source_url") or "",
+            "note": src.get("note") or "",
+            "change_bp": change,
         })
 
-    rows.sort(key=lambda r: r["rate"], reverse=True)
-    for i, r in enumerate(rows, 1):
+    # The Hang Seng figure is a board rate. It is shown, but not ranked
+    # against the new-fund and listed quotes above it.
+    ranked = [r for r in rows if r["rate"] is not None and not r["board_only"]]
+    board = [r for r in rows if r["board_only"]]
+    blank = [r for r in rows if r["rate"] is None]
+    ranked.sort(key=lambda r: r["rate"], reverse=True)
+    for i, r in enumerate(ranked, 1):
         r["rank"] = i
+    for r in board + blank:
+        r["rank"] = None
+    rows = ranked + board + blank
 
-    prev_path.write_text(json.dumps({r["name"]: r["rate"] for r in rows}, indent=2),
-                         encoding="utf-8")
+    snapshot = {
+        "verified": True,
+        "as_of_date": meta.get("as_of_date"),
+        "rates": {r["key"]: r["rate"] for r in rows if r["rate"] is not None},
+    }
+    (ROOT / "data/rates_prev.json").write_text(
+        json.dumps(snapshot, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    if placeholders:
-        log(f"{placeholders} of {len(rows)} rates are placeholders - "
-            f"edit data/rates_manual.json")
-
-    movers = [r for r in rows if r.get("change_bp")]
+    unchecked = len(blank)
+    if unchecked:
+        log(f"{unchecked} of {len(rows)} banks were not readable — shown as not checked, no number")
+    movers = [r for r in ranked if r.get("change_bp")]
     movers.sort(key=lambda r: abs(r["change_bp"]), reverse=True)
-    return {"tenor": BANKS["tenor"], "rows": rows, "movers": movers[:3],
-            "placeholders": placeholders}
+    return {
+        "tenor": meta.get("tenor") or "3-month HKD time deposit",
+        "as_of_date": meta.get("as_of_date"),
+        "as_of_label": meta.get("compiled_label") or meta.get("as_of_date") or "",
+        "rows": rows,
+        "movers": movers[:3],
+        "placeholders": 0,
+        "unchecked": unchecked,
+    }
 
 
 # ---------------------------------------------------------------- weather
@@ -1626,19 +1763,19 @@ If a cluster has nothing but a headline, say so rather than inventing detail.
 
 Sections and their rules:
 
-work — 3 items max. For each, write `zh` as EXACTLY three short Traditional Chinese
+Every news section: return the 5 to 8 strongest items, and never more than 8.
+This is a one-screen brief for a Hong Kong digital bank's CEO, business heads
+and treasury, not a feed. If fewer than 5 items truly belong, return only
+those. Do not pad with weak or duplicate stories. Merge only genuine
+duplicates of the same event.
+
+work — up to 8 items. For each, write `zh` as EXACTLY three short Traditional Chinese
   lines (Hong Kong written style), one fact per line, each under 30 characters.
   Also write `en`, a 2-4 sentence English summary.
 
-smalltalk_hk, smalltalk_sg — for each item write `headline` (English is fine) and
-  `body`, at most two sentences. No conversation scripts, no suggested openers.
-  Just the story.
-
-THERE IS NO FIXED NUMBER OF ITEMS. Include every distinct story that belongs in
-a section. Do not ration yourself: if forty candidates were supplied and thirty
-are distinct and relevant, return thirty. Merge only genuine duplicates of the
-same event. A section with three items when thirty candidates were supplied is
-wrong. Keep each item short so that a long list stays readable.
+smalltalk_hk, smalltalk_sg — up to 8 items. For each item write `headline`
+  (English is fine) and `body`, at most two sentences. No conversation scripts,
+  no suggested openers. Just the story.
 
 personal_hk — Traditional Chinese. `headline` is the story's own headline,
   `body` is AT MOST TWO short lines. Select for what people actually repeat:
@@ -1943,15 +2080,24 @@ def redundant(title, body):
     return b.startswith(t[:24]) or t.startswith(b[:24]) or similar(t, b) > 0.7
 
 
-def rss_digest(collected, depth=1):
-    """No-model mode. Uses the publisher's own RSS summary, which for 明報 and
-    HK01 is usually two or three usable sentences. Not as sharp as a model pass,
-    but free, instant, and it never invents anything."""
+def rss_digest(collected, depth=1, quiet=False):
+    """No-model mode. Keyword-ranked, deduplicated, and capped.
+
+    Uses the publisher's own RSS summary, which for 明報 and HK01 is usually
+    two or three usable sentences. Not as sharp as a model pass, but free,
+    instant, and it never invents anything. `depth` is ignored: an old caller
+    passed 4 and that, times max_items of 40, dumped the whole feed onto
+    the page.
+    """
+    del depth
+    per = int(CFG.get("section_cap", 8))
     out = {}
     for key, groups in collected.items():
-        sec = CFG["sections"][key]
+        if key not in CFG["sections"]:
+            continue
+        ranked = rank_groups(groups, section_include(key))
         out[key] = []
-        for g in groups[: sec["max_items"] * depth]:
+        for g in ranked[:per]:
             lead = g[0]
             body = lead.get("snippet") or ""
             srcs = []
@@ -1977,45 +2123,54 @@ def rss_digest(collected, depth=1):
                 entry["headline"] = lead["title"]
                 entry["body"] = "" if thin else " ".join(sentences(body, 2, 60))
             out[key].append(entry)
-    return out
+        if not quiet and len(groups) > len(out[key]):
+            log(f"[{key}] kept {len(out[key])} of {len(groups)} keyword-ranked stories")
+    return cap_page(out)
 
 
 # ---------------------------------------------------------------- main
 
+def _card_label(item):
+    return (item.get("headline") or item.get("title") or " ".join(item.get("zh") or []))
+
+
 def top_up(sections, collected):
-    """Fill out any section the model returned short.
+    """Top a thin model reply up to the floor, and never past the cap.
 
-    The model is conservative: given thirty candidates and a cap of eight it
-    will often return three. Rather than lose good stories, take the clusters it
-    passed over and add them in RSS form until the section reaches its quota.
+    The model often returns two or three items. Add keyword-ranked stories
+    the model skipped until the section reaches section_floor (5), and stop.
+    Do not fill the section out to every candidate.
     """
-    rss = rss_digest(collected, depth=4)
-    for key, sec in CFG["sections"].items():
-        have = sections.get(key) or []
-        # Fill to the number of distinct stories available, not a fixed number.
-        want = min(len(collected.get(key) or []),
-                   sec.get("max_items", 40),
-                   CFG.get("output_ceiling", 40))
+    per = int(CFG.get("section_cap", 8))
+    floor = int(CFG.get("section_floor", 5))
+    ranked = rss_digest(collected, quiet=True)
+    out = {}
+    for key in CFG["sections"]:
+        raw = [it for it in (sections.get(key) or []) if isinstance(it, dict)]
+        if len(raw) > per:
+            log(f"[{key}] model returned {len(raw)}, capped at {per}")
+        have = raw[:per]
+        available = len(collected.get(key) or [])
+        want = min(floor, per, available)
         if len(have) >= want:
+            out[key] = have
             continue
-
-        chosen = [(h.get("headline") or " ".join(h.get("zh") or [])) for h in have]
+        chosen = [_card_label(h) for h in have]
         added = 0
-        for cand in rss.get(key, []):
+        before = len(have)
+        for cand in ranked.get(key) or []:
             if len(have) >= want:
                 break
-            label = cand.get("headline") or " ".join(cand.get("zh") or [])
-            # Chinese headlines share common phrases, so only drop a candidate
-            # when it is close to a straight duplicate.
-            if any(similar(label, c) > 0.75 for c in chosen):
+            label = _card_label(cand)
+            if any(similar(label, c) > 0.75 for c in chosen if c):
                 continue
             have.append(cand)
             chosen.append(label)
             added += 1
         if added:
-            log(f"[{key}] model returned {len(have) - added}, topped up by {added}")
-        sections[key] = have
-    return sections
+            log(f"[{key}] model returned {before}, topped up by {added} to {len(have)}")
+        out[key] = have
+    return cap_page(out)
 
 
 TP_KEYWORDS = {
@@ -2707,14 +2862,16 @@ def candidates_for_model(items_by_key, rules):
         if dropped:
             stats["dropped"] += dropped
             log(f"[{key}] muted {dropped} item{'s' if dropped != 1 else ''} before the model")
-        groups = cluster(kept)
+        groups = rank_groups(cluster(kept), section_include(key))
         collected[key] = groups
-        # Same shape as before: every remaining cluster, three members, short snippet.
+        # Best clusters only, three members each, short snippet. The character
+        # budget then drops from the end, which is now the weaker stories.
+        limit = int(CFG.get("model_candidates", 12))
         payload[key] = [
             [{"title": m["title"], "source": m["source"], "url": m["url"],
               "published": m.get("published", ""), "snippet": (m.get("snippet") or "")[:280]}
              for m in g[:3]]
-            for g in groups
+            for g in groups[:limit]
         ]
     return collected, payload, stats
 
@@ -2810,8 +2967,8 @@ def main():
         else:
             fetched[key] = fetch_section(key, sec)
     collected, payload, mute_stats = candidates_for_model(fetched, rules)
-    # No fixed per-section cap. The shared character budget trims a busy day
-    # without cutting a quiet one. Muted stories are already gone.
+    # Candidates are already the best few per section. The character budget
+    # only trims a day that is still too long for the prompt.
     payload = fit_budget(payload)
     # Market data first, so a slow model call cannot skip the history update.
     market = build_market()
@@ -2855,7 +3012,7 @@ def main():
                 log("Talking points: headline-only (no model)")
 
     remember_titles(sections, talking, collected)
-    sections = filter_output(sections, rules)
+    sections = cap_page(filter_output(sections, rules))
     talking = filter_talking(talking, rules)
 
     now = datetime.now(HK)
@@ -2967,11 +3124,26 @@ INDEX_HTML = r'''<!doctype html>
   td{padding:6px 0;border-top:1px solid var(--hair)}
   tr:nth-child(even) td{background:var(--zebra)}
   td.rank{width:24px;color:var(--muted);font-size:11.5px}
-  .bank{font-weight:600}
-  .kind{font-size:10.5px;color:var(--muted);margin-left:6px;font-weight:400}
-  .rate{font-weight:680}.chg{font-size:11.5px;width:48px}
-  tr.cut td{border-top:1.5px dashed var(--line)}
-  .cutlab{font-size:10.5px;color:var(--muted);padding-top:6px}
+  .bank{font-weight:600;overflow-wrap:anywhere}
+  .kind{font-size:10.5px;color:var(--muted);font-weight:400}
+  .rate{font-weight:680}
+  .rate-list{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .rate-row{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    padding:9px 0;border-top:1px solid var(--hair);min-width:0}
+  .rate-row.is-stale{background:var(--warn-bg);border-radius:8px}
+  .rate-main{min-width:0;flex:1 1 auto}
+  .rate-name{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+  .rate-rank{color:var(--muted);font-size:11.5px;min-width:1.2em}
+  .rate-main .kind{display:inline}
+  .rate-meta,.rate-note{font-size:11.5px;line-height:1.4;color:var(--muted);margin-top:3px;
+    overflow-wrap:anywhere}
+  .rate-note{color:var(--ink2)}
+  .rate-meta a{color:var(--work)}
+  .rate-val{flex:0 0 auto;text-align:right;font-weight:680}
+  .rate-val .chg{display:block;font-size:11.5px;font-weight:650}
+  .notchecked{font-size:12px;font-weight:650;color:var(--muted)}
+  .boardtag{display:block;font-size:10px;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted)}
   .newpromo{margin-top:13px;border-top:1px solid var(--hair);padding-top:10px}
   .newpromo .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;
     color:var(--muted);font-weight:700;margin-bottom:6px}
@@ -3131,26 +3303,57 @@ function balancePanel(h, bars){
   </section>`;
 }
 
+function rateAgeDays(day){
+  if(!day) return null;
+  const today = hkDay(new Date());
+  const age = (Date.parse(today + "T00:00:00Z") - Date.parse(String(day).slice(0, 10) + "T00:00:00Z")) / 86400000;
+  return Number.isFinite(age) ? age : null;
+}
+function rateIsStale(x){
+  if(x.rate == null) return false;
+  const age = rateAgeDays(x.as_of_date || x.read_on);
+  return age != null && age > 3;
+}
 function ratePanel(r){
-  if(!r || !r.rows.length) return "";
-  const virtuals = r.rows.filter(x => x.kind === "virtual").length;
+  if(!r || !r.rows || !r.rows.length) return "";
+  const digital = r.rows.filter(x => x.kind === "digital" || x.kind === "virtual").length;
   const rows = r.rows.map(x => {
+    const stale = rateIsStale(x);
     const c = x.change_bp;
-    const chg = (c === null || c === undefined || c === 0) ? "—"
-      : `<span class="${c>0?'up':'down'}">${c>0?'+':''}${c}</span>`;
-    return `<tr class="${x.rank===11?'cut':''}">
-      <td class="rank">${x.rank}</td>
-      <td><span class="bank">${esc(x.name)}</span><span class="kind">${esc(x.kind)}</span></td>
-      <td class="r rate">${x.rate.toFixed(2)}%</td><td class="r chg">${chg}</td></tr>`;
+    const chg = (c === null || c === undefined || c === 0) ? ""
+      : `<div class="chg ${c>0?'up':'down'}">${c>0?'+':''}${c}bp</div>`;
+    const figure = (x.rate == null)
+      ? `<div class="notchecked">not checked</div><div class="rate">—</div>`
+      : `<div class="rate">${esc(x.rate_label)}%</div>${x.board_only?'<span class="boardtag">board only</span>':''}${chg}`;
+    const when = x.as_of_label
+      ? esc(x.as_of_label)
+      : (x.as_of_date ? "As of " + esc(x.as_of_date) : (x.read_on ? "Read " + esc(x.read_on) : ""));
+    const src = x.source_url
+      ? `<a href="${esc(x.source_url)}">source</a>`
+      : "";
+    const meta = [when, src].filter(Boolean).join(" · ");
+    const badge = stale ? `<span class="staletag">stale</span>` : "";
+    return `<article class="rate-row${stale?' is-stale':''}">
+      <div class="rate-main">
+        <div class="rate-name">
+          ${x.rank ? `<span class="rate-rank mono">${x.rank}</span>` : ""}
+          <span class="bank">${esc(x.name)}</span>
+          ${x.kind ? `<span class="kind">${esc(x.kind)}</span>` : ""}
+          ${badge}
+        </div>
+        ${meta ? `<div class="rate-meta">${meta}</div>` : ""}
+        ${x.note ? `<div class="rate-note">${esc(x.note)}</div>` : ""}
+      </div>
+      <div class="rate-val mono">${figure}</div>
+    </article>`;
   }).join("");
-  const movers = (r.movers||[]).map(m =>
-    `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${m.rate.toFixed(2)}%, now rank ${m.rank}.</div>`).join("");
-  return `<section class="panel">
-    <div class="ptitle">HKD time deposit promos — ${esc(r.tenor)}</div>
-    <div class="asof">${r.rows.length} banks tracked${virtuals ? `, ${virtuals} virtual` : ""}${r.placeholders ? ` &middot; <span style="color:var(--down)">${r.placeholders} placeholder value${r.placeholders===1?"":"s"} — edit data/rates_manual.json</span>` : ""}. Virtual-bank rows are typed in by hand.</div>
-    <table class="mono"><thead><tr><th></th><th>Bank</th><th class="r">Rate</th><th class="r">1d</th></tr></thead>
-    <tbody>${rows}</tbody></table>
-    <div class="cutlab">Dashed line = top 10 cut-off.</div>
+  const movers = (r.movers||[]).filter(m => m.rate != null).map(m =>
+    `<div class="np"><b>${esc(m.name)}</b> ${m.change_bp>0?'+':''}${m.change_bp}bp to ${esc(m.rate_label)}%, now rank ${m.rank}.</div>`).join("");
+  const missed = r.unchecked ? ` ${r.unchecked} not checked — no figure, so no number.` : "";
+  return `<section class="panel" id="rates">
+    <div class="ptitle">HKD time deposit — ${esc(r.tenor)}</div>
+    <div class="asof">${r.rows.length} banks${digital ? `, ${digital} digital` : ""}. Official pages${r.as_of_label ? ", read " + esc(r.as_of_label) : ""}.${missed} A quote older than 3 days is marked stale.</div>
+    <div class="rate-list">${rows}</div>
     ${movers ? `<div class="newpromo"><div class="h">Moved today · 3 max</div>${movers}</div>` : ""}
   </section>`;
 }

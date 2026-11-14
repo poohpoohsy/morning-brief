@@ -33,14 +33,10 @@ jobs:
       # so there is no SDK to install for the free path.
       - run: pip install feedparser
 
-      # Node 20 has no global WebSocket. The mute check opens Chrome's
-      # debugger socket itself, and this job runs on Node 22.
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
+      # Logic tests only. The headless Chrome check is a separate job so a
+      # browser failure cannot stop this job from building and publishing.
       - name: Test mute rules
-        run: python test_mute.py
+        run: python test_mute.py --unit
 
       - name: Build brief
         env:
@@ -72,3 +68,36 @@ jobs:
           if [ "$M" = "rss-only" ]; then
             echo "::warning::Built from RSS summaries - no model key set, or the model call failed."
           fi
+
+  # Runs after the brief is published. continue-on-error keeps a Chrome
+  # failure off the workflow result: the daily page must still go out.
+  ui-check:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install feedparser
+
+      # Node 20 has no global WebSocket. The mute check opens Chrome's
+      # debugger socket itself, and this job runs on Node 22.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # Ubuntu 24.04 and later block the user namespaces headless Chrome
+      # needs. The process stays up, the debugger port never opens, and the
+      # test used to die with "chrome failed:" and an empty message.
+      - name: Allow headless Chrome on this runner
+        run: |
+          if [ -e /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          fi
+
+      - name: UI self-test
+        run: python test_mute.py --ui
