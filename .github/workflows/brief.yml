@@ -10,6 +10,9 @@ on:
 
 permissions:
   contents: write
+  # issues: write includes read. The build lists issues labelled mute,
+  # comments "Applied", and closes them. The browser never sees this token.
+  issues: write
 
 concurrency:
   group: morning-brief
@@ -29,6 +32,13 @@ jobs:
       # so there is no SDK to install for the free path.
       - run: pip install feedparser
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Test mute rules
+        run: python test_mute.py
+
       - name: Build brief
         env:
           LLM_PROVIDER: ${{ vars.LLM_PROVIDER }}
@@ -36,6 +46,8 @@ jobs:
           LLM_MODEL: ${{ vars.LLM_MODEL }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python build.py
 
       - name: Save results

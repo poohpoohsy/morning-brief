@@ -13,7 +13,7 @@ Environment:
   LLM_MODEL      optional override
 """
 
-import os, re, json, html, time, urllib.request, urllib.error, http.cookiejar
+import os, re, json, html, time, hashlib, urllib.request, urllib.error, http.cookiejar
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -1852,9 +1852,37 @@ def fit_budget(payload):
     return payload
 
 
-def call_model(payload):
+def render_prompt(payload, skip_talking=False, muted_keys=()):
+    """Build the model prompt. Muted stories are already absent from payload."""
+    prompt = PROMPT
+    if skip_talking:
+        start = "talking_points — an object with exactly three keys:"
+        end = "Return ONLY a JSON object."
+        if start in prompt and end in prompt:
+            pre, rest = prompt.split(start, 1)
+            _, post = rest.split(end, 1)
+            prompt = (pre + "talking_points — omit this key entirely. The section is muted.\n\n"
+                      + end + post)
+        prompt = prompt.replace(
+            "Also include talking_points, shaped exactly as specified above.\n",
+            "Do not include a talking_points key.\n",
+        )
+    notes = []
+    if muted_keys:
+        notes.append("Do not write these muted sections: " + ", ".join(muted_keys) + ".")
+    if skip_talking:
+        notes.append("Do not write talking_points.")
+    if notes:
+        prompt = prompt.replace(
+            "CLUSTERS:\n{payload}",
+            " ".join(notes) + "\n\nCLUSTERS:\n{payload}",
+        )
+    return prompt.replace("{payload}", json.dumps(payload, ensure_ascii=False))
+
+
+def call_model(payload, skip_talking=False, muted_keys=()):
     provider = (os.getenv("LLM_PROVIDER") or "gemini").lower()
-    prompt = PROMPT.replace("{payload}", json.dumps(payload, ensure_ascii=False))
+    prompt = render_prompt(payload, skip_talking=skip_talking, muted_keys=muted_keys)
     log("Candidates sent: " + ", ".join(
         f"{k}={len(v)}" for k, v in payload.items()))
     log(f"Prompt size: {len(prompt):,} characters")
@@ -1934,7 +1962,7 @@ def rss_digest(collected, depth=1):
                 seen.add(m["source"])
                 srcs.append({"name": m["source"], "url": m["url"]})
             thin = redundant(lead["title"], body)
-            entry = {"sources": srcs}
+            entry = {"sources": srcs, "title": lead["title"]}
             if key == "work":
                 if thin:
                     entry["zh"] = [lead["title"][:34], "（只有標題，未有內文）", ""]
@@ -2122,6 +2150,7 @@ def rss_talking(collected):
                 continue
             buckets[aud].append({
                 "point": item["title"],
+                "title": item["title"],
                 "so_what": "",
                 "headline_only": True,
                 "sources": [{"name": item.get("source") or "source", "url": item["url"]}],
@@ -2131,44 +2160,631 @@ def rss_talking(collected):
     return buckets
 
 
-def main():
+# ---------------------------------------------------------------- mute rules
+#
+# The page is public and never calls the GitHub API. "✕ Not for me" is only a
+# prefilled new-issue link. This build reads those issues with the Action's
+# GITHUB_TOKEN, turns them into filters, and drops matching stories before
+# they are sent to the model. The merged rules are written to
+# data/mute_rules.json so they remain after an issue is deleted.
+
+REPO_SLUG = "poohpoohsy/morning-brief"
+MUTE_PATH = ROOT / "data" / "mute_rules.json"
+_DISPLAY = {
+    "work": "Work",
+    "talking_points": "Talking points",
+    "smalltalk_hk": "Small Talk",
+    "smalltalk_sg": "Small Talk",
+    "personal_hk": "Personal",
+    "personal_sg": "Personal",
+    "juicy_hk": "Juicy",
+    "juicy_sg": "Juicy",
+}
+_SECTION_GROUPS = (
+    ("Work", ["work"]),
+    ("Talking points", ["talking_points"]),
+    ("Small Talk", ["smalltalk_hk", "smalltalk_sg"]),
+    ("Personal", ["personal_hk", "personal_sg"]),
+    ("Juicy", ["juicy_hk", "juicy_sg"]),
+)
+
+
+def section_keys(name):
+    """Map a section label from a mute issue onto feed keys."""
+    raw = (name or "").strip().casefold().replace("·", " ").replace("|", " ").replace("•", " ")
+    raw = re.sub(r"\s+", " ", raw).strip()
+    table = {
+        "work": ["work"],
+        "talking points": ["talking_points"],
+        "talking_points": ["talking_points"],
+        "small talk": ["smalltalk_hk", "smalltalk_sg"],
+        "smalltalk": ["smalltalk_hk", "smalltalk_sg"],
+        "small talk hong kong": ["smalltalk_hk"],
+        "small talk singapore": ["smalltalk_sg"],
+        "smalltalk_hk": ["smalltalk_hk"],
+        "smalltalk_sg": ["smalltalk_sg"],
+        "personal": ["personal_hk", "personal_sg"],
+        "personal 香港民生": ["personal_hk"],
+        "personal singapore government": ["personal_sg"],
+        "personal_hk": ["personal_hk"],
+        "personal_sg": ["personal_sg"],
+        "juicy": ["juicy_hk", "juicy_sg"],
+        "juicy 香港": ["juicy_hk"],
+        "juicy singapore": ["juicy_sg"],
+        "juicy_hk": ["juicy_hk"],
+        "juicy_sg": ["juicy_sg"],
+    }
+    if raw in table:
+        return list(table[raw])
+    for key, sec in CFG["sections"].items():
+        label = re.sub(r"\s+", " ", sec.get("label", "").casefold().replace("·", " ")).strip()
+        if raw == label:
+            return [key]
+    return []
+
+
+def _display_name(keys):
+    names = []
+    for key in keys:
+        name = _DISPLAY.get(key, key)
+        if name not in names:
+            names.append(name)
+    return names[0] if len(names) == 1 else ", ".join(names)
+
+
+def _field(body, name):
+    match = re.search(rf"(?mi)^{re.escape(name)}\s*[:：]\s*(.*)$", body or "")
+    return match.group(1).strip() if match else ""
+
+
+def _form_field(body, label):
+    match = re.search(
+        rf"(?ims)^###\s*{re.escape(label)}\s*\n+(.*?)(?=^###\s|\Z)", body or "")
+    return match.group(1).strip() if match else ""
+
+
+def _split_terms(text):
+    out = []
+    for part in re.split(r"[,，、;；|]+", text or ""):
+        term = part.strip().strip("\"'“”‘’").strip()
+        if len(term) < 2 or term in out:
+            continue
+        out.append(term)
+        if len(out) >= 8:
+            break
+    return out
+
+
+def _checked_boxes(body):
+    """Which of the three mute boxes were ticked. Unticked boxes are ignored."""
+    found = {"source": False, "terms": False, "section": False}
+    phrases = (
+        ("source", "mute this source"),
+        ("terms", "mute these words"),
+        ("section", "mute the whole section"),
+    )
+    for line in (body or "").splitlines():
+        match = re.search(r"\[([^\]]*)\]\s*(.+)", line)
+        if not match:
+            continue
+        mark = match.group(1).strip().casefold()
+        if mark not in {"x", "✓", "✔"}:
+            continue
+        label = match.group(2).strip().casefold()
+        for key, phrase in phrases:
+            if phrase in label:
+                found[key] = True
+    return found
+
+
+def parse_mute_body(body):
+    """Read one mute issue. None when it has no usable section or scope.
+
+    Leaving every box unticked mutes the key terms, so submitting the prefilled
+    issue is enough. Ticking a box limits the rule to what was ticked.
+    """
+    body = body or ""
+    section = _field(body, "Section") or _form_field(body, "section")
+    source = _field(body, "Source") or _form_field(body, "source")
+    link = _field(body, "Link") or _form_field(body, "link")
+    title = _field(body, "Title") or _form_field(body, "title")
+    if _field(body, "Key terms") or re.search(r"(?mi)^Key terms\s*[:：]", body):
+        terms_line = _field(body, "Key terms")
+    else:
+        terms_line = _form_field(body, "key terms")
+    keys = section_keys(section)
+    if not keys:
+        return None
+    boxes = _checked_boxes(body)
+    any_checked = any(boxes.values())
+    use_source = boxes["source"]
+    use_terms = boxes["terms"] or not any_checked
+    use_section = boxes["section"]
+    sources = [source.strip()] if use_source and source.strip() else []
+    terms = _split_terms(terms_line) if use_terms else []
+    titles = []
+    if use_terms and not terms and title.strip():
+        titles.append(title.strip())
+    if not (use_section or sources or terms or titles):
+        return None
+    return {
+        "section": _display_name(keys),
+        "keys": keys,
+        "hide_section": bool(use_section),
+        "sources": sources,
+        "terms": terms,
+        "titles": titles,
+        "example_title": title.strip(),
+        "example_url": link.strip(),
+    }
+
+
+def normalize_rule(rule):
+    if not isinstance(rule, dict):
+        return None
+    keys = [k for k in (rule.get("keys") or []) if isinstance(k, str) and k]
+    if not keys and rule.get("section"):
+        keys = section_keys(rule.get("section"))
+    if not keys:
+        return None
+    sources = []
+    for src in rule.get("sources") or []:
+        if isinstance(src, str) and src.strip() and src.strip() not in sources:
+            sources.append(src.strip())
+    terms = []
+    for term in rule.get("terms") or []:
+        if isinstance(term, str) and len(term.strip()) >= 2 and term.strip() not in terms:
+            terms.append(term.strip())
+    titles = []
+    for title in rule.get("titles") or []:
+        if isinstance(title, str) and title.strip() and title.strip() not in titles:
+            titles.append(title.strip())
+    issue = rule.get("issue")
+    if not isinstance(issue, int):
+        issue = None
+    ident = rule.get("id")
+    if not ident:
+        ident = f"issue:{issue}" if issue else "manual:" + hashlib.sha1(
+            json.dumps({
+                "section": rule.get("section") or "",
+                "keys": keys,
+                "hide": bool(rule.get("hide_section")),
+                "sources": sources,
+                "terms": terms,
+                "titles": titles,
+            }, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ).hexdigest()[:12]
+    return {
+        "id": str(ident),
+        "issue": issue,
+        "section": rule.get("section") or _display_name(keys),
+        "keys": keys,
+        "hide_section": bool(rule.get("hide_section")),
+        "sources": sources,
+        "terms": terms,
+        "titles": titles,
+        "example_title": rule.get("example_title") or (titles[0] if titles else ""),
+        "example_url": rule.get("example_url") or "",
+    }
+
+
+def load_saved_rules(path=None):
+    data = load_json(Path(path) if path else MUTE_PATH, {"version": 1, "rules": []})
+    raw = data if isinstance(data, list) else (data.get("rules") if isinstance(data, dict) else [])
+    rules = []
+    for rule in raw or []:
+        cleaned = normalize_rule(rule)
+        if cleaned:
+            rules.append(cleaned)
+    return rules
+
+
+def merge_rules(saved, incoming):
+    """Issues win when they still exist. A rule whose issue was deleted stays."""
+    by_id = {}
+    for rule in saved or []:
+        cleaned = normalize_rule(rule)
+        if cleaned:
+            by_id[cleaned["id"]] = cleaned
+    for rule in incoming or []:
+        cleaned = normalize_rule(rule)
+        if cleaned:
+            by_id[cleaned["id"]] = cleaned
+    return sorted(by_id.values(), key=lambda r: (r.get("issue") or 10**9, r.get("id") or ""))
+
+
+def save_rules(rules, path=None):
+    path = Path(path) if path else MUTE_PATH
+    cleaned = []
+    for rule in rules or []:
+        item = normalize_rule(rule)
+        if item:
+            cleaned.append(item)
+    cleaned = merge_rules([], cleaned)
+    path.parent.mkdir(exist_ok=True)
+    doc = {"version": 1, "rules": cleaned}
+    path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return cleaned
+
+
+def github_json(method, path, token, payload=None):
+    """GitHub REST call. Returns (status, body). Body is None on a transport error."""
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.github.com" + path,
+        data=data,
+        method=method,
+        headers={
+            "Authorization": "Bearer " + token,
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "morning-brief",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = resp.read().decode("utf-8")
+            return resp.status, (json.loads(raw) if raw else None)
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", "replace")[:240]
+        return e.code, detail
+    except Exception as e:
+        log(f"GitHub {method} {path} failed: {e}")
+        return 0, None
+
+
+def ensure_mute_label(repo, token):
+    code, _ = github_json("POST", f"/repos/{repo}/labels", token, {
+        "name": "mute",
+        "color": "6e7781",
+        "description": "Hide matching stories from future morning briefs",
+    })
+    if code in (201, 422):
+        return
+    log(f"Could not ensure the mute label (HTTP {code})")
+
+
+def list_mute_issues(repo, token):
+    """Open and closed issues labelled mute. None when the API cannot be read."""
+    found = []
+    for page in range(1, 11):
+        code, data = github_json(
+            "GET",
+            f"/repos/{repo}/issues?state=all&labels=mute&per_page=100&page={page}",
+            token,
+        )
+        if code != 200 or not isinstance(data, list):
+            log(f"Could not list mute issues (HTTP {code})")
+            return None
+        found.extend(issue for issue in data if "pull_request" not in issue)
+        if len(data) < 100:
+            break
+    return found
+
+
+def rule_from_issue(issue):
+    parsed = parse_mute_body(issue.get("body") or "")
+    if not parsed:
+        return None
+    parsed["id"] = f"issue:{issue.get('number')}"
+    parsed["issue"] = issue.get("number")
+    return normalize_rule(parsed)
+
+
+def close_applied_issue(repo, token, number):
+    code, _ = github_json(
+        "POST", f"/repos/{repo}/issues/{number}/comments", token, {"body": "Applied"})
+    if code not in (200, 201):
+        log(f"Mute issue #{number} parsed, but the Applied comment failed (HTTP {code})")
+        return
+    code, _ = github_json(
+        "PATCH", f"/repos/{repo}/issues/{number}", token,
+        {"state": "closed", "state_reason": "completed"})
+    if code not in (200, 201):
+        code, _ = github_json(
+            "PATCH", f"/repos/{repo}/issues/{number}", token, {"state": "closed"})
+    if code in (200, 201):
+        log(f"Mute issue #{number} applied and closed")
+    else:
+        log(f"Mute issue #{number} commented, but it stayed open (HTTP {code})")
+
+
+def sync_mute_rules():
+    """Merge labelled issues into data/mute_rules.json. File-only when no token."""
+    saved = load_saved_rules()
+    token = (os.getenv("GITHUB_TOKEN") or "").strip()
+    repo = (os.getenv("GITHUB_REPOSITORY") or REPO_SLUG).strip()
+    if not token or token.lower() in {"none", "null"} or "/" not in repo:
+        log(f"Mute rules: {len(saved)} from data/mute_rules.json (no GitHub token)")
+        return save_rules(saved)
+    ensure_mute_label(repo, token)
+    issues = list_mute_issues(repo, token)
+    if issues is None:
+        log("Mute rules: GitHub issues unavailable, keeping the saved file")
+        return save_rules(saved)
+    parsed = []
+    close = []
+    for issue in issues:
+        rule = rule_from_issue(issue)
+        if not rule:
+            log(f"Mute issue #{issue.get('number')} left open — no section to apply")
+            continue
+        parsed.append(rule)
+        if issue.get("state") == "open":
+            close.append(issue.get("number"))
+    merged = merge_rules(saved, parsed)
+    save_rules(merged)
+    log(f"Mute rules: {len(merged)} active ({len(parsed)} from issues)")
+    for number in close:
+        if number:
+            close_applied_issue(repo, token, number)
+    return merged
+
+
+def section_hidden(rules, key):
+    return any(r.get("hide_section") and key in (r.get("keys") or []) for r in rules)
+
+
+def hidden_section_labels(rules):
+    labels = []
+    for label, keys in _SECTION_GROUPS:
+        if all(section_hidden(rules, key) for key in keys):
+            labels.append(label)
+    return labels
+
+
+def _card_bits(item):
+    parts = []
+    sources = []
+    if not isinstance(item, dict):
+        return "", []
+    for key in ("title", "headline", "point", "body", "en", "snippet", "so_what", "tag", "source"):
+        value = item.get(key)
+        if isinstance(value, str):
+            parts.append(value)
+    for line in item.get("zh") or []:
+        if isinstance(line, str):
+            parts.append(line)
+    if isinstance(item.get("source"), str):
+        sources.append(item["source"])
+    for src in item.get("sources") or []:
+        if isinstance(src, dict):
+            if isinstance(src.get("name"), str):
+                sources.append(src["name"])
+                parts.append(src["name"])
+    return " ".join(parts), sources
+
+
+def _source_hit(item_sources, rule_sources):
+    names = [re.sub(r"\s+", " ", s).strip().casefold()
+             for s in item_sources if isinstance(s, str)]
+    names = [n for n in names if n]
+    for rule in rule_sources or []:
+        needle = re.sub(r"\s+", " ", rule or "").strip().casefold()
+        if len(needle) < 2:
+            continue
+        if any(name == needle or needle in name for name in names):
+            return True
+    return False
+
+
+def _terms_hit(blob, terms):
+    needles = [t.casefold().strip() for t in (terms or [])
+               if isinstance(t, str) and len(t.strip()) >= 2]
+    if not needles:
+        return False
+    hay = (blob or "").casefold()
+    return all(n in hay for n in needles)
+
+
+def _title_hit(title, titles):
+    if not title:
+        return False
+    for other in titles or []:
+        if other and similar(title, other) >= 0.92:
+            return True
+    return False
+
+
+def _item_title(item):
+    for key in ("title", "headline", "point"):
+        value = item.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    for line in item.get("zh") or []:
+        if isinstance(line, str) and line.strip() and not line.strip().startswith("（只有標題"):
+            return line.strip()
+    return ""
+
+
+def item_is_muted(item, rules, key):
+    blob, sources = _card_bits(item)
+    title = _item_title(item)
+    for rule in rules or []:
+        if key not in (rule.get("keys") or []):
+            continue
+        if rule.get("hide_section"):
+            return True
+        if _source_hit(sources, rule.get("sources")):
+            return True
+        if _terms_hit(blob, rule.get("terms")):
+            return True
+        if _title_hit(title, rule.get("titles")):
+            return True
+    return False
+
+
+def candidates_for_model(items_by_key, rules):
+    """Drop muted stories before clustering, so they never reach the model."""
     collected = {}
     payload = {}
-    for key, sec in CFG["sections"].items():
-        groups = cluster(fetch_section(key, sec))
+    stats = {"dropped": 0, "hidden": []}
+    for key, items in items_by_key.items():
+        if section_hidden(rules, key):
+            collected[key] = []
+            stats["hidden"].append(key)
+            log(f"[{key}] whole section muted — not sent to the model")
+            continue
+        kept = []
+        dropped = 0
+        for item in items or []:
+            if item_is_muted(item, rules, key):
+                dropped += 1
+            else:
+                kept.append(item)
+        if dropped:
+            stats["dropped"] += dropped
+            log(f"[{key}] muted {dropped} item{'s' if dropped != 1 else ''} before the model")
+        groups = cluster(kept)
         collected[key] = groups
-        # No fixed per-section cap. Take every cluster and let the shared
-        # character budget below decide where to stop, so a busy 民生 day is not
-        # truncated to suit a quiet Work day.
+        # Same shape as before: every remaining cluster, three members, short snippet.
         payload[key] = [
             [{"title": m["title"], "source": m["source"], "url": m["url"],
-              "published": m["published"], "snippet": m["snippet"][:280]}
+              "published": m.get("published", ""), "snippet": (m.get("snippet") or "")[:280]}
              for m in g[:3]]
             for g in groups
         ]
+    return collected, payload, stats
 
+
+def filter_output(sections, rules):
+    out = {}
+    for key, items in (sections or {}).items():
+        if not isinstance(items, list):
+            continue
+        if section_hidden(rules, key):
+            out[key] = []
+            continue
+        out[key] = [it for it in items
+                    if isinstance(it, dict) and not item_is_muted(it, rules, key)]
+    for key in CFG["sections"]:
+        out.setdefault(key, [])
+        if section_hidden(rules, key):
+            out[key] = []
+    return out
+
+
+def filter_talking(talking, rules):
+    if not isinstance(talking, dict):
+        talking = {"mode": "rss", "audiences": []}
+    if section_hidden(rules, "talking_points"):
+        return {"mode": "muted", "audiences": []}
+    audiences = []
+    for aud in talking.get("audiences") or []:
+        if not isinstance(aud, dict):
+            continue
+        items = [it for it in (aud.get("items") or [])
+                 if isinstance(it, dict) and not item_is_muted(it, rules, "talking_points")]
+        if not items:
+            continue
+        kept = dict(aud)
+        kept["items"] = items
+        audiences.append(kept)
+    return {"mode": talking.get("mode") or "rss", "audiences": audiences}
+
+
+def remember_titles(sections, talking, collected):
+    """Keep the feed headline on each card so the mute link names the story."""
+    by_url = {}
+    for groups in (collected or {}).values():
+        for group in groups or []:
+            for item in group or []:
+                if isinstance(item, dict) and item.get("url") and item.get("title"):
+                    by_url.setdefault(item["url"], item["title"])
+
+    def stamp(item):
+        if not isinstance(item, dict) or item.get("title"):
+            return
+        for src in item.get("sources") or []:
+            url = src.get("url") if isinstance(src, dict) else ""
+            if url and url in by_url:
+                item["title"] = by_url[url]
+                return
+
+    for items in (sections or {}).values():
+        for item in items or []:
+            stamp(item)
+    for aud in (talking or {}).get("audiences") or []:
+        for item in aud.get("items") or []:
+            stamp(item)
+
+
+def mute_summaries(rules):
+    rows = []
+    for rule in rules or []:
+        bits = []
+        if rule.get("hide_section"):
+            bits.append("whole section")
+        for src in rule.get("sources") or []:
+            bits.append("source: " + src)
+        if rule.get("terms"):
+            bits.append("words: " + ", ".join(rule["terms"]))
+        if rule.get("titles") and not rule.get("terms"):
+            bits.append("title: " + rule["titles"][0][:80])
+        text = rule.get("section") or "Section"
+        if bits:
+            text += " — " + "; ".join(bits)
+        rows.append({"section": rule.get("section") or "", "summary": text})
+    return rows
+
+
+def main():
+    rules = sync_mute_rules()
+    fetched = {}
+    for key, sec in CFG["sections"].items():
+        # A muted section is not fetched and not sent to the model.
+        if section_hidden(rules, key):
+            fetched[key] = []
+        else:
+            fetched[key] = fetch_section(key, sec)
+    collected, payload, mute_stats = candidates_for_model(fetched, rules)
+    # No fixed per-section cap. The shared character budget trims a busy day
+    # without cutting a quiet one. Muted stories are already gone.
     payload = fit_budget(payload)
     # Market data first, so a slow model call cannot skip the history update.
     market = build_market()
 
-    try:
-        sections, method = call_model(payload)
-        if not isinstance(sections, dict):
-            raise ValueError("model reply was not a JSON object")
-        raw_points = sections.pop("talking_points", None)
-        sections = top_up(sections, collected)
-        cleaned = clean_talking(raw_points, urls_in_payload(payload))
-        if cleaned:
-            talking = package_talking(cleaned, "model")
-            log("Talking points: from the model")
-        else:
-            talking = package_talking(rss_talking(collected), "rss")
-            log("Talking points: no sourced model bullets — headline-only fallback")
-    except Exception as e:
-        log(f"Model step skipped or failed ({e}) — using RSS summaries")
-        sections, method = rss_digest(collected), "rss-only"
-        talking = package_talking(rss_talking(collected), "rss")
-        log("Talking points: headline-only (no model)")
+    skip_talking = section_hidden(rules, "talking_points")
+    muted_keys = list(mute_stats["hidden"])
+    nothing_left = not any(payload.values())
+    muted_all = nothing_left and (mute_stats["dropped"] or mute_stats["hidden"] or skip_talking)
+
+    if muted_all:
+        log("Mute rules left nothing to summarise — model not called")
+        sections, method = rss_digest(collected), "muted"
+        talking = {"mode": "muted", "audiences": []}
+    else:
+        try:
+            sections, method = call_model(
+                payload, skip_talking=skip_talking, muted_keys=muted_keys)
+            if not isinstance(sections, dict):
+                raise ValueError("model reply was not a JSON object")
+            raw_points = sections.pop("talking_points", None)
+            sections = top_up(sections, collected)
+            if skip_talking:
+                talking = {"mode": "muted", "audiences": []}
+                log("Talking points: section muted")
+            else:
+                cleaned = clean_talking(raw_points, urls_in_payload(payload))
+                if cleaned:
+                    talking = package_talking(cleaned, "model")
+                    log("Talking points: from the model")
+                else:
+                    talking = package_talking(rss_talking(collected), "rss")
+                    log("Talking points: no sourced model bullets — headline-only fallback")
+        except Exception as e:
+            log(f"Model step skipped or failed ({e}) — using RSS summaries")
+            sections, method = rss_digest(collected), "rss-only"
+            if skip_talking:
+                talking = {"mode": "muted", "audiences": []}
+                log("Talking points: section muted")
+            else:
+                talking = package_talking(rss_talking(collected), "rss")
+                log("Talking points: headline-only (no model)")
+
+    remember_titles(sections, talking, collected)
+    sections = filter_output(sections, rules)
+    talking = filter_talking(talking, rules)
 
     now = datetime.now(HK)
     out = {
@@ -2176,6 +2792,7 @@ def main():
         "generated_at": now.strftime("%d %b %Y %H:%M HKT"),
         "generated_iso": now.isoformat(),
         "build": {"method": method, "log": LOG},
+        "repo": os.getenv("GITHUB_REPOSITORY") or REPO_SLUG,
         "weather": weather(),
         "hkma": market["hkma"],
         "hkma_bars": market["bars"],
@@ -2184,6 +2801,8 @@ def main():
         "rates": rate_table(),
         "labels": {k: v["label"] for k, v in CFG["sections"].items()},
         "sections": sections,
+        "hidden_sections": hidden_section_labels(rules),
+        "mutes": mute_summaries(rules),
     }
     (ROOT / "data/brief.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -2321,7 +2940,19 @@ INDEX_HTML = r'''<!doctype html>
   .quiet{margin-top:8px;font-size:12px;line-height:1.45;color:var(--muted);
     border-left:2px solid var(--muted);padding-left:9px}
   .jhead{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .mute-row{display:flex;justify-content:flex-end}
+  .mute{display:inline-flex;align-items:center;min-height:32px;margin-top:4px;
+    padding:4px 8px;border-radius:8px;border:1px solid transparent;
+    font-size:11.5px;font-weight:650;color:var(--muted);text-decoration:none}
+  .mute:hover,.mute:active,.mute:focus-visible{
+    color:var(--ink2);border-color:var(--line);background:var(--hair)}
   footer{margin-top:26px;color:var(--muted);font-size:11.5px;line-height:1.6}
+  .mutes{margin-top:4px}
+  .mutes summary{color:var(--muted);font-size:12px;font-weight:650}
+  .mutes ul{margin:8px 0 0;padding-left:18px}
+  .mutes li{margin:3px 0}
+  .mutes-empty,.mutes-hint{margin:6px 0 0}
+  .foot-note{margin-top:12px}
   @media(max-width:560px){h1{font-size:25px}.bars{height:58px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
@@ -2570,7 +3201,8 @@ function talkingCard(it){
   return `<article class="card">
     <h3 class="headline">${esc(it.point || it.headline || "")}</h3>
     ${sowhat}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, "Talking points")}</article>`;
 }
 function talkingSection(tp){
   const audiences = ((tp && tp.audiences) || []).filter(a => (a.items || []).length);
@@ -2586,6 +3218,98 @@ function talkingSection(tp){
     <div class="shead"><span class="dot" style="background:var(--talk)"></span>
       <h2>Talking points</h2><span class="scount">${total} item${total===1?"":"s"}</span></div>
     ${intro}${body}</section>`;
+}
+
+const TERM_STOP = new Set(("a an the and or of to in on for with from by at as is are was were be been " +
+  "it its this that these those after over into about says said new more will has have had not but their " +
+  "his her who what when where how why amid via per than then also just may can could would should " +
+  "reportedly report reports news says say before under out update updates latest breaking " +
+  "hong kong singapore today yesterday year week month " +
+  "的 了 在 是 與 及 和 為 將 被 對 從 也 或 並 而 但 就 都 很 到 以 等 其 這 那 有 不 未 已 " +
+  "香港 港元 今日 昨日 今年 表示 指出").split(/\s+/));
+
+function repoSlug(v){
+  const s = String(v || "poohpoohsy/morning-brief");
+  return /^[\w.-]+\/[\w.-]+$/.test(s) ? s : "poohpoohsy/morning-brief";
+}
+
+function itemTitle(it){
+  if(it.title && String(it.title).trim()) return String(it.title).trim();
+  if(it.headline && String(it.headline).trim()) return String(it.headline).trim();
+  if(it.point && String(it.point).trim()) return String(it.point).trim();
+  const post = String(it.en || "").match(/The post (.+?) appeared first on /);
+  if(post && post[1].trim()) return post[1].trim();
+  for(const line of (it.zh || [])){
+    const s = String(line || "").trim();
+    if(s && !s.startsWith("（只有標題")) return s;
+  }
+  return "item";
+}
+
+function keyTerms(title){
+  const text = String(title || "");
+  const latin = [];
+  const re = /[A-Za-z][A-Za-z0-9'+-]{2,}/g;
+  let m;
+  while((m = re.exec(text))){
+    const low = m[0].replace(/^'+|'+$/g, "").toLowerCase();
+    if(low.length < 4 || TERM_STOP.has(low) || latin.includes(low)) continue;
+    latin.push(low);
+  }
+  const ranked = latin.slice().sort((a, b) => b.length - a.length).slice(0, 4);
+  const picked = latin.filter(w => ranked.includes(w)).slice(0, 4);
+  const cjk = [];
+  for(const run of (text.match(/[\u4e00-\u9fff]{2,}/g) || [])){
+    if(TERM_STOP.has(run)) continue;
+    const chunks = run.length <= 6 ? [run] : [run.slice(0, 4), run.slice(4, 8)].filter(Boolean);
+    for(const chunk of chunks){
+      if(chunk.length >= 2 && !TERM_STOP.has(chunk) && !cjk.includes(chunk)) cjk.push(chunk);
+      if(cjk.length >= 4) break;
+    }
+    if(cjk.length >= 4) break;
+  }
+  const terms = picked.length >= 2 ? picked : cjk.concat(picked);
+  const out = [];
+  for(const t of terms){
+    if(!out.includes(t)) out.push(t);
+    if(out.length >= 4) break;
+  }
+  return out;
+}
+
+function muteLink(repo, section, it){
+  const title = itemTitle(it);
+  const src = (it.sources && it.sources[0]) || {};
+  const source = it.source || src.name || "";
+  const link = it.url || src.url || "";
+  const terms = keyTerms(title);
+  const body = [
+    "Mute this from future briefs. Edit the key terms if they are off, then submit.",
+    "If you leave the boxes unticked, those key terms are muted in this section.",
+    "",
+    "Section: " + section,
+    "Source: " + source,
+    "Link: " + link,
+    "Title: " + title,
+    "",
+    "Key terms: " + terms.join(", "),
+    "",
+    "- [ ] Mute this source in this section",
+    "- [ ] Mute these words",
+    "- [ ] Mute the whole section",
+  ].join("\n");
+  const params = new URLSearchParams();
+  params.set("labels", "mute");
+  const heading = "Mute: " + title;
+  params.set("title", heading.length > 240 ? heading.slice(0, 237) + "..." : heading);
+  params.set("body", body);
+  return "https://github.com/" + repo + "/issues/new?" + params.toString();
+}
+
+let REPO = "poohpoohsy/morning-brief";
+function muteBtn(it, section){
+  const href = muteLink(REPO, section, it);
+  return `<div class="mute-row"><a class="mute" href="${esc(href)}" target="_blank" rel="noopener">✕ Not for me</a></div>`;
 }
 
 function srcLine(sources){
@@ -2604,6 +3328,7 @@ function workCard(it){
     <p class="zh3">${zh}</p>
     ${it.en ? `<details><summary>English summary &amp; source</summary>
       <div class="en">${esc(it.en)}${srcLine(it.sources)}</div></details>` : srcLine(it.sources)}
+    ${muteBtn(it, "Work")}
   </article>`;
 }
 
@@ -2615,27 +3340,32 @@ function juicyCard(it){
     ${it.raise === false
       ? `<div class="quiet">知道就得 &middot; 唔使主動提 — the other person's answer would expose a political position.</div>`
       : ""}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, "Juicy")}</article>`;
 }
-function plainCard(it){
+function plainCard(it, section){
   return `<article class="card">
     <h3 class="headline">${esc(it.headline)}</h3>
     ${it.body ? `<p class="two">${esc(it.body)}</p>`
               : `<p class="two" style="opacity:.6">Headline only - open the source.</p>`}
-    ${srcLine(it.sources)}</article>`;
+    ${srcLine(it.sources)}
+    ${muteBtn(it, section)}</article>`;
 }
 
 function render(D){
+  REPO = repoSlug(D && D.repo);
   $("date").textContent = D.report_date || "";
   $("sub").textContent  = D.generated_at ? `Built ${D.generated_at}` : "";
   $("wx").innerHTML = weatherStrip(D.weather);
+  const hidden = new Set(D.hidden_sections || []);
   $("panels").innerHTML =
     (D.treasury ? treasuryPanel(D.treasury, D.hkma_bars||[]) : balancePanel(D.hkma, D.hkma_bars||[]))
-    + talkingSection(D.talking_points)
+    + (hidden.has("Talking points") ? "" : talkingSection(D.talking_points))
     + ratePanel(D.rates);
 
   const S = D.sections || {}, L = D.labels || {};
   const block = (title, colour, groups) => {
+    if(hidden.has(title)) return "";
     const total = groups.reduce((n,g) => n + (g.items||[]).length, 0);
     const body = groups.map(g => {
       if(!(g.items||[]).length) return "";
@@ -2651,11 +3381,11 @@ function render(D){
   $("sections").innerHTML =
     block("Work", "var(--work)", [{items:S.work||[], work:true}]) +
     block("Small Talk", "var(--talk)", [
-      {sub:"Hong Kong", items:S.smalltalk_hk||[]},
-      {sub:"Singapore", items:S.smalltalk_sg||[]}]) +
+      {sub:"Hong Kong", items:S.smalltalk_hk||[], card:it => plainCard(it, "Small Talk")},
+      {sub:"Singapore", items:S.smalltalk_sg||[], card:it => plainCard(it, "Small Talk")}]) +
     block("Personal", "var(--life)", [
-      {sub:"香港 · 民生", items:S.personal_hk||[]},
-      {sub:"Singapore · Government", items:S.personal_sg||[]}]) +
+      {sub:"香港 · 民生", items:S.personal_hk||[], card:it => plainCard(it, "Personal")},
+      {sub:"Singapore · Government", items:S.personal_sg||[], card:it => plainCard(it, "Personal")}]) +
     block("Juicy", "var(--juicy)", [
       {sub:"香港", items:S.juicy_hk||[], card:juicyCard},
       {sub:"Singapore", items:S.juicy_sg||[], card:juicyCard}]);
@@ -2681,8 +3411,16 @@ function render(D){
   }
   if(msgs.length){ $("stale").innerHTML = msgs.join("<br>"); $("stale").classList.add("show"); }
 
-  $("foot").textContent = "Items flagged headline-only have no retrieved body text. "
-    + "Open the source before repeating anything that matters.";
+  const rules = Array.isArray(D.mutes) ? D.mutes : [];
+  const items = rules.map(r => `<li>${esc(r.summary || r.section || "")}</li>`).join("");
+  $("foot").innerHTML =
+    `<details class="mutes"><summary>Muted (${rules.length})</summary>`
+    + (rules.length
+        ? `<ul>${items}</ul>`
+        : `<p class="mutes-empty">Nothing muted yet. Use ✕ Not for me on a card.</p>`)
+    + `<p class="mutes-hint">Saved in data/mute_rules.json. Deleting the issue does not unmute; remove the rule from that file too.</p></details>`
+    + `<div class="foot-note">Items flagged headline-only have no retrieved body text. `
+    + `Open the source before repeating anything that matters.</div>`;
 }
 
 fetch(`data/brief.json?ts=${Date.now()}`, {cache:"no-store"})
