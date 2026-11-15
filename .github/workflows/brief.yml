@@ -4,15 +4,21 @@ on:
   schedule:
     # 05:30 Hong Kong time = 21:30 UTC the day before.
     # Set early on purpose: GitHub delays scheduled runs 5-30 minutes at peak,
-    # so aiming at 06:00 would sometimes land at 06:25.
+    # so aiming at 06:00 would sometimes land at 06:25. It still lands hours
+    # late, so a scheduler comments /build at 05:30. This cron is the fallback.
     - cron: "30 21 * * *"
   workflow_dispatch:
+  issue_comment:
+    # The scheduler can only comment. types is created, so editing a comment
+    # does not start a second build.
+    types: [created]
 
 permissions:
   contents: write
   # issues: write includes read. The build lists issues labelled mute,
   # including ones that list several stories, comments "Applied", and closes
-  # them. The browser never sees this token.
+  # them. The browser never sees this token. The guard job below drops these
+  # permissions; a comment never holds the token by itself.
   issues: write
 
 concurrency:
@@ -20,25 +26,130 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  # Public repo: a comment starts a runner only for the owner, on a non-PR
+  # issue labelled build-trigger. The /build check is here because the
+  # expression language cannot trim. This job has no scopes and no secrets.
+  # schedule and workflow_dispatch skip it and go straight to build.
+  guard:
+    if: |
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request == null &&
+      contains(github.event.issue.labels.*.name, 'build-trigger') &&
+      github.event.comment.user.login == github.repository_owner
     runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      ok: ${{ steps.command.outputs.ok }}
+    steps:
+      - name: Accept a trimmed /build comment
+        id: command
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          python3 - <<'PY'
+          import os
+          body = os.environ.get("COMMENT_BODY") or ""
+          ok = body.strip().startswith("/build")
+          print("command accepted" if ok else "command ignored")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write("ok=true\n" if ok else "ok=false\n")
+          PY
+
+  build:
+    needs: guard
+    # A skipped guard is the schedule and workflow_dispatch path. An
+    # issue_comment reaches this job only when the guard accepted /build.
+    if: cancelled() == false && (github.event_name != 'issue_comment' || needs.guard.outputs.ok == 'true')
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.schedule_gate.outputs.skip }}
     steps:
       - uses: actions/checkout@v4
 
+      # The cron often starts after the /build run has already committed.
+      # Concurrency queues this run on the old SHA, so read the default
+      # branch tip rather than the checkout. No actions:read permission:
+      # the published generated_iso is the record of today's build.
+      - name: Skip schedule when today's brief is already published
+        id: schedule_gate
+        if: github.event_name == 'schedule'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from datetime import datetime, timedelta, timezone
+          HK = timezone(timedelta(hours=8))
+          today = datetime.now(HK).date().isoformat()
+
+          def built_day(raw):
+              data = json.loads(raw)
+              iso = str(data.get("generated_iso") or "").strip()
+              if iso.endswith("Z"):
+                  iso = iso[:-1] + "+00:00"
+              parsed = datetime.fromisoformat(iso)
+              if parsed.tzinfo is None:
+                  parsed = parsed.replace(tzinfo=HK)
+              return parsed.astimezone(HK).date().isoformat()
+
+          raw = None
+          branch = (os.environ.get("DEFAULT_BRANCH") or "main").strip()
+          try:
+              if not branch or any(c in branch for c in " \t\n\r~^:?*[\\"):
+                  raise ValueError("unexpected default branch")
+              env = dict(os.environ)
+              env["GIT_TERMINAL_PROMPT"] = "0"
+              # A command-line refspec updates FETCH_HEAD. origin/<branch>
+              # can stay on the SHA this run was queued with.
+              subprocess.run(
+                  ["git", "fetch", "--depth", "1", "origin", f"refs/heads/{branch}"],
+                  check=True,
+                  timeout=60,
+                  env=env,
+              )
+              raw = subprocess.check_output(
+                  ["git", "show", "FETCH_HEAD:data/brief.json"],
+                  timeout=30,
+              )
+          except Exception as exc:
+              print(f"Could not read origin/{branch} brief ({exc}); using the checkout.")
+              try:
+                  raw = open("data/brief.json", "rb").read()
+              except Exception as exc2:
+                  print(f"No local brief either ({exc2}); building.")
+          skip = "false"
+          if raw:
+              try:
+                  built = built_day(raw)
+                  print(f"HKT today={today} built={built}")
+                  if built == today:
+                      skip = "true"
+              except Exception as exc:
+                  print(f"Could not parse the brief date ({exc}); building.")
+          print(f"skip={skip}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"skip={skip}\n")
+          PY
+
       - uses: actions/setup-python@v5
+        if: steps.schedule_gate.outputs.skip != 'true'
         with:
           python-version: "3.12"
 
       # Only feedparser is needed. Gemini is called over plain HTTPS,
       # so there is no SDK to install for the free path.
-      - run: pip install feedparser
+      - name: Install feedparser
+        if: steps.schedule_gate.outputs.skip != 'true'
+        run: pip install feedparser
 
       # Logic tests only. The headless Chrome check is a separate job so a
       # browser failure cannot stop this job from building and publishing.
       - name: Test mute rules
+        if: steps.schedule_gate.outputs.skip != 'true'
         run: python test_mute.py --unit
 
       - name: Build brief
+        if: steps.schedule_gate.outputs.skip != 'true'
         env:
           LLM_PROVIDER: ${{ vars.LLM_PROVIDER }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -47,9 +158,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          # Empty for schedule and workflow_dispatch, so those runs still
+          # apply and close mute issues. Set for /build so that issue is
+          # not parsed as a mute and not closed.
+          BUILD_TRIGGER_ISSUE: ${{ github.event_name == 'issue_comment' && format('{0}', github.event.issue.number) || '' }}
         run: python build.py
 
       - name: Save results
+        if: steps.schedule_gate.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -62,6 +178,7 @@ jobs:
           fi
 
       - name: Report how it built
+        if: steps.schedule_gate.outputs.skip != 'true'
         run: |
           M=$(python -c "import json;print(json.load(open('data/brief.json'))['build']['method'])")
           echo "Build method: $M"
@@ -73,6 +190,7 @@ jobs:
   # failure off the workflow result: the daily page must still go out.
   ui-check:
     needs: build
+    if: success() && needs.build.outputs.skip != 'true'
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:

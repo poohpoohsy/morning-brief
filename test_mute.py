@@ -4,6 +4,7 @@ No network. The button is checked by running the page's own script.
 """
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -296,6 +297,33 @@ def test_one_issue_can_list_many_items():
           [r["id"] for r in merged])
     kept = [r for r in merged if r["issue"] == 12]
     check(len(kept) == 1 and kept[0]["terms"] == ["ensemble", "tokenised"], kept)
+
+
+def test_build_trigger_issue_is_not_applied_or_closed():
+    body = _item_body(
+        "Work", "Fintech News HK", "https://fintechnews.hk/ensemble",
+        ENSEMBLE["title"], ["ensemble", "tokenised"])
+    trigger = {"number": 41, "state": "open", "body": body}
+    other = {"number": 42, "state": "open", "body": body}
+    check(build.rules_from_issue(trigger), "the trigger body would parse as a mute")
+    check(build.rules_from_issue(other), "a real mute issue still parses")
+    os.environ["BUILD_TRIGGER_ISSUE"] = "41"
+    try:
+        check(build.build_trigger_issue_number() == 41, "the comment issue number is read")
+        kept = build.applicable_mute_issues([trigger, other])
+        check([issue["number"] for issue in kept] == [42], kept)
+    finally:
+        os.environ.pop("BUILD_TRIGGER_ISSUE", None)
+    check(build.build_trigger_issue_number() is None, "schedule and dispatch have no trigger issue")
+    check([issue["number"] for issue in build.applicable_mute_issues([trigger, other])] == [41, 42],
+          "without a trigger, every mute issue is still applied")
+    os.environ["BUILD_TRIGGER_ISSUE"] = "nope"
+    try:
+        check(build.build_trigger_issue_number() is None, "a bad value matches no issue")
+        check([issue["number"] for issue in build.applicable_mute_issues([trigger])] == [41],
+              "a bad value does not drop mute issues")
+    finally:
+        os.environ.pop("BUILD_TRIGGER_ISSUE", None)
 
 
 def test_button_url_from_the_page():
@@ -1561,6 +1589,7 @@ def main():
         test_deleted_issue_rule_survives()
         test_issue_body_parsing()
         test_one_issue_can_list_many_items()
+        test_build_trigger_issue_is_not_applied_or_closed()
         test_rendered_card_uses_the_same_rule()
         test_button_url_from_the_page()
         test_fallback_is_capped_and_ranked()
