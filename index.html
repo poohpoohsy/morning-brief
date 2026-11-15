@@ -44,6 +44,9 @@
     background:var(--card);border:1px solid var(--line);border-radius:11px;
     font-size:13px;color:var(--ink2);box-shadow:var(--shadow)}
   .wx b{color:var(--ink)}
+  .wx-run{display:block;line-height:1.55;padding:10px 13px}
+  .wx-run div{margin:0}
+  .wx-run .wx-k{color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.04em}
   .panel{margin-top:16px;background:var(--card);border:1px solid var(--line);
     border-radius:14px;padding:15px 16px;box-shadow:var(--shadow)}
   .ptitle{font-size:14px;font-weight:680;margin:0 0 2px}
@@ -211,6 +214,15 @@ function hkDay(d){
 
 function weatherStrip(w){
   if(!w || !w.available) return "";
+  if(Array.isArray(w.lines) && w.lines.length){
+    const html = w.lines.map(line => {
+      const v = esc(line && line.v);
+      if(!v) return "";
+      const k = line.k ? `<span class="wx-k">${esc(line.k)}</span>　` : "";
+      return `<div>${k}${v}</div>`;
+    }).join("");
+    if(html) return `<div class="wx wx-run">${html}</div>`;
+  }
   return `<div class="wx"><b>${esc(w.desc)}</b>
     <span>${esc(w.tmin)}–${esc(w.tmax)}°C</span>
     <span>濕度 ${esc(w.hmin)}–${esc(w.hmax)}%</span></div>`;

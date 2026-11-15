@@ -13,7 +13,7 @@ Environment:
   LLM_MODEL      optional override
 """
 
-import os, re, json, html, time, hashlib, urllib.request, urllib.error, http.cookiejar
+import os, re, json, html, time, hashlib, csv, io, urllib.request, urllib.error, http.cookiejar
 from datetime import datetime, timezone, timedelta
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -428,7 +428,7 @@ CFG = {
         "sofr": "https://markets.newyorkfed.org/api/rates/secured/sofrai/last/2.json",
         "press": "https://api.hkma.gov.hk/public/press-releases?lang=en"
     },
-    "weather": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+    "weather": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=tc",
     "watched_publishers": [
         {
             "name": "AASTOCKS",
@@ -1739,18 +1739,525 @@ def rate_table():
 
 
 # ---------------------------------------------------------------- weather
+#
+# Short Traditional Chinese running block. Each feed is optional: a failed
+# call drops that line. The whole block is omitted when today's temperature
+# or conditions cannot be built. The 9-day forecast drops today after the
+# late-morning update, so a 05:30 run still has the day's range, and a later
+# rebuild uses the current temperature plus the local forecast.
 
-def weather():
-    d = get_json(CFG["weather"])
+WEATHER_URLS = {
+    "fnd": CFG["weather"],
+    "flw": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=tc",
+    "rhrread": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc",
+    "warnsum": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=tc",
+    "aqhi_rss_en": "https://www.aqhi.gov.hk/epd/ddata/html/out/aqhirss_Eng.xml",
+    "aqhi_rss_tc": "https://www.aqhi.gov.hk/epd/ddata/html/out/aqhirss_ChT.xml",
+    "aqhi_csv": "https://static.data.gov.hk/opendata/dataset/aqhi/aqhi.csv",
+}
+
+# Official AQHI bands. Longer phrases have to be matched first.
+_AQHI_EN = (
+    ("low to moderate", "低至中"),
+    ("moderate to high", "中至高"),
+    ("high to very high", "高至甚高"),
+    ("very high to serious", "甚高至嚴重"),
+    ("very high", "甚高"),
+    ("moderate", "中"),
+    ("serious", "嚴重"),
+    ("high", "高"),
+    ("low", "低"),
+)
+_AQHI_ZH = (
+    ("甚高至嚴重", "甚高至嚴重"),
+    ("高至甚高", "高至甚高"),
+    ("低至中", "低至中"),
+    ("中至高", "中至高"),
+    ("甚高", "甚高"),
+    ("嚴重", "嚴重"),
+    ("中等", "中"),
+    ("高", "高"),
+    ("中", "中"),
+    ("低", "低"),
+)
+# Bands that include High or above. "低至中" does not match these.
+_AQHI_ELEVATED = ("中至高", "高至甚高", "甚高至嚴重", "甚高", "嚴重", "高")
+
+# warnsum category keys. WTMW is the tsunami warning.
+_STOP_WARN = {"WRAIN", "WTCSGNL", "WTCPRE8", "WTS", "WL", "WTMW"}
+
+_AQHI_PERIODS = (
+    ("Today A.M.", "今日上午"),
+    ("Today P.M.", "今日下午"),
+    ("Tomorrow A.M.", "明日上午"),
+    ("Tomorrow P.M.", "明日下午"),
+    ("今天 上午", "今日上午"),
+    ("今天 下午", "今日下午"),
+    ("明天 上午", "明日上午"),
+    ("明天 下午", "明日下午"),
+)
+
+
+def _get_text(url, timeout=25):
     try:
-        f = d["weatherForecast"][0]
-        return {
-            "available": True,
-            "desc": f.get("forecastWeather", ""),
-            "tmin": f["forecastMintemp"]["value"], "tmax": f["forecastMaxtemp"]["value"],
-            "hmin": f["forecastMinrh"]["value"], "hmax": f["forecastMaxrh"]["value"],
-        }
-    except Exception:
+        req = urllib.request.Request(url, headers={"User-Agent": "morning-brief/1.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8")
+    except Exception as e:
+        log(f"API failed {url}: {e}")
+        return None
+
+
+def _parse_ymd(value):
+    text = re.sub(r"\D", "", str(value or ""))
+    if len(text) < 8:
+        return None
+    try:
+        return datetime.strptime(text[:8], "%Y%m%d").date()
+    except ValueError:
+        return None
+
+
+def _place_value(block, place):
+    if not isinstance(block, dict):
+        return None
+    for row in block.get("data") or []:
+        if isinstance(row, dict) and row.get("place") == place:
+            return row
+    return None
+
+
+def _first_sentence(text):
+    text = (text or "").strip().rstrip("。")
+    if not text:
+        return ""
+    return text.split("。")[0].strip()
+
+
+def _risk_phrase(text):
+    text = re.sub(r"\s+", " ", str(text or "")).strip(" .")
+    if not text or len(text) > 40:
+        return ""
+    if re.search(r"[\u4e00-\u9fff]", text):
+        compact = text.replace(" ", "")
+        for key, label in _AQHI_ZH:
+            if key in compact:
+                return label
+        return ""
+    low = text.lower()
+    for key, label in _AQHI_EN:
+        if key in low:
+            return label
+    return ""
+
+
+def _join_risks(labels):
+    phrases = []
+    for label in labels:
+        phrase = _risk_phrase(label)
+        if phrase and phrase not in phrases:
+            phrases.append(phrase)
+    if not phrases:
+        return ""
+    if len(phrases) == 1:
+        return phrases[0]
+    if all("至" not in phrase for phrase in phrases):
+        return "至".join(phrases)
+    return "、".join(phrases)
+
+
+def _fmt_aqhi_range(lo, hi, risk_lo, risk_hi):
+    lo_s = str(lo).strip() if lo is not None else ""
+    hi_s = str(hi).strip() if hi is not None else ""
+    if lo_s.lower() == "none":
+        lo_s = ""
+    if hi_s.lower() == "none":
+        hi_s = ""
+    if not lo_s and not hi_s:
+        return ""
+    if lo_s and hi_s and lo_s != hi_s:
+        num = f"{lo_s}–{hi_s}"
+    else:
+        num = lo_s or hi_s
+    risk = _join_risks((risk_lo, risk_hi))
+    return f"{num}（{risk}）" if risk else num
+
+
+def _fmt_pair(general, roadside):
+    if general and roadside and general == roadside:
+        return f"一般及路邊 {general}"
+    parts = []
+    if general:
+        parts.append(f"一般 {general}")
+    if roadside:
+        parts.append(f"路邊 {roadside}")
+    return "／".join(parts)
+
+
+def _aqhi_is_elevated(text):
+    return any(band in (text or "") for band in _AQHI_ELEVATED)
+
+
+def _strip_rss(text):
+    text = re.sub(r"<!\[CDATA\[(.*?)\]\]>", r"\1", text or "", flags=re.S)
+    text = html.unescape(text)
+    # EPD writes the forecast period as <Today P.M.> or <今天 下午>. Keep the
+    # words; a later tag strip would otherwise drop them.
+    for label, _shown in _AQHI_PERIODS:
+        text = text.replace(f"<{label}>", f" {label} ")
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _aqhi_current(plain):
+    patterns = (
+        re.compile(
+            r"General Stations:\s*(\d+)(?:\s*(?:to|至)\s*(\d+))?\s*"
+            r"\(Health Risk:\s*([^)]+)\)\s*"
+            r"Roadside Stations:\s*(\d+)(?:\s*(?:to|至)\s*(\d+))?\s*"
+            r"\(Health Risk:\s*([^)]+)\)", re.I),
+        re.compile(
+            r"一般監測站\s*[:：]\s*(\d+)(?:\s*(?:to|至)\s*(\d+))?\s*"
+            r"\(\s*健康風險\s*[:：]\s*([^)]+)\)\s*"
+            r"路邊監測站\s*[:：]\s*(\d+)(?:\s*(?:to|至)\s*(\d+))?\s*"
+            r"\(\s*健康風險\s*[:：]\s*([^)]+)\)"),
+    )
+    for pattern in patterns:
+        found = pattern.search(plain or "")
+        if not found:
+            continue
+        general = _fmt_aqhi_range(found.group(1), found.group(2), found.group(3), found.group(3))
+        roadside = _fmt_aqhi_range(found.group(4), found.group(5), found.group(6), found.group(6))
+        text = _fmt_pair(general, roadside)
+        if text:
+            return text
+    return ""
+
+
+def _aqhi_forecast(plain):
+    if not plain:
+        return ""
+    labels = [label for label, _shown in _AQHI_PERIODS]
+    nxt = "|".join(re.escape(label) for label in labels)
+    parts = []
+    for label, shown in _AQHI_PERIODS:
+        found = re.search(
+            rf"{re.escape(label)}\s*"
+            rf"(?:General Stations:|一般監測站\s*[:：])\s*(.+?)\s*"
+            rf"(?:Roadside Stations:|路邊監測站\s*[:：])\s*(.+?)"
+            rf"(?=\s*(?:{nxt}|$))",
+            plain, re.I)
+        if not found:
+            continue
+        if re.search(r"\d", found.group(1) + found.group(2)):
+            continue
+        phrase = _station_phrase(found.group(1), found.group(2))
+        if phrase:
+            parts.append((shown, phrase))
+    return _merge_forecast(parts)
+
+
+def _station_phrase(general, roadside):
+    g, r = _risk_phrase(general), _risk_phrase(roadside)
+    if g and r and g == r:
+        return g
+    if g or r:
+        return f"一般 {g or '—'}／路邊 {r or '—'}"
+    return ""
+
+
+def _merge_forecast(parts):
+    groups = []
+    for label, phrase in parts:
+        if groups and groups[-1][1] == phrase:
+            groups[-1][0].append(label)
+        else:
+            groups.append(([label], phrase))
+    return "；".join("、".join(labels) + " " + phrase for labels, phrase in groups)
+
+
+def _parse_aqhi_rss(plain):
+    return {"current": _aqhi_current(plain), "forecast": _aqhi_forecast(plain)}
+
+
+def _aqhi_from_csv(raw):
+    if not raw:
+        return ""
+    try:
+        rows = list(csv.DictReader(io.StringIO(raw.lstrip("\ufeff"))))
+    except csv.Error as e:
+        log(f"AQHI CSV unreadable: {e}")
+        return ""
+    found = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        kind = (row.get("type") or "").strip().lower()
+        if kind not in {"general", "roadside"} or kind in found:
+            continue
+        text = _fmt_aqhi_range(
+            row.get("aqhi_min"), row.get("aqhi_max"),
+            row.get("health_risk_min"), row.get("health_risk_max"))
+        if text:
+            found[kind] = text
+    return _fmt_pair(found.get("general", ""), found.get("roadside", ""))
+
+
+def _aqhi():
+    """Current AQHI and the next forecast periods. RSS first, CSV if needed."""
+    out = {"current": "", "forecast": ""}
+    try:
+        for url in (WEATHER_URLS["aqhi_rss_en"], WEATHER_URLS["aqhi_rss_tc"]):
+            raw = _get_text(url)
+            if not raw:
+                continue
+            parsed = _parse_aqhi_rss(_strip_rss(raw))
+            if not out["current"] and parsed["current"]:
+                out["current"] = parsed["current"]
+            if not out["forecast"] and parsed["forecast"]:
+                out["forecast"] = parsed["forecast"]
+            if out["current"] and out["forecast"]:
+                break
+        if not out["current"]:
+            out["current"] = _aqhi_from_csv(_get_text(WEATHER_URLS["aqhi_csv"]))
+    except Exception as e:
+        log(f"AQHI omitted: {e}")
+        return {"current": "", "forecast": ""}
+    return out
+
+
+def _aqhi_line(aqhi):
+    current = (aqhi or {}).get("current") or ""
+    forecast = (aqhi or {}).get("forecast") or ""
+    if current and forecast:
+        return f"{current}；預測 {forecast}"
+    if forecast:
+        return f"預測 {forecast}"
+    return current
+
+
+def _warning_state(warnsum):
+    """Active warning labels and category codes. CANCEL entries are skipped."""
+    labels, codes = [], []
+    if not isinstance(warnsum, dict):
+        return labels, codes
+    for key, rec in warnsum.items():
+        if not isinstance(rec, dict):
+            continue
+        action = str(rec.get("actionCode") or "").upper()
+        if "CANCEL" in action:
+            continue
+        code = str(key or "").upper().strip()
+        if not code:
+            sub = str(rec.get("code") or "").upper().strip()
+            if sub.startswith("WRAIN"):
+                code = "WRAIN"
+            elif sub.startswith("WFIRE"):
+                code = "WFIRE"
+            elif sub.startswith("TC"):
+                code = "WTCSGNL"
+            else:
+                code = sub
+        if code and code not in codes:
+            codes.append(code)
+        typ = str(rec.get("type") or "").strip()
+        name = str(rec.get("name") or "").strip()
+        if typ and name and typ not in name:
+            label = typ + name if len(typ) <= 2 else f"{name}（{typ}）"
+        else:
+            label = name or typ
+        if label and label not in labels:
+            labels.append(label)
+    return labels, codes
+
+
+def _weekend_outlook(by_date, today):
+    """Coming Sat–Sun. On Sunday that is the following weekend."""
+    if today.weekday() == 6:
+        days = [today + timedelta(days=6), today + timedelta(days=7)]
+        label = "下週末"
+    elif today.weekday() == 5:
+        days = [today, today + timedelta(days=1)]
+        label = "今個週末"
+    else:
+        days = [
+            today + timedelta(days=(5 - today.weekday())),
+            today + timedelta(days=(6 - today.weekday())),
+        ]
+        label = "今個週末"
+    parts = []
+    for day in days:
+        forecast = by_date.get(day)
+        if not forecast:
+            continue
+        tmin = (forecast.get("forecastMintemp") or {}).get("value")
+        tmax = (forecast.get("forecastMaxtemp") or {}).get("value")
+        if tmin is None or tmax is None:
+            continue
+        week = "六" if day.weekday() == 5 else "日"
+        chunk = f"{day.month}月{day.day}日（{week}）{tmin}–{tmax}°C"
+        sky = _first_sentence(forecast.get("forecastWeather") or "")
+        if sky:
+            chunk += f"，{sky}"
+        parts.append(chunk)
+    if not parts:
+        return "", ""
+    return label, "；".join(parts)
+
+
+def _uv_tip(uv, uv_desc):
+    try:
+        uv_n = float(uv)
+    except (TypeError, ValueError):
+        uv_n = None
+    desc = (uv_desc or "").strip()
+    if (uv_n is not None and uv_n >= 8) or desc in {"甚高", "極高"}:
+        return "紫外線甚高，日頭跑要防曬，盡量揀陰涼路線。"
+    if (uv_n is not None and uv_n >= 6) or desc == "高":
+        return "紫外線偏高，日頭跑記得防曬。"
+    return ""
+
+
+def _run_tip(labels, codes, uv, uv_desc, aqhi, rain_chance):
+    """One running line, from official warnings, AQHI, UV and rain chance."""
+    codes = set(codes or [])
+    if codes & _STOP_WARN:
+        return "有惡劣天氣警告，建議改期或改為室內訓練。"
+    if "WFNTSA" in codes:
+        return "新界北部水浸特別報告生效，該區戶外跑請改期。"
+    if "WHOT" in codes:
+        return "酷熱天氣警告生效，建議清晨較涼時段跑，並補水。"
+    if "WFROST" in codes:
+        return "霜凍警告生效，出發前先做足熱身。"
+    if "WCOLD" in codes:
+        return "寒冷天氣警告生效，出發前先做足熱身。"
+    if _aqhi_is_elevated(aqhi):
+        return "空氣質素健康風險偏高，建議縮短戶外跑或改為室內。"
+    uv_line = _uv_tip(uv, uv_desc)
+    if uv_line:
+        return uv_line
+    if rain_chance in {"高", "中高"}:
+        return "降雨機會較高，出發前再睇一次警告，必要時改室內。"
+    fire = [label for label in (labels or []) if "火災" in label]
+    if fire:
+        return f"天氣大致適合戶外跑；{fire[0]}生效，行山請小心火種。"
+    return "天氣大致適合戶外跑。"
+
+
+def _today_body(tmin, tmax, current_temp, rain_chance, today_text):
+    bits = []
+    if tmin is not None and tmax is not None:
+        temp = f"{tmin}–{tmax}°C"
+        if current_temp is not None:
+            temp += f"（現時 {current_temp}°C）"
+        bits.append(f"今日 {temp}")
+    elif current_temp is not None:
+        bits.append(f"現時 {current_temp}°C")
+    if rain_chance:
+        bits.append(f"降雨機會{rain_chance}")
+    if today_text:
+        bits.append(today_text)
+    return " · ".join(bits)
+
+
+def _running_weather(today):
+    fnd = get_json(WEATHER_URLS["fnd"])
+    flw = get_json(WEATHER_URLS["flw"])
+    current = get_json(WEATHER_URLS["rhrread"])
+    warnsum = get_json(WEATHER_URLS["warnsum"])
+
+    forecasts = []
+    if isinstance(fnd, dict):
+        forecasts = [row for row in (fnd.get("weatherForecast") or []) if isinstance(row, dict)]
+    by_date = {}
+    for row in forecasts:
+        day = _parse_ymd(row.get("forecastDate"))
+        if day:
+            by_date[day] = row
+    today_f = by_date.get(today)
+
+    tmin = tmax = rain_chance = None
+    today_text = ""
+    if today_f:
+        tmin = (today_f.get("forecastMintemp") or {}).get("value")
+        tmax = (today_f.get("forecastMaxtemp") or {}).get("value")
+        rain_chance = (today_f.get("PSR") or "").strip() or None
+        today_text = (today_f.get("forecastWeather") or "").strip().rstrip("。")
+    if not today_text and isinstance(flw, dict):
+        today_text = (flw.get("forecastDesc") or "").strip().rstrip("。")
+
+    current_temp = uv = uv_desc = None
+    if isinstance(current, dict):
+        hko = _place_value(current.get("temperature"), "香港天文台")
+        if hko and hko.get("value") is not None:
+            current_temp = hko.get("value")
+        uv_block = current.get("uvindex")
+        if isinstance(uv_block, dict):
+            rows = [row for row in (uv_block.get("data") or []) if isinstance(row, dict)]
+            if rows and rows[0].get("value") is not None:
+                uv = rows[0].get("value")
+                uv_desc = (rows[0].get("desc") or "").strip() or None
+
+    body = _today_body(tmin, tmax, current_temp, rain_chance, today_text)
+    if not body:
+        log("Running weather omitted: no temperature or conditions for today")
+        return {"available": False}
+
+    labels, codes = _warning_state(warnsum)
+    aqhi = _aqhi_line(_aqhi())
+    weekend_label, weekend = _weekend_outlook(by_date, today)
+    tip = _run_tip(labels, codes, uv, uv_desc, aqhi, rain_chance)
+
+    lines = [{"k": "跑步天氣", "v": body}]
+    if labels:
+        lines.append({"k": "警告", "v": "、".join(labels)})
+    detail = []
+    if uv is not None:
+        bit = f"紫外線 {uv}"
+        if uv_desc:
+            bit += f"（{uv_desc}）"
+        detail.append(bit)
+    if aqhi:
+        detail.append(f"空氣質素 {aqhi}")
+    if detail:
+        lines.append({"k": "", "v": " · ".join(detail)})
+    if tip:
+        lines.append({"k": "提示", "v": tip})
+    if weekend:
+        lines.append({"k": weekend_label or "週末", "v": weekend})
+
+    return {
+        "available": True,
+        "lines": lines,
+        "tmin": tmin,
+        "tmax": tmax,
+        "current_temp": current_temp,
+        "rain_chance": rain_chance,
+        "today_text": today_text,
+        "warnings": labels,
+        "uv": uv,
+        "uv_desc": uv_desc,
+        "aqhi": aqhi,
+        "tip": tip,
+        "weekend_label": weekend_label,
+        "weekend": weekend,
+        # Legacy keys keep the old one-line strip working on a stale page.
+        "desc": today_text or "",
+        "hmin": (today_f.get("forecastMinrh") or {}).get("value") if today_f else None,
+        "hmax": (today_f.get("forecastMaxrh") or {}).get("value") if today_f else None,
+    }
+
+
+def weather(today=None):
+    """Running-weather block for the brief. Failures omit the block only."""
+    if today is None:
+        today = datetime.now(HK).date()
+    elif isinstance(today, datetime):
+        today = today.astimezone(HK).date() if today.tzinfo else today.date()
+    try:
+        return _running_weather(today)
+    except Exception as e:
+        log(f"Running weather omitted: {e}")
         return {"available": False}
 
 
@@ -3120,6 +3627,9 @@ INDEX_HTML = r'''<!doctype html>
     background:var(--card);border:1px solid var(--line);border-radius:11px;
     font-size:13px;color:var(--ink2);box-shadow:var(--shadow)}
   .wx b{color:var(--ink)}
+  .wx-run{display:block;line-height:1.55;padding:10px 13px}
+  .wx-run div{margin:0}
+  .wx-run .wx-k{color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.04em}
   .panel{margin-top:16px;background:var(--card);border:1px solid var(--line);
     border-radius:14px;padding:15px 16px;box-shadow:var(--shadow)}
   .ptitle{font-size:14px;font-weight:680;margin:0 0 2px}
@@ -3287,6 +3797,15 @@ function hkDay(d){
 
 function weatherStrip(w){
   if(!w || !w.available) return "";
+  if(Array.isArray(w.lines) && w.lines.length){
+    const html = w.lines.map(line => {
+      const v = esc(line && line.v);
+      if(!v) return "";
+      const k = line.k ? `<span class="wx-k">${esc(line.k)}</span>　` : "";
+      return `<div>${k}${v}</div>`;
+    }).join("");
+    if(html) return `<div class="wx wx-run">${html}</div>`;
+  }
   return `<div class="wx"><b>${esc(w.desc)}</b>
     <span>${esc(w.tmin)}–${esc(w.tmax)}°C</span>
     <span>濕度 ${esc(w.hmin)}–${esc(w.hmax)}%</span></div>`;

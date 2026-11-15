@@ -1578,6 +1578,180 @@ def test_rates_show_verified_figures_only():
     check(build.rate_is_stale(None, "2026-11-14") is False, "a missing date is not stale")
 
 
+def test_running_weather_block():
+    """Running-weather lines, without calling HKO or EPD."""
+    from datetime import date
+
+    page = (ROOT / "index.html").read_text(encoding="utf-8")
+    check(page == build.INDEX_HTML, "index.html drifted from the build.py template")
+    check("wx-run" in page and "w.lines" in page, "running-weather strip missing")
+    check("濕度" in page, "old weather strip fallback removed")
+
+    english = """
+    <item><description><![CDATA[<p>General Stations: 3 to 4 (Health Risk: Low to Moderate)</p>
+    <p>Roadside Stations: 3 to 4 (Health Risk: Low to Moderate)</p>]]></description></item>
+    <item><description><![CDATA[<p>&lt;Today P.M.&gt;<p>General Stations: Low to Moderate</p>
+    <p>Roadside Stations: Low to Moderate</p></p>
+    <p>&lt;Tomorrow A.M.&gt;<p>General Stations: Low to Moderate</p>
+    <p>Roadside Stations: High</p></p>]]></description></item>
+    """
+    parsed = build._parse_aqhi_rss(build._strip_rss(english))
+    check(parsed["current"] == "一般及路邊 3–4（低至中）", parsed["current"])
+    check(parsed["forecast"] == "今日下午 低至中；明日上午 一般 低至中／路邊 高", parsed["forecast"])
+
+    chinese = """
+    <description><![CDATA[<p>一般監測站: 3 to 4 (健康風險:低 至 中)</p>
+    <p>路邊監測站: 3 to 4 (健康風險:低 至 中)</p>]]></description>
+    <description><![CDATA[<p>&lt;今天 下午&gt;<p>一般監測站: 低 至 中</p>
+    <p>路邊監測站: 低 至 中</p></p>
+    <p>&lt;明天 上午&gt;<p>一般監測站: 低 至 中</p>
+    <p>路邊監測站: 低 至 中</p></p>]]></description>
+    """
+    parsed = build._parse_aqhi_rss(build._strip_rss(chinese))
+    check(parsed["current"] == "一般及路邊 3–4（低至中）", parsed["current"])
+    check(parsed["forecast"] == "今日下午、明日上午 低至中", parsed["forecast"])
+
+    sheet = (
+        "type,aqhi_min,aqhi_max,health_risk_min,health_risk_max\n"
+        "general,2,3,Low,Low\n"
+        "roadside,3,3,Low,Moderate\n"
+    )
+    check(build._aqhi_from_csv(sheet) == "一般 2–3（低）／路邊 3（低至中）",
+          build._aqhi_from_csv(sheet))
+    check(build._aqhi_is_elevated("一般及路邊 3–4（低至中）") is False, "low band")
+    check(build._aqhi_is_elevated("一般 3–5（低至中）／路邊 7（高）") is True, "mixed band")
+    check(build._aqhi_is_elevated("預測 今日下午 中至高") is True, "forecast band")
+
+    check(build._run_tip([], [], 5, "中等", "一般及路邊 3–4（低至中）", "低")
+          == "天氣大致適合戶外跑。", "quiet day")
+    heat = build._run_tip(["酷熱天氣警告"], ["WHOT"], None, None, "", None)
+    check("酷熱" in heat and "清晨" in heat, heat)
+    tsunami = build._run_tip(["海嘯警告"], ["WTMW"], None, None, "", None)
+    check("惡劣" in tsunami and "酷熱" not in tsunami, tsunami)
+    check("空氣" in build._run_tip([], [], 9, "甚高", "路邊 8（高）", None), "aqhi before uv")
+    check("防曬" in build._run_tip([], [], None, "極高", "", None), "extreme uv wording")
+    check("防曬" not in build._run_tip([], [], None, "極端", "", None), "極高 is the HKO word")
+    check("偏高" in build._run_tip([], [], 6, "高", "", None), "high uv")
+    check("降雨" in build._run_tip(["黃色火災危險警告"], ["WFIRE"], None, None, "", "高"),
+          "rain before fire")
+    fire = build._run_tip(["黃色火災危險警告"], ["WFIRE"], 5, "中等",
+                          "一般及路邊 3–4（低至中）", "低")
+    check("火種" in fire and fire.startswith("天氣大致適合"), fire)
+    labels, codes = build._warning_state({
+        "WFIRE": {"name": "火災危險警告", "code": "WFIREY", "type": "黃色", "actionCode": "CANCEL"},
+        "WTS": {"name": "雷暴警告", "code": "WTS", "actionCode": "EXTEND"},
+    })
+    check(labels == ["雷暴警告"] and codes == ["WTS"], (labels, codes))
+    tc_labels, tc_codes = build._warning_state({
+        "WTCSGNL": {"name": "熱帶氣旋警告信號", "code": "TC3", "type": "三號強風信號",
+                    "actionCode": "ISSUE"},
+    })
+    check(tc_labels == ["熱帶氣旋警告信號（三號強風信號）"] and tc_codes == ["WTCSGNL"],
+          (tc_labels, tc_codes))
+
+    def day(ymd, lo, hi, psr, sky):
+        return {
+            "forecastDate": ymd,
+            "forecastWeather": sky,
+            "forecastMintemp": {"value": lo},
+            "forecastMaxtemp": {"value": hi},
+            "forecastMinrh": {"value": 60},
+            "forecastMaxrh": {"value": 90},
+            "PSR": psr,
+        }
+
+    def current(temp, uv="missing"):
+        body = {"temperature": {"data": [
+            {"place": "京士柏", "value": temp + 1},
+            {"place": "香港天文台", "value": temp},
+        ]}}
+        if uv == "missing":
+            body["uvindex"] = ""
+        else:
+            body["uvindex"] = {"data": [{"value": uv[0], "desc": uv[1]}]}
+        return body
+
+    urls = build.WEATHER_URLS
+    monday = {
+        urls["fnd"]: {"weatherForecast": [
+            day("20261116", 23, 26, "低", "大致多雲，有一兩陣雨。日間部分時間天色明朗。"),
+            day("20261121", 16, 21, "低", "大致多雲。早上清涼，日間部分時間天色明朗。"),
+            day("20261122", 19, 23, "低", "短暫時間有陽光。"),
+        ]},
+        urls["flw"]: {"forecastDesc": "這段不應蓋過九日預報。"},
+        urls["rhrread"]: current(24, (5, "中等")),
+        urls["warnsum"]: {"WFIRE": {
+            "name": "火災危險警告", "code": "WFIREY", "type": "黃色", "actionCode": "ISSUE",
+        }},
+    }
+    quiet = english.replace("Roadside Stations: High", "Roadside Stations: Low to Moderate")
+    texts = {urls["aqhi_rss_en"]: quiet, urls["aqhi_rss_tc"]: None, urls["aqhi_csv"]: None}
+    got = _feeds(monday, texts, date(2026, 11, 16))
+    blob = "\n".join(line["k"] + " " + line["v"] for line in got["lines"])
+    check(got["available"] is True, got)
+    check("今日 23–26°C（現時 24°C）" in blob, blob)
+    check("降雨機會低" in blob, blob)
+    check("大致多雲，有一兩陣雨。日間部分時間天色明朗" in blob, blob)
+    check("這段不應蓋過九日預報" not in blob, blob)
+    check("警告 黃色火災危險警告" in blob, blob)
+    check("紫外線 5（中等）" in blob, blob)
+    check("空氣質素 一般及路邊 3–4（低至中）" in blob, blob)
+    check("火種" in blob, blob)
+    check("今個週末 11月21日（六）16–21°C，大致多雲；11月22日（日）19–23°C，短暫時間有陽光" in blob, blob)
+    check(got["hmin"] == 60 and got["hmax"] == 90 and got["desc"].startswith("大致多雲"), got)
+
+    # Afternoon bulletin: the 9-day forecast starts tomorrow. Do not borrow it.
+    sunday = {
+        urls["fnd"]: {"weatherForecast": [
+            day("20261116", 23, 26, "高", "大致多雲，有一兩陣雨。"),
+            day("20261121", 16, 21, "低", "大致多雲。早上清涼。"),
+            day("20261122", 19, 23, "低", "短暫時間有陽光。"),
+        ]},
+        urls["flw"]: {"forecastDesc": "大致天晴。下午乾燥。吹輕微至和緩東北風。"},
+        urls["rhrread"]: current(25),
+        urls["warnsum"]: {},
+    }
+    got = _feeds(sunday, {urls["aqhi_rss_en"]: None, urls["aqhi_rss_tc"]: chinese,
+                          urls["aqhi_csv"]: None}, date(2026, 11, 15))
+    blob = "\n".join(line["v"] for line in got["lines"])
+    check(got["available"] is True, got)
+    check("現時 25°C" in blob and "23–26" not in blob, blob)
+    check("降雨機會" not in blob, blob)
+    check("大致天晴。下午乾燥。吹輕微至和緩東北風" in blob, blob)
+    check("紫外線" not in blob, blob)
+    check("預測 今日下午、明日上午 低至中" in blob, blob)
+    check(any(line["k"] == "下週末" for line in got["lines"]), got["lines"])
+
+    check(_feeds({}, {}, date(2026, 11, 15))["available"] is False, "empty feeds still published")
+
+    orig_json, orig_text = build.get_json, build._get_text
+    try:
+        def boom(url, timeout=25):
+            raise RuntimeError("down")
+        build.get_json = boom
+        build._get_text = boom
+        check(build.weather(today=date(2026, 11, 15))["available"] is False, "exception leaked")
+    finally:
+        build.get_json, build._get_text = orig_json, orig_text
+
+
+def _feeds(payloads, texts, today):
+    orig_json, orig_text = build.get_json, build._get_text
+
+    def fake_json(url, timeout=25):
+        return payloads.get(url)
+
+    def fake_text(url, timeout=25):
+        return texts.get(url)
+
+    build.get_json = fake_json
+    build._get_text = fake_text
+    try:
+        return build.weather(today=today)
+    finally:
+        build.get_json, build._get_text = orig_json, orig_text
+
+
 def main():
     args = [a for a in sys.argv[1:] if a.startswith("-")]
     run_unit = not args or "--unit" in args
@@ -1594,6 +1768,7 @@ def main():
         test_button_url_from_the_page()
         test_fallback_is_capped_and_ranked()
         test_rates_show_verified_figures_only()
+        test_running_weather_block()
         print("mute unit tests passed")
     if run_ui:
         test_page_hides_the_item_and_links_to_github()
