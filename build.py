@@ -2716,8 +2716,43 @@ def close_applied_issue(repo, token, number):
         log(f"Mute issue #{number} commented, but it stayed open (HTTP {code})")
 
 
+def build_trigger_issue_number():
+    """Issue a /build comment came from, or None on schedule and dispatch.
+
+    That issue is the scheduler's switch. It is not a mute request, even if
+    it also carries the mute label, and this run must not close it.
+    """
+    raw = (os.getenv("BUILD_TRIGGER_ISSUE") or "").strip()
+    if not raw or raw.lower() in {"none", "null", "false", "true"}:
+        return None
+    try:
+        number = int(raw)
+    except ValueError:
+        return None
+    if number <= 0:
+        return None
+    return number
+
+
+def applicable_mute_issues(issues):
+    """Drop the comment that started this run so it cannot be applied or closed."""
+    trigger = build_trigger_issue_number()
+    kept = []
+    for issue in issues or []:
+        number = issue.get("number") if isinstance(issue, dict) else None
+        if trigger is not None and number == trigger:
+            log(f"Issue #{number} started this build — left open, not read as a mute")
+            continue
+        kept.append(issue)
+    return kept
+
+
 def sync_mute_rules():
-    """Merge labelled issues into data/mute_rules.json. File-only when no token."""
+    """Merge labelled issues into data/mute_rules.json. File-only when no token.
+
+    BUILD_TRIGGER_ISSUE, set only for a /build comment, is skipped. Mute
+    issues filed on their own are still applied and closed.
+    """
     saved = load_saved_rules()
     token = (os.getenv("GITHUB_TOKEN") or "").strip()
     repo = (os.getenv("GITHUB_REPOSITORY") or REPO_SLUG).strip()
@@ -2731,7 +2766,7 @@ def sync_mute_rules():
         return save_rules(saved)
     parsed = []
     close = []
-    for issue in issues:
+    for issue in applicable_mute_issues(issues):
         rules = rules_from_issue(issue)
         if not rules:
             log(f"Mute issue #{issue.get('number')} left open — no section to apply")
