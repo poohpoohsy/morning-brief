@@ -1,15 +1,32 @@
 {
   "sofr": [
     {
-      "date": "2026-11-18",
-      "average30day": 3.92133
-    },
-    {
       "date": "2026-11-19",
       "average30day": 3.92233
+    },
+    {
+      "date": "2026-11-20",
+      "average30day": 3.92334
     }
   ],
   "liquidity": [
+    {
+      "end_of_date": "2026-11-20",
+      "closing_balance": 54186,
+      "opening_balance": 54186,
+      "disc_win_base_rate": 4.25,
+      "hibor_overnight": 2.38,
+      "hibor_fixing_1m": 2.71167,
+      "cu_weakside": 7.85,
+      "cu_strongside": 7.75,
+      "market_activities": "+0",
+      "interest_payment": "+0",
+      "discount_window_reversal": "-0",
+      "discount_window_activities": "+0",
+      "forex_trans_t1": "+0",
+      "forex_trans_t2": "+0",
+      "forex_trans_t3": "+0"
+    },
     {
       "end_of_date": "2026-11-19",
       "closing_balance": 54186,
@@ -1692,23 +1709,6 @@
       "forex_trans_t1": "+0",
       "forex_trans_t2": "+0",
       "forex_trans_t3": "+0"
-    },
-    {
-      "end_of_date": "2026-06-30",
-      "closing_balance": 53981,
-      "opening_balance": 53981,
-      "disc_win_base_rate": 4,
-      "hibor_overnight": 3.62,
-      "hibor_fixing_1m": 2.93976,
-      "cu_weakside": 7.85,
-      "cu_strongside": 7.75,
-      "market_activities": "+0",
-      "interest_payment": "+0",
-      "discount_window_reversal": "-0",
-      "discount_window_activities": "+0",
-      "forex_trans_t1": "+0",
-      "forex_trans_t2": "+0",
-      "forex_trans_t3": "+0"
     }
   ],
   "hibor": [
@@ -1816,6 +1816,11 @@
     {
       "end_of_day": "2026-11-19",
       "usd": 7.8456,
+      "vendor": "ECB"
+    },
+    {
+      "end_of_day": "2026-11-20",
+      "usd": 7.8389,
       "vendor": "ECB"
     }
   ]
