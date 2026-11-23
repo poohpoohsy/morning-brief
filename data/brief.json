@@ -1,7 +1,7 @@
 {
-  "report_date": "Sunday, 22 November 2026",
-  "generated_at": "22 Nov 2026 09:34 HKT",
-  "generated_iso": "2026-11-22T09:34:44.153776+08:00",
+  "report_date": "Monday, 23 November 2026",
+  "generated_at": "23 Nov 2026 09:55 HKT",
+  "generated_iso": "2026-11-23T09:55:49.938596+08:00",
   "build": {
     "method": "gemini:gemini-3.6-flash",
     "log": [
@@ -9,41 +9,45 @@
       "[work] 明報 經濟: HTTP 403 Forbidden",
       "[work] 明報 國際: HTTP 403 Forbidden",
       "[work] 明報 即時經濟: HTTP 403 Forbidden",
-      "[work] 131 items after filtering",
+      "[work] 70 items after filtering",
       "[smalltalk_hk] 明報 經濟: HTTP 403 Forbidden",
       "[smalltalk_hk] 明報 國際: HTTP 403 Forbidden",
-      "[smalltalk_hk] 78 items after filtering",
+      "[smalltalk_hk] 24 items after filtering",
       "[smalltalk_sg] Workers' Party: HTTP 404 Not Found",
-      "[smalltalk_sg] 14 items after filtering",
+      "[smalltalk_sg] 17 items after filtering",
       "[personal_hk] 明報 港聞: HTTP 403 Forbidden",
       "[personal_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[personal_hk] 明報 副刊: HTTP 403 Forbidden",
       "[personal_hk] 明報 即時港聞: HTTP 403 Forbidden",
-      "[personal_hk] 204 items after filtering",
+      "[personal_hk] 178 items after filtering",
       "[personal_sg] Workers' Party: HTTP 404 Not Found",
-      "[personal_sg] 14 items after filtering",
+      "[personal_sg] 6 items after filtering",
       "[juicy_hk] 明報 港聞: HTTP 403 Forbidden",
       "[juicy_hk] 明報 娛樂: HTTP 403 Forbidden",
       "[juicy_hk] 明報 副刊: HTTP 403 Forbidden",
       "[juicy_hk] 明報 即時港聞: HTTP 403 Forbidden",
-      "[juicy_hk] 472 items after filtering",
-      "[juicy_sg] 179 items after filtering",
+      "[juicy_hk] 466 items after filtering",
+      "[juicy_sg] 138 items after filtering",
       "HKMA liquidity: 100 sessions through 2026-11-20",
       "HIBOR fixing looked old (2026-10-30); trying another query",
       "HIBOR fixing looked old (2026-10-30); trying another query",
       "USD/HKD: HKMA series ends 2026-10-31; using the ECB reference rate through 2026-11-20",
       "HKMA history: already current through 2026-11-20",
-      "Candidates sent: work=12, smalltalk_hk=12, smalltalk_sg=12, personal_hk=12, personal_sg=12, juicy_hk=12, juicy_sg=12",
-      "Prompt size: 64,027 characters",
+      "Candidates sent: work=12, smalltalk_hk=12, smalltalk_sg=12, personal_hk=12, personal_sg=6, juicy_hk=12, juicy_sg=12",
+      "Prompt size: 57,742 characters",
       "Models available (v1beta): gemini-2.5-flash, gemini-2.5-pro, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemma-4-26b-a4b-it, gemma-4-31b-it, gemini-flash-latest, gemini-flash-lite-latest, gemini-pro-latest, gemini-2.5-flash-lite, gemini-2.5-flash-image, gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-pro-preview-customtools, gemini-3.1-flash-lite-preview, gemini-3.1-flash-lite, gemini-3-pro-image-preview, gemini-3-pro-image, nano-banana-pro-preview, gemini-3.1-flash-image-preview, gemini-3.1-flash-image, gemini-3.1-flash-lite-image, gemini-nano-banana-2.1, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-omni-flash-preview, gemini-omni-1.1-flash, gemini-omni-1.2-flash, gemini-3.5-transcribe, gemini-3.6-flash, gemini-3.7-flash, gemini-3.8-flash, gemini-4-argon, gemini-4-carbon, gemini-4-hydrogen, gemini-4-neon, lyria-3-clip-preview, lyria-3-pro-preview, lyria-3.5, gemini-3.1-flash-tts-preview",
-      "Model gemini-3.8-flash failed: The read operation timed out",
-      "Model gemini-3.7-flash failed: The read operation timed out",
+      "Model gemini-3.8-flash failed: HTTP Error 503: Service Unavailable",
+      "Model gemini-3.7-flash failed: HTTP Error 503: Service Unavailable",
       "Model used: gemini-3.6-flash",
+      "Model reply did not parse (Expecting property name enclosed in double quotes: line 114 column 7 (char 7727)); attempting repair",
+      "Repaired reply, kept 7,595 of 12,041 characters",
+      "[work] model returned 3, topped up by 2 to 5",
       "[smalltalk_hk] model returned 3, topped up by 2 to 5",
-      "[smalltalk_sg] model returned 3, topped up by 2 to 5",
-      "[personal_hk] model returned 4, topped up by 1 to 5",
-      "[personal_sg] model returned 4, topped up by 1 to 5",
-      "Talking points: from the model",
+      "[personal_hk] model returned 3, topped up by 2 to 5",
+      "[personal_sg] model returned 2, topped up by 3 to 5",
+      "[juicy_hk] model returned 0, topped up by 5 to 5",
+      "[juicy_sg] model returned 0, topped up by 5 to 5",
+      "Talking points: no sourced model bullets — headline-only fallback",
       "4 of 13 banks were not readable — shown as not checked, no number"
     ]
   },
@@ -53,41 +57,41 @@
     "lines": [
       {
         "k": "跑步天氣",
-        "v": "今日 19–23°C（現時 20°C） · 降雨機會低 · 大致多雲。初時部分時間天色明朗。稍後有一兩陣微雨"
+        "v": "今日 21–24°C（現時 22°C） · 降雨機會低 · 大致多雲，部分時間天色明朗，稍後有一兩陣雨"
       },
       {
         "k": "警告",
-        "v": "黃色火災危險警告"
+        "v": "強烈季候風信號"
       },
       {
         "k": "",
-        "v": "紫外線 0.9（低） · 空氣質素 一般 3–4（低至中）／路邊 4（中）；預測 今日上午、今日下午 低至中"
+        "v": "紫外線 0.4（低） · 空氣質素 一般 3–4（低至中）／路邊 4（中）；預測 今日上午 一般 低至中／路邊 中；今日下午 中"
       },
       {
         "k": "提示",
-        "v": "天氣大致適合戶外跑；黃色火災危險警告生效，行山請小心火種。"
+        "v": "天氣大致適合戶外跑。"
       },
       {
-        "k": "下週末",
-        "v": "11月28日（六）19–26°C，大致天晴，日間乾燥；11月29日（日）19–24°C，部分時間有陽光"
+        "k": "今個週末",
+        "v": "11月28日（六）19–26°C，大致天晴，日間乾燥；11月29日（日）19–24°C，部分時間有陽光，日間乾燥"
       }
     ],
-    "tmin": 19,
-    "tmax": 23,
-    "current_temp": 20,
+    "tmin": 21,
+    "tmax": 24,
+    "current_temp": 22,
     "rain_chance": "低",
-    "today_text": "大致多雲。初時部分時間天色明朗。稍後有一兩陣微雨",
+    "today_text": "大致多雲，部分時間天色明朗，稍後有一兩陣雨",
     "warnings": [
-      "黃色火災危險警告"
+      "強烈季候風信號"
     ],
-    "uv": 0.9,
+    "uv": 0.4,
     "uv_desc": "低",
-    "aqhi": "一般 3–4（低至中）／路邊 4（中）；預測 今日上午、今日下午 低至中",
-    "tip": "天氣大致適合戶外跑；黃色火災危險警告生效，行山請小心火種。",
-    "weekend_label": "下週末",
-    "weekend": "11月28日（六）19–26°C，大致天晴，日間乾燥；11月29日（日）19–24°C，部分時間有陽光",
-    "desc": "大致多雲。初時部分時間天色明朗。稍後有一兩陣微雨",
-    "hmin": 50,
+    "aqhi": "一般 3–4（低至中）／路邊 4（中）；預測 今日上午 一般 低至中／路邊 中；今日下午 中",
+    "tip": "天氣大致適合戶外跑。",
+    "weekend_label": "今個週末",
+    "weekend": "11月28日（六）19–26°C，大致天晴，日間乾燥；11月29日（日）19–24°C，部分時間有陽光，日間乾燥",
+    "desc": "大致多雲，部分時間天色明朗，稍後有一兩陣雨",
+    "hmin": 75,
     "hmax": 90
   },
   "hkma": {
@@ -385,7 +389,7 @@
     }
   },
   "talking_points": {
-    "mode": "model",
+    "mode": "rss",
     "audiences": [
       {
         "id": "ceo",
@@ -393,15 +397,71 @@
         "blurb": "Strategy, regulation, competition, virtual banks, HKMA and SFC, stablecoins and digital assets.",
         "items": [
           {
-            "point": "HSBC launched access to its tokenised money market fund via RedCoin digital wallets in its HK mobile app.",
-            "so_what": "Signals incumbent banks actively expanding stablecoins into wealth management, pressuring digital banks to match tokenised product shelves.",
+            "point": "HSBC Expands RedCoin into Wealth Management with Tokenised Fund Access in Hong Kong",
+            "title": "HSBC Expands RedCoin into Wealth Management with Tokenised Fund Access in Hong Kong",
+            "so_what": "",
+            "headline_only": true,
             "sources": [
               {
-                "name": "Fintech News HK",
-                "url": "https://fintechnews.hk/42218/blockchain/hsbc-tokenised-money-market-fund-redcoin/"
+                "name": "Hubbis",
+                "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPdzJGOF9WTXhLWGJKX1VzbjNGcE42RzFvYVBPV3dRNWowTGgtVmdVcWtlN0pQajhLeHpUcFZaVTRFTlBYZ1hqTldJbnFTVTg4Rl8ta0VUcXBKbFBhZFM4cjZkQTVrTnYyNFZIeU5zMFNMX2RadlhiMWFwVEptaEZhMnBQb0o2dkphV0hGN1QyZ1F5T1JkeFJ2eVBGTTlvOWlqVktGd0hBVG03Y2lwTi1XMQ?oc=5"
               }
-            ],
-            "title": "HSBC Links RedCoin Wallets to Its Tokenised Money Market Fund"
+            ]
+          },
+          {
+            "point": "貝萊德港推代幣化貨幣基金 - 20261123 - 報章內容",
+            "title": "貝萊德港推代幣化貨幣基金 - 20261123 - 報章內容",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "明報財經網",
+                "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxPV2RuX1UtVEtBTTA4aDhiWW5uUllxZ2VMQlJwV0p4TW5pMWlNWk1yTTNkNGlOTGFURDJseDlLYi0wVlJ3cnRCVnZJcGFxNjBRdF9nWENtdnI2YTU2YTgzNEJ1dWpuOUE4cV9IZURzRTZIMmJFSldBRUVQRGdtRXlvRkJoMUt5bi1zanJELTgwbEpJRTV2a1FxTU1HSDVQRjNtSnpidnMyRVllQVlLWFpwVG00aDEtbGNQQU1LNzRVWG40TzRxWkFVbTI1dTduTkRyYmNNWldLQTY4UDY4ZEpCUDdaSURjQmFGZmFvWEdlN1FJWlRFX0JGaGVFSHUwUQ?oc=5"
+              }
+            ]
+          },
+          {
+            "point": "HSBC Opens Tokenized Hong Kong Dollar Money Market Fund Class to Retail Clients via RedCoin on Ethereum",
+            "title": "HSBC Opens Tokenized Hong Kong Dollar Money Market Fund Class to Retail Clients via RedCoin on Ethereum",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "Crowdfund Insider",
+                "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxOVDhSMG1odWFxTnVBR3k5M0dTbmZRcFlROTQ4YTAtbU1hWl90VUsydFg4c2hHNlpOVU5DWFdKSEpacXNJN0IwWjZyTUhydk9VVW5LUWNDR1hoRUhsSmlmeEwybVBxZEwtNmNmV19fQV9GdW5SdmwzcDhCSEFjYTBFeGdRYnZubTNPTFkteF9KMVdHMXcyUDJIRlBvcHBMMHNiVENsZm1OUTd1cHlxbGFXR3BCRWtRQnNYeWFqYUFESDhoY2Z2bVI5NUdJY0JuTV9rYnlJTkNHOGJUYzVVUklrUVA0eUl3YzA?oc=5"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "business",
+        "label": "Business heads",
+        "blurb": "Product, customer and market moves by competitors.",
+        "items": [
+          {
+            "point": "許正宇完成出訪歐洲最後一站行程 拜會比利時副首相",
+            "title": "許正宇完成出訪歐洲最後一站行程 拜會比利時副首相",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "RTHK 財經",
+                "url": "https://news.rthk.hk/rthk/ch/component/k2/1878691-20261121.htm"
+              }
+            ]
+          },
+          {
+            "point": "最新mortgage link按揭優惠 省息高達80%",
+            "title": "最新mortgage link按揭優惠 省息高達80%",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "AM730",
+                "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxPdVhzUWNkMHdqVUhIWUZwRHpZVkU2VTBaTkhaQkpXZnU5eXk4c3YtUEJTQWU0Z3pJZTFDMXV5NHU0NFhaYXEzaW9nbHNSb3lULWhxUW9wRVAydC1HSThBQ3ZhOTdLRGt1RDJORm44dUQxRWRxMXhlX1l1bV9yNU5rUmFEbG9fUE1kQ2NGRHl6UzNBNnZOLUpkM3pIRWFnNHhUS0M4SzEzekxVZ2JXZVplTmpDUmlVcXpRVlFuai0wRnZtb2dEM1hmdTc1Uk1qb2U2UUNpbjM0dEZUQThhbi1zU3RSUXdObWw2RDVLRTVYTEdfMlZHN18wQm9R?oc=5"
+              }
+            ]
           }
         ]
       },
@@ -411,15 +471,40 @@
         "blurb": "Rate moves, liquidity, deposit competition and promo trends.",
         "items": [
           {
-            "point": "Hong Kong HIBOR rates rose across all tenors with 1-month HIBOR touching a 3-week high.",
-            "so_what": "Higher interbank borrowing costs will squeeze net interest margins unless deposit rates are selectively repriced.",
+            "point": "人行開展4995億元人民幣隔夜逆回購",
+            "title": "人行開展4995億元人民幣隔夜逆回購",
+            "so_what": "",
+            "headline_only": true,
             "sources": [
               {
-                "name": "明報財經網",
-                "url": "https://news.google.com/rss/articles/CBMiowJBVV95cUxQT1dUR2JHaWxNRmJuLXBLVC1ualdTOTlBWlA2TTFHWlNWMXdiWDhxbGk1U1Nta1JhTHJObS1lajZNbGtjQUZYV1RWXzJkTnRBZFAwcXNkSkRQR2dETU1rMzd3Sko0UmFOWHJmREZmUmNzV0Rta2Y4Ylk2QXJINkdDVEtGaUNCeU5GNi1TbHEwODV2ZjZ2a19pcmtYU2lBY3BfakZscy1yX3I4YmprNGVKeTZ0OW1telRLc1F1Uy04SUdCbFZfSURnZUp0c0xKc21QYzNFb0dzMHN4LXhFQ1JLWlZmRV9NQkRqN2E5UENyRjVmN0NZeTQxTDBZNE1lZ2RmZ3hoQjc3bGFWNlg1UUxWWEVFNjB6bkZtaGgzdFl5cVRqN2c?oc=5"
+                "name": "RTHK 財經",
+                "url": "https://news.rthk.hk/rthk/ch/component/k2/1878893-20261123.htm"
               }
-            ],
-            "title": "港元拆息全線向上 1個月HIBOR見三周高 (11:20) - 20261120 - 即時財經新聞"
+            ]
+          },
+          {
+            "point": "智破「土壤種子庫」 摸清大自然「生態存款」",
+            "title": "智破「土壤種子庫」 摸清大自然「生態存款」",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "香港文匯報",
+                "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE93QnVDLWhFOV9XTjQ5V0tfdDc3ajUzVmh3SjRnMTFzYzR1bXV3ckFhX1FoQTI3QnZUNjUybXVZNlZ2R1NuUFVibjh6WWUxbVRWTFFXemZ2dnc0Wll4eHVBd0ZQN2hQZEYxRHIyTGdJYXpGR0RIcWhN?oc=5"
+              }
+            ]
+          },
+          {
+            "point": "CrowdStrike據報洽購同業Zscaler 或成網絡安全行業最大收購之一",
+            "title": "CrowdStrike據報洽購同業Zscaler 或成網絡安全行業最大收購之一",
+            "so_what": "",
+            "headline_only": true,
+            "sources": [
+              {
+                "name": "星島頭條",
+                "url": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxObnRHSUl3MVQ3eHY2TGs5R0tEeWM4U3puMEdTdGFDX0F6Z0toaUhGLVR6TmpwaF94OHRzSXRKN0NVckJNNER5R0VWaGF0ZVdWdnJQbVdpMGs0N0h4a1pMSUl5RGZLRUZ2WkhJaGpPa1JoOF91MUd5VXZ3NW0waWNZWmxXNkt5ZkZqY3E2MkxIVnBYVzlIY1RmS2FCZnVyV0t4clFBTjNSSDhQN25aRWdSTWcyWWN4WXRVOG9IQ1RfZVZrVXJ5OU5Pa2ljN1JTRUhqNE9wOFJqWXpwVkZUZU5CRWFzTXFRSWVZYkliT0g2V1pXRUhqT2c2SjZDY1lMVzZ0dkN4ZHBEWHVSVWdHM21pZ09BdUNab0VXYlJoTWJqbGJfVGZ3eWk2bWY3OS1hWm9JNWs5RnVyVWxTRU50UjM1dFFfaERoRDh3NWlyOUt1SVlxNUFOaVFHckpOeVU3U1YzM2hsVHZVWkFDZVk?oc=5"
+              }
+            ]
           }
         ]
       }
@@ -669,146 +754,117 @@
     "work": [
       {
         "zh": [
-          "匯豐客戶可透過代幣化貨幣市場基金使用RedCoin",
-          "該舉措將港幣穩定幣應用擴展至財富管理領域",
-          "客戶須先於匯豐香港流動理財應用程式啟用穩定幣錢包"
+          "微億智造捲土重來今日起重啟招股",
+          "集資額縮至最多5.8億元及入場費1585元",
+          "基石投資者取消認購並預計下周五掛牌"
         ],
-        "en": "HSBC customers in Hong Kong can now use HSBC RedCoin to access a tokenised money market fund. This move expands the bank's Hong Kong dollar stablecoin applications beyond everyday payments and into wealth management. Customers must first activate a stablecoin wallet within the HSBC HK Mobile Banking App.",
-        "sources": [
-          {
-            "name": "Fintech News HK",
-            "url": "https://fintechnews.hk/42218/blockchain/hsbc-tokenised-money-market-fund-redcoin/"
-          }
-        ],
-        "title": "HSBC Links RedCoin Wallets to Its Tokenised Money Market Fund"
-      },
-      {
-        "zh": [
-          "渣打銀行完成跨行代幣化美元支付測試",
-          "有關結算於數分鐘內完成",
-          "測試涵蓋跨銀行代幣化資金交易"
-        ],
-        "en": "Standard Chartered has completed tests for cross-bank tokenised dollar payments. The transactions settled within minutes, marking progress in interbank tokenised payment capabilities.",
-        "sources": [
-          {
-            "name": "HK banking wide",
-            "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNVW00UnM0VHBFS1NBc1hBc0VfVWRrMlk1THBlUTVjNDlINk5OcHRjTGxER2VZM3QzU0Y2RTM2dmFmLVpVT0t4VVF4eGM2b2dZZlVEbHBhLXk5NHdVaUVIVG1aalNjSFU3QnFZMmNaR0RYWUFlSWF2WHVYaTdmY2x1R0U0VTNCUXk3?oc=5"
-          }
-        ],
-        "title": "BANKING"
-      },
-      {
-        "zh": [
-          "香港10月整體綜合消費物價按年上升2.2%",
-          "升幅較9月的1.9%有所擴大",
-          "政府統計處指通脹表現維持溫和"
-        ],
-        "en": "Hong Kong's consumer inflation remained moderate in October, with overall prices rising 2.2 percent year-on-year. This compares with a 1.9 percent expansion in September, according to figures from the Census and Statistics Department.",
-        "sources": [
-          {
-            "name": "RTHK finance",
-            "url": "https://news.rthk.hk/rthk/en/component/k2/1878616-20261120.htm"
-          }
-        ],
-        "title": "Hong Kong inflation remains moderate at 2.2pc"
-      },
-      {
-        "zh": [
-          "港元拆息全線向上",
-          "一個月期HIBOR升至三周高位",
-          "市場資金面有所收緊"
-        ],
-        "en": "Hong Kong dollar interbank offered rates (HIBOR) moved up across all tenors. The one-month HIBOR reached a three-week high.",
-        "sources": [
-          {
-            "name": "明報財經網",
-            "url": "https://news.google.com/rss/articles/CBMiowJBVV95cUxQT1dUR2JHaWxNRmJuLXBLVC1ualdTOTlBWlA2TTFHWlNWMXdiWDhxbGk1U1Nta1JhTHJObS1lajZNbGtjQUZYV1RWXzJkTnRBZFAwcXNkSkRQR2dETU1rMzd3Sko0UmFOWHJmREZmUmNzV0Rta2Y4Ylk2QXJINkdDVEtGaUNCeU5GNi1TbHEwODV2ZjZ2a19pcmtYU2lBY3BfakZscy1yX3I4YmprNGVKeTZ0OW1telRLc1F1Uy04SUdCbFZfSURnZUp0c0xKc21QYzNFb0dzMHN4LXhFQ1JLWlZmRV9NQkRqN2E5UENyRjVmN0NZeTQxTDBZNE1lZ2RmZ3hoQjc3bGFWNlg1UUxWWEVFNjB6bkZtaGgzdFl5cVRqN2c?oc=5"
-          }
-        ],
-        "title": "港元拆息全線向上 1個月HIBOR見三周高 (11:20) - 20261120 - 即時財經新聞"
-      },
-      {
-        "zh": [
-          "無紙證券市場制度本周一起實施",
-          "港交所等首批5間上市公司參與",
-          "港交所將於明年2月16日起實施無紙化"
-        ],
-        "en": "Hong Kong's uncertificated securities market regime came into effect this week. The first batch includes five listed companies, with HKEX participating from 16 February 2027, followed by China Resources Power and Xiangchi International in March.",
-        "sources": [
-          {
-            "name": "RTHK 財經",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1878644-20261120.htm"
-          }
-        ],
-        "title": "港交所、無綫集團及華潤電力明年2月至3月參與無紙證券市場"
-      },
-      {
-        "zh": [
-          "傳中證監收緊紅籌架構境外上市",
-          "2023年後成立者須先「回流」",
-          "市場憂慮新規打擊香港新股市場"
-        ],
-        "en": "Reports indicate the CSRC may tighten offshore listing rules for red-chip corporate structures, requiring those established after 2023 to restructure onshore first. The move raises concerns over potential impacts on Hong Kong's IPO market.",
+        "en": "Micro-Tech Intelligence has restarted its Hong Kong initial public offering with reduced terms, lowering the entry fee to HK$1,585 and scaling down maximum fundraising proceeds to HK$580 million. The company has seen its cornerstone investors withdraw ahead of its scheduled stock debut next Friday.",
         "sources": [
           {
             "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMiswRBVV95cUxLNTEyWHZNM3B3dTY0RkRHLXYwQ0VjV1gzb2gwZGhTWDBNRGZaNFRTeXFpODNnZFBJY3hMUDJsZW9ZWTFVY3lUOGdhelA2RzdTWUprVFQ0OFdfZ0E5R196NHJsMnhYdW9EOXZqeDg3Q0NyR0xyWVlqWWI4el9pZngzYTZwaVYxR1hoN0NibEdVRnZDTUtnaHpHdXhabElMcGVtU3JfTUZPaFItclhFV1pzLW5aS0l0QWlIZ1ZZbjlQYUhLRVZROWRVRVlpeUxuSlJnc09RcEhzUkFqdlBVUjRYQnF1V1YtUC1XZlBHZ0RxRTlvS2l1NzBfYzdDWEN6bUUwa1dZUjJhRnFDMGpWUHhVdThqcjQ0UEYzVGRXWS1PWUtOMkJ2SksxODBvcnJHczgyTVBrX2xtWWJlNHoxWjVYQ3dRWlpZdHA5elY0dmp1ZU1BazZpUkdiMU9RQm5rSTNWQW1saURCSE1UeXZ0WWdGa25USmtFUW5RNF8yQ2NYNWNpcE9HZ2ZIOE5wWWF6UU1ObGRwRmFGWDVDejI5LWVEMnVKTXFHTGxLcWx5bGIwN0dxREU5U2tTX0JaeGV5X0pNR0xqN1I0ZzZBdnJFeUJEaVR3c3h3Uk1PcFVzSXdTa3VldHZCTERjTlJvWEhuT3RTMFdxcUY0TlIwR0p2YW1wSkRKdzdONmJjREVYYUtZYTVBYnVGaVNMN0FkaFRKRGxEa0didEVJUWZQTWdlN01fbTkxdWdEVQ?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMitANBVV95cUxOQzZLMy1QODdNc2ZobGo3R3JhaVZNOXlGTzlWbXZYSUIySnVQdWpyWEdBd2ZFUFNacmg2OTJfOHBIbmxrRzdrZTlhRkpKTlJ5S180Sm02bk1yLTlSbXZCekxsbmtSTFp4T1hhSkZFblZJckJwM054SGI4VDRVYThMZlpWdXlVRlppeWZkdElUaGppN3ZJeXcwZVlFVzdSaEFIX0N5cnl2a1pEZ0xoR1BqTC1PUE5IMDg4QXVKQmJhWmFOdGlqeVZaUDZUVkhNcjdscGwzYWxBMUdKRlNrdEJLNmlLT1ZyS01oQjA4WXVZNXdoRkpJSEYyTWIwZWJGVGpYM0hDZ0xLcllxS2xLS1Y5dnZ6TVNmQ1cyZEtwOHBwaGNSMDFGSHJqOFJQTVN5WjhRN3YzSGJMYWpDdlFPLVdSRmhFN0NoUGF0Y2Q5Wkc4X2hfcGwwTXpNRUtoNG52Wi14a2dULVNFOVhqaUtsMFNZOFV5M2lUaHAxTW50SU1tWG1Qd2c1NmNoNTVQQ0lYR2IzRURvendiN1VzeHBITGVZZjNaN29FNXdhRHY1NTFOYV9MZUl2?oc=5"
+          },
+          {
+            "name": "etnet 經濟通",
+            "url": "https://news.google.com/rss/articles/CBMiigVBVV95cUxQbGlxQVdDWGZ6Y0VqWnpCYnpXLTFPSFFjSEQ1RGJScllqNVN0eFpEZUJkeHBpQlkwcTU2SkNDLXgtQjMwV01PczZnMzFtLTRmclFqcWpmTUZfUG1oMmVXWTVSTjZnaDRBcHdFZlBnbzFBV3BYdUp6RndqQllJRVpLMnUyYzludGxQUGNMSl9iVVR6SzIzaHlULVl1SVNqQkE1cWJMb3g4bGdXMlQwN2cyYnNvMTN6dC02TkRsb240TlNwTk9ReVBuM1BqWDhtNWtKZmJhcVc3NFdNQTQyQjdDWnk1MTN3QVF6ZHBxVnhOR1pIUEpxVHN4RjJNQmNBLVNZY3pISVh2VlBUZ0xvbE5fY0oza1pCSG5xdVpUYktPNmMwRzNGX0NMLVlPYk9oQnNSejE2eXhxV2MxNU5lNEI1V29IbWlEQ3M0LXQ3QlZqa0xuUDZycV9uOTFtdVAxNmxQOFk1Z01Cbko1Uk1ILXlUM3dvTHZtWVZjOVpmZ0NrNTFBRDQxb0pOemo0YmxfOE9VZFFaYk5aaWNkUEczVl9IM2dmWTRmd2wzcWV3QWpqTXc5c05ydzV5dTh0SW1hWnJEQWYxdzlOS1ZWNW5lM0RlMmw2TjRob1hEWFA3ZlhXS1BtSjI5OUJxN0pxd2NnVmJnTHJhSDA0cndlNlBfUFJ5UVJ5T2k4MEN3ZVhTcm9ISEtLY1JyRnA2RmhTcmpqZ0FuaWFZam9NODV4ZGFWS2ZyeE5IWG9KNWljS0VyelU0UGk5SkM3dVpVajBCSTZjM2hyU3ozSzlPb3BKcjZkWlJTRFBtYVlTeWxfWS1TLU1Ca04wTVFVQ2czanZDLUZkeV9vaE5OWXYwOGF4UQ?oc=5"
           }
-        ]
+        ],
+        "title": "【新股IPO】微億智造3275重新招股 集資額縮至最多5.8億元 入場費1585元"
       },
       {
         "zh": [
-          "傳Meta AI代理Muse混淆用戶對話",
-          "銀行餘額及私人訊息遭誤揭",
-          "事件引發AI隱私及數據安全疑慮"
+          "貝萊德在香港推出代幣化貨幣基金",
+          "匯豐將RedCoin擴展至財富管理業務",
+          "代幣化金融產品在地化應用正步深入"
         ],
-        "en": "Reports suggest Meta's AI agent Muse accidentally mixed up user conversations, inadvertently disclosing bank balances and private messages to other users.",
+        "en": "Asset management giant BlackRock has introduced a tokenised money market fund in Hong Kong. Concurrently, HSBC has expanded its RedCoin program into wealth management to support tokenised fund access.",
+        "sources": [
+          {
+            "name": "明報財經網",
+            "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxPV2RuX1UtVEtBTTA4aDhiWW5uUllxZ2VMQlJwV0p4TW5pMWlNWk1yTTNkNGlOTGFURDJseDlLYi0wVlJ3cnRCVnZJcGFxNjBRdF9nWENtdnI2YTU2YTgzNEJ1dWpuOUE4cV9IZURzRTZIMmJFSldBRUVQRGdtRXlvRkJoMUt5bi1zanJELTgwbEpJRTV2a1FxTU1HSDVQRjNtSnpidnMyRVllQVlLWFpwVG00aDEtbGNQQU1LNzRVWG40TzRxWkFVbTI1dTduTkRyYmNNWldLQTY4UDY4ZEpCUDdaSURjQmFGZmFvWEdlN1FJWlRFX0JGaGVFSHUwUQ?oc=5"
+          },
+          {
+            "name": "Hubbis",
+            "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPdzJGOF9WTXhLWGJKX1VzbjNGcE42RzFvYVBPV3dRNWowTGgtVmdVcWtlN0pQajhLeHpUcFZaVTRFTlBYZ1hqTldJbnFTVTg4Rl8ta0VUcXBKbFBhZFM4cjZkQTVrTnYyNFZIeU5zMFNMX2RadlhiMWFwVEptaEZhMnBQb0o2dkphV0hGN1QyZ1F5T1JkeFJ2eVBGTTlvOWlqVktGd0hBVG03Y2lwTi1XMQ?oc=5"
+          }
+        ],
+        "title": "貝萊德港推代幣化貨幣基金 - 20261123 - 報章內容"
+      },
+      {
+        "zh": [
+          "Anthropic首次公開招股程序引發爭議",
+          "限制投行投標人手並禁止接觸對手",
+          "罕見實施零超額配售手續費安排"
+        ],
+        "en": "Investment bankers have voiced concerns regarding unusual listing procedures for Anthropic's proposed IPO. The arrangements impose strict limits on underwriting headcount, prohibit contact with competitors, and feature zero greenshoe fees.",
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMizANBVV95cUxQUGhqN2lDM1dKQmFQek13cWZXaTZPLWxMWHlLazB2d1BZb29SQWhqT0Vxby1tV0NvSXZuSnoyUk1uNVZlT1NiWFYxckkxNUdPRFBTV0xnenFYMWRYSmxlYVhmQnduc0xYSFM5akN0SFdBMUNCa2xJeHQyQ2pEU3h3NDR6X3hHMkNMMHhvaUJsR0FWajFhb1ZTejdzTFRNQ2FTYW42TWplLVE0QUlVUlFCU1k5ektpbzMwTDRPWlo4QVo0aVpvaUpxUUNGS0VBUkpMQlVnbzZzR1NiUlBhSDB1YVpWMUYwcEdONTBna2Vxd2RFaEVoZ1RMaENNOUFmVGZQbkZ4N1BKalZ4SDdpNDNDQW8xYjE1MHliMjlreGxDMDBNaW9udHc5VXp6cldzTUJkaTd3Znlrc3RlWGRuWUphRGREX3dsd1MtOXZvQlU2SHdlbHM4RjVFaG95YXI0YUgwdFRObDBUbmVEQTc1U1pqYmxFM3dod3Fvc0xQeWFqcTRsdXFEUTVPVGZHbzhCWWljTXhFZThVZ09iMkcyOGx3YlNDMTBHSnB4R0o5djltQU9nUlhNWV9Dc3I3cGloZ0FfeEpGMjQtVUhrUFpS?oc=5"
+          }
+        ],
+        "title": "【Anthropic IPO】罕見上市程序惹投行微言 限人手、禁接觸對手兼零超額配股費"
+      },
+      {
+        "sources": [
+          {
+            "name": "香港經濟日報HKET",
+            "url": "https://news.google.com/rss/articles/CBMizANBVV95cUxQUGhqN2lDM1dKQmFQek13cWZXaTZPLWxMWHlLazB2d1BZb29SQWhqT0Vxby1tV0NvSXZuSnoyUk1uNVZlT1NiWFYxckkxNUdPRFBTV0xnenFYMWRYSmxlYVhmQnduc0xYSFM5akN0SFdBMUNCa2xJeHQyQ2pEU3h3NDR6X3hHMkNMMHhvaUJsR0FWajFhb1ZTejdzTFRNQ2FTYW42TWplLVE0QUlVUlFCU1k5ektpbzMwTDRPWlo4QVo0aVpvaUpxUUNGS0VBUkpMQlVnbzZzR1NiUlBhSDB1YVpWMUYwcEdONTBna2Vxd2RFaEVoZ1RMaENNOUFmVGZQbkZ4N1BKalZ4SDdpNDNDQW8xYjE1MHliMjlreGxDMDBNaW9udHc5VXp6cldzTUJkaTd3Znlrc3RlWGRuWUphRGREX3dsd1MtOXZvQlU2SHdlbHM4RjVFaG95YXI0YUgwdFRObDBUbmVEQTc1U1pqYmxFM3dod3Fvc0xQeWFqcTRsdXFEUTVPVGZHbzhCWWljTXhFZThVZ09iMkcyOGx3YlNDMTBHSnB4R0o5djltQU9nUlhNWV9Dc3I3cGloZ0FfeEpGMjQtVUhrUFpS?oc=5"
+          }
+        ],
+        "title": "【Anthropic IPO】罕見上市程序惹投行微言 限人手、禁接觸對手兼零超額配股費",
+        "zh": [
+          "【Anthropic IPO】罕見上市程序惹投行微言 限人手、禁接觸",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
+      },
+      {
         "sources": [
           {
             "name": "銀行新聞 GN1",
-            "url": "https://news.google.com/rss/articles/CBMihwNBVV95cUxNU1d3LVBZdWNiWU9OeHdaM1RJWjhFckZISFVpUmlXdzVoY1dGa0Rac1k1eFFLOWFGYVkxaEw1YXdpR2dTM1NqVGRrOE1OS2ZBa3BnNFQ4Z1JZTERQb29fLVJqcVdlQWxPWU9odjhfVlFWbVlTVEl0c2NFLVlXQlJNbWE5YW1LOXZxUDlTM1VCcjR2N3YtV2lsN0xuVWFRb25vOWdyM29EeGhBaG44WEtJdHZKOEo2bUxnMEdxblBUdlBYOFhYN01hSzdsM3kzaTR0OS04bXpEeWhjZUxycnNPQTNqVTM2MnkxQVp4cDUzcThKanFEOWg1NVU2ckIxQTZJZ1Y5VTZZeEJCazktcXNkSDFmZFVrM0JoeHYwMU1hUVdwZWNPcGZEcEdST0pLcGc3VTBJVFBkLU9VdlNfdUZlelk1TTZZWmgweDFlcWhIS1VaRGpYTnktOXRaMXlaWkZZeEItOXBrNHdqS09pNnVCQVAyV2JoQTVRMER6aHdLOTFzN2dHcG9R?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOaHVTQ0lBTGlDdjJFTWdpTF9SS1ZOd05DZHlqRm9PYlBXRU96bDVmaFFCaEZzbVNOdHdVN2Y4RDdfSFctWFJFOTVTSXJPV1JsaFhPSmpiNUdFQ1lqRGRpdWRpRUhQcldMOVFWSC14Q0pYSXpYZkI2OVl2R0RFT25hUXQtY2d0aGs1ejlQLTBxblhuNzNmQkt2WEpkSnB2cFE0M3dsWHlKNm9ab0I4YzlRNVotMC02aGd6QzZ6bnNCMFJ5eW1UVE94dXF2OVFKblhQNHl0cU9R?oc=5"
           }
-        ]
+        ],
+        "title": "新股上市日期備忘",
+        "zh": [
+          "新股上市日期備忘",
+          "（只有標題，未有內文）",
+          ""
+        ],
+        "en": "Headline only - this feed carried no article text."
       }
     ],
     "smalltalk_hk": [
       {
-        "headline": "Baidu Fined RMB 500,000 for Illegal Concentration in YY Live Acquisition",
-        "body": "China's State Administration for Market Regulation fined Baidu HK RMB 500,000 for completing its acquisition of YY Live's business without prior antitrust approval.",
+        "headline": "Election Committee Subsector Elections Conclude",
+        "body": "The 2026 Election Committee Subsector Ordinary Elections recorded a 98.79% turnout rate with 5,640 voters casting ballots. Chief Executive John Lee congratulated the winners, citing healthy competition among candidates."
+      },
+      {
+        "headline": "Baidu Fined Over HK Acquisition Violation",
+        "body": "Baidu has been fined over HK$580,000 in relation to an illegal acquisition in Hong Kong."
+      },
+      {
+        "headline": "Global M&A Activity and Tech Deals Progress",
+        "body": "SoftBank considered a $1 trillion bid for SK Hynix, while Amazon approaches a deal to acquire AI startup Decart. In banking, UniCredit launched a €34.5 billion cash-and-stock offer for Banca Monte dei Paschi di Siena."
+      },
+      {
         "sources": [
           {
-            "name": "etnet 經濟通",
-            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOUzhweGh0NGkyamJYdFRXOTQ5VlNwbmJLR3VnMlNfRlFhTF9hVldJOGNhX3ZaWUxQbzlMYlEzOHZmbGRKYnN6N3QwQzdsMjV5c09OME44VGwwVTFRVEZ3RjVCN3d0anVxWU9ocW9XOVFVMlFiampUSDhVRXBYQUJydkVwRURsekN3emtnM09mcDNobzhEWERPanRnREc1WDZxdmp5bURPaHJzbXls?oc=5"
+            "name": "news.gov.hk",
+            "url": "https://www.news.gov.hk/eng/2026/11/20261122/20261122_225414_935.html"
           }
         ],
-        "title": "《中國監管》市監總局：百度香港收購歡聚集團部分業務違法，罰款50萬人幣"
-      },
-      {
-        "headline": "Masayoshi Son Reportedly Considered Acquiring SK Hynix",
-        "body": "SoftBank founder Masayoshi Son reportedly weighed an acquisition of South Korean memory chipmaker SK Hynix to expand his technology portfolio.",
-        "sources": [
-          {
-            "name": "信報網站",
-            "url": "https://news.google.com/rss/articles/CBMilgJBVV95cUxNN0szVTBLNkR5WnM3WEVOLXZmS25NTmRqTjY5dGJoNmM3VnVjVmF1Wnd6UkhMMGdCMFZyRlZ6ZDZzczI0NUFUSXNObUZoeVdPZWpOdGpnMzhpcURlVlc3cHQ4RFd3WDNoM25Uei0xS1ZCM21BNmM0Q19nYVRVLUNKLUUxcmthLTVhRW43UlRMUUVfWk9WNmo2T2UzZjhfYnhVcmFOSGhEQVJsLVRiQWplNTFYYjJBMENRaDl3Tkp3dkhpa0VEUWJfamd4cVVPMG1KYjMxeU5BX3lod0s1MWFPRW5oOXBNNHFwclJ1U2FkQ0ZhWFRFODJwYjk1T2VlZXZZbGxJWUhtcjdTLUxCMVN5SWptRWFuZw?oc=5"
-          }
-        ]
-      },
-      {
-        "headline": "Nvidia Reportedly Seeking $500M Acquisition of Inception",
-        "body": "Nvidia is reportedly planning a $500 million acquisition of Inception to advance its open-source AI models and robotics development.",
-        "sources": [
-          {
-            "name": "香港經濟日報HKET",
-            "url": "https://news.google.com/rss/articles/CBMigwNBVV95cUxPU0NqdkVnTTE5RUVSRXVRQTNycHpodEQ3QlZ3cUVCdWlGSlZESHFqb0lGSFA5TEtreHg1czR6alNJSElXdXlDcG53Qm1zT2xGWWwyZVRoTnIyQXJMWS1Gc29ra1dwa2txTGtvcFJIdE5yM0Y0emJqei1iQ2hDTkNMM25NOGVOclJJc2lhUkRtU2pRbnl3dHhIcjd3bmsxVFhRZF91a0F4bndCbTNXMElMQ1BOUGs5RWdXMDJIVVpEWlo5NktkMVRSeUM1LXZhWFpoZDhLUHZtZTRleGpJUUZZelZqaTVfdGJXNkhxemZNdDNGU09BSFdBNjJ2QWF5cWI3S05vZkNmUi1IeHN6UEZtTWVSdHU3azQ5SDJnQ1BKRjVVanozb2xJcDB1SEh0TXNxQkg4ZHlBc0NwTGxnMGY2dW5CYUFYbWpvdU9HazdWMW4wdHNWdno2b3V6NTkxanNnTU5qSllXNHhBNjlobnY3cE5FRXFHUHpqa3JoTFZSQlpuVm8?oc=5"
-          }
-        ],
-        "title": "【NVDA】英偉達傳擬斥5億美元收購Inception 發展開源模型及機械人"
+        "title": "Vote count completed",
+        "headline": "Vote count completed",
+        "body": "A total of 5, 640 voters cast their votes in today’s 2026 Election Committ"
       },
       {
         "sources": [
           {
-            "name": "信報網站",
-            "url": "https://news.google.com/rss/articles/CBMilwNBVV95cUxOR3lqY29xZFFybjl5bU9WWFJFVnFRYU9FUGpBQVYzbTZGdHRVZlV4eVA1QU14VHJTb3AtbG81ckRmVGZ6dy1WTC15OG9Fb3R6RkY5cHBCRzA0aWtkS2xfQnF5dmpwbkVPcDM0R0dncDY3RkNkMFJOaUd5TE1wQlhDdEhPbzlnODJOMGNzcTN2aWJLTDNvNEtxNmpkQWhhTDV4cFlfaTRCd0dCLXdJTWZGQ0IyUzlPRW9WWlhuaDFMelZ0OVppRGVFOVBOLWpkN2ZubHAwVG4zaDhra2J3YzFwNXhBS3lFNjlEc0xGdDB3dTNDTkY0RDhnWk1UX2h4MVgxd2kzNHMxRjVYSzF0SHpVcFRjV3FLZkUyNmk2M2lKZ25VeXliWHJYRUQwdVdjWjUtQnNLdU8yNk9BOEtHR2ZjOEtKR3J2NlpmR1lWX2NkTkZjQURuUlF3RkZ3VW00bEJtX1hBTUQzajZoNjJWVzB2b1BsWFptUGc2VFBEd0FEemV2VFJyRnVBWEpFWFBmakZ6TVAzaENZVQ?oc=5"
+            "name": "Now 新聞",
+            "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9rakZDcmJfQ01NZE5ZbFFLMnV4cEwwQUNWNUpxYVZfRDZlUWFzTFFyVnlZcVZVZ0YtSHZFRGM0ZF9OeE81REw1ZEJPT1p3MFl2MW5SMzdFeEl4WFl3bUZ4VFJR?oc=5"
           },
           {
             "name": "香港文匯報",
@@ -819,183 +875,77 @@
             "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9ZUkltbzBlQVZ6SDFiQ19yc1Ftc0ljZy1VbnBMeG1lbzE4aXZ4ZWtiY0QtNVlURHBXbnE1Wl9UTnZVMlh2dWRGNHE0M3QxbnVxdlpaazdNVmc3NllEMXFHTFVTdUlYMXo0MFpmMDBZQQ?oc=5"
           }
         ],
-        "title": "立法會強烈不滿和堅決反對美中經濟與安全審議委員會報告",
-        "headline": "立法會強烈不滿和堅決反對美中經濟與安全審議委員會報告",
-        "body": ""
-      },
-      {
-        "sources": [
-          {
-            "name": "etnet 經濟通",
-            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOUzhweGh0NGkyamJYdFRXOTQ5VlNwbmJLR3VnMlNfRlFhTF9hVldJOGNhX3ZaWUxQbzlMYlEzOHZmbGRKYnN6N3QwQzdsMjV5c09OME44VGwwVTFRVEZ3RjVCN3d0anVxWU9ocW9XOVFVMlFiampUSDhVRXBYQUJydkVwRURsekN3emtnM09mcDNobzhEWERPanRnREc1WDZxdmp5bURPaHJzbXls?oc=5"
-          },
-          {
-            "name": "Yahoo 財經",
-            "url": "https://news.google.com/rss/articles/CBMigANBVV95cUxPemNJeGJwQnhHT29HcHlaNnRTOVJ6UEhLVXRCM2RoM0FEOV9uSVNNT3lVYW1QTGVkaFhUMzNJRGNYRFk5bnE0WnlISkJvUFpxdHVLdS1rSGstWnhpUGVUZ0VDa0pYaWt4NVFMRjU0eXlEbTZab0h5ZkFSSHI2VVc2SjZoQzJpcW9jejdZbmV6eks2bllUWFNsTjJ4am1NSkhUZzdLX3lMUjFSODNpZjRpc1M1NnlBOVFfRDRqT1duMmJ5eWpIWjhWN0pYMnFIOFhyUWJJU1hTVEcyMktaZ0FPUlZZVUhqTEp6X01OSGFfaGhBMkJ1Sk1SbWR3TThXRV9nTXdPXzlqQkVYd2hyaTRnV0ZmcTdseENHaUV6T3BDUUpQLWVvWDBpNEY3cTd1dV9PdDRzcHprYVpNX3dXWjZPcWcwVFl5OG9zM1Q3TnpDeE9VZV9Dc2FDN2J0c2hjUUhQOGJqVWJ5WW1oMXJUVmhOTXhNYmRESDB5XzNQMGU1WE0?oc=5"
-          }
-        ],
-        "title": "《中國監管》市監總局：百度香港收購歡聚集團部分業務違法，罰款50萬人幣",
-        "headline": "《中國監管》市監總局：百度香港收購歡聚集團部分業務違法，罰款50萬人幣",
+        "title": "立法會強烈不滿及反對美中經濟與安全審議委員會報告",
+        "headline": "立法會強烈不滿及反對美中經濟與安全審議委員會報告",
         "body": ""
       }
     ],
     "smalltalk_sg": [
       {
-        "headline": "Singapore Man Convicted Again over Nine-Company GST Fraud Scheme",
-        "body": "A 43-year-old man previously jailed for an $11.8 million government grant fraud has been convicted again for orchestrating a GST refund scam through nine companies.",
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/man-behind-s-11-8m-government-grant-fraud-convicted-again-over-nine-company-gst-scam"
-          }
-        ],
-        "title": "Man behind S$11.8m government grant fraud convicted again over nine-company GST scam"
+        "headline": "MAS Issues S$100m in Tokenised Bills",
+        "body": "The Monetary Authority of Singapore has issued S$100 million in tokenised bills utilizing wholesale central bank digital currency (CBDC)."
       },
       {
-        "headline": "Primary School Boys Spend S$159 to Treat Migrant Construction Workers",
-        "body": "Eight primary school boys in Singapore pooled $159 of their own money to buy food boxes for migrant workers building the Cross Island Line.",
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/thank-you-for-building-singapore-8-sg-primary-school-boys-spend-s-159-on-food-to-thank-migrant-construction-workers"
-          }
-        ],
-        "title": "‘Thank you for building Singapore’ — 8 SG primary school boys spend S$159 on food to thank migrant construction workers"
+        "headline": "MAS Outlines Agentic AI Framework",
+        "body": "MAS proposed 'Know Your Agent' protocols and an Agentic Money Sandbox for AI-driven stablecoin payments, while warning users against sharing financial login credentials with AI agents."
       },
       {
-        "headline": "Kraken Parent Payward Partners Singapore Gulf Bank for 24/7 Settlement",
-        "body": "Payward, the parent company of crypto exchange Kraken, has partnered with Singapore Gulf Bank to enable round-the-clock fiat payment settlements.",
-        "sources": [
-          {
-            "name": "CoinMarketCap",
-            "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOWUZrTUk1Wm13aVNPRFc4OTdIbl9ITTFsMmxDVi14OGY4MHZfbUhvQzlubGk3VVZ0dWd0OHFXa01YVnd3RDJtbkRNdnZLUlZ3VmV5NWpGWjdLTVFhQjJMMUtub2pzQlkteC1FcWM1ZEFqWnMxc0w2SDJlckExbFJDVlRzbkNpRmlERXNlMlhqUnRCZmFwRGRj?oc=5"
-          }
-        ],
-        "title": "Kraken Parent Payward Taps Singapore Gulf Bank for 24/7 Settlement"
+        "headline": "Senior Singaporeans to Receive CPF Top-Ups",
+        "body": "More than 782,000 Singaporeans aged 50 and above will receive up to S$1,500 in Central Provident Fund retirement savings top-ups by December 8 under a S$1.04 billion Budget 2026 scheme."
       },
       {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/sm-shanmugam-visits-6-y-o-boy-whose-parents-were-killed-in-tampines-accident-to-help-with-way-ahead"
-          }
-        ],
-        "title": "SM Shanmugam visits 6 y/o boy whose parents were killed in Tampines accident to help with way ahead",
-        "headline": "SM Shanmugam visits 6 y/o boy whose parents were killed in Tampines accident to help with way ahead",
-        "body": "SINGAPORE: On Oct 29, an Audi crashed into another car as well as a motorcycle alo"
+        "headline": "Two Charged Over Fake MAS Scams",
+        "body": "Two Malaysian men were charged in court for allegedly collecting cash and jewellery from victims on behalf of a syndicate posing as MAS officers."
       },
       {
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/thank-you-for-building-singapore-8-sg-primary-school-boys-spend-s-159-on-food-to-thank-migrant-construction-workers"
-          }
-        ],
-        "title": "‘Thank you for building Singapore’ — 8 SG primary school boys spend S$159 on food to thank migrant construction workers",
-        "headline": "‘Thank you for building Singapore’ — 8 SG primary school boys spend S$159 on food to thank migrant construction workers",
-        "body": "SINGAPORE: Eight primary school boys in Singapore have shown that appreciation doesn't need a big budget."
+        "headline": "Joint Funding for JS-SEZ Skills Study",
+        "body": "Johor and Singapore will jointly fund a RM220,000 (S$69,000) study to identify essential skill sets for upcoming jobs in the Johor-Singapore Special Economic Zone."
       }
     ],
     "personal_hk": [
       {
-        "headline": "72歲女子大埔失蹤 警方呼籲市民提供消息",
-        "body": "72歲女子蘇秀珍於大埔完善路最後露面後失蹤，警方呼籲市民提供消息。",
+        "headline": "寶勒巷致命交通意外 司機涉酒後駕駛及危駕致他人死亡被捕",
+        "body": "尖沙咀寶勒巷私家車衝上行人路致一死三傷，38歲司機涉酒駕及危駕致死被捕。"
+      },
+      {
+        "headline": "【香港天氣】天文台：日間氣溫徘徊23度、多雲有陣雨 星期三及四市區最低氣溫16度",
+        "body": "本港日間多雲有陣雨，周三及周四市區氣溫預料將進一步降至最低16度。"
+      },
+      {
+        "headline": "國際刑警大會香港舉行 機場特警組全面部署迎賓",
+        "body": "國際刑警大會在港舉行，機場特警組已完成全面部署以執行安保迎賓工作。"
+      },
+      {
         "sources": [
           {
             "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1878714-20261121.htm"
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1878852-20261122.htm"
           }
         ],
-        "title": "72歲女子大埔失蹤 警方呼籲市民提供消息"
-      },
-      {
-        "headline": "陳茂波率廿多人代表團 深夜啟程前往英國荷蘭訪問",
-        "body": "財政司司長陳茂波率領政商界代表團訪問英國及荷蘭，促進商貿及創科合作。",
-        "sources": [
-          {
-            "name": "RTHK 本地",
-            "url": "https://news.rthk.hk/rthk/ch/component/k2/1878693-20261121.htm"
-          }
-        ],
-        "title": "陳茂波率廿多人代表團 深夜啟程前往英國荷蘭訪問"
-      },
-      {
-        "headline": "天氣｜天文台：中午市區氣溫約20度 下周中期又降溫 最低約16度",
-        "body": "本港市區氣溫約20度，天文台預料下周中期氣溫將進一步降至最低約16度。",
-        "sources": [
-          {
-            "name": "港聞 GN3",
-            "url": "https://news.google.com/rss/articles/CBMiiANBVV95cUxPYWsxQXlLdFFrOGI3NklONm5Ta1RmOGV6NDFERTN3UFNoSnVRZmdFaWdRaDA0cEduSkpiTVlSZjVFclFKWUR3ZmZibDJ0azhLVjVDN0pKMXp1TWxYZGVUTmFkUnp6R1dGQkdqdDRKUkFpeXJWTWVrdVZFT0ZsYVU1UThxOHh4Q3EzNGoxWUVHVzBuNjZCOXA5NHpKTkJoNm1KMGRKbmtWZEpEaUw1eG5KT3hRS3lMVEl0ZlJVME9INVloekxvRkNSTFBkLXFTSG9jc096OWg2Z3pTUmJfU3lqYnRZN2VJTm9vN0dpdmNkTTBaN3dDVFhVRW0zVGhHUGJzVmJmN0QyUjlKeGpveUktU2lpd2UzWFNLdlJQV2Q0X1ZnX091Tk51SzE5Q25RdXo0RTRvVC1WbExJdzctMGxRdE81bXk3emQyWnp4WDBIbEdjSWxkd3FSRVAxRzFjNl94T0Y0aGdaR1hGZ2tYRjR5T3l5NDFPVzFEZWRrckEzMmtVOEJBanNLTA?oc=5"
-          }
-        ]
-      },
-      {
-        "headline": "香港體育爭議解決高峰會12月1日舉行",
-        "body": "體育爭議解決高峰會定於12月1日在香港舉行。",
-        "sources": [
-          {
-            "name": "www.hkcna.hk",
-            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE95c3V2Ym41RHp3NE5LSzFTbHg3WEJWcy1QcEZaMkhfcmx3M1ExYjg0dDZnR0lpdnFjdG1tRlZDZzdvZmNZNld2TmJoRzVsLWhid2xJMkt3SERTWGdXbmFzWEMybVlacndhV242VGlDVQ?oc=5"
-          }
-        ],
-        "title": "香港體育爭議解決高峰會12月1日舉行"
+        "title": "選委會選舉完成點票 經競逐產生723名選委包括多名前高官",
+        "headline": "選委會選舉完成點票 經競逐產生723名選委包括多名前高官",
+        "body": "選舉委員會選舉結果全部出爐，產生723名經競逐奪得席位的選委會委員。 當選者包括多名前高官，"
       },
       {
         "sources": [
           {
-            "name": "大公文匯網",
-            "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE95RVRFazFfRExxemxOQS1LSWRzVnoyeFNqYTg4UHVXMmp6anlPOUJnS3B5a2w2ZXlwMTdfUlVVM0VkOXhuY0pUUzhtMWllRVV1NXR1d2dzS3oxbEJvVHc4RjR1aDRldHd1V0c1amR4MzAtcWNG?oc=5"
+            "name": "港聞 GN1",
+            "url": "https://news.google.com/rss/articles/CBMixgNBVV95cUxObUF0cTVuenZ1dElKSE5XdnY0ZzJPZ29ENTY5UGhIcnpkTUt3NWxuRkljUEhJWDhaTHJKbVNiSzRnc25iSHlpQnJETkRCYjFRZlpKOVoycEFFeUdRczZOQ0ZzNnlDME1lWG1QOUpBOUJqdUpJeVBnN2RqTEFLMElCQmJ2WWFlc05fR01BRl9sN3l4N3Fvb1hTMklTZGp5ZzVLWVhuRVlMUE0tQ29TSGxQcUs3V2ZEdWd0dG5tTnUtdWZ1bmhoT2pHVzR3N3RfeFEycnRXZV8tWURMZzNoN1VNaDNEc0JWQjJiNTBrZnRNOURCejM5MWdPQ0dtX0xMdGpyWEtobFBfR05CWDNPd2VOZ05GQUtJWExGNXk4MElMNDJ4czdPTGtrdGZWOEdNVkZXNTNHYl9BUmZwV0EzaG1LVnhXQnY5bS1acWx4ZlVjTXFRRTVjWW5DbDdNQ1Jfc3lOeTFhMWhZYTVQbVEwWER6TDY5Zk84TUxmYlZ6VEV4eFludHlpNmZFQmRxaEZmR0NSSUZ1d3NTM09tcVpfNXZkZXFwRzN4TVFJLS0tdll6Sm96S2pldFFsTm92X212Ujg0LXptTjZB?oc=5"
           }
         ],
-        "title": "都市煙火氣/食物味美人情味濃香港珍貴旅遊賣點大牌檔文化獨特市民遊客盼保留- 港聞",
-        "headline": "都市煙火氣/食物味美人情味濃香港珍貴旅遊賣點大牌檔文化獨特市民遊客盼保留- 港聞",
+        "title": "交通執法",
+        "headline": "交通執法",
         "body": ""
       }
     ],
     "personal_sg": [
       {
-        "headline": "SM Shanmugam visits 6 y/o boy whose parents were killed in Tampines accident to help with way ahead",
-        "body": "Senior Minister K Shanmugam visited a six-year-old boy orphaned by a fatal Tampines crash to offer support.",
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/sm-shanmugam-visits-6-y-o-boy-whose-parents-were-killed-in-tampines-accident-to-help-with-way-ahead"
-          }
-        ],
-        "title": "SM Shanmugam visits 6 y/o boy whose parents were killed in Tampines accident to help with way ahead"
-      },
-      {
         "headline": "Jasmin Lau: Singapore considers extending financial aid for retrenched workers and longer training stints for fresh graduates",
-        "body": "Acting Manpower Minister Jasmin Lau announced plans to review financial support for retrenched workers and structure graduate training.",
-        "sources": [
-          {
-            "name": "The Independent SG",
-            "url": "https://theindependent.sg/jasmin-lau-singapore-considers-extending-financial-aid-for-retrenched-workers-and-longer-training-stints-for-fresh-graduates"
-          }
-        ],
-        "title": "Jasmin Lau: Singapore considers extending financial aid for retrenched workers and longer training stints for fresh graduates"
+        "body": "Acting Manpower Minister Jasmin Lau announced the government is reviewing employment support to extend financial aid for retrenched workers and structure year-long training for fresh graduates."
       },
       {
-        "headline": "Singapore Transport Minister Jeffrey Siow broke ground on Tuas Port's third and largest finger",
-        "body": "Transport Minister Jeffrey Siow marked the start of construction on Tuas Port's third finger featuring 21 mega berths.",
-        "sources": [
-          {
-            "name": "CPG Click Oil and Gas",
-            "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOemVJZUtpNUJwZUhFM2ZPSG41eXJTWTJhanlyS09USlplVUpBbkN4ZnRVOVVaOXZPa0thMXNpbzdRWUlPY2dvOWt4MTFhaV9vRm03SmY0N0pNZ2VOaFZHM1dMV1pmbjR2Z1pnNFZMSGtwS19TOWtRRjlTNHZzX2J3WHlNNmNkSDNjZm9tWHRILTZJYWgzTnl1NmN0emt1WHBtSENSQw?oc=5"
-          }
-        ],
-        "title": "Singapore Transport Minister Jeffrey Siow broke ground on Tuas Port's third and largest finger, almost 400 hectares of reclaimed land with 21 mega berths 23 metres deep and an 8.6 km wharf that will start operating in 2028."
-      },
-      {
-        "headline": "Singapore and China’s prime ministers meet in Beijing; PM Wong expects 20 cooperation agreements at JCBC",
-        "body": "Prime Minister Lawrence Wong met China's Premier in Beijing ahead of signing 20 bilateral agreements.",
-        "sources": [
-          {
-            "name": "联合早报",
-            "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNWEp4akNBMGh2VDA5Nm5KT2Zld3JFYWE0ZHFkd0RhN2xDdWxWTnpsOC01RkVjaUhMdFRVQXBraGdQMkRtdTRZRVJPQjNNYmxhR0ZfLUd6c2R1YkVzMTZjcTdpZ0ktV2lHdW9yX3hENmtJSFRCWEd2YUxocUp2czN4Y2Rtc1Z0YmJkbjBZSnhoajlkWmxKWXFuY1BnLVFpVE9lRTVGZmpkODA1WTRqSnpJcUVlaG9BYzJUaHZ2SlFab2FaRFREYVlaS3ROUm1qb2FKNnI2Z1otdw?oc=5"
-          }
-        ],
-        "title": "Singapore and China’s prime ministers meet in Beijing; PM Wong expects 20 cooperation agreements at JCBC"
+        "headline": "Singapore haze law: Amendments will be made at next Parliament sitting",
+        "body": "Legislative amendments to Singapore's transboundary haze law are scheduled to be introduced at the upcoming Parliament sitting."
       },
       {
         "sources": [
@@ -1007,167 +957,154 @@
         "title": "Mark Carney seeks greener pastures across the Pacific—but at what risk?",
         "headline": "Mark Carney seeks greener pastures across the Pacific—but at what risk?",
         "body": "The grass may look greener across the Pacific to Mark Carney ."
+      },
+      {
+        "sources": [
+          {
+            "name": "Yahoo News Singapore",
+            "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOcWw1SXNLdUw5bWhsVzJXZkpUU1VUQ2hWcTR1NndVQmxDWkFjVWRwODZLU2V2c3FXcmEybVlGUFBpMXd5YzdHcW1Za3BiclZyVGdmU3N5NkVlSWRvZzNNZmZfOEkzaEFRa3JlUzVrYWFtVjRXa3RJOHEwYzZySjMwM2hEQmM?oc=5"
+          }
+        ],
+        "title": "Mongolia's power struggle deepens as Parliament approves president's resignation",
+        "headline": "Mongolia's power struggle deepens as Parliament approves president's resignation",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "The Independent SG",
+            "url": "https://theindependent.sg/johor-and-singapore-to-jointly-fund-rm220-000-study-on-skills-needed-for-js-sez-jobs"
+          }
+        ],
+        "title": "Johor and Singapore to jointly fund RM220,000 study on skills needed for JS-SEZ jobs",
+        "headline": "Johor and Singapore to jointly fund RM220,000 study on skills needed for JS-SEZ jobs",
+        "body": "SINGAPORE/JOHOR: Johor and Singapore will jointly fund a RM2 20,000 (S$69,"
       }
     ],
     "juicy_hk": [
       {
-        "headline": "蔡天鳳碎屍案開審 被告出庭自辯引發數百市民徹夜排隊旁聽",
-        "body": "蔡天鳳碎屍案被告於法庭自辯，吸引數百名公眾人士排隊輪候旁聽席位，甚至有市民徹夜通宵排隊。",
-        "tag": "奇案人情",
-        "raise": true,
-        "sources": [
-          {
-            "name": "港聞 GN3",
-            "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBfa0Jvc1Vnb3FKY3RjTkttcTVZNUFVQjFXSll0UFAybkhaWFdZdU5zMy01b2lCdzBYOTN5QUVzZ2QxV0YyZTE3TFFaRnlVdW9zRVE?oc=5"
-          },
-          {
-            "name": "奇案 GN",
-            "url": "https://news.google.com/rss/articles/CBMisgNBVV95cUxPaXhqMHdMU1BETkRIVkhjVjlXX29qWHRtWjI4QzJ6Y1VJN1N4S2h6aFdXcklTelZGVFB4bjJFUlZxdVVMSHNjREtjQk8wN2h6bWlseGc3alV4WC1Uc1c2R0tPMGE3TWs5T2lidzJWX21tTHRPS0JuRVF0VWU2dXYzQURoeURXcnNwakk2VlBhOEFQNEg5YmNfNV9nbHdaNVpzdWJ1RE9rdmdGeDNYV2ZOWllIUWFWU2pVYUFkSWZTT0Y3U2h4d1Q5UGIwaVljVEFZbGR6NWk5b1RFclkyb2UwSER3WnY2RUZZM3NhMHVrXzZpNXBmUndIOEZNaDI4YXk0UXFWM0NxOHJLMGdlZWx3QjJrVFdWSW1BVlFza2h0YXVna2xIQVRiSGZNR1lhbmN4Qm9LVlhrclFNVWhHS2kwbnpFWXZGTmVxV0VQTGwwZV96cTBoWUdmdRozQlRTUW1TWGV0dmtNMHA4NWZFREZMcnEwZ1lRSVBOYUdBYzRSb1VTaHJZNXJ1S29UTkVKTzk0VEpRTWJhZGx5OEszcEFoc09mV1FmaXEzYjBaNElWN19hZw?oc=5"
-          }
-        ],
-        "title": "蔡天鳳碎屍案"
-      },
-      {
-        "headline": "男子於酒店謀殺瑜伽導師前女友 經審訊被判處終身監禁",
-        "body": "一名32歲男子四年前於酒店房內刺死瑜伽導師前女友，高等法院陪審團一致裁定謀殺罪成，被判處終身監禁。",
-        "tag": "奇案人情",
-        "raise": true,
-        "sources": [
-          {
-            "name": "HKFP",
-            "url": "https://hongkongfp.com/2026/11/20/hong-kong-man-jailed-for-life-for-murdering-yoga-instructor-ex-girlfriend-in-luxury-hotel/"
-          }
-        ],
-        "title": "Hong Kong man jailed for life for murdering yoga instructor ex-girlfriend in luxury hotel"
-      },
-      {
-        "headline": "兩名旅客違規攜帶未完稅香煙入境 罪成被判監禁5至6個月",
-        "body": "海關加強打擊私煙，兩名入境旅客因進口未完稅香煙被法庭裁定罪成，分別判處監禁5個及6個月。",
-        "tag": "實用",
-        "raise": true,
-        "sources": [
-          {
-            "name": "on.cc東網",
-            "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNaloybWl6MTR2SmJ6NUlhajZmM0FlR1pxTUhJVUJCc2wtd3FRdmR0ZXp2MFNKRl9pRjFreXRuZFNHRkNscHhDMzBOZnZkWFdlRG93OWdnMUlmRXptd2RYZkpQZExtdXlONlUtdGZ1ZDl0b2FfMDV3U0VHV2hzRHNoZmxNdWJlUE5CUllR?oc=5"
-          }
-        ],
-        "title": "2名入境旅客進口未完稅香煙罪成 判囚5至6個月"
-      },
-      {
-        "headline": "新地委任葉劉淑儀為獨任董事 每年收取袍金30萬元",
-        "body": "新鴻基地產宣布委任行政會議召集人葉劉淑儀為獨立非執行董事，每年董事袍金為30萬港元。",
-        "tag": "行業線",
-        "raise": true,
         "sources": [
           {
             "name": "etnet 經濟通",
-            "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNNnNmTG1sbE1wRXE3R0pDR2NwWGIzY19UZC16RzVDR1YtT0FYdXRlb09va0YtTElDMENSVWFkMW43YnFyZVZvNzJHa0p6a0V6RkFuaHFvTmNkSkg5MWdSdFdSOEtGeldobmxrNi1ROVZhYnBnUHVacXczYy1IaWhaZzZEa3NNajhJdjhKSHFiR001SkRIa1gyZnZ4SURlc2k2NWFlNTZmSFJBVnFUSG1z?oc=5"
-          }
-        ]
-      },
-      {
-        "headline": "政府爭議年內通過大宗商品貿易稅務優惠法案 提供半稅特惠",
-        "body": "運輸及物流局局長陳美寶表示，政府正積極爭議於年內通過相關條例草案，為大宗商品貿易商提供利得稅半稅特惠。",
-        "tag": "實用",
-        "raise": true,
-        "sources": [
-          {
-            "name": "RTHK News",
-            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBEZ0t0NVdrZXJ2cGs1Rkk4Wkk3d2tXYzZacUYyV1RUa1hOZUd1UXlGdV9vbFg4RTgtSFNHY0pUekVnVngtLU9YTUJDclFNd2JQM2NjMG5MMXVnU3JaVmZHcmd0Szh0N004dzhoaVpLWQ?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQeG80WkV0TzVJcW5IeHhiQ0Q4Q1VWU3ZyMmxUVXpEU29CVWc4OUZqcElveHpwOFFBN3g0QXJSOWZ5YWhzRDlWZzVTV2ZkaFlfMGNYaGd2dE1wS2ZGYXJpSWlLTkwwUEJqQ0otUk4tN0R6anhyUVhfdmtBbmwtMkFWWS1uUnIyXzdvSlJMVXc2N0hlVlliTnFBbTN6YnhmaWtLU2RUVHozQklHMU9UYTdJWQ?oc=5"
           }
         ],
-        "title": "陳美寶：爭取年內通過為大宗商品貿易提供半稅優惠"
+        "title": "《異動股》邁威生物-B等2家公司上午9:39異動",
+        "headline": "《異動股》邁威生物-B等2家公司上午9:39異動",
+        "body": ""
       },
       {
-        "headline": "立法會及特區政府發表聲明 堅決反對美中經濟與安全審議委員會報告",
-        "body": "特區政府與立法會分別發表嚴正聲明，對美國「美中經濟與安全審議委員會」發表的報告表示強烈不滿及堅決反對。",
-        "tag": "敏感",
-        "raise": false,
         "sources": [
           {
             "name": "信報網站",
-            "url": "https://news.google.com/rss/articles/CBMilwNBVV95cUxOR3lqY29xZFFybjl5bU9WWFJFVnFRYU9FUGpBQVYzbTZGdHRVZlV4eVA1QU14VHJTb3AtbG81ckRmVGZ6dy1WTC15OG9Fb3R6RkY5cHBCRzA0aWtkS2xfQnF5dmpwbkVPcDM0R0dncDY3RkNkMFJOaUd5TE1wQlhDdEhPbzlnODJOMGNzcTN2aWJLTDNvNEtxNmpkQWhhTDV4cFlfaTRCd0dCLXdJTWZGQ0IyUzlPRW9WWlhuaDFMelZ0OVppRGVFOVBOLWpkN2ZubHAwVG4zaDhra2J3YzFwNXhBS3lFNjlEc0xGdDB3dTNDTkY0RDhnWk1UX2h4MVgxd2kzNHMxRjVYSzF0SHpVcFRjV3FLZkUyNmk2M2lKZ25VeXliWHJYRUQwdVdjWjUtQnNLdU8yNk9BOEtHR2ZjOEtKR3J2NlpmR1lWX2NkTkZjQURuUlF3RkZ3VW00bEJtX1hBTUQzajZoNjJWVzB2b1BsWFptUGc2VFBEd0FEemV2VFJyRnVBWEpFWFBmakZ6TVAzaENZVQ?oc=5"
+            "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxQc05nQ0ljUktLdUFSWWdSQmFZYjgxLTBwaHdwM2JiSW05cFFQR1RaU3RObWNqNXprSHRpUWVfQlpPWmVfNXR4cWFWcjBSWGRfanM0Wmh0S24zbnZaTWYzVkNYTE84bmMzT01IazJLeHhEa3hCakFrZDlEZFBsUmJYUDUzMm9RWFdZZF9Xc3pKVnFiVUVfT2xya1VrdG9PN0RNS0k0VHk2RTNHSm0weXF6NHZPSmVxVVZMWXJMLVJuZ0xFUGwzRVFyQ0o0UFZ5cnJmamRCYXJXOTYxcVZtNC04ckxkb2h2RUhKc3dFS0lTV0Z0YmhtSUVaZElOcS1SRUF4YkRQdg?oc=5"
           }
         ],
-        "title": "立法會強烈不滿和堅決反對美中經濟與安全審議委員會報告"
+        "title": "選委會選舉丨金融界當選名單",
+        "headline": "選委會選舉丨金融界當選名單",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "AM730",
+            "url": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxPd1Fwc2djaU50WnRWck1SVnMwZFhvbUxieU5kNGFnTVNLUFp5RWdwVkNVRU9xM0JCc2lHdUhBZkNnOE03SGFHRlR1VEx2RlZja3AtWGxhUHctOXViVzBfMGl0NS1JeUc2YXZGbXZCSWNnVHlERE9TWnY3UkFzX09HTFdLZW1DdHd4SVJhOEt0S0NxeEFLcm9xWnc1WHVPTHRfdHdCRG8tRWl5LUNOTGFHR1gwUjcwMjI5dzR6UmFSbUx3MmkzbFFRRXA3dUdLcUVfNjB4T0xldmxPR0hGem1rT0YxUDZJS0pEOHdkTXBneVV3d1BRZWJxLVY3ak5XWXZtZmR5MGJ3WnF3bWVES1YwVkxuREFkSGlXQVBGVEtoaTV4UmpHbURLN2M1Wm8tVTZpQWMwUl9JNVh5TEpJZzczTUtCbktHMnlkMUpxWmtLdUhTT2oySkd0U2RrSjM1S1FEMGhtTEFyZWh5ZmRyNzhzVGhEMC1jTUd6cHc?oc=5"
+          },
+          {
+            "name": "RTHK News",
+            "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5YVGRUa0NkVzI0QVBLaTZ0aEFNSlgxX1E5Ulh5X0NWMDlDNWNueDNhSE42TEc5bE95WWxxZ3ZHWVptUmw2MG9YYWVtaElEbGZseWxOVTFfRUE3TFBlOHl3VUxKX3BkdGhZdVJkWkNRaw?oc=5"
+          },
+          {
+            "name": "on.cc東網",
+            "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPTG9VOFFmSW91R0stdklWci1objZWMEZKVGsteG9QaS1GX053QVc4a3V3ajdINkIwTWVIdFNhZXVFWlh5US1SbHlfN1RHY0F5dVF4cE1yNWVBMEluSGx4YmxBNVh2N20tRnFXNXFyaFJWVVhFX0hEOHIxWkJjQ3NGZWE4S3ZLXzh5cWVF?oc=5"
+          }
+        ],
+        "title": "中國第二艘國產大型郵輪「愛達．花城號」商業首航今抵港",
+        "headline": "中國第二艘國產大型郵輪「愛達．花城號」商業首航今抵港",
+        "body": ""
+      },
+      {
+        "sources": [
+          {
+            "name": "RTHK 本地",
+            "url": "https://news.rthk.hk/rthk/ch/component/k2/1878886-20261123.htm"
+          }
+        ],
+        "title": "【重溫】2026年11月23日《社評摘要》",
+        "headline": "【重溫】2026年11月23日《社評摘要》",
+        "body": "匯集各大報章社論及評論精華，多角度呈現各方觀點。"
+      },
+      {
+        "sources": [
+          {
+            "name": "etnet 經濟通",
+            "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOTV9GMGs4MkN5SDBvanJkNlE1b0lROUM4RmdRNmtidXBwYXlIaG93UnNjd2FqU09nTzRGb1FrYzY0dHkzU28tTDV1Mlc4UUZxSEhYbWFBbXF2SVdlRGlQcjgtNHpYbGNaZWxDcFhwTDQxV0dFU1pxUDl4RldjOTNESzcwdGR2WElUb1MwS2RnT2hTYjhTSENOY1oweHBKeHd6V0RCeFdIMzVYeTgxeHpUWA?oc=5"
+          }
+        ],
+        "title": "《大手成交》京東集團等4家公司上午9:00市前大手交易",
+        "headline": "《大手成交》京東集團等4家公司上午9:00市前大手交易",
+        "body": ""
       }
     ],
     "juicy_sg": [
       {
-        "headline": "Domestic Helper Inherits S$6 Million from Employer After 20 Years of Service",
-        "body": "A domestic helper from the Philippines inherited S$6 million from her Singaporean employer following two decades of loyal service.",
-        "tag": "human interest",
-        "raise": true,
+        "sources": [
+          {
+            "name": "English.gov.cn",
+            "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPdVZoUDF6OHFZYnNzLXFaT2dfVXlwbzVHeW5QTVJUMngxb0lTaXMtczVKamlHRDNiMmtkWWcyUmpfYjNUS3lqeldxY29VMUVKRm9MNWFJSzNDUGlIdnZrXzgxM2RDWEF5QzRzZU56WVg3Zk14SEJoNVd6aVgzWGRfM2lhR2lVV012?oc=5"
+          },
+          {
+            "name": "CGTN",
+            "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQMHFSRHNHQlJ1Y2Z1d2MxRnhRdW1Yd0k0ckJiRExCT0k4NHo1bjdyV0NtTWtSWml4dV94YU11WHhtdnBCOVdfRzljVkRwaXhoVTlPM1NQbUJPSFAzODZiTGd5aTVZaFFRbi1TdUdMR3NoOHN1WVhpc05ubTdaTlBTbjJTcHNqSDhDdDNGV3k1NzNIUlJZb0tTX1V4TlBudzFJZlRTNl9fN2V2Y2p3YUVqOWI1MDlSQmlwNFBROExobmdtVWIw?oc=5"
+          }
+        ],
+        "title": "China ready to accelerate FTA upgrade talks with Singapore: premier",
+        "headline": "China ready to accelerate FTA upgrade talks with Singapore: premier",
+        "body": ""
+      },
+      {
         "sources": [
           {
             "name": "The Independent SG",
-            "url": "https://theindependent.sg/i-am-the-luckiest maid-in-singapore-domestic-helper-inherits-s-6m-from-sg-employer-for-her-20-years-of-loyal-service"
-          }
-        ]
-      },
-      {
-        "headline": "Singaporean Extradited to US Court over Multi-Million Dollar Insider Trading Ring",
-        "body": "A Singaporean national faces charges in a US court for his alleged role in an international insider trading network that generated tens of millions in profits.",
-        "tag": "scandal",
-        "raise": true,
-        "sources": [
-          {
-            "name": "Arise News",
-            "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOUFNpa3JFcjE2a3lqR05xNHNWNjBKN0laNG9YVFR4aUg0ekNyUnZoWFZxcENzcGk4LV81YkV2alMzaGpHQnZLZjBmWURBZWR1T3I1aGs0UkNpSDF4RUJZd0hoa1VRaEJ4Z0NQZGY2UWFXSHplRmNHYWVNQUhyOEUwUll1WjJhalBZbTgzR3Qxb21PU2VqTzBsaFNJbDBYaEkyMnlRbm11b3RlVmdy?oc=5"
+            "url": "https://theindependent.sg/netizens-rally-behind-alibaba-amid-controversy-over-suspected-spy-connections-in-nvidia-issue"
           }
         ],
-        "title": "Singaporean Extradited To US Over Alleged Global Insider-Trading Scheme Worth Millions"
+        "title": "Netizens rally behind Alibaba amid controversy over suspected spy connections in Nvidia issue",
+        "headline": "Netizens rally behind Alibaba amid controversy over suspected spy connections in Nvidia issue",
+        "body": "INTERNATIONAL: Shareholders sued Alibaba in New York, accusing it of defrauding them by hiding ties to Megaspeed,"
       },
       {
-        "headline": "Woman Ordered to Pay S$15,000 After Court Dismisses Lawsuit Over Chicken Braking Incident",
-        "body": "A Singapore judge dismissed a passenger's negligence lawsuit against a private-hire driver who braked for a crossing chicken, ordering the plaintiff to pay S$15,000 in legal costs.",
-        "tag": "light",
-        "raise": true,
         "sources": [
           {
             "name": "The Independent SG",
-            "url": "https://theindependent.sg/this-incident-was-caused-by-chicken-crossing-the-road-sg-judge-dismisses-woman-s-lawsuit-against-phv-driver-who-braked-for-the-bird-orders-her-to-pay-s-15k-instead"
+            "url": "https://theindependent.sg/400-new-jobs-expected-as-us-semiconductor-equipment-maker-kla-expands-singapore-into-its-biggest-manufacturing-base-worldwide"
           }
         ],
-        "title": "‘This incident was caused by chicken crossing the road’ — SG judge dismisses woman’s lawsuit against PHV driver who braked for the bird, orders her to pay S$15K instead"
+        "title": "400 new jobs expected as US semiconductor equipment maker KLA expands Singapore into its biggest manufacturing base worldwide",
+        "headline": "400 new jobs expected as US semiconductor equipment maker KLA expands Singapore into its biggest manufacturing base worldwide",
+        "body": "SINGAPORE: Singapore is set to gain about 400 new jobs as US semiconductor equipment maker KLA Corporation expands its op"
       },
       {
-        "headline": "Tenant Clamped and Fined S$500 Due to Neighbour's Renovation Debris in Parking Lot",
-        "body": "A condo resident questioned a S$500 wheel-clamp release fee after her neighbour's vehicle was clamped because of renovation materials left in a shared parking space.",
-        "tag": "practical",
-        "raise": true,
         "sources": [
           {
             "name": "The Independent SG",
-            "url": "https://theindependent.sg/s-500-fee-questioned-after-tenant-s-car-clamped-over-another-resident-s-renovation-items"
+            "url": "https://theindependent.sg/17-weeks-imprisonment-for-a-61-year-old-man-who-secretly-filmed-more-than-30-men-showering-at-public-pool-a-lifeguard-reported"
           }
         ],
-        "title": "S$500 fee questioned after tenant's car clamped over another resident's renovation items"
+        "title": "17 weeks’ imprisonment for a 61 year old man who secretly filmed more than 30 men showering at public pool, a lifeguard reported",
+        "headline": "17 weeks’ imprisonment for a 61 year old man who secretly filmed more than 30 men showering at public pool, a lifeguard reported",
+        "body": "SINGAPORE: A 61-year-old man was sentenced to 17 weeks’ impr isonment after secretly filming men showering at a public sw"
       },
       {
-        "headline": "Gen Z Employee Facing Backlash for Taking 5 Days Off for GTA 6 Release",
-        "body": "A 25-year-old SME employee sparked workplace debate after older colleagues complained to management about him taking five days of annual leave for a video game launch.",
-        "tag": "human interest",
-        "raise": true,
         "sources": [
           {
             "name": "The Independent SG",
-            "url": "https://theindependent.sg/it-s-my-leave-gen-z-employee-upset-after-older-colleagues-complain-about-his-5-days-off-for-gta-6"
+            "url": "https://theindependent.sg/my-house-in-bangladesh-is-inspired-by-singapore-homes-bangladeshi-man-invites-sg-boss-to-visit-his-s-258k-dream-home-in-village"
           }
         ],
-        "title": "‘It's my leave’: Gen Z employee upset after older colleagues complain about his 5 days off for GTA 6"
-      },
-      {
-        "headline": "Piped Gas Exports from Indonesia to Singapore Fully Restored as of Nov. 12",
-        "body": "Indonesia fully restored its piped natural gas supply to Singapore on November 12 following earlier disruptions.",
-        "tag": "practical",
-        "raise": true,
-        "sources": [
-          {
-            "name": "Mothership",
-            "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBHeGhFTDZPSkFFbDY2VFhtU2t4VnlKdi1mQXNQRjV1X1JjbEZfSkpzaEJibkFacUVLR21mbXlneWluM0lhRWY1TnVEZlctTU5CSzJoJnQzVlRLMmxPeFBuZjBhM1lheGRBZ2k2NHVpWHRKZGI4bzcxY0dwSQ?oc=5"
-          }
-        ]
+        "title": "‘My house in Bangladesh is inspired by Singapore homes’ — Bangladeshi man invites SG boss to visit his S$258K dream home in village",
+        "headline": "‘My house in Bangladesh is inspired by Singapore homes’ — Bangladeshi man invites SG boss to visit his S$258K dream home in village",
+        "body": "SINGAPORE/BANGLADESH: A Bangladeshi man who spent years work ing in Singapore has built a S$258,"
       }
     ]
   },
